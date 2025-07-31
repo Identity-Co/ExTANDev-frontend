@@ -18,6 +18,9 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Divider from '@mui/material/Divider'
 import Alert from '@mui/material/Alert'
 
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+
 // Third-party Imports
 import { signIn } from 'next-auth/react'
 import { Controller, useForm } from 'react-hook-form'
