@@ -2,17 +2,10 @@
 
 // Next Imports
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
 
 // MUI Imports
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-
-// Type Imports
-import type { Locale } from '@configs/i18n'
-
-// Util Imports
-import { getLocalizedUrl } from '@/utils/i18n'
 
 // Type Imports
 import type { Mode } from '@core/types'
@@ -29,7 +22,7 @@ const NotAuthorized = ({ mode }: { mode: Mode }) => {
   const lightImg = '/images/pages/misc-mask-light.png'
 
   // Hooks
-  const { lang: locale } = useParams()
+
   const miscBackground = useImageVariant(mode, lightImg, darkImg)
 
   return (
@@ -47,7 +40,7 @@ const NotAuthorized = ({ mode }: { mode: Mode }) => {
           src='/images/illustrations/characters/8.png'
           className='object-cover bs-[400px] md:bs-[450px] lg:bs-[500px]'
         />
-        <Button href={getLocalizedUrl('/', locale as Locale)} component={Link} variant='contained'>
+        <Button href={'/'} component={Link} variant='contained'>
           Back to Home
         </Button>
       </div>

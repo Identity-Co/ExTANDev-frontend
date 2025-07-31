@@ -5,7 +5,6 @@ import { useState } from 'react'
 
 // Next Imports
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
 
 // MUI Imports
 import Card from '@mui/material/Card'
@@ -21,7 +20,6 @@ import Divider from '@mui/material/Divider'
 
 // Type Imports
 import type { Mode } from '@core/types'
-import type { Locale } from '@configs/i18n'
 
 // Component Imports
 import Logo from '@components/layout/shared/Logo'
@@ -33,9 +31,6 @@ import themeConfig from '@configs/themeConfig'
 // Hook Imports
 import { useImageVariant } from '@core/hooks/useImageVariant'
 
-// Util Imports
-import { getLocalizedUrl } from '@/utils/i18n'
-
 const LoginV1 = ({ mode }: { mode: Mode }) => {
   // States
   const [isPasswordShown, setIsPasswordShown] = useState(false)
@@ -45,7 +40,7 @@ const LoginV1 = ({ mode }: { mode: Mode }) => {
   const lightImg = '/images/pages/auth-v1-mask-light.png'
 
   // Hooks
-  const { lang: locale } = useParams()
+
   const authBackground = useImageVariant(mode, lightImg, darkImg)
 
   const handleClickShowPassword = () => setIsPasswordShown(show => !show)
@@ -54,7 +49,7 @@ const LoginV1 = ({ mode }: { mode: Mode }) => {
     <div className='flex flex-col justify-center items-center min-bs-[100dvh] relative p-6'>
       <Card className='flex flex-col sm:is-[450px]'>
         <CardContent className='p-6 sm:!p-12'>
-          <Link href={getLocalizedUrl('/', locale as Locale)} className='flex justify-center items-center mbe-6'>
+          <Link href={'/'} className='flex justify-center items-center mbe-6'>
             <Logo />
           </Link>
           <div className='flex flex-col gap-5'>
@@ -92,7 +87,7 @@ const LoginV1 = ({ mode }: { mode: Mode }) => {
                   className='text-end'
                   color='primary.main'
                   component={Link}
-                  href={getLocalizedUrl('/pages/auth/forgot-password-v1', locale as Locale)}
+                  href={'/pages/auth/forgot-password-v1'}
                 >
                   Forgot password?
                 </Typography>
@@ -102,11 +97,7 @@ const LoginV1 = ({ mode }: { mode: Mode }) => {
               </Button>
               <div className='flex justify-center items-center flex-wrap gap-2'>
                 <Typography>New on our platform?</Typography>
-                <Typography
-                  component={Link}
-                  href={getLocalizedUrl('/pages/auth/register-v1', locale as Locale)}
-                  color='primary.main'
-                >
+                <Typography component={Link} href={'/pages/auth/register-v1'} color='primary.main'>
                   Create an account
                 </Typography>
               </div>
