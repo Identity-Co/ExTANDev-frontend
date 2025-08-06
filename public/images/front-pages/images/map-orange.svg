@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="84.615" height="102.414" viewBox="0 0 84.615 102.414">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_15" data-name="Rectangle 15" width="83.198" height="81.898" fill="#f84b0b"/>
+    </clipPath>
+  </defs>
+  <g id="Group_449" data-name="Group 449" transform="translate(-1082.486 -1108.518)">
+    <g id="Group_148" data-name="Group 148" transform="translate(1082.486 1108.518)">
+      <g id="Group_16" data-name="Group 16" transform="matrix(1, 0.017, -0.017, 1, 1.429, 0)">
+        <g id="Group_9" data-name="Group 9" clip-path="url(#clip-path)">
+          <path id="Path_4" data-name="Path 4" d="M29.7,0A29.518,29.518,0,0,0,0,29.249C0,45.369,29.7,81.9,29.7,81.9s29.7-36.529,29.7-52.649A29.518,29.518,0,0,0,29.7,0m0,48.034a19.209,19.209,0,1,1,0-38.414,19.209,19.209,0,1,1,0,38.414" transform="translate(11.895)" fill="#f84b0b" fill-rule="evenodd"/>
+        </g>
+      </g>
+      <ellipse id="Ellipse_1" data-name="Ellipse 1" cx="30.197" cy="8.088" rx="30.197" ry="8.088" transform="translate(12.402 86.237)" fill="#3e3d3d" opacity="0.168"/>
+    </g>
+  </g>
+</svg>
