@@ -10,12 +10,8 @@ import type { NotificationsType } from '@components/layout/shared/NotificationsD
 
 // Component Imports
 import NavToggle from './NavToggle'
-import Logo from '@components/layout/shared/Logo'
-import NavSearch from '@components/layout/shared/search'
 
 import ModeDropdown from '@components/layout/shared/ModeDropdown'
-import ShortcutsDropdown from '@components/layout/shared/ShortcutsDropdown'
-import NotificationsDropdown from '@components/layout/shared/NotificationsDropdown'
 import UserDropdown from '@components/layout/shared/UserDropdown'
 
 // Hook Imports
@@ -114,6 +110,7 @@ const notifications: NotificationsType[] = [
 const NavbarContent = () => {
   // Hooks
   const { isBreakpointReached } = useHorizontalNav()
+  
 
   return (
     <div
@@ -124,16 +121,16 @@ const NavbarContent = () => {
         {/* Hide Logo on Smaller screens */}
         {!isBreakpointReached && (
           <Link href={'/'}>
-            <Logo />
+            
           </Link>
         )}
       </div>
 
       <div className='flex items-center'>
-        <NavSearch />
+        {/*<NavSearch />*/}
         <ModeDropdown />
-        <ShortcutsDropdown shortcuts={shortcuts} />
-        <NotificationsDropdown notifications={notifications} />
+        {/*<ShortcutsDropdown shortcuts={shortcuts} />*/}
+        {/*<NotificationsDropdown notifications={notifications} />*/}
         <UserDropdown />
         {/* Language Dropdown, Notification Dropdown, quick access menu dropdown, user dropdown will be placed here */}
       </div>

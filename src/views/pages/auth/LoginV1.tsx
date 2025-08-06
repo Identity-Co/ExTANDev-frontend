@@ -31,6 +31,8 @@ import themeConfig from '@configs/themeConfig'
 // Hook Imports
 import { useImageVariant } from '@core/hooks/useImageVariant'
 
+// Util Imports
+
 const LoginV1 = ({ mode }: { mode: Mode }) => {
   // States
   const [isPasswordShown, setIsPasswordShown] = useState(false)
@@ -40,7 +42,7 @@ const LoginV1 = ({ mode }: { mode: Mode }) => {
   const lightImg = '/images/pages/auth-v1-mask-light.png'
 
   // Hooks
-
+  
   const authBackground = useImageVariant(mode, lightImg, darkImg)
 
   const handleClickShowPassword = () => setIsPasswordShown(show => !show)
@@ -97,7 +99,11 @@ const LoginV1 = ({ mode }: { mode: Mode }) => {
               </Button>
               <div className='flex justify-center items-center flex-wrap gap-2'>
                 <Typography>New on our platform?</Typography>
-                <Typography component={Link} href={'/pages/auth/register-v1'} color='primary.main'>
+                <Typography
+                  component={Link}
+                  href={'/pages/auth/register-v1'}
+                  color='primary.main'
+                >
                   Create an account
                 </Typography>
               </div>

@@ -23,6 +23,8 @@ import type { ThemeColor } from '@core/types'
 // Components Imports
 import ComposeMail from './ComposeMail'
 
+// Util Imports
+
 // Styles Imports
 import styles from './styles.module.css'
 
@@ -86,6 +88,7 @@ const SidebarLeft = (props: Props) => {
   const [openCompose, setOpenCompose] = useState(false)
 
   // Hooks
+  
 
   const folderCounts = store.emails.reduce((counts: Record<string, number>, email: Email) => {
     if (!email.isRead && email.folder !== 'trash') {

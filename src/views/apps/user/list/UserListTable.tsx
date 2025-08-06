@@ -4,21 +4,24 @@
 import { useEffect, useState, useMemo } from 'react'
 
 // Next Imports
-import Link from 'next/link'
+import { useParams } from 'next/navigation'
 
 // MUI Imports
+import type { IconProps } from '@mui/material/Icon';
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import Divider from '@mui/material/Divider'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import Chip from '@mui/material/Chip'
 import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
 import { styled } from '@mui/material/styles'
 import TablePagination from '@mui/material/TablePagination'
 import type { TextFieldProps } from '@mui/material/TextField'
+import { Switch, FormControlLabel } from '@mui/material'
+
+import { toast } from 'react-toastify';
 
 // Third-party Imports
 import classnames from 'classnames'
@@ -35,8 +38,19 @@ import {
   getPaginationRowModel,
   getSortedRowModel
 } from '@tanstack/react-table'
-import type { ColumnDef, FilterFn } from '@tanstack/react-table'
+
+import type { ColumnDef, FilterFn, ColumnFiltersState } from '@tanstack/react-table'
 import type { RankingInfo } from '@tanstack/match-sorter-utils'
+
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContentText from '@mui/material/DialogContentText'
+
+import { useNavigationStore } from '@/libs/navigation-store'
+
+import SmartLink from '@/components/SmartLink'
 
 // Type Imports
 import type { ThemeColor } from '@core/types'
@@ -44,8 +58,6 @@ import type { UsersType } from '@/types/apps/userTypes'
 
 // Component Imports
 import TableFilters from './TableFilters'
-import AddUserDrawer from './AddUserDrawer'
-import OptionMenu from '@core/components/option-menu'
 import CustomAvatar from '@core/components/mui/Avatar'
 
 // Util Imports
@@ -53,6 +65,8 @@ import { getInitials } from '@/utils/getInitials'
 
 // Style Imports
 import tableStyles from '@core/styles/table.module.css'
+
+import * as User from '@/app/server/users'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -65,6 +79,10 @@ declare module '@tanstack/table-core' {
 
 type UsersTypeWithAction = UsersType & {
   action?: string
+  profile_picture?: string
+  first_name?: string
+  role?: string
+  _id?: string
 }
 
 type UserRoleType = {
@@ -73,6 +91,11 @@ type UserRoleType = {
 
 type UserStatusType = {
   [key: string]: ThemeColor
+}
+
+type roleData = {
+  key: string;
+  name: string;
 }
 
 // Styled Components
@@ -138,15 +161,32 @@ const userStatusObj: UserStatusType = {
 // Column Definitions
 const columnHelper = createColumnHelper<UsersTypeWithAction>()
 
-const UserListTable = ({ tableData }: { tableData?: UsersType[] }) => {
+const UserListTable = ({ tableData, roles }: { tableData?: UsersType[]; roles?: roleData[] }) => {
+  const setLoading = useNavigationStore((s) => s.setLoading)
+
   // States
   const [addUserOpen, setAddUserOpen] = useState(false)
   const [rowSelection, setRowSelection] = useState({})
   const [data, setData] = useState(...[tableData])
   const [filteredData, setFilteredData] = useState(data)
   const [globalFilter, setGlobalFilter] = useState('')
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+
+  const [userId, setId] = useState<string>('')
+  const [open, setOpen] = useState(false)
+  const [onSubmit, setSubmit] = useState<() => Promise<void>>(() => async () => {});
+
+  const [openDelete, setOpenDelete] = useState(false)
+
+  const getRoleName = (key: string): string => {
+    const role = roles?.find(r => r.key === key);
+
+    return role ? role.name : 'Unknown';
+  };
+
 
   // Hooks
+  const { lang: locale } = useParams()
 
   const columns = useMemo<ColumnDef<UsersTypeWithAction, any>[]>(
     () => [
@@ -176,84 +216,104 @@ const UserListTable = ({ tableData }: { tableData?: UsersType[] }) => {
         header: 'User',
         cell: ({ row }) => (
           <div className='flex items-center gap-4'>
-            {getAvatar({ avatar: row.original.avatar, fullName: row.original.fullName })}
+            {row.original.profile_picture ? getAvatar({ avatar: process.env.NEXT_PUBLIC_UPLOAD_URL+'/'+row.original.profile_picture, fullName: row.original.first_name ?? '' }) : getAvatar({ avatar: '/images/avatars/1.png', fullName: row.original.first_name ?? '' })}
             <div className='flex flex-col'>
               <Typography className='font-medium' color='text.primary'>
-                {row.original.fullName}
+                {row.original.first_name}
               </Typography>
-              <Typography variant='body2'>{row.original.username}</Typography>
+              <Typography variant='body2'>{row.original.email}</Typography>
             </div>
           </div>
-        )
+        ),
+        sortingFn: (rowA, rowB, columnId) => {
+          // Example: case-insensitive sort
+          const a = rowA.original.first_name?.toLowerCase() ?? ''
+          const b = rowB.original.first_name?.toLowerCase() ?? ''
+          
+          return a > b ? 1 : a < b ? -1 : 0
+        },
       }),
       columnHelper.accessor('email', {
         header: 'Email',
         cell: ({ row }) => <Typography>{row.original.email}</Typography>
       }),
+      columnHelper.accessor('contact', {
+        header: 'Phone',
+        cell: ({ row }) => <Typography>{row.original.phone.country_code} {row.original.phone.number}</Typography>
+      }),
       columnHelper.accessor('role', {
         header: 'Role',
         cell: ({ row }) => (
           <div className='flex items-center gap-2'>
-            <Icon
+            {/*<Icon
               className={userRoleObj[row.original.role].icon}
               sx={{ color: `var(--mui-palette-${userRoleObj[row.original.role].color}-main)`, fontSize: '1.375rem' }}
-            />
+            />*/}
+
             <Typography className='capitalize' color='text.primary'>
-              {row.original.role}
+              {getRoleName(row.original.role)}
             </Typography>
           </div>
         )
       }),
-      columnHelper.accessor('currentPlan', {
-        header: 'Plan',
-        cell: ({ row }) => (
-          <Typography className='capitalize' color='text.primary'>
-            {row.original.currentPlan}
-          </Typography>
-        )
-      }),
+      
       columnHelper.accessor('status', {
         header: 'Status',
         cell: ({ row }) => (
           <div className='flex items-center gap-3'>
-            <Chip
+            {/* <Chip
               variant='tonal'
               label={row.original.status}
               size='small'
               color={userStatusObj[row.original.status]}
               className='capitalize'
+            /> */}
+
+            <FormControlLabel
+              label=""
+              control={
+                row.original.status? (
+                  <Switch value='1' defaultChecked inputProps={{ 'aria-label': 'Switch A' }} onChange={(e) => handleSwitchChange(row.original._id, e)} />
+                ) : (
+                  <Switch value='1' inputProps={{ 'aria-label': 'Switch A' }} onChange={(e) => handleSwitchChange(row.original._id, e)} />
+                )
+              }
             />
           </div>
-        )
+        ),
+        enableSorting: false
       }),
       columnHelper.accessor('action', {
         header: 'Action',
         cell: ({ row }) => (
           <div className='flex items-center'>
-            <IconButton onClick={() => setData(data?.filter(product => product.id !== row.original.id))}>
-              <i className='ri-delete-bin-7-line text-textSecondary' />
-            </IconButton>
-            <IconButton>
-              <Link href={'/apps/user/view'} className='flex'>
+            {/*<IconButton>
+              <Link href={getLocalizedUrl('/admin/users/view/'+row.original._id, locale as Locale)} className='flex'>
                 <i className='ri-eye-line text-textSecondary' />
               </Link>
+            </IconButton>*/}
+            <IconButton sx={{color: 'warning.main'}} href={'/admin/users/edit/'+row.original._id} className='flex'>
+              <i className='ri-edit-box-line' />
             </IconButton>
-            <OptionMenu
+            <IconButton sx={{color: 'error.main'}} onClick={() => handleDeleteList(row.original._id)}>
+              <i className='ri-delete-bin-7-line' />
+            </IconButton>
+            {/*<OptionMenu
               iconButtonProps={{ size: 'medium' }}
               iconClassName='text-textSecondary'
               options={[
-                {
-                  text: 'Download',
-                  icon: 'ri-download-line',
-                  menuItemProps: { className: 'flex items-center gap-2 text-textSecondary' }
-                },
+                // {
+                //   text: 'Download',
+                //   icon: 'ri-download-line',
+                //   menuItemProps: { className: 'flex items-center gap-2 text-textSecondary' }
+                // },
                 {
                   text: 'Edit',
                   icon: 'ri-edit-box-line',
                   menuItemProps: { className: 'flex items-center gap-2 text-textSecondary' }
                 }
               ]}
-            />
+            />*/}
           </div>
         ),
         enableSorting: false
@@ -263,6 +323,53 @@ const UserListTable = ({ tableData }: { tableData?: UsersType[] }) => {
     [data, filteredData]
   )
 
+  // Vars
+  const iconProps: IconProps = {
+    className: 'ri-rotate-lock-line',
+    sx:{
+      cursor: 'pointer',
+      fontSize: '1.375rem',
+      color: 'info.main',
+    }
+  }
+
+  const handleDeleteList = async (id?: string) => {
+    /*if(confirm('Are you sure to delete?')) {
+      const res = await User.deleteUserData(id)
+      toast.success(res.message);
+      fetchData();
+    }*/
+
+    setId(id ?? '')
+    setOpenDelete(true)
+  }
+
+  const handleDeleteClose = () => {
+    setOpenDelete(false)
+  };
+
+  const handleDeleteAction = async () => {
+    const res = await User.deleteUserData(userId)
+
+    toast.success('User deleted successfully');
+
+    setOpenDelete(false)
+
+    fetchData();      
+  }
+
+  const editPermission = (userId?: string) => {
+    setOpen(true)
+    setId(userId ?? '')
+    setSubmit(() => fetchData)
+  }
+
+  const fetchData = async () => {
+    const refresh = await User.getUserData();
+    
+    setData(refresh);
+  };
+
   const table = useReactTable({
     data: filteredData as UsersType[],
     columns,
@@ -270,6 +377,7 @@ const UserListTable = ({ tableData }: { tableData?: UsersType[] }) => {
       fuzzy: fuzzyFilter
     },
     state: {
+      columnFilters,
       rowSelection,
       globalFilter
     },
@@ -283,6 +391,7 @@ const UserListTable = ({ tableData }: { tableData?: UsersType[] }) => {
     globalFilterFn: fuzzyFilter,
     onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
+    onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -292,9 +401,16 @@ const UserListTable = ({ tableData }: { tableData?: UsersType[] }) => {
     getFacetedMinMaxValues: getFacetedMinMaxValues()
   })
 
+  /*  console.log(table.getState().sorting[0])
+  useEffect(() => {
+    if (table.getState().sorting[0]?.id === 'fullName') {
+      table.setSorting([{ id: 'email', desc: table.getState().sorting[0]?.desc }])
+    }
+  }, [table.getState().sorting[0]?.id])*/
+
   const getAvatar = (params: Pick<UsersType, 'avatar' | 'fullName'>) => {
     const { avatar, fullName } = params
-
+    
     if (avatar) {
       return <CustomAvatar src={avatar} skin='light' size={34} />
     } else {
@@ -306,21 +422,39 @@ const UserListTable = ({ tableData }: { tableData?: UsersType[] }) => {
     }
   }
 
+  const handleSwitchChange = async (userID: any, event: React.ChangeEvent<HTMLInputElement>) => {    
+    const _status_ = event.target.checked ? 1 : 0;
+    const res = await User.updateUser(userID, {status: _status_})
+
+    if (res && res._id) {
+      if(_status_) {
+        toast.success('User Activated successfully.')
+      } else {
+        toast.success('User De-Activated successfully.')
+      }
+    } else {
+      if(res.errors) {
+        toast.error(res.errors)
+      }
+    }
+  }
+
   return (
     <>
       <Card>
         <CardHeader title='Filters' />
-        <TableFilters setData={setFilteredData} tableData={data} />
+        <TableFilters setData={setFilteredData} tableData={data} roles={roles} />
         <Divider />
         <div className='flex justify-between p-5 gap-4 flex-col items-start sm:flex-row sm:items-center'>
-          <Button
+          {/*<Button
             color='secondary'
             variant='outlined'
             startIcon={<i className='ri-upload-2-line text-xl' />}
             className='max-sm:is-full'
           >
             Export
-          </Button>
+          </Button>*/}
+          <div></div>
           <div className='flex items-center gap-x-4 gap-4 flex-col max-sm:is-full sm:flex-row'>
             <DebouncedInput
               value={globalFilter ?? ''}
@@ -328,9 +462,15 @@ const UserListTable = ({ tableData }: { tableData?: UsersType[] }) => {
               placeholder='Search User'
               className='max-sm:is-full'
             />
-            <Button variant='contained' onClick={() => setAddUserOpen(!addUserOpen)} className='max-sm:is-full'>
+            {/*<Button variant='contained' onClick={() => setAddUserOpen(!addUserOpen)} className='max-sm:is-full'>
               Add New User
-            </Button>
+            </Button>*/}
+
+            <SmartLink href={`/admin/users/add/`}>
+              <Button variant='contained' className='max-sm:is-full'>
+                Add New User
+              </Button>     
+            </SmartLink>       
           </div>
         </div>
         <div className='overflow-x-auto'>
@@ -401,12 +541,41 @@ const UserListTable = ({ tableData }: { tableData?: UsersType[] }) => {
           onRowsPerPageChange={e => table.setPageSize(Number(e.target.value))}
         />
       </Card>
-      <AddUserDrawer
+      {/*<UserPermissionDialog open={open} setOpen={setOpen} userId={userId} onSubmit={fetchData} permissions={userPermission} />*/}
+      {/*<AddUserDrawer
         open={addUserOpen}
         handleClose={() => setAddUserOpen(!addUserOpen)}
         userData={data}
         setData={setData}
-      />
+      />*/}
+
+      <Dialog
+        open={openDelete}
+        disableEscapeKeyDown
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
+        onClose={(event, reason) => {
+          if (reason !== 'backdropClick') {
+            handleDeleteClose()
+          }
+        }}
+        closeAfterTransition={false}
+      >
+        <DialogTitle id='alert-dialog-title' className='text-center'>Delete User?</DialogTitle>
+        <DialogContent>
+          <DialogContentText id='alert-dialog-description' className='text-center'>
+            Are you sure you want to delete this User?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteAction} variant='contained'>
+            Yes
+          </Button>
+          <Button onClick={handleDeleteClose} variant='outlined' color='secondary'>
+            No
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   )
 }

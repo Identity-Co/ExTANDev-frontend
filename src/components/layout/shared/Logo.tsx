@@ -14,7 +14,7 @@ import type { VerticalNavContextProps } from '@menu/contexts/verticalNavContext'
 import MaterioLogo from '@core/svg/Logo'
 
 // Config Imports
-import themeConfig from '@configs/themeConfig'
+//import themeConfig from '@configs/themeConfig'
 
 // Hook Imports
 import useVerticalNav from '@menu/hooks/useVerticalNav'
@@ -81,7 +81,7 @@ const Logo = ({ color }: { color?: CSSProperties['color'] }) => {
         transitionDuration={transitionDuration}
         isBreakpointReached={isBreakpointReached}
       >
-        {themeConfig.templateName}
+        {/*{themeConfig.templateName}*/}
       </LogoText>
     </div>
   )

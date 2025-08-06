@@ -17,6 +17,8 @@ import classnames from 'classnames'
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from 'cmdk'
 import { Title, Description } from '@radix-ui/react-dialog'
 
+// Type Imports
+
 // Component Imports
 import DefaultSuggestions from './DefaultSuggestions'
 import NoResult from './NoResult'
@@ -24,6 +26,8 @@ import NoResult from './NoResult'
 // Hook Imports
 import useVerticalNav from '@menu/hooks/useVerticalNav'
 import { useSettings } from '@core/hooks/useSettings'
+
+// Util Imports
 
 // Style Imports
 import './styles.css'
@@ -35,7 +39,7 @@ type Item = {
   id: string
   name: string
   url: string
-
+  
   icon: string
   shortcut?: string
 }
@@ -62,7 +66,7 @@ const transformedData = data.reduce((acc: Section[], item) => {
     id: item.id,
     name: item.name,
     url: item.url,
-
+    
     icon: item.icon,
     shortcut: item.shortcut
   }
@@ -144,13 +148,15 @@ const NavSearch = () => {
   const router = useRouter()
   const pathName = usePathname()
   const { settings } = useSettings()
-
+  
   const { isBreakpointReached } = useVerticalNav()
   const isAboveMdScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
   // When an item is selected from the search results
   const onSearchItemSelect = (item: Item) => {
-    item.url.startsWith('http') ? window.open(item.url, '_blank') : router.push(item.url)
+    item.url.startsWith('http')
+      ? window.open(item.url, '_blank')
+      : router.push( item.url)
     setOpen(false)
   }
 

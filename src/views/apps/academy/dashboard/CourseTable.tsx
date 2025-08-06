@@ -40,6 +40,8 @@ import type { Course } from '@/types/apps/academyTypes'
 // Components Imports
 import CustomAvatar from '@core/components/mui/Avatar'
 
+// Util Imports
+
 // Style Imports
 import tableStyles from '@core/styles/table.module.css'
 
@@ -109,6 +111,7 @@ const CourseTable = ({ courseData }: { courseData?: Course[] }) => {
   const [globalFilter, setGlobalFilter] = useState('')
 
   // Hooks
+  
 
   const columns = useMemo<ColumnDef<CourseWithProgress, any>[]>(
     () => [

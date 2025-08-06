@@ -38,7 +38,7 @@ export const reverseEslintConfig = async () => {
     ? 'yarn uninstall eslint-plugin-unused-imports'
     : fs.existsSync('pnpm-lock.yaml')
       ? 'pnpm uninstall eslint-plugin-unused-imports'
-      : 'npm remove eslint-plugin-unused-imports'
+      : 'npm run uninstall eslint-plugin-unused-imports'
 
   await exec(packageManager).then(() => {
     consola.success('eslint-plugin-unused-imports uninstalled successfully\n')

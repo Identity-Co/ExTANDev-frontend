@@ -5,7 +5,7 @@ import { useRef, useState } from 'react'
 import type { MouseEvent } from 'react'
 
 // Next Imports
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 
 // MUI Imports
 import { styled } from '@mui/material/styles'
@@ -24,8 +24,14 @@ import Button from '@mui/material/Button'
 // Third-party Imports
 import { signOut, useSession } from 'next-auth/react'
 
+import { useNavigationStore } from '@/libs/navigation-store'
+
+// Type Imports
+
 // Hook Imports
 import { useSettings } from '@core/hooks/useSettings'
+
+// Util Imports
 
 // Styled component for badge content
 const BadgeContentSpan = styled('span')({
@@ -38,6 +44,9 @@ const BadgeContentSpan = styled('span')({
 })
 
 const UserDropdown = () => {
+  const setLoading = useNavigationStore((s) => s.setLoading)
+  const pathname = usePathname()
+
   // States
   const [open, setOpen] = useState(false)
 
@@ -48,13 +57,16 @@ const UserDropdown = () => {
   const router = useRouter()
   const { data: session } = useSession()
   const { settings } = useSettings()
+  
 
   const handleDropdownOpen = () => {
     !open ? setOpen(true) : setOpen(false)
   }
 
   const handleDropdownClose = (event?: MouseEvent<HTMLLIElement> | (MouseEvent | TouchEvent), url?: string) => {
-    if (url) {
+    if (url && pathname != url) {
+      setLoading(true)
+      
       router.push(url)
     }
 

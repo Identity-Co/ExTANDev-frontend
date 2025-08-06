@@ -15,10 +15,7 @@ import InputAdornment from '@mui/material/InputAdornment'
 import Checkbox from '@mui/material/Checkbox'
 import Button from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Divider from '@mui/material/Divider'
-import Alert from '@mui/material/Alert'
-
-import 'react-phone-input-2/lib/style.css'
+import CircularProgress from '@mui/material/CircularProgress';
 
 // Third-party Imports
 import { signIn } from 'next-auth/react'
@@ -39,9 +36,13 @@ import Illustrations from '@components/Illustrations'
 // Config Imports
 import themeConfig from '@configs/themeConfig'
 
+import { useNavigationStore } from '@/libs/navigation-store'
+
 // Hook Imports
 import { useImageVariant } from '@core/hooks/useImageVariant'
 import { useSettings } from '@core/hooks/useSettings'
+
+// Util Imports
 
 type ErrorType = {
   message: string[]
@@ -59,9 +60,12 @@ const schema = object({
 })
 
 const Login = ({ mode }: { mode: Mode }) => {
+  const setLoading = useNavigationStore((s) => s.setLoading)
+
   // States
   const [isPasswordShown, setIsPasswordShown] = useState(false)
   const [errorState, setErrorState] = useState<ErrorType | null>(null)
+  const [isSubmitting , setIsSubmitting ] = useState(false)
 
   // Vars
   const darkImg = '/images/pages/auth-v2-mask-dark.png'
@@ -74,7 +78,7 @@ const Login = ({ mode }: { mode: Mode }) => {
   // Hooks
   const router = useRouter()
   const searchParams = useSearchParams()
-
+  
   const { settings } = useSettings()
 
   const {
@@ -84,8 +88,8 @@ const Login = ({ mode }: { mode: Mode }) => {
   } = useForm<FormData>({
     resolver: valibotResolver(schema),
     defaultValues: {
-      email: 'admin@materio.com',
-      password: 'admin'
+      email: '',
+      password: ''
     }
   })
 
@@ -102,22 +106,29 @@ const Login = ({ mode }: { mode: Mode }) => {
   const handleClickShowPassword = () => setIsPasswordShown(show => !show)
 
   const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
+    setIsSubmitting(true)
+
     const res = await signIn('credentials', {
       email: data.email,
       password: data.password,
       redirect: false
     })
 
+    console.log('res: ', res)
+
     if (res && res.ok && res.error === null) {
+      setLoading(true)
+
       // Vars
-      const redirectURL = searchParams.get('redirectTo') ?? '/'
+      const redirectURL = searchParams.get('redirectTo') ?? '/admin'
 
       router.replace(redirectURL)
     } else {
       if (res?.error) {
-        const error = JSON.parse(res.error)
-
-        setErrorState(error)
+        setIsSubmitting(false)
+        const error = res?.error
+        
+        setErrorState({"message": Array(error)})
       }
     }
   }
@@ -152,14 +163,14 @@ const Login = ({ mode }: { mode: Mode }) => {
         <div className='flex flex-col gap-5 is-full sm:is-auto md:is-full sm:max-is-[400px] md:max-is-[unset]'>
           <div>
             <Typography variant='h4'>{`Welcome to ${themeConfig.templateName}!👋🏻`}</Typography>
-            <Typography>Please sign-in to your account and start the adventure 5</Typography>
+            <Typography>Please sign-in to your account and start the adventure</Typography>
           </div>
-          <Alert icon={false} className='bg-primaryLight'>
+          {/*<Alert icon={false} className='bg-primaryLight'>
             <Typography variant='body2' color='primary.main'>
               Email: <span className='font-medium'>admin@materio.com</span> / Pass:{' '}
               <span className='font-medium'>admin</span>
             </Typography>
-          </Alert>
+          </Alert>*/}
 
           <form
             noValidate
@@ -232,17 +243,18 @@ const Login = ({ mode }: { mode: Mode }) => {
                 Forgot password?
               </Typography>
             </div>
-            <Button fullWidth variant='contained' type='submit'>
+            <Button fullWidth variant='contained' type='submit' disabled={isSubmitting}>
               Log In
+              {isSubmitting ? <CircularProgress style={{marginLeft: '8px', color: 'white'}} size={20} thickness={6} /> : ''}
             </Button>
-            <div className='flex justify-center items-center flex-wrap gap-2'>
+            {/*<div className='flex justify-center items-center flex-wrap gap-2'>
               <Typography>New on our platform?</Typography>
               <Typography component={Link} href='/register' color='primary.main'>
                 Create an account
               </Typography>
-            </div>
+            </div>*/}
           </form>
-          <Divider className='gap-3'>or</Divider>
+          {/*<Divider className='gap-3'>or</Divider>
           <Button
             color='secondary'
             className='self-center text-textPrimary'
@@ -251,7 +263,7 @@ const Login = ({ mode }: { mode: Mode }) => {
             onClick={() => signIn('google')}
           >
             Sign in with Google
-          </Button>
+          </Button>*/}
         </div>
       </div>
     </div>

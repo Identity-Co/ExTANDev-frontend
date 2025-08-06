@@ -24,6 +24,8 @@ import type { Theme } from '@mui/material/styles'
 import classnames from 'classnames'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 
+// Type Imports
+
 // Component Imports
 import CustomAvatar from '@core/components/mui/Avatar'
 
@@ -32,6 +34,8 @@ import themeConfig from '@configs/themeConfig'
 
 // Hook Imports
 import { useSettings } from '@core/hooks/useSettings'
+
+// Util Imports
 
 export type ShortcutsType = {
   url: string
@@ -64,6 +68,7 @@ const ShortcutsDropdown = ({ shortcuts }: { shortcuts: ShortcutsType[] }) => {
   const hidden = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'))
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
   const { settings } = useSettings()
+  
 
   const handleClose = useCallback(() => {
     setOpen(false)

@@ -10,7 +10,7 @@ export const removeLangaugeDropdown = async () => {
   const fileToDelete = 'src/components/layout/shared/LanguageDropdown.tsx'
   const importPatternToDelete = new RegExp(`import .* from '.*LanguageDropdown';?`, 'g')
 
-  // await exec(`rm -rf ${fileToDelete}`)
+  //await exec(`rm -rf ${fileToDelete}`)
 
   const filesToRemoveFrom = [
     'src/components/layout/vertical/NavbarContent.tsx',

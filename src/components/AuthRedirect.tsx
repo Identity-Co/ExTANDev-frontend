@@ -3,8 +3,12 @@
 // Next Imports
 import { redirect, usePathname } from 'next/navigation'
 
+// Type Imports
+
 // Config Imports
 import themeConfig from '@configs/themeConfig'
+
+// Util Imports
 
 const AuthRedirect = () => {
   const pathname = usePathname()

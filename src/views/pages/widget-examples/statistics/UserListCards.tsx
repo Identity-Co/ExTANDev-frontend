@@ -11,7 +11,7 @@ import HorizontalWithSubtitle from '@components/card-statistics/HorizontalWithSu
 const data: UserDataType[] = [
   {
     title: 'Session',
-    stats: '21,459',
+    stats: 21459,
     avatarIcon: 'ri-group-line',
     avatarColor: 'primary',
     trend: 'positive',
@@ -20,7 +20,7 @@ const data: UserDataType[] = [
   },
   {
     title: 'Paid Users',
-    stats: '4,567',
+    stats: 4567,
     avatarIcon: 'ri-user-add-line',
     avatarColor: 'error',
     trend: 'positive',
@@ -29,7 +29,7 @@ const data: UserDataType[] = [
   },
   {
     title: 'Active Users',
-    stats: '19,860',
+    stats: 19860,
     avatarIcon: 'ri-user-follow-line',
     avatarColor: 'success',
     trend: 'negative',
@@ -38,7 +38,7 @@ const data: UserDataType[] = [
   },
   {
     title: 'Pending Users',
-    stats: '237',
+    stats: 237,
     avatarIcon: 'ri-user-search-line',
     avatarColor: 'warning',
     trend: 'positive',

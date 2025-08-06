@@ -4,6 +4,10 @@ import Link from 'next/link'
 // Third-party Imports
 import classnames from 'classnames'
 
+// Type Imports
+
+// Util Imports
+
 type DefaultSuggestionsType = {
   sectionLabel: string
   items: {
@@ -118,6 +122,7 @@ const defaultSuggestions: DefaultSuggestionsType[] = [
 
 const DefaultSuggestions = ({ setOpen }: { setOpen: (value: boolean) => void }) => {
   // Hooks
+  
 
   return (
     <div className='flex grow flex-wrap gap-x-[48px] gap-y-8 plb-14 pli-16 overflow-y-auto overflow-x-hidden bs-full'>

@@ -2,7 +2,7 @@ type SearchData = {
   id: string
   name: string
   url: string
-
+  
   icon: string
   section: string
   shortcut?: string
@@ -48,7 +48,7 @@ const data: SearchData[] = [
     id: '6',
     name: 'Landing Front',
     url: '/front-pages/landing-page',
-
+    
     icon: 'ri-article-line',
     section: 'Front Pages'
   },
@@ -56,7 +56,7 @@ const data: SearchData[] = [
     id: '7',
     name: 'Pricing Front',
     url: '/front-pages/pricing',
-
+    
     icon: 'ri-money-dollar-circle-line',
     section: 'Front Pages'
   },
@@ -64,7 +64,7 @@ const data: SearchData[] = [
     id: '8',
     name: 'Payment Front',
     url: '/front-pages/payment',
-
+    
     icon: 'ri-bank-card-line',
     section: 'Front Pages'
   },
@@ -72,7 +72,7 @@ const data: SearchData[] = [
     id: '9',
     name: 'Checkout Front',
     url: '/front-pages/checkout',
-
+    
     icon: 'ri-shopping-cart-2-line',
     section: 'Front Pages'
   },
@@ -80,7 +80,7 @@ const data: SearchData[] = [
     id: '10',
     name: 'Help Center Front',
     url: '/front-pages/help-center',
-
+    
     icon: 'ri-question-line',
     section: 'Front Pages'
   },

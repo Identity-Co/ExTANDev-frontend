@@ -1,3 +1,5 @@
+// Next Imports
+
 // MUI Imports
 import { useTheme } from '@mui/material/styles'
 import Chip from '@mui/material/Chip'
@@ -55,10 +57,12 @@ const HorizontalMenu = () => {
   const verticalNavOptions = useVerticalNav()
   const theme = useTheme()
   const { settings } = useSettings()
+  
 
   // Vars
   const { skin } = settings
   const { transitionDuration } = verticalNavOptions
+  
 
   return (
     <HorizontalNav
@@ -112,7 +116,9 @@ const HorizontalMenu = () => {
             <SubMenu label='products'>
               <MenuItem href='/apps/ecommerce/products/list'>list</MenuItem>
               <MenuItem href='/apps/ecommerce/products/add'>add</MenuItem>
-              <MenuItem href='/apps/ecommerce/products/category'>category</MenuItem>
+              <MenuItem href='/apps/ecommerce/products/category'>
+                category
+              </MenuItem>
             </SubMenu>
             <SubMenu label='orders'>
               <MenuItem href='/apps/ecommerce/orders/list'>list</MenuItem>
@@ -134,14 +140,18 @@ const HorizontalMenu = () => {
                 details
               </MenuItem>
             </SubMenu>
-            <MenuItem href='/apps/ecommerce/manage-reviews'>manageReviews</MenuItem>
+            <MenuItem href='/apps/ecommerce/manage-reviews'>
+              manageReviews
+            </MenuItem>
             <MenuItem href='/apps/ecommerce/referrals'>referrals</MenuItem>
             <MenuItem href='/apps/ecommerce/settings'>settings</MenuItem>
           </SubMenu>
           <SubMenu label='academy' icon={<i className='ri-graduation-cap-line' />}>
             <MenuItem href='/apps/academy/dashboard'>dashboard</MenuItem>
             <MenuItem href='/apps/academy/my-courses'>myCourses</MenuItem>
-            <MenuItem href='/apps/academy/course-details'>courseDetails</MenuItem>
+            <MenuItem href='/apps/academy/course-details'>
+              courseDetails
+            </MenuItem>
           </SubMenu>
           <SubMenu label='logistics' icon={<i className='ri-car-line' />}>
             <MenuItem href='/apps/logistics/dashboard'>dashboard</MenuItem>
@@ -166,7 +176,11 @@ const HorizontalMenu = () => {
           </MenuItem>
           <SubMenu label='invoice' icon={<i className='ri-file-list-2-line' />}>
             <MenuItem href='/apps/invoice/list'>list</MenuItem>
-            <MenuItem href='/apps/invoice/preview/4987' exactMatch={false} activeUrl='/apps/invoice/preview'>
+            <MenuItem
+              href='/apps/invoice/preview/4987'
+              exactMatch={false}
+              activeUrl='/apps/invoice/preview'
+            >
               preview
             </MenuItem>
             <MenuItem href='/apps/invoice/edit/4987' exactMatch={false} activeUrl='/apps/invoice/edit'>
@@ -265,8 +279,12 @@ const HorizontalMenu = () => {
           </SubMenu>
           <SubMenu label='wizardExamples' icon={<i className='ri-git-commit-line' />}>
             <MenuItem href='/pages/wizard-examples/checkout'>checkout</MenuItem>
-            <MenuItem href='/pages/wizard-examples/property-listing'>propertyListing</MenuItem>
-            <MenuItem href='/pages/wizard-examples/create-deal'>createDeal</MenuItem>
+            <MenuItem href='/pages/wizard-examples/property-listing'>
+              propertyListing
+            </MenuItem>
+            <MenuItem href='/pages/wizard-examples/create-deal'>
+              createDeal
+            </MenuItem>
           </SubMenu>
           <MenuItem href='/pages/dialog-examples' icon={<i className='ri-tv-2-line' />}>
             dialogExamples
@@ -274,9 +292,13 @@ const HorizontalMenu = () => {
           <SubMenu label='widgetExamples' icon={<i className='ri-bar-chart-box-line' />}>
             <MenuItem href='/pages/widget-examples/basic'>basic</MenuItem>
             <MenuItem href='/pages/widget-examples/advanced'>advanced</MenuItem>
-            <MenuItem href='/pages/widget-examples/statistics'>statistics</MenuItem>
+            <MenuItem href='/pages/widget-examples/statistics'>
+              statistics
+            </MenuItem>
             <MenuItem href='/pages/widget-examples/charts'>charts</MenuItem>
-            <MenuItem href='/pages/widget-examples/gamification'>gamification</MenuItem>
+            <MenuItem href='/pages/widget-examples/gamification'>
+              gamification
+            </MenuItem>
             <MenuItem href='/pages/widget-examples/actions'>actions</MenuItem>
           </SubMenu>
           <SubMenu label='frontPages' icon={<i className='ri-file-copy-line' />}>

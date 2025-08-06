@@ -28,6 +28,8 @@ import type { ThemeColor } from '@core/types'
 // Component Imports
 import DirectionalIcon from '@components/DirectionalIcon'
 
+// Util Imports
+
 type ChipColorType = {
   color: ThemeColor
 }
@@ -56,6 +58,7 @@ const Courses = (props: Props) => {
   const [activePage, setActivePage] = useState(0)
 
   // Hooks
+  
 
   useEffect(() => {
     let newData =

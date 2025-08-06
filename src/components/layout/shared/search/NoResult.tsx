@@ -4,6 +4,10 @@ import Link from 'next/link'
 // Third-party Imports
 import classnames from 'classnames'
 
+// Type Imports
+
+// Util Imports
+
 type NoResultData = {
   label: string
   href: string
@@ -30,6 +34,7 @@ const noResultData: NoResultData[] = [
 
 const NoResult = ({ searchValue, setOpen }: { searchValue: string; setOpen: (value: boolean) => void }) => {
   // Hooks
+  
 
   return (
     <div className='flex items-center justify-center grow flex-wrap plb-14 pli-16 overflow-y-auto overflow-x-hidden bs-full'>

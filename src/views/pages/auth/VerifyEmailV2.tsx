@@ -1,5 +1,7 @@
 'use client'
 
+// Next Imports
+
 // MUI Imports
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
@@ -19,6 +21,8 @@ import Illustrations from '@components/Illustrations'
 import { useImageVariant } from '@core/hooks/useImageVariant'
 import { useSettings } from '@core/hooks/useSettings'
 
+// Util Imports
+
 const VerifyEmailV2 = ({ mode }: { mode: Mode }) => {
   // Vars
   const darkImg = '/images/pages/auth-v2-mask-dark.png'
@@ -29,7 +33,7 @@ const VerifyEmailV2 = ({ mode }: { mode: Mode }) => {
   const borderedLightIllustration = '/images/illustrations/auth/v2-verify-email-light-border.png'
 
   // Hooks
-
+  
   const { settings } = useSettings()
   const authBackground = useImageVariant(mode, lightImg, darkImg)
 
@@ -65,7 +69,10 @@ const VerifyEmailV2 = ({ mode }: { mode: Mode }) => {
         />
       </div>
       <div className='flex justify-center items-center bs-full bg-backgroundPaper !min-is-full p-6 md:!min-is-[unset] md:p-12 md:is-[480px]'>
-        <Link href={'/'} className='absolute block-start-5 sm:block-start-[38px] inline-start-6 sm:inline-start-[38px]'>
+        <Link
+          href={'/'}
+          className='absolute block-start-5 sm:block-start-[38px] inline-start-6 sm:inline-start-[38px]'
+        >
           <Logo />
         </Link>
 

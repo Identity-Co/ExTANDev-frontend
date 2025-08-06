@@ -130,3 +130,14 @@ code {
   background-color: rgb(var(--mui-palette-info-mainChannel) / 0.08);
   border: 0;
 }
+
+/*******************/
+.react-tel-input input.form-control { width: 100%; height: 56px; }
+
+[data-dark] .ts-vertical-layout-content form .react-tel-input .form-control[type="tel"]{background: none; color: currentColor; border-color: rgb(231 227 252 / 22%);}
+[data-dark] .ts-vertical-layout-content form .react-tel-input .flag-dropdown{background: none; border-color: transparent; border-right: solid 1px #e7e3fc38;}
+[data-dark] .ts-vertical-layout-content form .react-tel-input .flag-dropdown .selected-flag .arrow{border-top-color: #fff;}
+[data-dark] .ts-vertical-layout-content form .react-tel-input .flag-dropdown ul.country-list{background: #312d4b; color: currentColor;}
+[data-dark] .ts-vertical-layout-content form .react-tel-input .flag-dropdown ul.country-list li .dial-code{color: currentColor;}
+[data-dark] .ts-vertical-layout-content form .react-tel-input .flag-dropdown ul.country-list .country.highlight,
+[data-dark] .ts-vertical-layout-content form .react-tel-input .flag-dropdown ul.country-list .country:hover{background: rgba(255,255,255,0.05);}

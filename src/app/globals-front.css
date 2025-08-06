@@ -1,0 +1,51 @@
+/* src/index.css or src/globals.css */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
+
+*,::after,::before {box-sizing: border-box; padding: 0; margin: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
+a, button{transition: 0.3s ease-in-out; outline: none; text-decoration: none;}
+body {margin: 0; font-family: "Raleway", sans-serif; padding: 0; font-size: 1.318vw; line-height: 1.83vw; font-weight: 500; color: #1F1F1F; background-color: #ffffff;}
+p{padding-bottom: 1.042vw;}
+p:last-child{margin: 0; padding: 0;}
+p:empty{margin: 0; padding: 0;}
+ul, ol{padding: 0; margin: 0;}
+svg path{transition: 0.3s ease-in-out;}
+.h1,.h2,.h3,.h4,.h5,.h6,h1,h2,h3,h4,h5,h6 {font-family: "Bebas Neue", sans-serif; margin: 0; font-weight: 400;line-height: 1.2;color: #1F1F1F; text-transform: uppercase; letter-spacing: -0.005em;}
+.fs_35{font-size: 2.562vw !important; line-height: 1;}
+.fs_55{font-size: 4.026vw !important; line-height: 1;}
+.fs_70{font-size: 5.124vw !important; line-height: 1;}
+.container{max-width: 100%; margin: 0 auto; padding: 0 5.857vw;}
+input, textarea, select {-webkit-appearance: none;}
+.extra_bold{font-weight: 800;}
+.py_150{padding: 10.981vw 0;}
+.pt_150{padding-top: 10.981vw;}
+.pb_150{padding-bottom: 10.981vw;}
+.py_100{padding: 7.321vw 0;}
+.pt_100{padding-top: 7.321vw;}
+.pb_100{padding-bottom: 7.321vw;}
+.py_50{padding: 3.66vw 0;}
+.pt_50{padding-top: 3.66vw;}
+.pb_50{padding-bottom: 3.66vw;}
+.grid2{display: grid; grid-template-columns: repeat(2, 1fr);}
+.grid3{display: grid; grid-template-columns: repeat(3, 1fr);}
+.grid4{display: grid; grid-template-columns: repeat(4, 1fr);}
+.item_center{align-items: center;}
+.full_img img{width: 100%; max-width: 100%; display: block;}
+.gap_16{gap:0.833vw;}
+.gap_24{gap:1.757vw;}
+.gap_32{gap:1.667vw;}
+.gap_40{gap:2.928vw;}
+.gap_48{gap:2.5vw;}
+.gap_56{gap:4.1vw;}
+.gap_64{gap:3.333vw;}
+.btn a{font-size: 1.025vw; font-weight: 700; color: #ffffff; background-color: #EA5647; border-radius:0.22vw; text-transform: uppercase; padding: 0.732vw 1.025vw; display: inline-block; line-height: 1; font-family: "Raleway", sans-serif;}
+.btn a:hover{background-color: #000000;}
+.bx_sd{box-shadow: 0 1.098vw 1.464vw rgb(0, 0, 0, 0.10);}
+
+
+.top-banner .keen-slider:not([data-keen-slider-disabled]) .keen-slider__slide { min-height: 100vh !important; }

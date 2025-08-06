@@ -8,6 +8,10 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 // Type Imports
+
+// Util Imports
+
+// Type Imports
 import type { Mode } from '@core/types'
 
 // Component Imports
@@ -22,7 +26,7 @@ const NotAuthorized = ({ mode }: { mode: Mode }) => {
   const lightImg = '/images/pages/misc-mask-light.png'
 
   // Hooks
-
+  
   const miscBackground = useImageVariant(mode, lightImg, darkImg)
 
   return (

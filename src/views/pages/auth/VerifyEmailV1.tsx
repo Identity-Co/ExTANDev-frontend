@@ -1,5 +1,7 @@
 'use client'
 
+// Next Imports
+
 // MUI Imports
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -17,13 +19,15 @@ import Logo from '@components/layout/shared/Logo'
 // Hook Imports
 import { useImageVariant } from '@core/hooks/useImageVariant'
 
+// Util Imports
+
 const VerifyEmailV1 = ({ mode }: { mode: Mode }) => {
   // Vars
   const darkImg = '/images/pages/auth-v1-mask-dark.png'
   const lightImg = '/images/pages/auth-v1-mask-light.png'
 
   // Hooks
-
+  
   const authBackground = useImageVariant(mode, lightImg, darkImg)
 
   return (

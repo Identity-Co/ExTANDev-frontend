@@ -12,6 +12,7 @@ import { styled, useColorScheme, useTheme } from '@mui/material/styles'
 // Type Imports
 import type { Mode } from '@core/types'
 
+
 // Component Imports
 import VerticalNav, { NavHeader, NavCollapseIcons } from '@menu/vertical-menu'
 import VerticalMenu from './VerticalMenu'
@@ -21,10 +22,13 @@ import Logo from '@components/layout/shared/Logo'
 import useVerticalNav from '@menu/hooks/useVerticalNav'
 import { useSettings } from '@core/hooks/useSettings'
 
+// Util Imports
+
 // Style Imports
 import navigationCustomStyles from '@core/styles/vertical/navigationCustomStyles'
 
 type Props = {
+  
   mode: Mode
 }
 
@@ -48,12 +52,12 @@ const StyledBoxForShadow = styled('div')(({ theme }) => ({
 
 const Navigation = (props: Props) => {
   // Props
-  const { mode } = props
+  const {  mode } = props
 
   // Hooks
   const verticalNavOptions = useVerticalNav()
   const { updateSettings, settings } = useSettings()
-
+  
   const { mode: muiMode, systemMode: muiSystemMode } = useColorScheme()
   const theme = useTheme()
 
@@ -123,7 +127,7 @@ const Navigation = (props: Props) => {
         )}
       </NavHeader>
       <StyledBoxForShadow ref={shadowRef} />
-      <VerticalMenu scrollMenu={scrollMenu} />
+      <VerticalMenu  scrollMenu={scrollMenu} />
     </VerticalNav>
   )
 }

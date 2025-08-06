@@ -5,7 +5,7 @@ export type UsersType = {
   id: number
   role: string
   email: string
-  status: string
+  status: number
   avatar: string
   company: string
   country: string
@@ -14,4 +14,9 @@ export type UsersType = {
   username: string
   currentPlan: string
   avatarColor?: ThemeColor
+  phone: {
+    country_code: string,
+    number: string,
+    country_name: string
+  }
 }

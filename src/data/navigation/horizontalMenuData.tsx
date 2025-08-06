@@ -429,27 +429,32 @@ const horizontalMenuData = (): HorizontalMenuDataType[] => [
           {
             label: 'landing',
             href: '/front-pages/landing-page',
-            target: '_blank'
+            target: '_blank',
+            
           },
           {
             label: 'pricing',
             href: '/front-pages/pricing',
-            target: '_blank'
+            target: '_blank',
+            
           },
           {
             label: 'payment',
             href: '/front-pages/payment',
-            target: '_blank'
+            target: '_blank',
+            
           },
           {
             label: 'checkout',
             href: '/front-pages/checkout',
-            target: '_blank'
+            target: '_blank',
+            
           },
           {
             label: 'helpCenter',
             href: '/front-pages/help-center',
-            target: '_blank'
+            target: '_blank',
+            
           }
         ]
       }

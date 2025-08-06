@@ -6,24 +6,18 @@ import type { MouseEvent } from 'react'
 
 // Next Imports
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
 
 // MUI Imports
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
 import Tooltip from '@mui/material/Tooltip'
-import TablePagination from '@mui/material/TablePagination'
 
 // Third-party Imports
 import classnames from 'classnames'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import {
   createColumnHelper,
-  flexRender,
   getCoreRowModel,
   useReactTable,
   getFilteredRowModel,
@@ -38,14 +32,12 @@ import type { RankingInfo } from '@tanstack/match-sorter-utils'
 
 // Type Imports
 import type { ThemeColor } from '@core/types'
+
 import type { InvoiceType } from '@/types/apps/invoiceTypes'
 
 // Component Imports
 import OptionMenu from '@core/components/option-menu'
 import CustomAvatar from '@core/components/mui/Avatar'
-
-// Style Imports
-import tableStyles from '@core/styles/table.module.css'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -104,6 +96,7 @@ const InvoiceListTable = ({ invoiceData }: { invoiceData?: InvoiceType[] }) => {
   const open = Boolean(anchorEl)
 
   // Hooks
+  const { lang: locale } = useParams()
 
   const columns = useMemo<ColumnDef<InvoiceTypeWithAction, any>[]>(
     () => [
@@ -112,7 +105,7 @@ const InvoiceListTable = ({ invoiceData }: { invoiceData?: InvoiceType[] }) => {
         cell: ({ row }) => (
           <Typography
             component={Link}
-            href={`/apps/invoice/preview/${row.original.id}`}
+            href={`/invoice/preview/${row.original.id}/`}
             color='primary.main'
           >{`#${row.original.id}`}</Typography>
         )
@@ -161,7 +154,10 @@ const InvoiceListTable = ({ invoiceData }: { invoiceData?: InvoiceType[] }) => {
               <i className='ri-delete-bin-7-line text-textSecondary' />
             </IconButton>
             <IconButton>
-              <Link href={`/apps/invoice/preview/${row.original.id}`} className='flex'>
+              <Link
+                href={`/invoice/preview/${row.original.id}/`}
+                className='flex'
+              >
                 <i className='ri-eye-line text-textSecondary' />
               </Link>
             </IconButton>
@@ -177,7 +173,7 @@ const InvoiceListTable = ({ invoiceData }: { invoiceData?: InvoiceType[] }) => {
                 {
                   text: 'Edit',
                   icon: 'ri-pencil-line',
-                  href: `/apps/invoice/edit/${row.original.id}`,
+                  href: `/invoice/edit/${row.original.id}/`,
                   linkProps: {
                     className: classnames('flex items-center bs-[40px] plb-2 pli-4 is-full gap-2 text-textSecondary')
                   }
@@ -235,98 +231,98 @@ const InvoiceListTable = ({ invoiceData }: { invoiceData?: InvoiceType[] }) => {
     setAnchorEl(null)
   }
 
-  return (
-    <Card>
-      <CardHeader
-        title='Invoice List'
-        sx={{ '& .MuiCardHeader-action': { m: 0 } }}
-        action={
-          <>
-            <Button
-              variant='contained'
-              aria-haspopup='true'
-              onClick={handleClick}
-              aria-expanded={open ? 'true' : undefined}
-              endIcon={<i className='ri-arrow-down-s-line' />}
-              aria-controls={open ? 'user-view-overview-export' : undefined}
-            >
-              Export
-            </Button>
-            <Menu open={open} anchorEl={anchorEl} onClose={handleClose} id='user-view-overview-export'>
-              <MenuItem onClick={handleClose} className='uppercase'>
-                pdf
-              </MenuItem>
-              <MenuItem onClick={handleClose} className='uppercase'>
-                xlsx
-              </MenuItem>
-              <MenuItem onClick={handleClose} className='uppercase'>
-                csv
-              </MenuItem>
-            </Menu>
-          </>
-        }
-      />
-      <div className='overflow-x-auto'>
-        <table className={tableStyles.table}>
-          <thead>
-            {table.getHeaderGroups().map(headerGroup => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map(header => (
-                  <th key={header.id} {...(header.id === 'action' && { className: 'is-24' })}>
-                    {header.isPlaceholder ? null : (
-                      <>
-                        <div
-                          className={classnames({
-                            'flex items-center': header.column.getIsSorted(),
-                            'cursor-pointer select-none': header.column.getCanSort()
-                          })}
-                          onClick={header.column.getToggleSortingHandler()}
-                        >
-                          {flexRender(header.column.columnDef.header, header.getContext())}
-                          {{
-                            asc: <i className='ri-arrow-up-s-line text-xl' />,
-                            desc: <i className='ri-arrow-down-s-line text-xl' />
-                          }[header.column.getIsSorted() as 'asc' | 'desc'] ?? null}
-                        </div>
-                      </>
-                    )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {table
-              .getRowModel()
-              .rows.slice(0, table.getState().pagination.pageSize)
-              .map(row => {
-                return (
-                  <tr key={row.id} className={classnames({ selected: row.getIsSelected() })}>
-                    {row.getVisibleCells().map(cell => (
-                      <td key={cell.id} {...(cell.id.includes('action') && { className: 'is-24' })}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </td>
-                    ))}
-                  </tr>
-                )
-              })}
-          </tbody>
-        </table>
-      </div>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 50]}
-        component='div'
-        className='border-bs'
-        count={table.getFilteredRowModel().rows.length}
-        rowsPerPage={table.getState().pagination.pageSize}
-        page={table.getState().pagination.pageIndex}
-        onPageChange={(_, page) => {
-          table.setPageIndex(page)
-        }}
-        onRowsPerPageChange={e => table.setPageSize(Number(e.target.value))}
-      />
-    </Card>
-  )
+  // return (
+  //   <Card>
+  //     <CardHeader
+  //       title='Invoice List'
+  //       sx={{ '& .MuiCardHeader-action': { m: 0 } }}
+  //       action={
+  //         <>
+  //           <Button
+  //             variant='contained'
+  //             aria-haspopup='true'
+  //             onClick={handleClick}
+  //             aria-expanded={open ? 'true' : undefined}
+  //             endIcon={<i className='ri-arrow-down-s-line' />}
+  //             aria-controls={open ? 'user-view-overview-export' : undefined}
+  //           >
+  //             Export
+  //           </Button>
+  //           <Menu open={open} anchorEl={anchorEl} onClose={handleClose} id='user-view-overview-export'>
+  //             <MenuItem onClick={handleClose} className='uppercase'>
+  //               pdf
+  //             </MenuItem>
+  //             <MenuItem onClick={handleClose} className='uppercase'>
+  //               xlsx
+  //             </MenuItem>
+  //             <MenuItem onClick={handleClose} className='uppercase'>
+  //               csv
+  //             </MenuItem>
+  //           </Menu>
+  //         </>
+  //       }
+  //     />
+  //     <div className='overflow-x-auto'>
+  //       <table className={tableStyles.table}>
+  //         <thead>
+  //           {table.getHeaderGroups().map(headerGroup => (
+  //             <tr key={headerGroup.id}>
+  //               {headerGroup.headers.map(header => (
+  //                 <th key={header.id} {...(header.id === 'action' && { className: 'is-24' })}>
+  //                   {header.isPlaceholder ? null : (
+  //                     <>
+  //                       <div
+  //                         className={classnames({
+  //                           'flex items-center': header.column.getIsSorted(),
+  //                           'cursor-pointer select-none': header.column.getCanSort()
+  //                         })}
+  //                         onClick={header.column.getToggleSortingHandler()}
+  //                       >
+  //                         {flexRender(header.column.columnDef.header, header.getContext())}
+  //                         {{
+  //                           asc: <i className='ri-arrow-up-s-line text-xl' />,
+  //                           desc: <i className='ri-arrow-down-s-line text-xl' />
+  //                         }[header.column.getIsSorted() as 'asc' | 'desc'] ?? null}
+  //                       </div>
+  //                     </>
+  //                   )}
+  //                 </th>
+  //               ))}
+  //             </tr>
+  //           ))}
+  //         </thead>
+  //         <tbody>
+  //           {table
+  //             .getRowModel()
+  //             .rows.slice(0, table.getState().pagination.pageSize)
+  //             .map(row => {
+  //               return (
+  //                 <tr key={row.id} className={classnames({ selected: row.getIsSelected() })}>
+  //                   {row.getVisibleCells().map(cell => (
+  //                     <td key={cell.id} {...(cell.id.includes('action') && { className: 'is-24' })}>
+  //                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
+  //                     </td>
+  //                   ))}
+  //                 </tr>
+  //               )
+  //             })}
+  //         </tbody>
+  //       </table>
+  //     </div>
+  //     <TablePagination
+  //       rowsPerPageOptions={[10, 25, 50]}
+  //       component='div'
+  //       className='border-bs'
+  //       count={table.getFilteredRowModel().rows.length}
+  //       rowsPerPage={table.getState().pagination.pageSize}
+  //       page={table.getState().pagination.pageIndex}
+  //       onPageChange={(_, page) => {
+  //         table.setPageIndex(page)
+  //       }}
+  //       onRowsPerPageChange={e => table.setPageSize(Number(e.target.value))}
+  //     />
+  //   </Card>
+  // )
 }
 
 export default InvoiceListTable

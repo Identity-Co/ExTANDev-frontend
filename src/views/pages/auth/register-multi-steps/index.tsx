@@ -16,6 +16,8 @@ import { useTheme } from '@mui/material/styles'
 // Third-party Imports
 import classnames from 'classnames'
 
+// Type Imports
+
 // Component Imports
 import StepperWrapper from '@core/styles/stepper'
 import StepAccountDetails from './StepAccountDetails'
@@ -26,6 +28,8 @@ import Logo from '@components/layout/shared/Logo'
 
 // Hook Imports
 import { useSettings } from '@core/hooks/useSettings'
+
+// Util Imports
 
 // Vars
 const steps = [
@@ -64,6 +68,7 @@ const RegisterMultiSteps = () => {
   // Hooks
   const { settings } = useSettings()
   const theme = useTheme()
+  
 
   // Handle Stepper
   const handleNext = () => {
@@ -92,7 +97,10 @@ const RegisterMultiSteps = () => {
         />
       </div>
       <div className='flex justify-center items-center bs-full is-full bg-backgroundPaper'>
-        <Link href={'/'} className='absolute block-start-5 sm:block-start-[25px] inline-start-6 sm:inline-start-[25px]'>
+        <Link
+          href={'/'}
+          className='absolute block-start-5 sm:block-start-[25px] inline-start-6 sm:inline-start-[25px]'
+        >
           <Logo />
         </Link>
         <StepperWrapper className='p-5 sm:p-8 is-[700px]'>

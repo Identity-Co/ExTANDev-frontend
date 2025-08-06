@@ -137,6 +137,7 @@ const CustomerListTable = ({ customerData }: { customerData?: Customer[] }) => {
   const [globalFilter, setGlobalFilter] = useState('')
 
   // Hooks
+  
 
   const columns = useMemo<ColumnDef<ECommerceOrderTypeWithAction, any>[]>(
     () => [

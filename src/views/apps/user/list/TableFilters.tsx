@@ -12,17 +12,23 @@ import Select from '@mui/material/Select'
 // Type Imports
 import type { UsersType } from '@/types/apps/userTypes'
 
-const TableFilters = ({ setData, tableData }: { setData: (data: UsersType[]) => void; tableData?: UsersType[] }) => {
+type roleData = {
+  key: string;
+  name: string;
+}
+
+const TableFilters = ({ setData, tableData, roles }: { setData: (data: UsersType[]) => void; tableData?: UsersType[]; roles?: roleData[] }) => {
   // States
   const [role, setRole] = useState<UsersType['role']>('')
   const [plan, setPlan] = useState<UsersType['currentPlan']>('')
-  const [status, setStatus] = useState<UsersType['status']>('')
+  const [status, setStatus] = useState<UsersType['status']>(0)
+
+  const filteredRoles = roles?.filter(role => role.key !== 'admin');
 
   useEffect(() => {
     const filteredData = tableData?.filter(user => {
       if (role && user.role !== role) return false
-      if (plan && user.currentPlan !== plan) return false
-      if (status && user.status !== status) return false
+      if (status && user.status != status) return false
 
       return true
     })
@@ -46,15 +52,18 @@ const TableFilters = ({ setData, tableData }: { setData: (data: UsersType[]) => 
               inputProps={{ placeholder: 'Select Role' }}
             >
               <MenuItem value=''>Select Role</MenuItem>
-              <MenuItem value='admin'>Admin</MenuItem>
+              {/*<MenuItem value='admin'>Admin</MenuItem>
               <MenuItem value='author'>Author</MenuItem>
               <MenuItem value='editor'>Editor</MenuItem>
               <MenuItem value='maintainer'>Maintainer</MenuItem>
-              <MenuItem value='subscriber'>Subscriber</MenuItem>
+              <MenuItem value='subscriber'>Subscriber</MenuItem>*/}
+              {filteredRoles?.map((item, index) => (
+                <MenuItem key={index} value={item.key}>{item.name}</MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
-        <Grid size={{ xs: 12, sm: 4 }}>
+        {/*<Grid size={{ xs: 12, sm: 4 }}>
           <FormControl fullWidth>
             <InputLabel id='plan-select'>Select Plan</InputLabel>
             <Select
@@ -73,7 +82,8 @@ const TableFilters = ({ setData, tableData }: { setData: (data: UsersType[]) => 
               <MenuItem value='team'>Team</MenuItem>
             </Select>
           </FormControl>
-        </Grid>
+        </Grid>*/}
+
         <Grid size={{ xs: 12, sm: 4 }}>
           <FormControl fullWidth>
             <InputLabel id='status-select'>Select Status</InputLabel>
@@ -82,14 +92,14 @@ const TableFilters = ({ setData, tableData }: { setData: (data: UsersType[]) => 
               id='select-status'
               label='Select Status'
               value={status}
-              onChange={e => setStatus(e.target.value)}
+              onChange={e => setStatus(Number(e.target.value))}
               labelId='status-select'
               inputProps={{ placeholder: 'Select Status' }}
             >
               <MenuItem value=''>Select Status</MenuItem>
-              <MenuItem value='pending'>Pending</MenuItem>
-              <MenuItem value='active'>Active</MenuItem>
-              <MenuItem value='inactive'>Inactive</MenuItem>
+              {/*<MenuItem value='pending'>Pending</MenuItem>*/}
+              <MenuItem value='1'>Active</MenuItem>
+              <MenuItem value='0'>Inactive</MenuItem>
             </Select>
           </FormControl>
         </Grid>

@@ -30,6 +30,8 @@ import Illustrations from '@components/Illustrations'
 import { useImageVariant } from '@core/hooks/useImageVariant'
 import { useSettings } from '@core/hooks/useSettings'
 
+// Util Imports
+
 const RegisterV2 = ({ mode }: { mode: Mode }) => {
   // States
   const [isPasswordShown, setIsPasswordShown] = useState(false)
@@ -43,7 +45,7 @@ const RegisterV2 = ({ mode }: { mode: Mode }) => {
   const borderedLightIllustration = '/images/illustrations/auth/v2-register-light-border.png'
 
   // Hooks
-
+  
   const { settings } = useSettings()
   const authBackground = useImageVariant(mode, lightImg, darkImg)
 
@@ -81,7 +83,10 @@ const RegisterV2 = ({ mode }: { mode: Mode }) => {
         />
       </div>
       <div className='flex justify-center items-center bs-full bg-backgroundPaper !min-is-full p-6 md:!min-is-[unset] md:p-12 md:is-[480px]'>
-        <Link href={'/'} className='absolute block-start-5 sm:block-start-[38px] inline-start-6 sm:inline-start-[38px]'>
+        <Link
+          href={'/'}
+          className='absolute block-start-5 sm:block-start-[38px] inline-start-6 sm:inline-start-[38px]'
+        >
           <Logo />
         </Link>
 
@@ -132,7 +137,11 @@ const RegisterV2 = ({ mode }: { mode: Mode }) => {
             </Button>
             <div className='flex justify-center items-center flex-wrap gap-2'>
               <Typography>Already have an account?</Typography>
-              <Typography component={Link} href={'/pages/auth/login-v2'} color='primary.main'>
+              <Typography
+                component={Link}
+                href={'/pages/auth/login-v2'}
+                color='primary.main'
+              >
                 Sign in instead
               </Typography>
             </div>

@@ -16,14 +16,17 @@ import Header from '@components/layout/horizontal/Header'
 import Navbar from '@components/layout/vertical/Navbar'
 import VerticalFooter from '@components/layout/vertical/Footer'
 import HorizontalFooter from '@components/layout/horizontal/Footer'
-import Customizer from '@core/components/customizer'
 import ScrollToTop from '@core/components/scroll-to-top'
 import AuthGuard from '@/hocs/AuthGuard'
+
+// Config Imports
 
 // Util Imports
 import { getMode, getSystemMode } from '@core/utils/serverHelpers'
 
-const Layout = async (props: ChildrenType) => {
+const Layout = async (props: ChildrenType ) => {
+  
+
   const { children } = props
 
   // Vars
@@ -33,16 +36,20 @@ const Layout = async (props: ChildrenType) => {
 
   return (
     <Providers direction={direction}>
-      <AuthGuard>
+      <AuthGuard >
         <LayoutWrapper
           systemMode={systemMode}
           verticalLayout={
-            <VerticalLayout navigation={<Navigation mode={mode} />} navbar={<Navbar />} footer={<VerticalFooter />}>
+            <VerticalLayout
+              navigation={<Navigation  mode={mode} />}
+              navbar={<Navbar />}
+              footer={<VerticalFooter />}
+            >
               {children}
             </VerticalLayout>
           }
           horizontalLayout={
-            <HorizontalLayout header={<Header />} footer={<HorizontalFooter />}>
+            <HorizontalLayout header={<Header  />} footer={<HorizontalFooter />}>
               {children}
             </HorizontalLayout>
           }
@@ -55,7 +62,7 @@ const Layout = async (props: ChildrenType) => {
             <i className='ri-arrow-up-line' />
           </Button>
         </ScrollToTop>
-        <Customizer dir={direction} disableDirection  disableDirection  disableDirection />
+        {/*<Customizer dir={direction}  disableDirection />*/}
       </AuthGuard>
     </Providers>
   )

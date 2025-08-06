@@ -3,12 +3,7 @@
 // React Imports
 import { useState } from 'react'
 
-// Next Imports
-import Link from 'next/link'
-
 // MUI Imports
-import Button from '@mui/material/Button'
-import IconButton from '@mui/material/IconButton'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
 import type { Theme } from '@mui/material/styles'
@@ -18,15 +13,6 @@ import classnames from 'classnames'
 
 // Type Imports
 import type { Mode } from '@core/types'
-
-// Component Imports
-import Logo from '@components/layout/shared/Logo'
-import ModeDropdown from '@components/layout/shared/ModeDropdown'
-import FrontMenu from './FrontMenu'
-import CustomIconButton from '@core/components/mui/IconButton'
-
-// Util Imports
-import { frontLayoutClasses } from '@layouts/utils/layoutClasses'
 
 // Styles Imports
 import styles from './styles.module.css'
@@ -45,53 +31,64 @@ const Header = ({ mode }: { mode: Mode }) => {
   })
 
   return (
-    <header className={classnames(frontLayoutClasses.header, styles.header)}>
-      <div className={classnames(frontLayoutClasses.navbar, styles.navbar, { [styles.headerScrolled]: trigger })}>
-        <div className={classnames(frontLayoutClasses.navbarContent, styles.navbarContent)}>
-          {isBelowLgScreen ? (
-            <div className='flex items-center gap-2 sm:gap-4'>
-              <IconButton onClick={() => setIsDrawerOpen(true)} className='-mis-2'>
-                <i className='ri-menu-line text-textPrimary' />
-              </IconButton>
-              <Link href='/front-pages/landing-page'>
-                <Logo />
-              </Link>
-              <FrontMenu mode={mode} isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
-            </div>
-          ) : (
-            <div className='flex items-center gap-10'>
-              <Link href='/front-pages/landing-page'>
-                <Logo />
-              </Link>
-              <FrontMenu mode={mode} isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
-            </div>
-          )}
-          <div className='flex items-center gap-2 sm:gap-4'>
-            <ModeDropdown />
-            {isBelowLgScreen ? (
-              <CustomIconButton
-                component={Link}
-                variant='contained'
-                href='https://themeselection.com/item/materio-mui-nextjs-admin-template/'
-                color='primary'
-                target='_blank'
-              >
-                <i className='ri-shopping-cart-line text-xl' />
-              </CustomIconButton>
-            ) : (
-              <Button
-                component={Link}
-                variant='contained'
-                href='https://themeselection.com/item/materio-mui-nextjs-admin-template/'
-                startIcon={<i className='ri-shopping-cart-line text-xl' />}
-                className='whitespace-nowrap'
-                target='_blank'
-              >
-                Purchase Now
-              </Button>
-            )}
+    <header className={classnames(styles.header)}>
+      <div className="container">
+          <div className={classnames(styles.headMain)}>
+              <div className={classnames(styles.headerLogo)}>
+                  <a href="#">
+                      <img src="images/front-pages/head-logo.png" />
+                  </a>
+              </div>
+              <div className={classnames(styles.navMenu)}>
+                  <nav>
+                      <ul>
+                          <li><a href="#">Our Destinations</a></li>
+                          <li><a href="#">Our adventures</a></li>
+                          <li><a href="#">Total travel</a></li>
+                          <li><a href="#">Field notes</a></li>
+                          <li><a href="#">Merch</a></li>
+                      </ul>
+                  </nav>
+              </div>
+              <div className={classnames(styles.head_right)}>
+                  <div className={classnames(styles.head_buttons)}>
+                      <div className={classnames(styles.head_btn1)}>
+                          <a href="#">Ambassadorship</a>
+                      </div>
+                      <div className={classnames(styles.head_btn2)}>
+                          <a href="#">Log in or <span>sign up</span></a>
+                      </div>
+                      <div className={classnames(styles.head_btn3)}>
+                          <a href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="17.923" height="17.759" viewBox="0 0 17.923 17.759">
+                            <defs>
+                              <clipPath id="clip-path">
+                                <rect id="Rectangle_4336" data-name="Rectangle 4336" width="17.923" height="17.759" fill="#1f1f1f"/>
+                              </clipPath>
+                            </defs>
+                            <g id="Group_834" data-name="Group 834" transform="translate(0 0)" opacity="0.65">
+                              <path id="Path_1187" data-name="Path 1187" d="M8.962,0,7.67,6.672,4.742,4.693l2.011,2.96L0,8.912l6.754,1.259L4.775,13.066,7.686,11.1,8.962,17.76,10.237,11.1l2.911,1.962-1.979-2.895,6.754-1.259L11.169,7.653l2.012-2.96L10.253,6.672Z" transform="translate(0 0)" fill="#1f1f1f"/>
+                              <g id="Group_833" data-name="Group 833" transform="translate(0 0)">
+                                <g id="Group_832" data-name="Group 832" transform="translate(0 0)" clipPath="url(#clip-path)">
+                                  <path id="Path_1188" data-name="Path 1188" d="M43.306,7.6a6.607,6.607,0,0,1,5.708,5.739l.81.151a7.394,7.394,0,0,0-6.675-6.7Z" transform="translate(-33.498 -5.272)" fill="#1f1f1f"/>
+                                  <path id="Path_1189" data-name="Path 1189" d="M7.954,13.341A6.607,6.607,0,0,1,13.662,7.6l.157-.811a7.394,7.394,0,0,0-6.674,6.7Z" transform="translate(-5.547 -5.272)" fill="#1f1f1f"/>
+                                  <path id="Path_1190" data-name="Path 1190" d="M48.993,43.1a6.607,6.607,0,0,1-5.7,5.672l-.156.811a7.4,7.4,0,0,0,6.672-6.635Z" transform="translate(-33.487 -33.344)" fill="#1f1f1f"/>
+                                  <path id="Path_1191" data-name="Path 1191" d="M13.687,48.774a6.607,6.607,0,0,1-5.7-5.672l-.812-.151a7.4,7.4,0,0,0,6.672,6.635Z" transform="translate(-5.567 -33.344)" fill="#1f1f1f"/>
+                                </g>
+                              </g>
+                            </g>
+                          </svg>
+                          Find your next adventure</a>
+                      </div>
+                  </div>
+              </div>
+              <div className={classnames(styles.menu_button_container)}>
+                  <div className={classnames(styles.hamburger)} id="hamburger-6">
+                    <span className={classnames(styles.line)}></span>
+                    <span className={classnames(styles.line)}></span>
+                    <span className={classnames(styles.line)}></span>
+                  </div>
+              </div>
           </div>
-        </div>
       </div>
     </header>
   )

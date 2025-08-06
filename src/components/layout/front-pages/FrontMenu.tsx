@@ -24,7 +24,7 @@ import type { Mode } from '@core/types'
 import { useIntersection } from '@/hooks/useIntersection'
 
 // Component Imports
-import DropdownMenu from './DropdownMenu'
+// import DropdownMenu from './DropdownMenu'
 
 type Props = {
   mode: Mode
@@ -101,54 +101,59 @@ const FrontMenu = (props: Props) => {
         })}
         color='text.primary'
       >
-        Home
+        Our Destinations
       </Typography>
       <Typography
         component={Link}
-        href='/front-pages/landing-page#features'
+        href='/'
         className={classnames('font-medium plb-3 pli-1.5 hover:text-primary', {
           'text-primary': intersections.features
         })}
         color='text.primary'
       >
-        Features
+        Our Adventures
       </Typography>
       <Typography
         component={Link}
-        href='/front-pages/landing-page#team'
+        href='/'
         className={classnames('font-medium plb-3 pli-1.5 hover:text-primary', {
           'text-primary': intersections.team
         })}
         color='text.primary'
       >
-        Team
+        Total Travel
       </Typography>
       <Typography
         component={Link}
-        href='/front-pages/landing-page#faq'
+        href='/'
         className={classnames('font-medium plb-3 pli-1.5 hover:text-primary', {
           'text-primary': intersections.faq
         })}
         color='text.primary'
       >
-        FAQ
+        Field Notes
       </Typography>
       <Typography
         component={Link}
-        href='/front-pages/landing-page#contact-us'
+        href='/'
         className={classnames('font-medium plb-3 pli-1.5 hover:text-primary', {
           'text-primary': intersections['contact-us']
         })}
         color='text.primary'
       >
-        Contact us
+        Merch
       </Typography>
-      <DropdownMenu
-        mode={mode}
-        isBelowLgScreen={isBelowLgScreen}
-        isDrawerOpen={isDrawerOpen}
-        setIsDrawerOpen={setIsDrawerOpen}
-      />
+      <Typography
+        component={Link}
+        href='/'
+        className={classnames('font-medium plb-3 pli-1.5 hover:text-primary', {
+          'text-primary': intersections['contact-us']
+        })}
+        color='text.primary'
+      >
+        Ambassadorship
+      </Typography>
+      
       <Typography
         component={Link}
         href='/'
@@ -156,7 +161,17 @@ const FrontMenu = (props: Props) => {
         className='font-medium plb-3 pli-1.5 hover:text-primary'
         color='text.primary'
       >
-        Admin
+        Login OR Sign Up
+      </Typography>
+      <Typography
+        component={Link}
+        href='/'
+        className={classnames('font-medium plb-3 pli-1.5 hover:text-primary', {
+          'text-primary': intersections['contact-us']
+        })}
+        color='text.primary'
+      >
+        Find Your Next Adventure
       </Typography>
     </Wrapper>
   )

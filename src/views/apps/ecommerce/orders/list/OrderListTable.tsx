@@ -136,6 +136,7 @@ const OrderListTable = ({ orderData }: { orderData?: OrderType[] }) => {
   const [globalFilter, setGlobalFilter] = useState('')
 
   // Hooks
+  
 
   // Vars
   const paypal = '/images/apps/ecommerce/paypal.png'

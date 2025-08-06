@@ -37,6 +37,7 @@ type Footer = {
 }
 
 export type Config = {
+  appName: string
   templateName: string
   homePageUrl: string
   settingsCookieName: string
@@ -54,11 +55,13 @@ export type Config = {
 }
 
 const themeConfig: Config = {
-  templateName: 'Materio',
-  homePageUrl: '/dashboards/crm',
+  appName: 'Adventure Network',
+  templateName: 'Adventure Network',
+  homePageUrl: '/dashboards/admin/',
   settingsCookieName: 'materio-mui-next-demo-1',
   mode: 'system', // 'system', 'light', 'dark'
   skin: 'default', // 'default', 'bordered'
+  primaryColor: '#EA5647',
   semiDark: false, // true, false
   layout: 'vertical', // 'vertical', 'collapsed', 'horizontal'
   layoutPadding: 24, // Common padding for header, content, footer layout components (in px)
@@ -78,6 +81,6 @@ const themeConfig: Config = {
   },
   disableRipple: false, // true, false
   toastPosition: 'top-right' // 'top-right', 'top-center', 'top-left', 'bottom-right', 'bottom-center', 'bottom-left'
-}
+} as unknown as Config
 
 export default themeConfig

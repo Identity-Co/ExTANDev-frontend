@@ -14,7 +14,7 @@ import CustomAvatar from '@core/components/mui/Avatar'
 
 export type UserDataType = {
   title: string
-  stats: string
+  stats: number
   avatarIcon: string
   avatarColor?: ThemeColor
   trend: string

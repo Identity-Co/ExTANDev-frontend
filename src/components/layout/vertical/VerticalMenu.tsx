@@ -1,5 +1,10 @@
+import React from 'react';
+
+// Next Imports
+import { usePathname } from 'next/navigation'
+
 // MUI Imports
-import Chip from '@mui/material/Chip'
+// import Chip from '@mui/material/Chip'
 import { useTheme } from '@mui/material/styles'
 
 // Third-party Imports
@@ -8,8 +13,8 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 // Type Imports
 import type { VerticalMenuContextProps } from '@menu/components/vertical-menu/Menu'
 
-// Component Imports
-import { Menu, SubMenu, MenuItem, MenuSection } from '@menu/vertical-menu'
+// Component Imports SubMenu, MenuSection
+import { Menu, MenuItem, SubMenu } from '@menu/vertical-menu'
 
 // import { GenerateVerticalMenu } from '@components/GenerateMenu'
 
@@ -23,6 +28,8 @@ import StyledVerticalNavExpandIcon from '@menu/styles/vertical/StyledVerticalNav
 import menuItemStyles from '@core/styles/vertical/menuItemStyles'
 import menuSectionStyles from '@core/styles/vertical/menuSectionStyles'
 
+import { useNavigationStore } from '@/libs/navigation-store'
+
 // Menu Data Imports
 // import menuData from '@/data/navigation/verticalMenuData'
 
@@ -32,6 +39,7 @@ type RenderExpandIconProps = {
 }
 
 type Props = {
+  
   scrollMenu: (container: any, isPerfectScrollbar: boolean) => void
 }
 
@@ -41,15 +49,26 @@ const RenderExpandIcon = ({ open, transitionDuration }: RenderExpandIconProps) =
   </StyledVerticalNavExpandIcon>
 )
 
-const VerticalMenu = ({ scrollMenu }: Props) => {
+const VerticalMenu = ({  scrollMenu }: Props) => {
+  const setLoading = useNavigationStore((s) => s.setLoading)
+  const pathname = usePathname()
+
   // Hooks
   const theme = useTheme()
   const verticalNavOptions = useVerticalNav()
+  
 
   // Vars
   const { isBreakpointReached, transitionDuration } = verticalNavOptions
+  
 
   const ScrollWrapper = isBreakpointReached ? 'div' : PerfectScrollbar
+
+  const showPageLoadr = (event?: React.MouseEvent<HTMLLIElement> | (MouseEvent | TouchEvent), url?: string) => {
+    if (url && pathname != url) {
+      setLoading(true)
+    }
+  }
 
   return (
     // eslint-disable-next-line lines-around-comment
@@ -74,7 +93,104 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
         renderExpandedMenuItemIcon={{ icon: <i className='ri-circle-line' /> }}
         menuSectionStyles={menuSectionStyles(verticalNavOptions, theme)}
       >
+        <MenuItem
+          href='/admin/dashboards/'
+          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/dashboard/')}
+          exactMatch={false}
+          activeUrl='/admin/dashboards'
+          icon={<i className='ri-home-smile-line' />}
+        >
+          Dashboard
+        </MenuItem>
+
+        <MenuItem
+          href='/admin/users/'
+          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/users/')}
+          exactMatch={false}
+          activeUrl='/admin/users'
+          icon={<i className='ri-user-line' />}
+        >
+          Users
+        </MenuItem>
+
+        <MenuItem
+          href='/admin/banner-sliders/'
+          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/banner-sliders/')}
+          exactMatch={false}
+          activeUrl='/admin/banner_sliders'
+          icon={<i className='ri-triangular-flag-line' />}
+        >
+          Banners/Sliders
+        </MenuItem>
+
         <SubMenu
+          label='CMS Management'
+          icon={<i className='ri-vip-diamond-line' />}
+        >
+          <MenuItem href='/admin/cms_home/' onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/cms_home/')}>Homepage</MenuItem>
+        </SubMenu>
+
+        <MenuItem
+          href='/admin/destimation/'
+          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/destimation/')}
+          exactMatch={false}
+          activeUrl='/admin/destimation'
+          icon={<i className='ri-user-line' />}
+        >
+          Destination Management 
+        </MenuItem>
+
+        <MenuItem
+          href='/admin/adventure/'
+          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/adventure/')}
+          exactMatch={false}
+          activeUrl='/admin/adventure'
+          icon={<i className='ri-flight-takeoff-line' />}
+        >
+          Adventure Management 
+        </MenuItem>
+
+        <MenuItem
+          href='/admin/travel/'
+          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/travel/')}
+          exactMatch={false}
+          activeUrl='/admin/travel'
+          icon={<i className='ri-road-map-line' />}
+        >
+          Travel Management 
+        </MenuItem>
+
+        <MenuItem
+          href='/admin/field-notes/'
+          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/field-notes/')}
+          exactMatch={false}
+          activeUrl='/admin/field-notes'
+          icon={<i className='ri-sticky-note-line' />}
+        >
+          Manage Field Notes
+        </MenuItem>
+
+        <MenuItem
+          href='/admin/reports/'
+          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/reports/')}
+          exactMatch={false}
+          activeUrl='/admin/reports'
+          icon={<i className='ri-file-chart-line' />}
+        >
+          Reports
+        </MenuItem>
+
+        <MenuItem
+          href='/admin/settings/'
+          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/settings/')}
+          exactMatch={false}
+          activeUrl='/admin/settings'
+          icon={<i className='ri-settings-5-line' />}
+        >
+          System Settings
+        </MenuItem>
+
+        {/*<SubMenu
           label='dashboards'
           icon={<i className='ri-home-smile-line' />}
           suffix={<Chip label='5' size='small' color='error' />}
@@ -108,7 +224,9 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
             <SubMenu label='products'>
               <MenuItem href='/apps/ecommerce/products/list'>list</MenuItem>
               <MenuItem href='/apps/ecommerce/products/add'>add</MenuItem>
-              <MenuItem href='/apps/ecommerce/products/category'>category</MenuItem>
+              <MenuItem href='/apps/ecommerce/products/category'>
+                category
+              </MenuItem>
             </SubMenu>
             <SubMenu label='orders'>
               <MenuItem href='/apps/ecommerce/orders/list'>list</MenuItem>
@@ -130,14 +248,18 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
                 details
               </MenuItem>
             </SubMenu>
-            <MenuItem href='/apps/ecommerce/manage-reviews'>manageReviews</MenuItem>
+            <MenuItem href='/apps/ecommerce/manage-reviews'>
+              manageReviews
+            </MenuItem>
             <MenuItem href='/apps/ecommerce/referrals'>referrals</MenuItem>
             <MenuItem href='/apps/ecommerce/settings'>settings</MenuItem>
           </SubMenu>
           <SubMenu label='academy' icon={<i className='ri-graduation-cap-line' />}>
             <MenuItem href='/apps/academy/dashboard'>dashboard</MenuItem>
             <MenuItem href='/apps/academy/my-courses'>myCourses</MenuItem>
-            <MenuItem href='/apps/academy/course-details'>courseDetails</MenuItem>
+            <MenuItem href='/apps/academy/course-details'>
+              courseDetails
+            </MenuItem>
           </SubMenu>
           <SubMenu label='logistics' icon={<i className='ri-car-line' />}>
             <MenuItem href='/apps/logistics/dashboard'>dashboard</MenuItem>
@@ -162,7 +284,11 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
           </MenuItem>
           <SubMenu label='invoice' icon={<i className='ri-bill-line' />}>
             <MenuItem href='/apps/invoice/list'>list</MenuItem>
-            <MenuItem href='/apps/invoice/preview/4987' exactMatch={false} activeUrl='/apps/invoice/preview'>
+            <MenuItem
+              href='/apps/invoice/preview/4987'
+              exactMatch={false}
+              activeUrl='/apps/invoice/preview'
+            >
               preview
             </MenuItem>
             <MenuItem href='/apps/invoice/edit/4987' exactMatch={false} activeUrl='/apps/invoice/edit'>
@@ -253,8 +379,12 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
           </SubMenu>
           <SubMenu label='wizardExamples' icon={<i className='ri-git-commit-line' />}>
             <MenuItem href='/pages/wizard-examples/checkout'>checkout</MenuItem>
-            <MenuItem href='/pages/wizard-examples/property-listing'>propertyListing</MenuItem>
-            <MenuItem href='/pages/wizard-examples/create-deal'>createDeal</MenuItem>
+            <MenuItem href='/pages/wizard-examples/property-listing'>
+              propertyListing
+            </MenuItem>
+            <MenuItem href='/pages/wizard-examples/create-deal'>
+              createDeal
+            </MenuItem>
           </SubMenu>
           <MenuItem href='/pages/dialog-examples' icon={<i className='ri-tv-2-line' />}>
             dialogExamples
@@ -262,9 +392,13 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
           <SubMenu label='widgetExamples' icon={<i className='ri-bar-chart-box-line' />}>
             <MenuItem href='/pages/widget-examples/basic'>basic</MenuItem>
             <MenuItem href='/pages/widget-examples/advanced'>advanced</MenuItem>
-            <MenuItem href='/pages/widget-examples/statistics'>statistics</MenuItem>
+            <MenuItem href='/pages/widget-examples/statistics'>
+              statistics
+            </MenuItem>
             <MenuItem href='/pages/widget-examples/charts'>charts</MenuItem>
-            <MenuItem href='/pages/widget-examples/gamification'>gamification</MenuItem>
+            <MenuItem href='/pages/widget-examples/gamification'>
+              gamification
+            </MenuItem>
             <MenuItem href='/pages/widget-examples/actions'>actions</MenuItem>
           </SubMenu>
         </MenuSection>
@@ -344,7 +478,9 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
             documentation
           </MenuItem>
           <SubMenu label='others' icon={<i className='ri-more-line' />}>
-            <MenuItem suffix={<Chip label='New' size='small' color='info' />}>itemWithBadge</MenuItem>
+            <MenuItem suffix={<Chip label='New' size='small' color='info' />}>
+              itemWithBadge
+            </MenuItem>
             <MenuItem
               href='https://themeselection.com'
               target='_blank'
@@ -361,7 +497,7 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
             </SubMenu>
             <MenuItem disabled>disabledMenu</MenuItem>
           </SubMenu>
-        </MenuSection>
+        </MenuSection>*/}
       </Menu>
       {/* <Menu
         popoutMenuOffset={{ mainAxis: 10 }}

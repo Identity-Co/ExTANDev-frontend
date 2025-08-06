@@ -140,6 +140,7 @@ const InvoiceListTable = ({ invoiceData }: { invoiceData?: InvoiceType[] }) => {
   const [globalFilter, setGlobalFilter] = useState('')
 
   // Hooks
+  
 
   const columns = useMemo<ColumnDef<InvoiceTypeWithAction, any>[]>(
     () => [
@@ -243,7 +244,10 @@ const InvoiceListTable = ({ invoiceData }: { invoiceData?: InvoiceType[] }) => {
               <i className={'ri-delete-bin-7-line text-textSecondary'} />
             </IconButton>
             <IconButton>
-              <Link href={`/apps/invoice/preview/${row.original.id}`} className='flex'>
+              <Link
+                href={`/apps/invoice/preview/${row.original.id}`}
+                className='flex'
+              >
                 <i className='ri-eye-line text-textSecondary' />
               </Link>
             </IconButton>

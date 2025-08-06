@@ -26,6 +26,8 @@ import Illustrations from '@components/Illustrations'
 // Hook Imports
 import { useImageVariant } from '@core/hooks/useImageVariant'
 
+// Util Imports
+
 const ResetPasswordV1 = ({ mode }: { mode: Mode }) => {
   // States
   const [isPasswordShown, setIsPasswordShown] = useState(false)
@@ -36,7 +38,7 @@ const ResetPasswordV1 = ({ mode }: { mode: Mode }) => {
   const lightImg = '/images/pages/auth-v1-mask-light.png'
 
   // Hooks
-
+  
   const authBackground = useImageVariant(mode, lightImg, darkImg)
 
   const handleClickShowPassword = () => setIsPasswordShown(show => !show)
@@ -103,7 +105,10 @@ const ResetPasswordV1 = ({ mode }: { mode: Mode }) => {
                 Set New Password
               </Button>
               <Typography className='flex justify-center items-center' color='primary.main'>
-                <Link href={'/pages/auth/login-v1'} className='flex items-center gap-1.5'>
+                <Link
+                  href={'/pages/auth/login-v1'}
+                  className='flex items-center gap-1.5'
+                >
                   <DirectionalIcon
                     ltrIconClass='ri-arrow-left-s-line'
                     rtlIconClass='ri-arrow-right-s-line'

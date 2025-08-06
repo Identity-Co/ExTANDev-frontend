@@ -5,12 +5,15 @@ import type { ChildrenType } from '@core/types'
 import Providers from '@components/Providers'
 import BlankLayout from '@layouts/BlankLayout'
 
+// Config Imports
+
 // Util Imports
 import { getSystemMode } from '@core/utils/serverHelpers'
 
-type Props = ChildrenType
+type Props = ChildrenType 
 
 const Layout = async (props: Props) => {
+  
   const { children } = props
 
   // Vars

@@ -24,11 +24,11 @@ const FooterContent = () => {
         <span>{`© ${new Date().getFullYear()}, Made with `}</span>
         <span>{`❤️`}</span>
         <span>{` by `}</span>
-        <Link href='https://themeselection.com' target='_blank' className='text-primary'>
-          ThemeSelection
+        <Link href='https://adventure.deepripple.com/' target='_blank' className='text-primary'>
+          Adventure Network
         </Link>
       </p>
-      {!isBreakpointReached && (
+      {/*{!isBreakpointReached && (
         <div className='flex items-center gap-4'>
           <Link href='https://themeselection.com/license' target='_blank' className='text-primary'>
             License
@@ -47,7 +47,7 @@ const FooterContent = () => {
             Support
           </Link>
         </div>
-      )}
+      )}*/}
     </div>
   )
 }

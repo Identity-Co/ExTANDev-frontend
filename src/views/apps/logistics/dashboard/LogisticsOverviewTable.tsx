@@ -40,6 +40,8 @@ import type { Vehicle } from '@/types/apps/logisticsTypes'
 import CustomAvatar from '@core/components/mui/Avatar'
 import OptionMenu from '@core/components/option-menu'
 
+// Util Imports
+
 // Style Imports
 import tableStyles from '@core/styles/table.module.css'
 
@@ -87,6 +89,7 @@ const LogisticsOverviewTable = ({ vehicleData }: { vehicleData?: Vehicle[] }) =>
   const [data, setData] = useState(...[vehicleData])
 
   // Hooks
+  
 
   const columns = useMemo<ColumnDef<Vehicle, any>[]>(
     () => [

@@ -3,7 +3,7 @@ import CredentialProvider from 'next-auth/providers/credentials'
 import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { PrismaClient } from '@prisma/client'
-import type { NextAuthOptions } from 'next-auth'
+import type { NextAuthOptions, User } from 'next-auth'
 import type { Adapter } from 'next-auth/adapters'
 
 const prisma = new PrismaClient()
@@ -36,7 +36,7 @@ export const authOptions: NextAuthOptions = {
 
         try {
           // ** Login API Call to match the user credentials and receive user data in response along with his role
-          const res = await fetch(`${process.env.API_URL}/login`, {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -56,7 +56,17 @@ export const authOptions: NextAuthOptions = {
              * user data below. Below return statement will set the user object in the token and the same is set in
              * the session which will be accessible all over the app.
              */
-            return data
+
+            const final_data:User = {
+                "id": data.data.id,
+                "name": data.data.first_name+' '+data.data.last_name,
+                "email": email,
+                "image": data.data.profile_picture??"/images/avatars/1.png",
+                "userToken": data.data.token,
+                "role": data.data.role,
+            }
+
+            return final_data //data
           }
 
           return null
@@ -110,7 +120,12 @@ export const authOptions: NextAuthOptions = {
          * For adding custom parameters to user in session, we first need to add those parameters
          * in token which then will be available in the `session()` callback
          */
-        token.name = user.name
+        token.user_id = user.id
+        token.name  = user.name
+        token.email = user.email
+        token.token = user.userToken
+        token.image = user.image??"/images/avatars/1.png"
+        token.role  = user.role
       }
 
       return token
@@ -118,7 +133,12 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (session.user) {
         // ** Add custom params to user in session which are added in `jwt()` callback via `token` parameter
-        session.user.name = token.name
+        session.user.id     = token?.user_id as string
+        session.user.name   = token?.name as string
+        session.user.email  = token?.email as string
+        session.user.role   = token?.role as string
+        session.user.image  = token?.image as string
+        session.user.userToken  = token?.token as string
       }
 
       return session

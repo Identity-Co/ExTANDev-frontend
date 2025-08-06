@@ -33,7 +33,7 @@ type FormValidateType = {
   email: string
   role: string
   plan: string
-  status: string
+  status: number
 }
 
 type FormNonValidateType = {
@@ -69,7 +69,7 @@ const AddUserDrawer = (props: Props) => {
       email: '',
       role: '',
       plan: '',
-      status: ''
+      status: 0
     }
   })
 
@@ -91,7 +91,7 @@ const AddUserDrawer = (props: Props) => {
     setData([...(userData ?? []), newUser])
     handleClose()
     setFormData(initialData)
-    resetForm({ fullName: '', username: '', email: '', role: '', plan: '', status: '' })
+    resetForm({ fullName: '', username: '', email: '', role: '', plan: '', status: 0 })
   }
 
   const handleReset = () => {
@@ -209,9 +209,9 @@ const AddUserDrawer = (props: Props) => {
               rules={{ required: true }}
               render={({ field }) => (
                 <Select label='Select Status' {...field} error={Boolean(errors.status)}>
-                  <MenuItem value='pending'>Pending</MenuItem>
-                  <MenuItem value='active'>Active</MenuItem>
-                  <MenuItem value='inactive'>Inactive</MenuItem>
+                  <MenuItem value='0'>Pending</MenuItem>
+                  <MenuItem value='1'>Active</MenuItem>
+                  <MenuItem value='2'>Inactive</MenuItem>
                 </Select>
               )}
             />

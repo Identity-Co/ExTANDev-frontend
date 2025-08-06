@@ -2,6 +2,8 @@
 import styled from '@emotion/styled'
 import classnames from 'classnames'
 
+// Type Imports
+
 // Component Imports
 import HorizontalMenu from './HorizontalMenu'
 
@@ -57,7 +59,7 @@ const Navigation = () => {
           className: classnames(horizontalLayoutClasses.navigationContentWrapper, 'flex items-center is-full plb-2.5')
         })}
       >
-        <HorizontalMenu />
+        <HorizontalMenu  />
       </StyledDiv>
     </div>
   )

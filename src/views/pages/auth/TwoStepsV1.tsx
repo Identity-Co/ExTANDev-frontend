@@ -3,6 +3,8 @@
 // React Imports
 import { useState } from 'react'
 
+// Next Imports
+
 // MUI Imports
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -25,6 +27,8 @@ import Logo from '@components/layout/shared/Logo'
 
 // Hook Imports
 import { useImageVariant } from '@core/hooks/useImageVariant'
+
+// Util Imports
 
 // Style Imports
 import styles from '@/libs/styles/inputOtp.module.css'
@@ -55,7 +59,7 @@ const TwoStepsV1 = ({ mode }: { mode: Mode }) => {
   const lightImg = '/images/pages/auth-v1-mask-light.png'
 
   // Hooks
-
+  
   const authBackground = useImageVariant(mode, lightImg, darkImg)
 
   return (

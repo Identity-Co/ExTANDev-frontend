@@ -1,6 +1,8 @@
 // React Imports
 import type { ReactNode } from 'react'
 
+// Next Imports
+
 // MUI Imports
 import Chip from '@mui/material/Chip'
 import type { ChipProps } from '@mui/material/Chip'
@@ -20,9 +22,12 @@ import type {
 import { SubMenu as HorizontalSubMenu, MenuItem as HorizontalMenuItem } from '@menu/horizontal-menu'
 import { SubMenu as VerticalSubMenu, MenuItem as VerticalMenuItem, MenuSection } from '@menu/vertical-menu'
 
+// Util Imports
+
 // Generate a menu from the menu data array
 export const GenerateVerticalMenu = ({ menuData }: { menuData: VerticalMenuDataType[] }) => {
   // Hooks
+  
 
   const renderMenuItems = (data: VerticalMenuDataType[]) => {
     // Use the map method to iterate through the array of menu data
@@ -79,10 +84,10 @@ export const GenerateVerticalMenu = ({ menuData }: { menuData: VerticalMenuDataT
       }
 
       // If the current item is neither a section nor a sub menu, return a MenuItem component
-      const { label, icon, prefix, suffix, ...rest } = menuItem
+      const { label,  icon, prefix, suffix, ...rest } = menuItem
 
       // Localize the href
-
+      
       const Icon = icon ? <i className={icon} /> : null
 
       const menuItemPrefix: ReactNode =
@@ -112,6 +117,7 @@ export const GenerateVerticalMenu = ({ menuData }: { menuData: VerticalMenuDataT
 // Generate a menu from the menu data array
 export const GenerateHorizontalMenu = ({ menuData }: { menuData: HorizontalMenuDataType[] }) => {
   // Hooks
+  
 
   const renderMenuItems = (data: HorizontalMenuDataType[]) => {
     // Use the map method to iterate through the array of menu data
@@ -154,10 +160,10 @@ export const GenerateHorizontalMenu = ({ menuData }: { menuData: HorizontalMenuD
       }
 
       // If the current item is not a sub menu, return a MenuItem component
-      const { label, icon, prefix, suffix, ...rest } = menuItem
+      const { label,  icon, prefix, suffix, ...rest } = menuItem
 
       // Localize the href
-
+      
       const Icon = icon ? <i className={icon} /> : null
 
       const menuItemPrefix: ReactNode =

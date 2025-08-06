@@ -16,13 +16,15 @@ import Illustrations from '@components/Illustrations'
 // Hook Imports
 import { useImageVariant } from '@core/hooks/useImageVariant'
 
+// Util Imports
+
 const UnderMaintenance = ({ mode }: { mode: Mode }) => {
   // Vars
   const darkImg = '/images/pages/misc-mask-dark.png'
   const lightImg = '/images/pages/misc-mask-light.png'
 
   // Hooks
-
+  
   const miscBackground = useImageVariant(mode, lightImg, darkImg)
 
   return (

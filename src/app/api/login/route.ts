@@ -9,6 +9,8 @@ type ResponseUser = Omit<UserTable, 'password'>
 import { users } from './users'
 
 export async function POST(req: Request) {
+  console.log('Email or Password is invalid.....')
+
   // Vars
   const { email, password } = await req.json()
   const user = users.find(u => u.email === email && u.password === password)

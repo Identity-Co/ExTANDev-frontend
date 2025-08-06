@@ -39,6 +39,8 @@ import type { ReferralsType } from '@/types/apps/ecommerceTypes'
 // Component Imports
 import CustomAvatar from '@core/components/mui/Avatar'
 
+// Util Imports
+
 // Style Imports
 import tableStyles from '@core/styles/table.module.css'
 
@@ -85,6 +87,7 @@ const ReferredUsersTable = ({ referralsData }: { referralsData?: ReferralsType[]
   const [data, setData] = useState(...[referralsData])
 
   // Hooks
+  
 
   const columns = useMemo<ColumnDef<ReferralsType, any>[]>(
     () => [

@@ -45,6 +45,8 @@ import type { ReviewType } from '@/types/apps/ecommerceTypes'
 import CustomAvatar from '@core/components/mui/Avatar'
 import OptionMenu from '@core/components/option-menu'
 
+// Util Imports
+
 // Style Imports
 import tableStyles from '@core/styles/table.module.css'
 
@@ -115,6 +117,7 @@ const ManageReviewsTable = ({ reviewsData }: { reviewsData?: ReviewType[] }) => 
   const [globalFilter, setGlobalFilter] = useState('')
 
   // Hooks
+  
 
   const columns = useMemo<ColumnDef<ReviewWithActionsType, any>[]>(
     () => [

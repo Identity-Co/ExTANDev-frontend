@@ -15,7 +15,6 @@ import type { ChildrenType } from '@core/types'
 
 // Component Imports
 import NavHeader from '@menu/components/vertical-menu/NavHeader'
-import Logo from '@components/layout/shared/Logo'
 import NavCollapseIcons from '@menu/components/vertical-menu/NavCollapseIcons'
 
 // Hook Imports
@@ -45,6 +44,7 @@ const StyledBoxForShadow = styled('div')(({ theme }) => ({
 const VerticalNavContent = ({ children }: ChildrenType) => {
   // Hooks
   const { isBreakpointReached } = useHorizontalNav()
+  
 
   // Refs
   const shadowRef = useRef(null)
@@ -71,7 +71,7 @@ const VerticalNavContent = ({ children }: ChildrenType) => {
     <>
       <NavHeader>
         <Link href={'/'}>
-          <Logo />
+          
         </Link>
         <NavCollapseIcons
           lockedIcon={<i className='ri-radio-button-line text-xl' />}
