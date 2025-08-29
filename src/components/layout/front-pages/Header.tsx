@@ -44,9 +44,11 @@ const Header = ({ mode }: { mode: Mode }) => {
     disableHysteresis: true
   })
 
-  const [isSticky, setIsSticky] = useState(stickPage.includes(firstSegment)?true:false);
+  const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
+    setIsSticky(stickPage.includes(firstSegment)?true:false);
+
     const handleScroll = () => {
       if (window.scrollY > 100) {
         setIsSticky(true);
