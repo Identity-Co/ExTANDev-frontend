@@ -68,12 +68,23 @@ const Login = ({ mode }: { mode: Mode }) => {
   const [isSubmitting , setIsSubmitting ] = useState(false)
 
   // Vars
-  const darkImg = '/images/pages/auth-v2-mask-dark.png'
-  const lightImg = '/images/pages/auth-v2-mask-light.png'
-  const darkIllustration = '/images/illustrations/auth/v2-login-dark.png'
-  const lightIllustration = '/images/illustrations/auth/v2-login-light.png'
-  const borderedDarkIllustration = '/images/illustrations/auth/v2-login-dark-border.png'
-  const borderedLightIllustration = '/images/illustrations/auth/v2-login-light-border.png'
+  /*const darkImg = '/images/pages/auth-v2-mask-dark.png'
+  const lightImg = '/images/pages/auth-v2-mask-light.png'*/
+
+  const darkImg = '/images/pages/tan-background.jpg'
+  const lightImg = '/images/pages/tan-background.jpg'
+
+  /*const darkIllustration = '/images/illustrations/auth/v2-login-dark.png'
+  const lightIllustration = '/images/illustrations/auth/v2-login-light.png'*/
+
+  const darkIllustration = '/images/pages/admin-left.png'
+  const lightIllustration = '/images/pages/admin-left.png'
+
+  /*const borderedDarkIllustration = '/images/illustrations/auth/v2-login-dark-border.png'
+  const borderedLightIllustration = '/images/illustrations/auth/v2-login-light-border.png'*/
+
+  const borderedDarkIllustration = '/images/pages/tan-background.jpg'
+  const borderedLightIllustration = '/images/pages/tan-background.jpg'
 
   // Hooks
   const router = useRouter()
@@ -120,7 +131,7 @@ const Login = ({ mode }: { mode: Mode }) => {
       setLoading(true)
 
       // Vars
-      const redirectURL = searchParams.get('redirectTo') ?? '/admin'
+      const redirectURL = searchParams.get('redirectTo') ?? '/admin/'
 
       router.replace(redirectURL)
     } else {
@@ -137,7 +148,7 @@ const Login = ({ mode }: { mode: Mode }) => {
     <div className='flex bs-full justify-center'>
       <div
         className={classnames(
-          'flex bs-full items-center justify-center flex-1 min-bs-[100dvh] relative p-6 max-md:hidden',
+          'login-imgbg flex bs-full items-center justify-center flex-1 min-bs-[100dvh] relative p-6 max-md:hidden',
           {
             'border-ie': settings.skin === 'bordered'
           }
@@ -151,7 +162,7 @@ const Login = ({ mode }: { mode: Mode }) => {
           />
         </div>
         <Illustrations
-          image1={{ src: '/images/illustrations/objects/tree-2.png' }}
+          image1={null}
           image2={null}
           maskImg={{ src: authBackground }}
         />

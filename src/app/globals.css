@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.MuiAccordion-root,
+.MuiAccordionSummary-root,
+.MuiAccordionDetails-root {
+  all: unset;
+}
+
 :root {
   --border-radius: var(--mui-shape-borderRadius);
   --border-color: var(--mui-palette-divider);
@@ -141,3 +147,8 @@ code {
 [data-dark] .ts-vertical-layout-content form .react-tel-input .flag-dropdown ul.country-list li .dial-code{color: currentColor;}
 [data-dark] .ts-vertical-layout-content form .react-tel-input .flag-dropdown ul.country-list .country.highlight,
 [data-dark] .ts-vertical-layout-content form .react-tel-input .flag-dropdown ul.country-list .country:hover{background: rgba(255,255,255,0.05);}
+
+.login-imgbg > img{height:100%; object-fit:cover;}
+
+.ProseMirror { width: 100%; padding: 10px; }
+.ProseMirror-focused { border: 0px !important; }

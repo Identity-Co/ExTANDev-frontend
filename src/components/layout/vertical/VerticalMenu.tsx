@@ -14,7 +14,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import type { VerticalMenuContextProps } from '@menu/components/vertical-menu/Menu'
 
 // Component Imports SubMenu, MenuSection
-import { Menu, MenuItem, SubMenu } from '@menu/vertical-menu'
+import { Menu, MenuItem } from '@menu/vertical-menu'
 
 // import { GenerateVerticalMenu } from '@components/GenerateMenu'
 
@@ -117,30 +117,54 @@ const VerticalMenu = ({  scrollMenu }: Props) => {
           href='/admin/banner-sliders/'
           onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/banner-sliders/')}
           exactMatch={false}
-          activeUrl='/admin/banner_sliders'
+          activeUrl='/admin/banner-sliders'
           icon={<i className='ri-triangular-flag-line' />}
         >
           Banners/Sliders
         </MenuItem>
 
-        <SubMenu
-          label='CMS Management'
-          icon={<i className='ri-vip-diamond-line' />}
+        <MenuItem 
+          href='/admin/page_list/' 
+          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/page_list/')}
+          icon={<i className='ri-article-line' />}
         >
-          <MenuItem href='/admin/cms_home/' onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/cms_home/')}>Homepage</MenuItem>
-        </SubMenu>
-
-        <MenuItem
-          href='/admin/destimation/'
-          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/destimation/')}
-          exactMatch={false}
-          activeUrl='/admin/destimation'
-          icon={<i className='ri-user-line' />}
-        >
-          Destination Management 
+          Pages
         </MenuItem>
 
         <MenuItem
+          href='/admin/destination/'
+          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/destimation/')}
+          exactMatch={false}
+          activeUrl='/admin/destination'
+          icon={<i className='ri-map-pin-line' />}
+        >
+          Manage Destinations 
+        </MenuItem>
+
+        <MenuItem 
+          href='/admin/adventure-guide/' 
+          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/adventure-guide/')}
+          exactMatch={false}
+          activeUrl='/admin/adventure-guide/'
+          icon={<i className='ri-news-line' />}
+        >
+          Adventure Guide
+        </MenuItem>
+
+
+        {/*<SubMenu
+          label='Pages'
+          icon={<i className='ri-vip-diamond-line' />}
+        >
+            <MenuItem href='/admin/page/add' onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/page/add')}>Add New Page</MenuItem>*/}
+          {/*<MenuItem href='/admin/cms_home/' onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/cms_home/')}>Homepage</MenuItem>
+          <MenuItem href='/admin/page/contact-us' onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/page/contact-us')}>Contact Us</MenuItem>
+          <MenuItem href='/admin/page/privacy-policy' onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/page/privacy-policy')}>Privacy Policy</MenuItem>
+          <MenuItem href='/admin/page/terms-of-use' onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/page/terms-of-use')}>Terms of Use</MenuItem>
+          <MenuItem href='/admin/page/real-estate' onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/page/real-estate')}>Real Estate Opportunities</MenuItem>*/}
+        {/*</SubMenu>*/}
+
+        {/*<MenuItem
           href='/admin/adventure/'
           onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/adventure/')}
           exactMatch={false}
@@ -168,7 +192,7 @@ const VerticalMenu = ({  scrollMenu }: Props) => {
           icon={<i className='ri-sticky-note-line' />}
         >
           Manage Field Notes
-        </MenuItem>
+        </MenuItem>*/}
 
         <MenuItem
           href='/admin/reports/'
