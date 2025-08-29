@@ -1,0 +1,79 @@
+// Component Imports
+import DestinationPage from '@views/admin/cms/destination/PageSection'
+import AdventurePage from '@views/admin/cms/adventure/PageSection'
+import TravelPage from '@views/admin/cms/travel/PageSection'
+import PrivacyPolicy from '@views/admin/cms/privacy-policy/PageSection'
+
+// import AmbassadorshipPage from '@views/admin/cms/ambassadorship/PageSection'
+
+/**
+ * ! If you need data using an API call, uncomment the below API code, update the `process.env.API_URL` variable in the
+ * ! `.env` file found at root of your project and also update the API endpoints like `/apps/user-list` in below example.
+ * ! Also, remove the above server action import and the action itself from the `src/app/server/actions.ts` file to clean up unused code
+ * ! because we've used the server action for getting our static data.
+ */
+
+/* const getUserData = async () => {
+  // Vars
+  const res = await fetch(`${process.env.API_URL}/apps/user-list`)
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch userData')
+  }
+
+  return res.json()
+} */
+
+import * as Common from '@/app/server/common'
+
+import {getPageData} from '@/app/server/pages'
+import { getDestinations } from '@/app/server/destinations'
+
+import config from '@/configs/themeConfig'
+
+export const metadata = {
+  title: `Pages - ${config.appName}`,
+  description:`${config.appName}`,
+  keywords:`${config.appName}`,
+  robots:'noindex, nofollow, noarchive',
+  authors: [{ name: `${config.appName}` }],
+  publisher:`${config.appName}`,
+  classification:'Business: Real Estate',
+  other: {
+    'revisit-after': '365 days',
+    'ratings':'general',
+    'geo.region':'US',
+    'copyright':`${config.appName}`
+  }
+}
+
+const _pages = {
+  'our_destination': 'Our Destination',
+  'our_adventure': 'Our Adventure',
+  'total_travel': 'Total Travel',
+  'privacy_policy': 'Privacy Policy',
+}
+
+const EditPage = async (props: { params: Promise<{ page: string }> }) => {
+  const params = await props.params
+
+  const _pg = params.page
+
+  const session = await Common.getUserSess()
+
+  // Vars
+  const data = await getPageData(_pages[_pg])
+
+  const _destinations = await getDestinations()
+
+  return ( 
+    <>
+      {_pg=="our_destination" && (<DestinationPage pgData={data} destinations={_destinations??[]} />) } 
+      {_pg=="our_adventure" && (<AdventurePage pgData={data} destinations={[]} />) } 
+      {_pg=="total_travel" && (<TravelPage pgData={data} />) } 
+      {_pg=="privacy_policy" && (<PrivacyPolicy pgData={data} />) } 
+    </>
+  )
+}
+
+export default EditPage

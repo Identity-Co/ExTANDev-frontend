@@ -1,7 +1,10 @@
 'use client'
 
 // React Imports
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
+
+// Next Imports
+import Link from 'next/link'
 
 // MUI Imports
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -35,7 +38,7 @@ const Header = ({ mode }: { mode: Mode }) => {
   // Hooks
   const isBelowLgScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'))
 
-  // Detect window scroll
+  //Sticky
   const trigger = useScrollTrigger({
     threshold: 0,
     disableHysteresis: true
@@ -59,7 +62,7 @@ const Header = ({ mode }: { mode: Mode }) => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  });
+  },[firstSegment]);
 
   //Toggle Menu
 
@@ -70,35 +73,37 @@ const Header = ({ mode }: { mode: Mode }) => {
   };
 
   return (
-    <header className={classnames(styles.header)}>
+    <header className={classnames(styles.header, { [styles.sticky]: isSticky })}>
       <div className="container">
           <div className={classnames(styles.headMain)}>
               <div className={classnames(styles.headerLogo)}>
-                  <a href="#">
-                      <img src="images/front-pages/head-logo.png" />
-                  </a>
+                  <Link href={"/"}>
+                      <img src="/images/front-pages/head-logo.svg" />
+                  </Link>
               </div>
-              <div className={classnames(styles.navMenu)}>
+              <div className={classnames(styles.navMenu, {[styles.open]: isActive,})}>
                   <nav>
                       <ul>
-                          <li><a href="#">Our Destinations</a></li>
-                          <li><a href="#">Our adventures</a></li>
-                          <li><a href="#">Total travel</a></li>
-                          <li><a href="#">Field notes</a></li>
-                          <li><a href="#">Merch</a></li>
+                          <li><Link href={"/our-destinations"}>Our Destinations</Link></li>
+                          <li><Link href={"/our-adventure"}>Our adventures</Link></li>
+                          <li><Link href={"/total-travel"}>Total travel</Link></li>
+                          <li><Link href={"/blog"}>Field notes</Link></li>
+                          <li><Link href={"#"}>Merch</Link></li>
+                          <li className={classnames(styles.hide_desktop)}><Link href={"/ambassadorship"}>Ambassadorship</Link></li>
+                          <li className={classnames(styles.hide_desktop)}><Link href={"#"}>Find your next adventure</Link></li>
                       </ul>
                   </nav>
               </div>
               <div className={classnames(styles.head_right)}>
                   <div className={classnames(styles.head_buttons)}>
                       <div className={classnames(styles.head_btn1)}>
-                          <a href="#">Ambassadorship</a>
+                          <Link href={"/ambassadorship"}>Ambassadorship</Link>
                       </div>
                       <div className={classnames(styles.head_btn2)}>
-                          <a href="#">Log in or <span>sign up</span></a>
+                          <Link href={"/signin/"}>Log in or <span>sign up</span></Link>
                       </div>
                       <div className={classnames(styles.head_btn3)}>
-                          <a href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="17.923" height="17.759" viewBox="0 0 17.923 17.759">
+                          <Link href={"#"}> <svg xmlns="http://www.w3.org/2000/svg" width="17.923" height="17.759" viewBox="0 0 17.923 17.759">
                             <defs>
                               <clipPath id="clip-path">
                                 <rect id="Rectangle_4336" data-name="Rectangle 4336" width="17.923" height="17.759" fill="#1f1f1f"/>
@@ -116,12 +121,12 @@ const Header = ({ mode }: { mode: Mode }) => {
                               </g>
                             </g>
                           </svg>
-                          Find your next adventure</a>
+                          Find your next adventure</Link>
                       </div>
                   </div>
               </div>
               <div className={classnames(styles.menu_button_container)}>
-                  <div className={classnames(styles.hamburger)} id="hamburger-6">
+                  <div id="hamburger-6" className={classnames(styles.hamburger, {[styles.is_active]: isActive,})} onClick={toggleMenu}>
                     <span className={classnames(styles.line)}></span>
                     <span className={classnames(styles.line)}></span>
                     <span className={classnames(styles.line)}></span>

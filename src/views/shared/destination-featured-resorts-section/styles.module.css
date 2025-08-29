@@ -1,0 +1,54 @@
+a.fl_bx_lnk_glb:hover ~ .network_travel_img_text .btn a{background-color: #ffffff; color: #F85241;}
+a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
+
+.feature_resort_row{display: grid; grid-template-columns: repeat(3, 1fr); gap:2.489vw;}
+.feature_resort_row .network_travel_top .network_travel_img_text{text-align: left;}
+.feature_resort_row .network_travel_box .network_travel_top:before{opacity: 0.83; background: linear-gradient(360deg,rgba(0, 0, 0, 1) 0%, rgba(25, 26, 26, 0) 100%); height: 70%;}
+.feature_resort_row .network_travel_img_text span{font-size: 0.805vw; color: #ffffff; display: block; padding-bottom: 0.732vw; line-height: 1.025vw;}
+.feature_resort_row .network_travel_img_text h4{font-size: 1.464vw; color: #ffffff;}
+.feature_resort_row .network_travel_img_text p{font-size: 0.805vw; color: #ffffff; line-height: 1.025vw; padding-top: 1.042vw;}
+.feature_resort_row .network_travel_top .network_travel_img_text .btn a{font-family: "Bebas Neue", sans-serif; font-size: 1.098vw; font-weight: 400;}
+
+.network_travel_top .network_travel_img_text{text-align: center; position: absolute; bottom: 3.148vw; left: 0; right: 0; margin: 0 auto; width: 80%; z-index: 2;}
+.network_travel_top .network_travel_img_text h3{font-size: 3.294vw; color: #ffffff;}
+.network_travel_top .network_travel_img_text .btn a{font-size: 1.098vw; text-decoration: underline; border-radius: 0.0365vw; font-weight: 800; border: solid 0.0365vw #ffffff; background-color: transparent; padding: 0.732vw 1.537vw; text-decoration: none;}
+.network_travel_top .network_travel_img_text .btn a:hover{background-color: #ffffff; color: #F85241;}
+
+.network_travel_box .network_travel_top .network_travel_img{padding-bottom: 38.36vw; position: relative; overflow: hidden;}
+.network_travel_box .network_travel_top .network_travel_img img{position: absolute; width: 100%; height: 100%; object-fit: cover; top: 0; left: 0; box-shadow: 0 1.098vw 1.464vw rgb(0, 0, 0, 0.16); transition: 0.3s ease-in-out;}
+.network_travel_box .network_travel_top{position: relative;}
+.network_travel_box .network_travel_top:before{position: absolute; content: ""; background: linear-gradient(360deg,rgba(31, 31, 31, 1) 0%, rgba(105, 105, 105, 0) 100%); opacity: 0.24; mix-blend-mode: multiply; width: 100%; height: 100%; bottom: 0; left: 0; right: 0; z-index: 1;}
+
+.destination_resort_sec2 .feature_resort_row{grid-template-columns: repeat(4, 1fr);}
+.destination_resort_sec2 .network_travel_box .network_travel_top .network_travel_img{padding-bottom: 27.526vw;}
+
+.our_desti_sec2{margin-top: -10.981vw;}
+
+
+@media only screen and (max-width: 1024px){
+  .feature_resort_row .network_travel_img_text span{font-size: 1.505vw; line-height: 1.3;}
+  .feature_resort_row .network_travel_img_text h4{font-size: 2.464vw;}
+  .feature_resort_row .network_travel_img_text p{font-size: 1.505vw; line-height: 1.3;}
+  .feature_resort_row .network_travel_top .network_travel_img_text .btn a{font-size: 2.098vw;}
+
+  .network_travel_top .network_travel_img_text h3{font-size: 4.294vw;}
+  .network_travel_top .network_travel_img_text .btn a{font-size: 1.825vw; padding: 1.532vw 2.025vw;}
+
+  .destination_resort_sec2 .feature_resort_row{grid-template-columns: repeat(2, 1fr);}
+  .destination_resort_sec2 .network_travel_box .network_travel_top .network_travel_img,
+  .network_travel_box .network_travel_top .network_travel_img{padding-bottom: 100%;}
+}
+
+@media only screen and (max-width: 768px){
+  .feature_resort_row .network_travel_img_text span{font-size: 2.505vw; line-height: 1.3;}
+  .feature_resort_row .network_travel_img_text h4{font-size: 4.464vw;}
+  .feature_resort_row .network_travel_img_text p{font-size: 2.705vw; line-height: 1.3;}
+  .feature_resort_row .network_travel_top .network_travel_img_text .btn a{font-size: 3.98vw;}
+  .feature_resort_row{grid-template-columns: repeat(1, 1fr); grid-row-gap: 8.333vw;}
+  .feature_resort_row .network_travel_top .network_travel_img_text{bottom: 6.148vw;}
+
+  .network_travel_top .network_travel_img_text h3{font-size: 6.294vw;}
+  .network_travel_top .network_travel_img_text .btn a{font-size: 3.225vw; padding: 2.232vw 5.025vw;}
+
+  .destination_resort_sec2 .feature_resort_row{grid-template-columns: repeat(1, 1fr);}
+}
