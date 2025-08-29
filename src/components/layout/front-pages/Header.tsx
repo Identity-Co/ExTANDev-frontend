@@ -23,7 +23,14 @@ import styles from './styles.module.css'
 const stickPage = ['privacy-policy','terms-of-use']
 
 const Header = ({ mode }: { mode: Mode }) => {
-  const firstSegment = window.location.pathname.split("/").filter(Boolean)[0];
+  
+  // const firstSegment = window.location.pathname.split("/").filter(Boolean)[0];
+  const [firstSegment, setFirstSegment] = useState<string | null>(null);
+
+  useEffect(() => {
+    const segment = window.location.pathname.split("/").filter(Boolean)[0];
+    setFirstSegment(segment);
+  }, []);
   
   // States
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
