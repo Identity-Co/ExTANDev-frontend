@@ -17,6 +17,8 @@ import type { Mode } from '@core/types'
 // Styles Imports
 import styles from './styles.module.css'
 
+const stickPage = ['privacy-policy','terms-of-use']
+
 const Header = ({ mode }: { mode: Mode }) => {
 
   // const firstSegment = window.location.pathname.split("/").filter(Boolean)[0];
