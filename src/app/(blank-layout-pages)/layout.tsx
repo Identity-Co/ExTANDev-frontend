@@ -10,9 +10,6 @@ import BlankLayout from '@layouts/BlankLayout'
 // Util Imports
 import { getSystemMode } from '@core/utils/serverHelpers'
 
-// Style Imports
-import '@/app/globals.css'
-
 type Props = ChildrenType 
 
 const Layout = async (props: Props) => {

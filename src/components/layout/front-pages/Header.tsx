@@ -1,10 +1,7 @@
 'use client'
 
 // React Imports
-import { useState, useEffect } from 'react'
-
-// Next Imports
-import Link from 'next/link'
+import { useState } from 'react'
 
 // MUI Imports
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -20,10 +17,8 @@ import type { Mode } from '@core/types'
 // Styles Imports
 import styles from './styles.module.css'
 
-const stickPage = ['privacy-policy','terms-of-use']
-
 const Header = ({ mode }: { mode: Mode }) => {
-  
+
   // const firstSegment = window.location.pathname.split("/").filter(Boolean)[0];
   const [firstSegment, setFirstSegment] = useState<string | null>(null);
 
@@ -38,7 +33,7 @@ const Header = ({ mode }: { mode: Mode }) => {
   // Hooks
   const isBelowLgScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'))
 
-  //Sticky
+  // Detect window scroll
   const trigger = useScrollTrigger({
     threshold: 0,
     disableHysteresis: true
@@ -73,37 +68,35 @@ const Header = ({ mode }: { mode: Mode }) => {
   };
 
   return (
-    <header className={classnames(styles.header, { [styles.sticky]: isSticky })}>
+    <header className={classnames(styles.header)}>
       <div className="container">
           <div className={classnames(styles.headMain)}>
               <div className={classnames(styles.headerLogo)}>
-                  <Link href={"/"}>
-                      <img src="/images/front-pages/head-logo.svg" />
-                  </Link>
+                  <a href="#">
+                      <img src="images/front-pages/head-logo.png" />
+                  </a>
               </div>
-              <div className={classnames(styles.navMenu, {[styles.open]: isActive,})}>
+              <div className={classnames(styles.navMenu)}>
                   <nav>
                       <ul>
-                          <li><Link href={"/our-destinations"}>Our Destinations</Link></li>
-                          <li><Link href={"/our-adventure"}>Our adventures</Link></li>
-                          <li><Link href={"/total-travel"}>Total travel</Link></li>
-                          <li><Link href={"/blog"}>Field notes</Link></li>
-                          <li><Link href={"#"}>Merch</Link></li>
-                          <li className={classnames(styles.hide_desktop)}><Link href={"/ambassadorship"}>Ambassadorship</Link></li>
-                          <li className={classnames(styles.hide_desktop)}><Link href={"#"}>Find your next adventure</Link></li>
+                          <li><a href="#">Our Destinations</a></li>
+                          <li><a href="#">Our adventures</a></li>
+                          <li><a href="#">Total travel</a></li>
+                          <li><a href="#">Field notes</a></li>
+                          <li><a href="#">Merch</a></li>
                       </ul>
                   </nav>
               </div>
               <div className={classnames(styles.head_right)}>
                   <div className={classnames(styles.head_buttons)}>
                       <div className={classnames(styles.head_btn1)}>
-                          <Link href={"/ambassadorship"}>Ambassadorship</Link>
+                          <a href="#">Ambassadorship</a>
                       </div>
                       <div className={classnames(styles.head_btn2)}>
-                          <Link href={"/signin/"}>Log in or <span>sign up</span></Link>
+                          <a href="#">Log in or <span>sign up</span></a>
                       </div>
                       <div className={classnames(styles.head_btn3)}>
-                          <Link href={"#"}> <svg xmlns="http://www.w3.org/2000/svg" width="17.923" height="17.759" viewBox="0 0 17.923 17.759">
+                          <a href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="17.923" height="17.759" viewBox="0 0 17.923 17.759">
                             <defs>
                               <clipPath id="clip-path">
                                 <rect id="Rectangle_4336" data-name="Rectangle 4336" width="17.923" height="17.759" fill="#1f1f1f"/>
@@ -121,12 +114,12 @@ const Header = ({ mode }: { mode: Mode }) => {
                               </g>
                             </g>
                           </svg>
-                          Find your next adventure</Link>
+                          Find your next adventure</a>
                       </div>
                   </div>
               </div>
               <div className={classnames(styles.menu_button_container)}>
-                  <div id="hamburger-6" className={classnames(styles.hamburger, {[styles.is_active]: isActive,})} onClick={toggleMenu}>
+                  <div className={classnames(styles.hamburger)} id="hamburger-6">
                     <span className={classnames(styles.line)}></span>
                     <span className={classnames(styles.line)}></span>
                     <span className={classnames(styles.line)}></span>

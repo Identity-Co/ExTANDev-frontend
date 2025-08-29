@@ -256,7 +256,6 @@ const AddForm = ({ roles }: { roles?: roleData[] }) => {
     const user = await User.getSingleUser(session?.user?.id)
 
     if (logoInput) fData.append('file', logoInput);
-    console.log(fData)
     
     const f_data = {
       "first_name" : data.user_first_name,

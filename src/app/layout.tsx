@@ -27,8 +27,6 @@ import { getSystemMode } from '@core/utils/serverHelpers'
 // Style Imports
 import '@/app/globals.css'
 
-// import '@/app/globals-front.css'
-
 // Generated Icon CSS Imports
 import '@assets/iconify-icons/generated-icons.css'
 

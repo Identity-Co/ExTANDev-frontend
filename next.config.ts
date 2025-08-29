@@ -2,12 +2,6 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   basePath: process.env.BASEPATH,
-  trailingSlash: true,
-  experimental: {
-    serverActions: {
-      bodySizeLimit: '5mb',
-    },
-  },
   redirects: async () => {
     return [
       {
@@ -20,11 +14,11 @@ const nextConfig: NextConfig = {
         destination: '/admin/dashboards',
         permanent: true
       },
-      /*{
+      {
         source: '/',
         destination: '/home',
         permanent: true
-      }*/
+      }
     ]}
 }
 
