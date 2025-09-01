@@ -33,6 +33,8 @@ import { object, string, pipe, nonEmpty, array, optional } from 'valibot'
 import type { InferInput } from 'valibot'
 import type { SubmitHandler } from 'react-hook-form'
 
+import { useNavigationStore } from '@/libs/navigation-store'
+
 import { updatePageInfo } from '@/app/server/pages'
 
 type FileProp = {

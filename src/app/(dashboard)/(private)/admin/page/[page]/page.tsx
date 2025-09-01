@@ -3,6 +3,7 @@ import DestinationPage from '@views/admin/cms/destination/PageSection'
 import AdventurePage from '@views/admin/cms/adventure/PageSection'
 import TravelPage from '@views/admin/cms/travel/PageSection'
 import PrivacyPolicy from '@views/admin/cms/privacy-policy/PageSection'
+import Ambassadorship from '@views/admin/cms/ambassadorship/PageSection'
 
 // import AmbassadorshipPage from '@views/admin/cms/ambassadorship/PageSection'
 
@@ -52,6 +53,7 @@ const _pages = {
   'our_adventure': 'Our Adventure',
   'total_travel': 'Total Travel',
   'privacy_policy': 'Privacy Policy',
+  'ambassadorship': 'Ambassadorship',
 }
 
 const EditPage = async (props: { params: Promise<{ page: string }> }) => {
@@ -72,6 +74,7 @@ const EditPage = async (props: { params: Promise<{ page: string }> }) => {
       {_pg=="our_adventure" && (<AdventurePage pgData={data} destinations={[]} />) } 
       {_pg=="total_travel" && (<TravelPage pgData={data} />) } 
       {_pg=="privacy_policy" && (<PrivacyPolicy pgData={data} />) } 
+      {_pg=="ambassadorship" && (<Ambassadorship pgData={data} />) } 
     </>
   )
 }
