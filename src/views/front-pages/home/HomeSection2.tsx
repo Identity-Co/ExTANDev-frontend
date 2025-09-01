@@ -67,7 +67,9 @@ const HomeSection2 = ({ slides }: { slides?: []; }) => {
                   })}>
                   <div className={classnames(styles.resort_box)}>
                       <div className={classnames(styles.resort_img)}>
-                          {item.image && (<img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${item.image}`} alt={item.title} />)}
+                          {/*item.image && (<img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${item.image}`} alt={item.title} />)*/}
+                          {item.image && (<img src='https://adventure.deepripple.com/images/front-pages/images/jade-slider.jpg' alt={item.title} />)}
+
                       </div>
                       <div className={classnames(styles.resort_text)}>
                           {item.title && (<h3>{item.title}</h3>)}

@@ -23,7 +23,6 @@ const BannerSection = ({ mode, banners }: { mode: Mode; banners?: [] }) => {
       const backgroundImage = slide.style.backgroundImage;
       
       if (!backgroundImage) {
-        let bgImgPath = slideref.current.getAttribute('databackground').replace(/\\uploads\\banners\\/g, 'uploads\\\\banners\\\\');
         slide.style.backgroundImage = 'url("'+slideref.current.getAttribute('databackground')+'")';
       }
     });
@@ -46,7 +45,6 @@ const BannerSection = ({ mode, banners }: { mode: Mode; banners?: [] }) => {
           <Slider {...settings} className={classnames(styles.home_hero_slider, 'home_hero_slider')}>
             {banners?.map((item, index) => {
               const imageUrl = `${process.env.NEXT_PUBLIC_UPLOAD_URL}/\\${item.banner_image}`;
-              let bgImgPath = imageUrl.replace(/\\uploads\\banners\\/g, 'uploads\\\\banners\\\\');
               
               return (
                 <div
@@ -54,7 +52,7 @@ const BannerSection = ({ mode, banners }: { mode: Mode; banners?: [] }) => {
                   className={classnames(styles.hero_slide_box, 'hero_slide_box')}
                   ref={slideref} databackground={imageUrl}
                   style={{
-                    backgroundImage: `url("${bgImgPath}")`,
+                    backgroundImage: `url("${imageUrl}")`,
                   }}
                 >
                   <div className={styles.hero_slide_container}>
