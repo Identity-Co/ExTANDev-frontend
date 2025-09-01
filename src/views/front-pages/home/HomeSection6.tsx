@@ -48,6 +48,10 @@ const HomeSection6 = ({ data, fieldNotes }: { data?: []; fieldNotes?: []; }) => 
     ]
   };
 
+  const staticImgs = ['https://adventure.deepripple.com/images/front-pages/images/guide1.jpg', 'https://adventure.deepripple.com/images/front-pages/images/guide2.jpg', 'https://adventure.deepripple.com/images/front-pages/images/guide3.jpg', 'https://adventure.deepripple.com/images/front-pages/images/guide2.jpg']
+
+  const staticLogos = ['https://adventure.deepripple.com/images/front-pages/images/bike.png', 'https://adventure.deepripple.com/images/front-pages/images/surfer-logo.png', 'https://adventure.deepripple.com/images/front-pages/images/powder-white-logo.png', 'https://adventure.deepripple.com/images/front-pages/images/surfer-logo.png']
+
   return (
     <section className={classnames(styles.home_section6, 'pb_150 home_section6')}>
       <div className="container">
@@ -63,10 +67,12 @@ const HomeSection6 = ({ data, fieldNotes }: { data?: []; fieldNotes?: []; }) => 
                     <div className={classnames(styles.adv_guide_box)}>
                       <div className={classnames(styles.adv_guide_top)}>
                         <div className={classnames(styles.adv_guide_img)}>
-                          {slide.image && (<img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${slide.image}`} alt={slide.title} />)}
+                          {/*slide.image && (<img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${slide.image}`} alt={slide.title} />)*/}
+                          {slide.image && (<img src={`${staticImgs[index]}`} alt={slide.title} />)}
                         </div>
                         <div className={classnames(styles.adv_guide_img_logo)}>
-                          {slide.logo && (<img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${slide.logo}`} alt={slide.title} />)}
+                          {/*slide.logo && (<img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${slide.logo}`} alt={slide.title} />)*/}
+                          {slide.logo && (<img src={`${staticLogos[index]}`} alt={slide.title} />)}
                         </div>
                       </div>
                       <div className={classnames(styles.adv_guide_bottom)}>
