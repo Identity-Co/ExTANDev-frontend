@@ -1,0 +1,118 @@
+<table width="100%" id="outer_wrapper" style="background-color: #F0F0F0;" bgcolor="#F0F0F0">
+  <tr>
+    <td><!-- Deliberately empty to support consistent sizing and layout across multiple email clients. --></td>
+    <td width="600" style="padding:70px 0;">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" id="template_container" style="background-color: #fff; border-radius: 0px;" bgcolor="#fff">
+        <tr>
+          <td>
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" id="template_header" style="background-color: #014040; color: #fff; border-bottom: 0; font-weight: bold; line-height: 100%; vertical-align: middle; font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif; border-radius: 0px;" bgcolor="#fff">
+              <tbody>
+                <tr>
+                  <td id="header_wrapper" align="center" style="padding: 20px 0; display: block;">
+                    <img src="images/head-logo.png" width="200" alt="" border="0"> 
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tbody>
+                <tr>
+                  <td valign="top" style="padding:48px 48px 48px 48px; color: #1F1F1F; font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif; font-size: 13px; line-height: 150%; text-align: left;"><div id="body_content_inner" style="color: #1F1F1F; font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif; font-size: 13px; line-height: 150%; text-align: left;" align="left">
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td colspan="2">
+                                <p style="font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif; font-size: 13px; line-height: 150%; margin:0 0 15px;">Hi {First Name:1},</p>
+                                <p style="font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif; font-size: 13px; line-height: 150%; margin:0 0 15px;">Thank you for completing payment for your booking, your booking is now confirmed!</p>
+                                <p style="font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif; font-size: 13px; line-height: 150%; margin:0 0 25px;">Please see a summary of your booking below:</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="padding:0 15px 0 0;">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                  <tr>
+                                    <td style="color: #1F1F1F; font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif; font-size: 13px; line-height: 150%; padding:0 0 10px;"><strong>Full Name:</strong><br>{First Name:1} {Last Name:3}</td>
+                                  </tr>
+                                  <tr>
+                                    <td style="color: #1F1F1F; font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif; font-size: 13px; line-height: 150%; padding:0 0 10px;"><strong>Email:</strong><br>{Email:4}</td>
+                                  </tr>
+                                  <tr>
+                                    <td style="color: #1F1F1F; font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif; font-size: 13px; line-height: 150%;"><strong>Phone Number:</strong><br>{Phone Number:5}</td>
+                                  </tr>
+                                </table>
+                            </td>
+                            <td style="padding:0 0 0 15px;">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                  <tr>
+                                    <td style="color: #1F1F1F; font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif; font-size: 13px; line-height: 150%; padding:0 0 10px;"><strong>Location:</strong><br>{Location:32}{Location:33}</td>
+                                  </tr>
+                                  <tr>
+                                    <td style="color: #1F1F1F; font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif; font-size: 13px; line-height: 150%; padding:0 0 10px;"><strong>Number of People:</strong><br>{Number of People:10}</td>
+                                  </tr>
+                                  <tr>
+                                    <td style="color: #1F1F1F; font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif; font-size: 13px; line-height: 150%;"><strong>Choice of Activity:</strong><br>{Choice of Activity:28}</td>
+                                  </tr>
+                                </table>
+                            </td>
+                          </tr>
+                      </table>
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td style="border-bottom:solid 1px #d1d1d1; padding:25px 0 0;"></td>
+                          </tr>
+                          <tr>
+                            <td style="padding:25px 0 0;"></td>
+                          </tr>
+                      </table>
+                      <table width="100%" border="1" bordercolor="#d1d1d1" cellspacing="0" cellpadding="10" style="color: #1F1F1F; font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif; font-size: 13px; line-height: 150%; text-align: left; border-color: #d1d1d1;">
+                          <tr>
+                            <th>Event Title:</th>
+                            <th>Booking Date:</th>
+                            <th>Timeslots:</th>
+                            <th>Booking fee:</th>
+                          </tr>
+                          <tr>
+                            <td>{Event Title:21}</td>
+                            <td>{Booking Date:8}</td>
+                            <td>{Timeslots:7}</td>
+                            <td>{Booking fee:35}</td>
+                          </tr>
+                          <tr>
+                            <td colspan="3">Deposit Amount:</td>
+                            <td>{Deposit amount:31}</td>
+                          </tr>
+                          <tr>
+                            <td colspan="3">Second Payment:</td>
+                            <td>{Amount payable to secure booking:17}</td>
+                          </tr>
+                          <tr>
+                            <td colspan="3" align="right" style="font-size:15px;"><strong>Total Amount:</strong></td>
+                            <td style="font-size:15px;"><strong>{Total amount:30}</strong></td>
+                          </tr>
+                      </table>
+                    </div></td>
+                </tr>
+              </tbody>
+            </table>
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" id="template_footer" style="background-color: #014040; border-radius: 0px;" bgcolor="#014040">
+              <tbody>
+                <tr>
+                  <td valign="middle" align="center" id="footer-contact" style="color: #fff; padding: 30px 0 16px; font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif; font-size: 12px; line-height: 150%;"><p style="margin: 0; padding: 0;"><a href="tel:1234567890" style="font-weight: normal; color: #fff; text-decoration: none;">1234567890</a><br>
+                      <a href="mailto:hello@adventurenetwork.com" style="font-weight: normal; color: #fff; text-decoration: none;">hello@adventurenetwork.com</a><br>
+                      <a href="https://www.adventurenetwork.com" style="font-weight: normal; color: #fff; text-decoration: none;">adventurenetwork.com</a><br>
+                      2/54 Hulme Court, Myaree Perth WA 3695</p></td>
+                </tr>
+                <tr>
+                  <td valign="middle" align="center" id="footer-social" style="padding:0;"><a href="#" style="color: #dd6c53; font-weight: normal; text-decoration: underline;"><img src="images/insta.png" width="" alt="" style="border: none; display: inline-block; font-size: 14px; font-weight: bold; height: auto; outline: none; text-decoration: none; text-transform: capitalize; vertical-align: middle; margin-right: 10px; max-width: 100%;" border="0"></a> <a href="#" style="color: #dd6c53; font-weight: normal; text-decoration: underline;"><img src="images/fb.png" width="" alt="" style="border: none; display: inline-block; font-size: 14px; font-weight: bold; height: auto; outline: none; text-decoration: none; text-transform: capitalize; vertical-align: middle; margin-right: 10px; max-width: 100%;" border="0"></a> <a href="#" style="color: #dd6c53; font-weight: normal; text-decoration: underline;"><img src="images/yt.png" width="" alt="" style="border: none; display: inline-block; font-size: 14px; font-weight: bold; height: auto; outline: none; text-decoration: none; text-transform: capitalize; vertical-align: middle; margin-right: 10px; max-width: 100%;" border="0"></a> <a href="#" style="color: #dd6c53; font-weight: normal; text-decoration: underline;"><img src="images/x.png" width="" alt="" style="border: none; display: inline-block; font-size: 14px; font-weight: bold; height: auto; outline: none; text-decoration: none; text-transform: capitalize; vertical-align: middle; margin-right: 10px; max-width: 100%;" border="0"></a> </td>
+                </tr>
+                <tr>
+                  <td valign="middle" align="center" id="footer-copy" style="color: #fff; padding: 16px 0 30px 0; font-family:Helvetica Neue,Helvetica,Roboto,Arial,sans-serif; font-size: 10px; line-height: 150%;">© 2025 | All rights reserved </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td><!-- Deliberately empty to support consistent sizing and layout across multiple email clients. --></td>
+  </tr>
+</table>
