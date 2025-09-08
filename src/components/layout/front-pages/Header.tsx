@@ -88,7 +88,7 @@ const Header = ({ mode }: { mode: Mode }) => {
                           <li><Link href={"/our-adventure"}>Our adventures</Link></li>
                           <li><Link href={"/total-travel"}>Total travel</Link></li>
                           <li><Link href={"/blog"}>Field notes</Link></li>
-                          <li><Link href={"#"}>Merch</Link></li>
+                          <li><Link href={"/merchandise"}>Merch</Link></li>
                           <li className={classnames(styles.hide_desktop)}><Link href={"/ambassadorship"}>Ambassadorship</Link></li>
                           <li className={classnames(styles.hide_desktop)}><Link href={"#"}>Find your next adventure</Link></li>
                       </ul>
