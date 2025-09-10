@@ -110,13 +110,15 @@
 .signup_box{padding: 3.66vw; background-color: #ffffff;}
 .signup_box h4{font-size: 1.903vw; text-transform: uppercase; text-align: center; padding-bottom: 2.928vw; color: #000000; font-family: "Raleway", sans-serif; font-weight: 800;}
 .signup_box .input_row{display: flex; flex-wrap: wrap; gap:1.098vw;}
+.signup_box .input_row .MuiOutlinedInput-root{background: #f4f8f7; border-radius: .293vw;}
+.signup_box .input_row .MuiOutlinedInput-root fieldset{border-width: 0;}
 .signup_box .input_row .input_full_box{width: 100%;}
-.signup_box .input_row .input_full_box:not(.checkbox_label) label{display: block; width: 100%; display: none;}
-.signup_box .input_row .input_full_box input:not([type="checkbox"], [type="submit"]){width: 100%; min-height: 4.319vw; padding: 1.464vw; background-color: #F4F8F7; border-radius: 0.293vw; font-size: 1.025vw; font-family: "Raleway", sans-serif; font-weight: 400; color: #868686; border: none; outline: none;}
+.signup_box .input_row .input_full_box:not(.checkbox_label) label{display: block; width: 100%;}
+.signup_box .input_row .input_full_box input:not([type="checkbox"], [type="submit"]){width: 100%; min-height: 1vw; padding: 1.464vw; background-color: #F4F8F7; border-radius: 0.293vw; font-size: 1.025vw; font-family: "Raleway", sans-serif; font-weight: 400; color: #868686; border: none; outline: none;}
 
 .signup_box .input_row .input_full_box.pass_ref{padding-top: 1.464vw;}
 .signup_box .input_row .input_full_box.pass_ref span{font-size: 0.952vw; font-family: "Raleway", sans-serif; font-weight: 400; color: #868686; text-align: center; display: block; line-height: 1.4;}
-.signup_box .input_row .input_full_box input[type="password"]{padding-left: 2.928vw; background: #F4F8F7 url(/images/sub-pages/lock.svg) center left 1.464vw no-repeat; background-size: 0.878vw 0.878vw;}
+/*.signup_box .input_row .input_full_box input[type="password"]{padding-left: 2.928vw; background: #F4F8F7 url(/images/sub-pages/lock.svg) center left 1.464vw no-repeat; background-size: 0.878vw 0.878vw;}*/
 .signup_box .input_row .input_full_box.checkbox_label{padding-top: 1.464vw; position: relative;}
 .signup_box .input_row .input_full_box.checkbox_label input{padding: 0; margin-bottom: 0; -webkit-appearance: auto; cursor: pointer; left: 0; right: 0; height: 1.464vw; z-index: 1; opacity: 0; bottom: 0; position: absolute;}
 .signup_box .input_row .input_full_box.checkbox_label label {position: relative;cursor: pointer; font-size: 1.025vw; font-family: "Raleway", sans-serif; font-weight: 400; color: #868686; display: flex; align-items: center; line-height: 1.4;}
@@ -134,7 +136,7 @@
 .signup_box .input_row .input_full_box.checkbox_label label a.forgot_pass{margin-left: auto;}
 .signup_box .input_row .input_full_box a{color: #127AC3; position: relative; z-index: 2;}
 .signup_box .input_row .input_full_box a:hover{color: #F85241;}
-.signup_box .input_row .input_full_box.email input[type="email"]{padding-left: 2.928vw; background: #F4F8F7 url(/images/sub-pages/email.svg) center left 1.464vw no-repeat; background-size: 1.025vw 0.805vw;}
+/*.signup_box .input_row .input_full_box.email input[type="email"]{padding-left: 2.928vw; background: #F4F8F7 url(/images/sub-pages/email.svg) center left 1.464vw no-repeat; background-size: 1.025vw 0.805vw;}*/
 .grid_box .signup_box.account_box{margin-top: 1.464vw;}
 .signup_box .input_row .input_full_box.pass_ref.recovery{padding-top: 0;}
 .signup_box .btnset{display: flex; justify-content: space-between; flex-wrap: wrap; padding-top: 1.098vw;}
