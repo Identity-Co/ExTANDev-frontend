@@ -32,7 +32,6 @@ const LandingPageWrapper = ({ mode, pgData }: { mode: Mode; pgData?: [] }) => {
   return (
     <>
       <BannerSection mode={mode} />
-      <pre>{JSON.stringify(pgData, null, 2)}</pre>
       <AmbassadorshipSection1 data={pgData} />
       <AmbassadorshipSection2 data={pgData}/>
       <AmbassadorshipSection3 />
