@@ -11,6 +11,15 @@ const LandingPage = async () => {
 
   const pgData = await getPageData("Ambassadorship");
 
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/page/data/Ambassadorship`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }).catch(rejected => {
+      console.log(rejected);
+  })
+
   console.log(pgData);
 
   return <LandingPageWrapper mode={mode} pgData={pgData} />
