@@ -105,6 +105,8 @@ export const getPageData = async (pg: any) => {
       console.log(rejected);
   })
 
+  console.log(res);
+
   if (res && res.ok) {
     const log = await res.json()
 

@@ -11,6 +11,8 @@ const LandingPage = async () => {
 
   const pgData = await getPageData("Ambassadorship");
 
+  console.log(pgData);
+
   return <LandingPageWrapper mode={mode} pgData={pgData} />
 }
 
