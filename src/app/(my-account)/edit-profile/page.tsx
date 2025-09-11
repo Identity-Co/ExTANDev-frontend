@@ -1,5 +1,5 @@
 // Component Imports
-import LandingPageWrapper from '@views/sub-pages/ambassadorship'
+import LandingPageWrapper from '@views/sub-pages/my-account/edit-profile'
 
 // Server Action Imports
 import { getServerMode } from '@core/utils/serverHelpers'

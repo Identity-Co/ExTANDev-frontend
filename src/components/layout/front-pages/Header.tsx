@@ -14,6 +14,8 @@ import type { Theme } from '@mui/material/styles'
 // Third-party Imports
 import classnames from 'classnames'
 
+import * as Common from '@/app/server/common'
+
 // Type Imports
 import type { Mode } from '@core/types'
 
@@ -23,12 +25,21 @@ import styles from './styles.module.css'
 const stickPage = ['privacy-policy','terms-of-use']
 
 const Header = ({ mode }: { mode: Mode }) => {
+  const [session, setSession] = useState(null)
 
   // const firstSegment = window.location.pathname.split("/").filter(Boolean)[0];
   const [firstSegment, setFirstSegment] = useState<string | null>(null);
 
   useEffect(() => {
     const segment = window.location.pathname.split("/").filter(Boolean)[0];
+
+    const fetchSession = async () => {
+      const sess = await Common.getUserSess()
+      setSession(sess)
+    }
+
+    fetchSession()
+
     setFirstSegment(segment);
   }, []);
   
@@ -47,13 +58,15 @@ const Header = ({ mode }: { mode: Mode }) => {
   const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
-    setIsSticky(stickPage.includes(firstSegment)?true:false);
+    const shouldBeSticky = firstSegment ? stickPage.includes(firstSegment) : false;
+    
+    setIsSticky(shouldBeSticky);
 
     const handleScroll = () => {
       if (window.scrollY > 100) {
         setIsSticky(true);
       } else {
-        setIsSticky(stickPage.includes(firstSegment)?true:false);
+        setIsSticky(firstSegment ? stickPage.includes(firstSegment) : false);
       }
     };
 
@@ -62,7 +75,7 @@ const Header = ({ mode }: { mode: Mode }) => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  },[firstSegment]);
+  }, [firstSegment]);
 
   //Toggle Menu
 
@@ -87,21 +100,34 @@ const Header = ({ mode }: { mode: Mode }) => {
                           <li><Link href={"/our-destinations"}>Our Destinations</Link></li>
                           <li><Link href={"/our-adventure"}>Our adventures</Link></li>
                           <li><Link href={"/total-travel"}>Total travel</Link></li>
-                          <li><Link href={"/blog"}>Field notes</Link></li>
+                          <li><Link href={"/adventure-guide"}>Field notes</Link></li>
                           <li><Link href={"/merchandise"}>Merch</Link></li>
-                          <li className={classnames(styles.hide_desktop)}><Link href={"/ambassadorship"}>Ambassadorship</Link></li>
+                          {session?.user?.id && session?.user?.id != '' ? (
+                              <li className={classnames(styles.hide_desktop)}><Link href={"/my-account/"}>My Account</Link></li>
+                          ) : (
+                              <li className={classnames(styles.hide_desktop)}><Link href={"/ambassadorship"}>Ambassadorship</Link></li>
+                          )}
                           <li className={classnames(styles.hide_desktop)}><Link href={"#"}>Find your next adventure</Link></li>
                       </ul>
                   </nav>
               </div>
               <div className={classnames(styles.head_right)}>
                   <div className={classnames(styles.head_buttons)}>
+                    {session?.user?.id && session?.user?.id != '' ? (
                       <div className={classnames(styles.head_btn1)}>
-                          <Link href={"/ambassadorship"}>Ambassadorship</Link>
-                      </div>
-                      <div className={classnames(styles.head_btn2)}>
-                          <Link href={"/signin/"}>Log in or <span>sign up</span></Link>
-                      </div>
+                            <Link href={"/my-account/"}>My Account</Link>
+                        </div>
+                    ) : (
+                      <>
+                        <div className={classnames(styles.head_btn1)}>
+                            <Link href={"/ambassadorship"}>Ambassadorship</Link>
+                        </div>
+                        <div className={classnames(styles.head_btn2)}>
+                            <Link href={"/signin/"}>Log in or <span>sign up</span></Link>
+                        </div>
+                      </>
+                    )}
+                    
                       <div className={classnames(styles.head_btn3)}>
                           <Link href={"#"}> <svg xmlns="http://www.w3.org/2000/svg" width="17.923" height="17.759" viewBox="0 0 17.923 17.759">
                             <defs>

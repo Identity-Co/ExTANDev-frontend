@@ -21,30 +21,7 @@ const AmbassadorshipSection3 = () => {
                     </div>
                 </div>
                 <div className={classnames(styles.grid_box)}>
-                    <div className={classnames(styles.signup_box, styles.sign_in)}>
-                        <h4>SIGN IN</h4>
-                        <SigninForm />
-                    </div>
-                    <div className={classnames(styles.signup_box, styles.account_box)}>
-                        <h4>ACCOUNT RECOVERY</h4>
-                        <form>
-                            <div className={classnames(styles.input_row)}>
-                                <div className={classnames(styles.input_full_box, styles.pass_ref, styles.recovery)}>
-                                    <span>Enter your e-mail address below to reset your password</span>
-                                </div>
-                                <div className={classnames(styles.input_full_box, styles.email)}>
-                                    <label>E-mail</label>
-                                    <input type="email" placeholder="E-mail" />
-                                </div>
-                                <div className={classnames(styles.input_full_box, styles.btnset)}>
-                                    <a className={classnames(styles.back_btn)} href="#">Back</a>
-                                    <div className={classnames(styles.submit_btn)}>
-                                        <input type="submit" value="Sign in" />
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    <SigninForm />
                 </div>
                 </div>
             </div>

@@ -19,6 +19,10 @@ import ScrollToTop from '@core/components/scroll-to-top'
 // Util Imports
 import { getSystemMode } from '@core/utils/serverHelpers'
 
+import * as Common from '@/app/server/common'
+
+import { redirect } from 'next/navigation';
+
 // Style Imports
 import '@/app/globals-front.css'
 
@@ -33,6 +37,14 @@ export const metadata = {
 
 const Layout = async ({ children }: ChildrenType) => {
   // Vars
+  const session = await Common.getUserSess()
+
+  if(session?.user?.id && session?.user?.id != '') {
+    redirect('/my-account/')
+
+    return;
+  }
+
   const systemMode = await getSystemMode()
 
   return (

@@ -64,6 +64,8 @@ export const authOptions: NextAuthOptions = {
                 "image": data.data.profile_picture??"/images/avatars/1.png",
                 "userToken": data.data.token,
                 "role": data.data.role,
+                "ambassador_status": data.data.ambassador_status,
+                "membership_level": data.data.membership_level,
             }
 
             return final_data //data
@@ -126,6 +128,8 @@ export const authOptions: NextAuthOptions = {
         token.token = user.userToken
         token.image = user.image??"/images/avatars/1.png"
         token.role  = user.role
+        token.ambassador_status  = user.ambassador_status
+        token.membership_level   = user.membership_level
       }
 
       return token
@@ -139,6 +143,8 @@ export const authOptions: NextAuthOptions = {
         session.user.role   = token?.role as string
         session.user.image  = token?.image as string
         session.user.userToken  = token?.token as string
+        session.user.ambassador_status  = token?.ambassador_status as number
+        session.user.membership_level   = token?.membership_level as number
       }
 
       return session

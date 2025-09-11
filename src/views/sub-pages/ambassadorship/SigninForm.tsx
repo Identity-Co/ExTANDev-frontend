@@ -54,9 +54,11 @@ import styles from './styles.module.css'
 const SigninForm = () => {
 
     // States
+    //const [currentForm, setCurrentForm] = useState('login')
     const [isPasswordShown, setIsPasswordShown] = useState(false)
     const [errorState, setErrorState] = useState<ErrorType | null>(null)
     const [isSubmitting , setIsSubmitting ] = useState(false)
+    const [formError , setFormError ] = useState('')
 
     // Hooks
     const router = useRouter()
@@ -80,6 +82,7 @@ const SigninForm = () => {
 
     const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
         setIsSubmitting(true)
+        setFormError('');
 
         const res = await signIn('credentials', {
             email: data.email,
@@ -87,13 +90,13 @@ const SigninForm = () => {
             redirect: false
         })
 
-        console.log('res: ', res)
+        //console.log('res: ', res)
 
         if (res && res.ok && res.error === null) {
-            setLoading(true)
+            //setLoading(true)
 
             // Vars
-            const redirectURL = searchParams.get('redirectTo') ?? '/admin/'
+            const redirectURL = searchParams.get('redirectTo') ?? '/my-account/'
 
             router.replace(redirectURL)
         } else {
@@ -101,13 +104,15 @@ const SigninForm = () => {
                 setIsSubmitting(false)
                 const error = res?.error
 
-                setErrorState({"message": Array(error)})
+                setFormError("Invalid username or password.")
             }
         }
     }
   
     return (
         <>
+          <div className={classnames(styles.signup_box, styles.sign_in)}>
+            <h4>SIGN IN</h4>
             <form
                 noValidate
                 action={() => {}}
@@ -195,39 +200,43 @@ const SigninForm = () => {
 
                     <div className='flex justify-between items-center flex-wrap gap-x-3 gap-y-1'>
                       <FormControlLabel control={<Checkbox defaultChecked />} label='Remember me' />
-                      <Typography className='text-end' color='primary.main' component={Link} href='/forgot-password'>
+                      <Typography className='text-end' color='primary.main' component={Link} href='#'>
                         Forgot password?
                       </Typography>
                     </div>
                     <div className={classnames(styles.input_full_box, styles.submit_btn)}>
-                        <Button fullWidth variant='contained' type='submit' disabled={isSubmitting}>
-                          Log In
-                          {isSubmitting ? <CircularProgress style={{marginLeft: '8px', color: 'white'}} size={20} thickness={6} /> : ''}
-                        </Button>
+                      <input type="submit" value="Sign in" disabled={isSubmitting} />
+                      {isSubmitting ? <CircularProgress style={{marginLeft: '8px', color: 'white'}} size={20} thickness={6} /> : ''}
                     </div>
-                </div>
 
-                <div className={classnames(styles.input_row)}>
-                    <div className={classnames(styles.input_full_box, styles.email)}>
-                        <label>E-mail</label>
-                        <input type="email" placeholder="E-mail" />
-                    </div>
-                    <div className={classnames(styles.input_full_box)}>
-                        <label>Password</label>
-                        <input type="password" placeholder="Password" />
-                    </div>
-                    <div className={classnames(styles.input_full_box, styles.checkbox_label)}>
-                        <input type="checkbox" />
-                        <label>Remember <a className={classnames(styles.forgot_pass)} href="#">Forgot your password?</a></label>
-                    </div>
-                    <div className={classnames(styles.input_full_box, styles.submit_btn)}>
-                        <input type="submit" value="Sign in" />
-                    </div>
-                    <div className={classnames(styles.input_full_box, styles.pass_ref)}>
-                        <span>New member? <a href="#">Create account</a></span>
-                    </div>
+                    {formError && (
+                      <Typography variant="error" className="text-center text-green-600 font-medium">
+                          {formError}
+                      </Typography>
+                    )}
                 </div>
             </form>
+          </div>
+          <div className={classnames(styles.signup_box, styles.account_box)} style={{ display: 'none' }}>
+              <h4>ACCOUNT RECOVERY</h4>
+              <form>
+                  <div className={classnames(styles.input_row)}>
+                      <div className={classnames(styles.input_full_box, styles.pass_ref, styles.recovery)}>
+                          <span>Enter your e-mail address below to reset your password</span>
+                      </div>
+                      <div className={classnames(styles.input_full_box, styles.email)}>
+                          <label>E-mail</label>
+                          <input type="email" placeholder="E-mail" />
+                      </div>
+                      <div className={classnames(styles.input_full_box, styles.btnset)}>
+                          <a className={classnames(styles.back_btn)} href="#">Back</a>
+                          <div className={classnames(styles.submit_btn)}>
+                              <input type="submit" value="Sign in" />
+                          </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
         </>
     )
 }

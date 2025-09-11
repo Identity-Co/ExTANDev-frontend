@@ -631,7 +631,8 @@ const SignupForm = () => {
                     )}
 
                     <div className={classnames(styles.input_full_box, styles.submit_btn)}>
-                        <input type="submit" value="Create an account" />
+                        <input type="submit" value="Create an account" disabled={isSubmitting} />
+                        {isSubmitting ? <CircularProgress style={{marginLeft: '8px', color: 'white'}} size={20} thickness={6} /> : ''}
                     </div>
                 </div>
             </form>

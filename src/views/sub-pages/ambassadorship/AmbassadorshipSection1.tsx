@@ -13,6 +13,7 @@ const AmbassadorshipSection1 = ({ data }: { data?: []; }) => {
                 <img src="/images/sub-pages/ambassadorship.png" />
             </div>
             <div className={classnames(styles.amb_sec1_inner)}>
+
                 {data?.video_title && (<h1 className="fs_55">{data.video_title}</h1>)}
                 <div className={classnames(styles.ambassador_video)}>
                     {data?.youtube_video_url && (

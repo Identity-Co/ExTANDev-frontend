@@ -30,7 +30,7 @@ import '@/app/globals-front.css'
 import '@assets/iconify-icons/generated-icons.css'
 
 export const metadata = {
-  title: 'Adventure Network | Signup',
+  title: 'Adventure Network | Our Adventure',
   description:
     ''
 }
@@ -39,8 +39,8 @@ const Layout = async ({ children }: ChildrenType) => {
   // Vars
   const session = await Common.getUserSess()
 
-  if(session?.user?.id && session?.user?.id != '') {
-    redirect('/my-account/')
+  if(!session?.user?.id || session?.user?.id == '') {
+    redirect('/signin/')
 
     return;
   }
