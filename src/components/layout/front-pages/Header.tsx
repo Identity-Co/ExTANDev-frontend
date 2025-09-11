@@ -100,7 +100,7 @@ const Header = ({ mode }: { mode: Mode }) => {
                           <li><Link href={"/our-destinations"}>Our Destinations</Link></li>
                           <li><Link href={"/our-adventure"}>Our adventures</Link></li>
                           <li><Link href={"/total-travel"}>Total travel</Link></li>
-                          <li><Link href={"/adventure-guide"}>Field notes</Link></li>
+                          <li><Link href={"/blog"}>Field notes</Link></li>
                           <li><Link href={"/merchandise"}>Merch</Link></li>
                           {session?.user?.id && session?.user?.id != '' ? (
                               <li className={classnames(styles.hide_desktop)}><Link href={"/my-account/"}>My Account</Link></li>
