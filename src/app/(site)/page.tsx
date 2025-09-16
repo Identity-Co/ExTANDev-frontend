@@ -8,6 +8,7 @@ import { getPageBanner } from '@/app/server/banners'
 import { getPageData } from '@/app/server/home_page'
 import { getPageFieldNote } from '@/app/server/field_notes'
 import { getPageDestination } from '@/app/server/destinations'
+import { getFilterLocations } from '@/app/server/tours'
 
 const LandingPage = async () => {
   // Vars
@@ -21,11 +22,14 @@ const LandingPage = async () => {
 
   const destinations = await getPageDestination(pgData?.destinations??[]);
 
+  const filter_locations = await getFilterLocations();
+
   return  <LandingPageWrapper mode={mode} 
             banners={banners}
             pgData = {pgData}
             fieldNotes={fieldnotes}
             destinations={destinations}
+            filter_locations={filter_locations}
           />
 }
 

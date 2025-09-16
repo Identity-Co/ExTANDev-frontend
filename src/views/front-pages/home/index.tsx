@@ -13,17 +13,15 @@ import HomeSection5 from '@/views/shared/instagram-feed-slider-section/Instagram
 import HomeSection6 from './HomeSection6'
 import HomeSection7 from '@/views/shared/cta-section/CTASection'
 
-const LandingPageWrapper = ({ mode, banners, pgData, fieldNotes, destinations }: { mode: Mode; banners?: []; pgData?: []; fieldNotes?: []; destinations?: []; }) => {
+const LandingPageWrapper = ({ mode, banners, pgData, fieldNotes, destinations, filter_locations }: { mode: Mode; banners?: []; pgData?: []; fieldNotes?: []; destinations?: []; filter_locations?: []; }) => {
 
   const instagramSliderSectionProps = {
     class: 'py_150',
   }
-
-  console.log(destinations);
   
   return (
     <>
-      {banners.length ? <BannerSection mode={mode} banners={banners}/> : null}
+      {banners.length ? <BannerSection mode={mode} banners={banners} filter_locations={filter_locations} /> : null}
       <HomeSection1 data={pgData}/>
       {destinations.length ? <HomeSection2 slides={destinations}/> : null}
       <HomeSection3 />
