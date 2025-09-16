@@ -33,7 +33,11 @@ const ToursListing = ({ data, toursData }: { data?: []; toursData?: []; }) => {
                             <div className={classnames(styles.feature_adven_bot)}>
                                 <h3>{tour.name}</h3>
                                 <span className={classnames(styles.days_price)}><span className="extra_bold">{tour.tour_days}</span> days   |  from <span className="extra_bold">USD {tour.start_price}</span>/pp <span className={classnames(styles.taxes)}>(price includes taxes and fees)</span></span>
-                                <p>{tour.description}</p>
+                                <p>{tour.description
+                                    .split(' ')
+                                    .slice(0, 50)
+                                    .join(' ')}
+                                  {tour.description.split(' ').length > 50 ? '...' : ''}</p>
                                 <div className={classnames(styles.btn, 'btn')}>
                                     <a href={tour.site_url} tabIndex="0">View Trip</a>
                                 </div>
