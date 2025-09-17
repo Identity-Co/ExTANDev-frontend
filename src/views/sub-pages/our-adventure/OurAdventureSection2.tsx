@@ -17,24 +17,31 @@ const OurAdventureSection2 = ({ data, toursData, totalTours }: { data?: []; tour
   const recordsPerPage = 12
   const totalPages = Math.ceil(totalTours / recordsPerPage)
 
-    const fetchTours = async (activity: string, destination: string, page: number) => {
-      const data = await getFilteredTours(activity, destination, page)
-      setCurrentTours(data)
-    }
+  const fetchTours = async (activity: string, destination: string, page: number) => {
+    const data = await getFilteredTours(activity, destination, page)
+    setCurrentTours(data)
+  }
 
   // Update currentPage from URL query if exists
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const page = parseInt(params.get('page') || '1', 10)
-    setCurrentPage(Math.min(Math.max(page, 1), totalPages))
+    const clampedPage = Math.min(Math.max(page, 1), totalPages)
+
+    setCurrentPage(clampedPage)
 
     const activityFromUrl = params.get('activity') || ''
     const destinationFromUrl = params.get('destination') || ''
     setSelectedActivity(activityFromUrl)
     setSelectedDestination(destinationFromUrl)
 
-    fetchTours(activityFromUrl, destinationFromUrl, page)
-  }, [])
+    const loadTours = async () => {
+      await fetchTours(activityFromUrl, destinationFromUrl, clampedPage)
+    }
+
+    //fetchTours(activityFromUrl, destinationFromUrl, page)
+    loadTours()
+  }, [totalPages])
 
     // Handle page change
     const handlePageChange = (page: number) => {
@@ -48,7 +55,11 @@ const OurAdventureSection2 = ({ data, toursData, totalTours }: { data?: []; tour
       fetchTours(selectedActivity, selectedDestination, clampedPage)
     }
 
-    const getPaginationRange = (currentPage: number, totalPages: number, delta = 3): (number | string)[] => {
+    const getPaginationRange = (
+      currentPage: number,
+      totalPages: number,
+      delta = 3
+    ): (number | string)[] => {
       if (totalPages <= 1) return [1]
 
       const range: (number | string)[] = []
@@ -56,14 +67,10 @@ const OurAdventureSection2 = ({ data, toursData, totalTours }: { data?: []; tour
       const right = Math.min(currentPage + delta, totalPages - 1)
 
       range.push(1)
-
       if (left > 2) range.push('...')
       for (let i = left; i <= right; i++) range.push(i)
       if (right < totalPages - 1) range.push('...')
-
       range.push(totalPages)
-
-      console.log('range: ', range)
 
       return range
     }
