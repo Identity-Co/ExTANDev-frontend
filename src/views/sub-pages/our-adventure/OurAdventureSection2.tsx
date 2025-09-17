@@ -41,7 +41,11 @@ const OurAdventureSection2 = ({ data, toursData, totalTours }: { data?: []; tour
 
     //fetchTours(activityFromUrl, destinationFromUrl, page)
     loadTours()
-  }, [totalPages])
+
+    return () => {
+        // e.g., abort ongoing fetch here if needed
+    };
+  }, [totalPages, fetchTours]);
 
     // Handle page change
     const handlePageChange = (page: number) => {
