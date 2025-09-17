@@ -147,7 +147,7 @@ section.home_section1.our_desti_sec1{ background: url(/images/front-pages/images
 .feature_adven_box .feature_adven_img_text .adven_star svg{width: 6.296vw; height: 1.025vw;}
 .feature_adven_box .feature_adven_img_text .adven_star span{font-size: 1.025vw;}
 .feature_adven_box .feature_adven_bot{padding-top: 2.196vw;}
-.feature_adven_box .feature_adven_bot h3{font-size: 2.343vw;}
+.feature_adven_box .feature_adven_bot h3{font-size: 2.343vw; min-height: 5.637vw;}
 .feature_adven_box .feature_adven_bot span.days_price{font-size: 1.025vw; line-height: 1.3; letter-spacing: -0.010em; padding: 0.732vw 0 1.757vw; display: block;}
 .feature_adven_box .feature_adven_bot span.days_price span.taxes{font-size: 0.878vw;}
 .feature_adven_box .feature_adven_bot p{font-size: 1.171vw; line-height: 1.4; letter-spacing: -0.005em;}
@@ -171,7 +171,7 @@ section.home_section1.our_desti_sec1{ background: url(/images/front-pages/images
   .feature_adven_box .feature_adven_top .feature_adven_img{padding-bottom: 65%;}
   .feature_adven_box .feature_adven_img_text .adven_star svg{width: 7.296vw; height: 1.525vw;}
   .feature_adven_box .feature_adven_img_text .adven_star span{font-size: 1.525vw;}
-  .feature_adven_box .feature_adven_bot h3{font-size: 3.343vw;}
+  .feature_adven_box .feature_adven_bot h3{font-size: 3.343vw; min-height: 7.91vw;}
   .feature_adven_box .feature_adven_bot span.days_price{font-size: 1.825vw;}
   .feature_adven_box .feature_adven_bot span.days_price span.taxes{font-size: 1.578vw;}
   .feature_adven_box .feature_adven_bot p{font-size: 1.971vw;}
@@ -191,7 +191,7 @@ section.home_section1.our_desti_sec1{ background: url(/images/front-pages/images
   .feature_adven_box .feature_adven_img_text .adven_star{border-radius: 3.757vw; padding: 1.498vw 2.598vw;}
   .feature_adven_box .feature_adven_img_text .adven_star svg{width: 18.296vw; height: 2.525vw;}
   .feature_adven_box .feature_adven_img_text .adven_star span{font-size: 2.825vw;}
-  .feature_adven_box .feature_adven_bot h3{font-size: 5.343vw;}
+  .feature_adven_box .feature_adven_bot h3{font-size: 5.343vw; min-height: 1vw;}
   .feature_adven_box .feature_adven_bot span.days_price{font-size: 2.985vw;}
   .feature_adven_box .feature_adven_bot span.days_price span.taxes{font-size: 2.978vw;}
   .feature_adven_box .feature_adven_bot p{font-size: 3.371vw;}
