@@ -13,7 +13,7 @@ import styles from './styles.module.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const BannerSection = ({ mode, banners }: { mode: Mode; banners?: []; }) => {
+const BannerSection = ({ mode, banners, filter_locations }: { mode: Mode; banners?: []; filter_locations: [] }) => {
   const slideref = useRef();
   
     useEffect(() => {
@@ -83,24 +83,21 @@ const BannerSection = ({ mode, banners }: { mode: Mode; banners?: []; }) => {
           <div className={classnames(styles.container, 'container')}>
               <div className={classnames(styles.search_box_inner)}>
                   <div className={classnames(styles.search_row)}>
-                      <form>
+                      <form action="/tours/" method="get">
                           <div className={classnames(styles.search_select, styles.ss1)}>
                               <label>Destinations</label>
                               <select name="location" id="location" required>
-                                <option value="">Destination 1</option>
-                                <option value="">Destination 2</option>
-                                <option value="">Destination 3</option>
-                                <option value="">Destination 4</option>
+                                <option value="">Select a Destination</option>
+                                {filter_locations.map((loc) => (
+                                  <option key={loc} value={loc}>
+                                    {loc}
+                                  </option>
+                                ))}
                               </select>
                           </div>
                           <div className={classnames(styles.search_select, styles.ss2)}>
-                              <label>Resort/Hotel</label>
-                              <select name="cars" id="cars">
-                                <option value="">Resort 1</option>
-                                <option value="">Resort 2</option>
-                                <option value="">Resort 3</option>
-                                <option value="">Resort 4</option>
-                              </select>
+                              <label>Date</label>
+                              <input type="date" name="date" id="date" required />
                           </div>
                           <div className={classnames(styles.search_btn)}>
                               <input type="submit" name="" value="Search" />
