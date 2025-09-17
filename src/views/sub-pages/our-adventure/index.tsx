@@ -64,7 +64,7 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
   return (
     <>
 
-      {banners.length ? <BannerSection mode={mode} banners={banners} filter_activities={filter_activities} /> : null}
+      {banners.length ? <BannerSection mode={mode} banners={banners} /> : null}
       <OurAdventureSection1 data={pgData} />
       <OurAdventureSection2 data={pgData} />
       <OverviewSection3 data={pgData} sectionProps={instagramSliderSectionProps} />
