@@ -161,6 +161,11 @@ section.home_section1.our_desti_sec1{ background: url(/images/front-pages/images
 .feature_desti_row .network_travel_top .network_travel_img_text .btn a{font-family: "Bebas Neue", sans-serif; font-size: 1.318vw; font-weight: 400;}
 .feature_desti_row .network_travel_box .network_travel_top:before{opacity: 0.72; background: linear-gradient(360deg,rgba(0, 0, 0, 1) 0%, rgba(25, 26, 26, 0) 100%); height: 50%;}
 
+.pagination{padding-top: 2.928vw; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap:0.732vw;}
+.pagination button {width: 2.196vw; height: 2.196vw; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 1.171vw; font-weight: 400; background-color: #ffffff; border: solid 0.073vw #131313; color: #131313; transition: 0.3s ease-in-out; font-family: "Bebas Neue", sans-serif; cursor: pointer;}
+.pagination button:hover,
+.pagination button.active{background-color: #EA5647; color: #ffffff; border-color: #EA5647;}
+
 
 @media only screen and (max-width: 1024px){
   .feature_adven_box .feature_adven_top .feature_adven_img{padding-bottom: 65%;}
@@ -176,6 +181,9 @@ section.home_section1.our_desti_sec1{ background: url(/images/front-pages/images
   .feature_desti_row{column-gap: 1.758vw; grid-row-gap: 1.758vw; grid-template-columns: repeat(2, 1fr);}
   .feature_desti_row .network_travel_img_text p{font-size: 2.025vw; line-height: 1.3;}
   .feature_desti_row .network_travel_top .network_travel_img_text .btn a{font-size: 2.318vw;}
+
+  .pagination{padding-top: 5.259vw;}
+  .pagination button{width: 4vw; height: 4vw; gap:1.6vw; font-size: 2.1vw;}
   
 }
 
@@ -197,6 +205,9 @@ section.home_section1.our_desti_sec1{ background: url(/images/front-pages/images
   .feature_desti_row .network_travel_top .network_travel_img_text .btn a{font-size: 3.218vw;}
   .network_travel_top .network_travel_img_text{bottom: 6.148vw;}
   .network_travel_top .network_travel_img_text{width: 90%;}
+
+  .pagination{padding-top: 6.759vw;}
+  .pagination button{width: 6vw; height: 6vw; gap:1.6vw; font-size: 3.1vw;}
   
 }
 
