@@ -15,7 +15,7 @@ import OverviewSection4 from '@/views/shared/instagram-feed-section/InstagramFee
 import OverviewSection5 from '@/views/shared/cta-section/CTASection'
 import { useSettings } from '@core/hooks/useSettings'
 
-const LandingPageWrapper = ({ mode, banners, pgData, filter_activities, toursData, totalTours }: { mode: Mode; banners?: []; pgData?: []; filter_activities?: []; toursData?: []; totalTours?: 0 }) => {
+const LandingPageWrapper = ({ mode, banners, pgData, filter_categories, toursData, totalTours }: { mode: Mode; banners?: []; pgData?: []; filter_categories?: []; toursData?: []; totalTours?: 0 }) => {
   // Hooks
   const { updatePageSettings } = useSettings()
 
@@ -63,7 +63,7 @@ const LandingPageWrapper = ({ mode, banners, pgData, filter_activities, toursDat
 
   return (
     <>
-      {banners.length ? <BannerSection mode={mode} banners={banners} filter_activities={filter_activities} /> : null}
+      {banners.length ? <BannerSection mode={mode} banners={banners} filter_categories={filter_categories} /> : null}
       <OurAdventureSection1 data={pgData} />
       <OurAdventureSection2 data={pgData} toursData={toursData} totalTours={totalTours} />
       <OverviewSection3 data={pgData} sectionProps={instagramSliderSectionProps} />

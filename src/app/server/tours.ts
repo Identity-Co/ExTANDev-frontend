@@ -69,11 +69,52 @@ export const getDestinationsByActivity = async (activity: string) => {
   }
 }
 
-export const getFilteredCount = async (activity: string, destination: string) => {
+export const getFilterCategories = async () => {
+  const session = await getServerSession(authOptions);
+
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tours/get-categories`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + session?.user?.userToken
+    }
+  })
+
+  if (!response.ok) {
+    return {}
+  } else {
+    const json = await response.json();
+
+    return json.data
+  }
+}
+
+export const getDestinationsByCategory = async (category: number) => {
+  const session = await getServerSession(authOptions);
+
+  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/tours/get-destinations-by-category`);
+  url.searchParams.append("category_id", category);
+
+  const response = await fetch(url.toString(), {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + session?.user?.userToken
+    }
+  })
+
+  if (!response.ok) {
+    return {}
+  } else {
+    const json = await response.json();
+
+    return json.data
+  }
+}
+
+export const getFilteredCount = async (category: number, destination: string) => {
   const session = await getServerSession(authOptions);
 
   const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/tours/filter-count`);
-  url.searchParams.append("activity", activity);
+  url.searchParams.append("category", category);
   url.searchParams.append("destination", destination);
 
   const response = await fetch(url.toString(), {
@@ -92,12 +133,12 @@ export const getFilteredCount = async (activity: string, destination: string) =>
   }
 }
 
-export const getFilteredTours = async (activity: string, destination: string, page: number) => {
+export const getFilteredTours = async (category: number, destination: string, page: number) => {
   const session = await getServerSession(authOptions);
   if(!page) { page = 1; }
 
   const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/tours/filter-tours`);
-  url.searchParams.append("activity", activity);
+  url.searchParams.append("category", category);
   url.searchParams.append("destination", destination);
   url.searchParams.append("page", page);
   url.searchParams.append("limit", 12);

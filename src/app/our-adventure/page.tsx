@@ -6,19 +6,22 @@ import { getServerMode } from '@core/utils/serverHelpers'
 import { getPageBanner } from '@/app/server/banners'
 import { getPageData } from '@/app/server/pages'
 import { getFilteredTours, getFilteredCount } from '@/app/server/tours'
-import { getFilterActivities } from '@/app/server/tours'
+import { getFilterCategories } from '@/app/server/tours'
 
 interface PageProps {
-  searchParams: {
-    activity?: string
+  searchParams: Promise<{
+    category?: number
     destination?: string
-  }
+    page?: string
+  }>
 }
 
 const LandingPage = async ({ searchParams }: PageProps) => {
-  const activity = searchParams.activity || ''
-  const destination = searchParams.destination || ''
-  const page = searchParams.page || 1
+  const params = await searchParams
+
+  const category = params.category || 0
+  const destination = params.destination || ''
+  const page = params.page || 1
 
   // Vars
   const mode = await getServerMode()
@@ -27,15 +30,15 @@ const LandingPage = async ({ searchParams }: PageProps) => {
 
   const pgData = await getPageData("Our Adventure");
 
-  const totalTours = await getFilteredCount(activity, destination);
-  const toursData = await getFilteredTours(activity, destination, page);
+  const totalTours = await getFilteredCount(category, destination);
+  const toursData = await getFilteredTours(category, destination, page);
 
-  const filter_activities = await getFilterActivities();
+  const filter_categories = await getFilterCategories();
 
   return <LandingPageWrapper mode={mode} 
       banners={banners}
       pgData={pgData}
-      filter_activities={filter_activities}
+      filter_categories={filter_categories}
       toursData={toursData}
       totalTours={totalTours}
     />

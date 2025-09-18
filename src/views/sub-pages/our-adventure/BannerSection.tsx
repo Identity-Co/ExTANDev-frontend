@@ -1,5 +1,6 @@
 // React Imports
 import { useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 
 // Third-party Imports
 import Slider from 'react-slick';
@@ -8,18 +9,20 @@ import classnames from 'classnames'
 // Type Imports
 import type { Mode } from '@core/types'
 
-import { getDestinationsByActivity } from '@/app/server/tours'
+import { getDestinationsByCategory } from '@/app/server/tours'
 
 // Styles Imports
 import styles from './styles.module.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const BannerSection = ({ mode, banners, filter_activities }: { mode: Mode; banners?: []; filter_activities: []; }) => {
+const BannerSection = ({ mode, banners, filter_categories }: { mode: Mode; banners?: []; filter_categories: []; }) => {
   const slideref = useRef();
   const [destinations, setDestinations] = useState<string[]>([])
-  const [selectedActivity, setSelectedActivity] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('')
   const [selectedDestination, setSelectedDestination] = useState('')
+
+  const searchParams = useSearchParams()
   
   useEffect(() => {
     const slides = document.querySelectorAll('.hero_slide_box');
@@ -32,24 +35,30 @@ const BannerSection = ({ mode, banners, filter_activities }: { mode: Mode; banne
       }
     });
 
-    const loadDestinations = async (activityFromUrl) => {
-      const data = await getDestinationsByActivity(activityFromUrl)
+    const loadDestinations = async (categoryFromUrl) => {
+      const data = await getDestinationsByCategory(categoryFromUrl)
 
       setDestinations(data || [])
     }
 
-    const searchParams = new URLSearchParams(window.location.search)
-    const activityFromUrl = searchParams.get('activity')
+    //const searchParams = new URLSearchParams(window.location.search)
+    const categoryFromUrl = searchParams.get('category')
     const destinationFromUrl = searchParams.get('destination')
 
-    if (activityFromUrl) {
-      setSelectedActivity(activityFromUrl)
-
-      loadDestinations(activityFromUrl);
+    if (categoryFromUrl) {
+      setSelectedCategory(categoryFromUrl)
+      loadDestinations(categoryFromUrl);
+    } else {
+      setSelectedCategory('')
+      setDestinations([])
     }
 
-    if (destinationFromUrl) setSelectedDestination(destinationFromUrl)
-  }, []);
+    if (destinationFromUrl) {
+      setSelectedDestination(destinationFromUrl)
+    } else {
+      setSelectedDestination('')
+    }
+  }, [searchParams]);
 
   const settings = {
     dots: false,
@@ -62,16 +71,16 @@ const BannerSection = ({ mode, banners, filter_activities }: { mode: Mode; banne
     slidesToScroll: 1,
   };
 
-  // Handle activity change
-  const handleActivityChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const activity = e.target.value
-    setSelectedActivity(activity)
+  // Handle Category change
+  const handleCategoryChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const category = e.target.value
+    setSelectedCategory(category)
     setSelectedDestination('')
     setDestinations([])
 
-    if (activity) {
+    if (category) {
       try {
-        const data = await getDestinationsByActivity(activity)
+        const data = await getDestinationsByCategory(category)
         setDestinations(data || [])
       } catch (err) {
         console.error('Failed to fetch destinations:', err)
@@ -122,12 +131,12 @@ const BannerSection = ({ mode, banners, filter_activities }: { mode: Mode; banne
                     <div className={classnames(styles.search_row)}>
                         <form action="/our-adventure/" method="get">
                             <div className={classnames(styles.search_select, styles.ss1)}>
-                                <label>Activity</label>
-                                <select name="activity" id="activity" required value={selectedActivity} onChange={handleActivityChange}>
-                                  <option value="">Select a Activity</option>
-                                  {filter_activities.map((loc) => (
-                                    <option key={loc} value={loc}>
-                                      {loc}
+                                <label>Travel Style</label>
+                                <select name="category" id="category" required value={selectedCategory} onChange={handleCategoryChange}>
+                                  <option value="">Select a Travel Style</option>
+                                  {filter_categories.map((loc) => (
+                                    <option key={loc.api_category_id} value={loc.api_category_id}>
+                                      {loc.category_name}
                                     </option>
                                   ))}
                                 </select>

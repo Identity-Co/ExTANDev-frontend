@@ -10,15 +10,15 @@ import classnames from 'classnames'
 import styles from './styles.module.css'
 
 const OurAdventureSection2 = ({ data, toursData, totalTours }: { data?: []; toursData?: []; totalTours?: 0; }) => {
-  const [selectedActivity, setSelectedActivity] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('')
   const [selectedDestination, setSelectedDestination] = useState('')
   const [currentTours, setCurrentTours] = useState(toursData)
   const [currentPage, setCurrentPage] = useState(1)
   const recordsPerPage = 12
   const totalPages = Math.ceil(totalTours / recordsPerPage)
 
-  const fetchTours = async (activity: string, destination: string, page: number) => {
-    const data = await getFilteredTours(activity, destination, page)
+  const fetchTours = async (category: number, destination: string, page: number) => {
+    const data = await getFilteredTours(category, destination, page)
     setCurrentTours(data)
   }
 
@@ -30,16 +30,16 @@ const OurAdventureSection2 = ({ data, toursData, totalTours }: { data?: []; tour
 
     setCurrentPage(clampedPage)
 
-    const activityFromUrl = params.get('activity') || ''
+    const categoryFromUrl = params.get('category') || ''
     const destinationFromUrl = params.get('destination') || ''
-    setSelectedActivity(activityFromUrl)
+    setSelectedCategory(categoryFromUrl)
     setSelectedDestination(destinationFromUrl)
 
     const loadTours = async () => {
-      await fetchTours(activityFromUrl, destinationFromUrl, clampedPage)
+      await fetchTours(categoryFromUrl, destinationFromUrl, clampedPage)
     }
 
-    //fetchTours(activityFromUrl, destinationFromUrl, page)
+    //fetchTours(categoryFromUrl, destinationFromUrl, page)
     loadTours()
   }, [totalPages])
 
@@ -52,7 +52,7 @@ const OurAdventureSection2 = ({ data, toursData, totalTours }: { data?: []; tour
       params.set('page', clampedPage.toString())
       window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`)
 
-      fetchTours(selectedActivity, selectedDestination, clampedPage)
+      fetchTours(selectedCategory, selectedDestination, clampedPage)
     }
 
     const getPaginationRange = (
@@ -60,7 +60,7 @@ const OurAdventureSection2 = ({ data, toursData, totalTours }: { data?: []; tour
       totalPages: number,
       delta = 3
     ): (number | string)[] => {
-      if (totalPages <= 1) return [1]
+      if (totalPages <= 1) return []
 
       const range: (number | string)[] = []
       const left = Math.max(currentPage - delta, 2)
@@ -75,10 +75,6 @@ const OurAdventureSection2 = ({ data, toursData, totalTours }: { data?: []; tour
       return range
     }
 
-
-
-
-  
   return (
     <section className={classnames(styles.our_desti_sec2, styles.our_adven_sec2)}>
         <div className="container">
