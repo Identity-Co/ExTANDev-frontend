@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+
 // Component Imports
 import LandingPageWrapper from '@views/sub-pages/our-adventure/sub-pages'
 
@@ -10,6 +12,10 @@ const LandingPage = async ({ params }) => {
   
   const categories = await getAllCategories();
   const {data, tour_details} = await getToruBySlug(adventureSlug);
+
+  if(!data || !tour_details) {
+  	redirect("/our-adventure/");
+  }
   
   // Vars
   const mode = await getServerMode()
