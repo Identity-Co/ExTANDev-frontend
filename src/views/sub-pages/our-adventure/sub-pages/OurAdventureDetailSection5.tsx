@@ -1,124 +1,115 @@
 // React Imports
-import { useState} from 'react'
-
-import Accordion from '@mui/material/Accordion'
-import AccordionSummary from '@mui/material/AccordionSummary'
-import AccordionDetails from '@mui/material/AccordionDetails'
+import React, { useState, useMemo } from 'react'
 
 // Third-party Imports
 import classnames from 'classnames'
 
-
 // Styles Imports
 import styles from './styles.module.css'
 
-const OurAdventureDetailSection5 = () => {
+const OurAdventureDetailSection5 = ({ tour, tour_details }: { tour: any; tour_details: any; }) => {
+    
+    const statuses = {"AVAILABLE": "Open", "WAIT_LIST": "Sold Out", "REQUEST_SPACE": "Request"};
 
-    const [expanded, setExpanded] = useState('1');
-    const [showAll, setShowAll] = useState(false);
+    const formatDate = (dateStr) => {
+        const date = new Date(dateStr)
+        const weekday = date.toLocaleDateString('en-US', { weekday: 'short' })
+        const month   = date.toLocaleDateString('en-US', { month: 'short' })
+        const day     = date.toLocaleDateString('en-US', { day: '2-digit' })
+        const year    = date.getFullYear()
 
-    const handleChange =
-    (panel: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false)
+        return `${weekday}, ${month} ${day} ${year}`
     }
 
-    const handleShowMore = () => {
-        setShowAll(!showAll);
-    };
+    const formatAmount = (amount) => {
+        return amount.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 0
+        });
+    }
 
-    const faqData = [
-        { 
-            id: '1',
-            question: 'Where does the trip start?',
-            answer: 'On the first day of the trip we’ll meet you at Hotel Parque del Lago at 6pm for dinner with your fellow adventurers. You are welcome to book your pre-trip stay at this hotel directly or any other hotel in San Jose, though you must make your own way to Hotel Parque del Lago at the pre-designated time.'
-        },
-        { 
-            id: '2',
-            question: 'Where does the trip end?',
-            answer: 'On the first day of the trip we’ll meet you at Hotel Parque del Lago at 6pm for dinner with your fellow adventurers. You are welcome to book your pre-trip stay at this hotel directly or any other hotel in San Jose, though you must make your own way to Hotel Parque del Lago at the pre-designated time.'
-        },
-        { 
-            id: '3',
-            question: 'What flights would you recommend?',
-            answer: 'On the first day of the trip we’ll meet you at Hotel Parque del Lago at 6pm for dinner with your fellow adventurers. You are welcome to book your pre-trip stay at this hotel directly or any other hotel in San Jose, though you must make your own way to Hotel Parque del Lago at the pre-designated time.'
-        },
-        { 
-            id: '4',
-            question: 'What are the accommodations we stay at on this trip?',
-            answer: 'On the first day of the trip we’ll meet you at Hotel Parque del Lago at 6pm for dinner with your fellow adventurers. You are welcome to book your pre-trip stay at this hotel directly or any other hotel in San Jose, though you must make your own way to Hotel Parque del Lago at the pre-designated time.'
-        },
-        { 
-            id: '5',
-            question: 'How fit do I need to be for this trip?',
-            answer: 'On the first day of the trip we’ll meet you at Hotel Parque del Lago at 6pm for dinner with your fellow adventurers. You are welcome to book your pre-trip stay at this hotel directly or any other hotel in San Jose, though you must make your own way to Hotel Parque del Lago at the pre-designated time.'
-        },
-        { 
-            id: '6',
-            question: 'How fit do I need to be for this trip?',
-            answer: 'On the first day of the trip we’ll meet you at Hotel Parque del Lago at 6pm for dinner with your fellow adventurers. You are welcome to book your pre-trip stay at this hotel directly or any other hotel in San Jose, though you must make your own way to Hotel Parque del Lago at the pre-designated time.'
-        },
-        { 
-            id: '7',
-            question: 'How fit do I need to be for this trip?',
-            answer: 'On the first day of the trip we’ll meet you at Hotel Parque del Lago at 6pm for dinner with your fellow adventurers. You are welcome to book your pre-trip stay at this hotel directly or any other hotel in San Jose, though you must make your own way to Hotel Parque del Lago at the pre-designated time.'
-        },
-    ];
-  
+    const [selectedYear, setSelectedYear] = useState<number | ''>('');
+
+    const availableYears = useMemo(() => {
+        const years = tour_details.availabilities.map(slot => new Date(slot.start_date).getFullYear());
+        return Array.from(new Set(years)).sort((a, b) => a - b); // unique and sorted
+    }, [tour_details.availabilities]);
+
+    /*const filteredSlots = useMemo(() => {
+        if (!selectedYear) return tour_details.availabilities;
+        return tour_details.availabilities.filter(slot => new Date(slot.start_date).getFullYear() === Number(selectedYear));
+    }, [selectedYear, tour_details.availabilities]);*/
+
+    const filteredSlots = useMemo(() => {
+        let slots = tour_details.availabilities;
+
+        // filter by selected year if any
+        if (selectedYear) {
+            slots = slots.filter(slot => new Date(slot.start_date).getFullYear() === Number(selectedYear));
+        }
+
+        // sort by start_date ascending
+        return slots.sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime());
+    }, [selectedYear, tour_details.availabilities]);
+    
     return (
-        <section className={classnames(styles.faq_section, styles.adven_detl_sec5, 'pb_150')}>
+        <section className={classnames(styles.adven_detl_sec4, 'pb_150')}>
             <div className="container">
-                <div className={classnames(styles.head_text_center, 'head_text_center')}>
-                    <h2 className="fs_55">USEFUL INFO</h2>
-                </div>
-                <div className={classnames(styles.faq)}>
-                    {faqData.slice(0, 5).map(faq => (
-                        <div key={faq.id} className={classnames(styles.faq_box)}>
-                            <Accordion expanded={expanded === faq.id ? true : false} onChange={handleChange(faq.id)}>
-                                <AccordionSummary 
-                                    id={`panel-header-${faq.id}`}
-                                    aria-controls={`panel-content-${faq.id}`}
-                                    sx={{ padding: 0, '& .MuiAccordionSummary-expandIconWrapper': { display: 'none' } }}
+                <div className={classnames(styles.departure_ates, 'bx_sd')}>
+                   <div className={classnames(styles.departure_ates_inner)}>
+                       <h4>{tour.name} Departure Dates</h4>
+                       <div className={classnames(styles.search_row)}>
+                           <form>
+                                <div className={classnames(styles.search_select, styles.ss1)}>
+                                    <label>Select Year</label>
+                                    <select 
+                                        value={selectedYear} 
+                                        onChange={e => setSelectedYear(e.target.value ? Number(e.target.value) : '')}
                                     >
-                                    <div className={classnames(styles.question, expanded === faq.id ? styles.open : '')}>
-                                        <h4>{faq.question}</h4>
-                                    </div>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <div className={classnames(styles.answercont)}>
-                                        <div className={classnames(styles.answer)}>
-                                            <p>{faq.answer}</p>
-                                        </div>
-                                    </div>
-                                </AccordionDetails>
-                            </Accordion>
+                                        <option value="">All years</option>
+                                        {availableYears.map(year => (
+                                            <option key={year} value={year}>{year}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </form>
                         </div>
-                    ))}
+                        <h4 className={classnames(styles.selsect_year)}>{selectedYear || 'All Years'}</h4>
+                        <div className={classnames(styles.departure_table_main)}>
+                            <div className={classnames(styles.departure_table)}>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Start</th>
+                                            <th>Ending</th>
+                                            <th>Availability</th>
+                                            <th>Prices from</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                    {showAll && faqData.slice(5).map(faq => (
-                        <div key={faq.id} className={classnames(styles.faq_box)}>
-                            <Accordion expanded={expanded === faq.id ? true : false} onChange={handleChange(faq.id)}>
-                                <AccordionSummary 
-                                    id={`panel-header-${faq.id}`}
-                                    aria-controls={`panel-content-${faq.id}`}
-                                    sx={{ padding: 0, '& .MuiAccordionSummary-expandIconWrapper': { display: 'none' } }}
-                                    >
-                                    <div className={classnames(styles.question, expanded === faq.id ? styles.open : '')}>
-                                        <h4>{faq.question}</h4>
-                                    </div>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <div className={classnames(styles.answercont)}>
-                                        <div className={classnames(styles.answer)}>
-                                            <p>{faq.answer}</p>
-                                        </div>
-                                    </div>
-                                </AccordionDetails>
-                            </Accordion>
+                                        {filteredSlots.map(slot => (
+                                            <tr key={slot.start_date}>
+                                                <td>{formatDate(slot.start_date)}</td>
+                                                <td>{formatDate(slot.finish_date)}</td>
+                                                <td className={classnames({[styles.item_sold]: slot.status === "WAIT_LIST"})}>{statuses[slot.status]} {slot.status !== "WAIT_LIST" && `(${slot.spaces})`}</td>
+                                                <td>{formatAmount(slot.price)} USD<br /><span className={classnames(styles.price_tax)}>(price includes taxes and fees)</span></td>
+                                                <td>
+                                                    {slot.status == 'WAIT_LIST' && (<div className={classnames(styles.btn, styles.sold_btn, 'btn')}><a>SOLD OUT</a></div>)}
+                                                    {slot.status == 'REQUEST_SPACE' && (<div className={classnames(styles.btn, styles.departure_btn_set, 'btn')}><a href={`${tour_details.site_links.checkout}#date/${slot.start_date.slice(0,10)}`}>INQUIRE</a></div>)}
+                                                    {slot.status == 'AVAILABLE' && (<div className={classnames(styles.btn, styles.departure_btn_set, 'btn')}><a href={`${tour_details.site_links.checkout}#date/${slot.start_date.slice(0,10)}`}>BOOK</a></div>)}
+                                                    
+                                                </td>
+                                            </tr>
+                                        ))}
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    ))}
-                </div>
-                <div className={classnames(styles.faq_more_btn)}>
-                    <button onClick={handleShowMore}>{showAll ? "- SHOW LESS" : "+ SHOW MORE"}</button>
+                   </div> 
                 </div>
             </div>
         </section>

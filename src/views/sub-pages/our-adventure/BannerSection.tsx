@@ -9,7 +9,7 @@ import classnames from 'classnames'
 // Type Imports
 import type { Mode } from '@core/types'
 
-import { getDestinationsByCategory } from '@/app/server/tours'
+import { getDestinationsByCustomCategory } from '@/app/server/tours'
 
 // Styles Imports
 import styles from './styles.module.css'
@@ -36,9 +36,12 @@ const BannerSection = ({ mode, banners, filter_categories }: { mode: Mode; banne
     });
 
     const loadDestinations = async (categoryFromUrl) => {
-      const data = await getDestinationsByCategory(categoryFromUrl)
-
-      setDestinations(data || [])
+      const matchedCategory = filter_categories.find(loc => loc.category_name === categoryFromUrl)
+      if (matchedCategory) {
+        const cat_id = matchedCategory._id
+        const data = await getDestinationsByCustomCategory(cat_id)
+        setDestinations(data || [])
+      }
     }
 
     //const searchParams = new URLSearchParams(window.location.search)
@@ -73,14 +76,17 @@ const BannerSection = ({ mode, banners, filter_categories }: { mode: Mode; banne
 
   // Handle Category change
   const handleCategoryChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const category = e.target.value
-    setSelectedCategory(category)
+    const selectedOption = e.target.selectedOptions[0]
+
+    const categoryName = e.target.value
+    const category = selectedOption.getAttribute("data-id");
+    setSelectedCategory(categoryName)
     setSelectedDestination('')
     setDestinations([])
 
     if (category) {
       try {
-        const data = await getDestinationsByCategory(category)
+        const data = await getDestinationsByCustomCategory(category)
         setDestinations(data || [])
       } catch (err) {
         console.error('Failed to fetch destinations:', err)
@@ -135,7 +141,7 @@ const BannerSection = ({ mode, banners, filter_categories }: { mode: Mode; banne
                                 <select name="category" id="category" required value={selectedCategory} onChange={handleCategoryChange}>
                                   <option value="">Select a Travel Style</option>
                                   {filter_categories.map((loc) => (
-                                    <option key={loc.api_category_id} value={loc.api_category_id}>
+                                    <option key={loc._id} value={loc.category_name} data-id={loc._id}>
                                       {loc.category_name}
                                     </option>
                                   ))}
@@ -145,7 +151,7 @@ const BannerSection = ({ mode, banners, filter_categories }: { mode: Mode; banne
                                 <label>Destinations</label>
                                 <select name="destination" id="destination" value={selectedDestination} onChange={(e) => setSelectedDestination(e.target.value)}>
                                   <option value="">Select a Destination</option>
-                                  {destinations.map((dest: string) => (
+                                  {Array.isArray(destinations) && destinations.map((dest: string) => (
                                     <option key={dest} value={dest}>
                                       {dest}
                                     </option>

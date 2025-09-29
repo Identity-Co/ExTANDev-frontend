@@ -6,11 +6,11 @@ import { getServerMode } from '@core/utils/serverHelpers'
 import { getPageBanner } from '@/app/server/banners'
 import { getPageData } from '@/app/server/pages'
 import { getFilteredTours, getFilteredCount } from '@/app/server/tours'
-import { getFilterCategories } from '@/app/server/tours'
+import { getCustomCategories } from '@/app/server/tours'; // getFilterCategories
 
 interface PageProps {
   searchParams: Promise<{
-    category?: number
+    category?: string
     destination?: string
     page?: string
   }>
@@ -19,7 +19,8 @@ interface PageProps {
 const LandingPage = async ({ searchParams }: PageProps) => {
   const params = await searchParams
 
-  const category = params.category || 0
+  //let cat_pattern = '';
+  const category = params.category || ''
   const destination = params.destination || ''
   const page = params.page || 1
 
@@ -30,10 +31,11 @@ const LandingPage = async ({ searchParams }: PageProps) => {
 
   const pgData = await getPageData("Our Adventure");
 
+  //const filter_categories = await getFilterCategories();
+  const filter_categories = await getCustomCategories();
+  
   const totalTours = await getFilteredCount(category, destination);
   const toursData = await getFilteredTours(category, destination, page);
-
-  const filter_categories = await getFilterCategories();
 
   return <LandingPageWrapper mode={mode} 
       banners={banners}

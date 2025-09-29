@@ -6,9 +6,6 @@ import InitColorSchemeScript from '@mui/material/InitColorSchemeScript'
 // Third-party Imports
 import 'react-perfect-scrollbar/dist/css/styles.css'
 
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 import PageLoader from '@/app/providers/PageLoader'
 import NavigationEvents from '@/app/providers/NavigationEvents'
 
@@ -51,7 +48,6 @@ const RootLayout = async (props: ChildrenType ) => {
     
       <html id='__next' lang='en' dir={direction} suppressHydrationWarning>
         <body className='flex is-full min-bs-full flex-auto flex-col'>
-          <ToastContainer />
           <InitColorSchemeScript attribute='data' defaultMode={systemMode} />
           <NavigationEvents />
           <PageLoader />

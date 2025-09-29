@@ -3,12 +3,20 @@ import LandingPageWrapper from '@views/sub-pages/our-adventure/sub-pages'
 
 // Server Action Imports
 import { getServerMode } from '@core/utils/serverHelpers'
+import { getToruBySlug, getAllCategories, getCustomCategories } from '@/app/server/tours'
 
-const LandingPage = async () => {
+const LandingPage = async ({ params }) => {
+  const adventureSlug = params.adventure
+  
+  const categories = await getAllCategories();
+  const {data, tour_details} = await getToruBySlug(adventureSlug);
+  
   // Vars
   const mode = await getServerMode()
 
-  return <LandingPageWrapper mode={mode} />
+  const filter_categories = await getCustomCategories();
+
+  return <LandingPageWrapper mode={mode} tour={data} tour_details={tour_details} categories={categories} filter_categories={filter_categories} />
 }
 
 export default LandingPage

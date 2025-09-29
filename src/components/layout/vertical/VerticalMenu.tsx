@@ -151,6 +151,16 @@ const VerticalMenu = ({  scrollMenu }: Props) => {
           Adventure Guide
         </MenuItem>
 
+        <MenuItem 
+          href='/admin/custom-categories/' 
+          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/custom-categories/')}
+          exactMatch={false}
+          activeUrl='/admin/custom-categories/'
+          icon={<i className='ri-menu-search-line' />}
+        >
+          Tour Custom Categories
+        </MenuItem>
+
 
         {/*<SubMenu
           label='Pages'
