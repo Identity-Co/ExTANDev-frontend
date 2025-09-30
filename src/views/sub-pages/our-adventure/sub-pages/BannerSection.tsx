@@ -105,7 +105,7 @@ const BannerSection = ({ mode, filter_categories }: { mode: Mode; filter_categor
                     <div className={classnames(styles.search_row)}>
                         <form action="/our-adventure/" method="get">
                             <div className={classnames(styles.search_select, styles.ss1)}>
-                                <label>Activity</label>
+                                <label>Travel Style</label>
                                 <select name="category" id="category" required value={selectedCategory} onChange={handleCategoryChange}>
                                   <option value="">Select a Travel Style</option>
                                   {filter_categories.map((loc) => (

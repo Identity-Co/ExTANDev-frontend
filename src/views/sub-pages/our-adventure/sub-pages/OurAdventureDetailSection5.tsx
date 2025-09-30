@@ -1,5 +1,5 @@
 // React Imports
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 
 // Third-party Imports
 import classnames from 'classnames'
@@ -7,36 +7,7 @@ import classnames from 'classnames'
 // Styles Imports
 import styles from './styles.module.css'
 
-// Custom media query hook
-const useMediaQuery = (query) => {
-  const [matches, setMatches] = useState(false);
-
-  useEffect(() => {
-    const media = window.matchMedia(query);
-    
-    // Set initial value
-    setMatches(media.matches);
-    
-    // Define callback function
-    const listener = (event) => {
-      setMatches(event.matches);
-    };
-    
-    // Add listener
-    media.addEventListener('change', listener);
-    
-    // Clean up
-    return () => {
-      media.removeEventListener('change', listener);
-    };
-  }, [query]);
-
-  return matches;
-}
-
 const OurAdventureDetailSection5 = ({ tour, tour_details }: { tour: any; tour_details: any; }) => {
-    
-    const isMobile = useMediaQuery('(max-width: 767px)');
     
     const statuses = {"AVAILABLE": "Open", "WAIT_LIST": "Sold Out", "REQUEST_SPACE": "Request"};
 
@@ -62,7 +33,7 @@ const OurAdventureDetailSection5 = ({ tour, tour_details }: { tour: any; tour_de
 
     const availableYears = useMemo(() => {
         const years = tour_details.availabilities.map(slot => new Date(slot.start_date).getFullYear());
-        return Array.from(new Set(years)).sort((a, b) => a - b);
+        return Array.from(new Set(years)).sort((a, b) => a - b); // unique and sorted
     }, [tour_details.availabilities]);
 
     /*const filteredSlots = useMemo(() => {
@@ -72,24 +43,15 @@ const OurAdventureDetailSection5 = ({ tour, tour_details }: { tour: any; tour_de
 
     const filteredSlots = useMemo(() => {
         let slots = tour_details.availabilities;
+
+        // filter by selected year if any
         if (selectedYear) {
             slots = slots.filter(slot => new Date(slot.start_date).getFullYear() === Number(selectedYear));
         }
+
+        // sort by start_date ascending
         return slots.sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime());
     }, [selectedYear, tour_details.availabilities]);
-
-    const renderActionButton = (slot) => {
-        if (slot.status == 'WAIT_LIST') {
-            return <div className={classnames(styles.btn, styles.sold_btn, 'btn')}><a>SOLD OUT</a></div>;
-        }
-        if (slot.status == 'REQUEST_SPACE') {
-            return <div className={classnames(styles.btn, styles.departure_btn_set, 'btn')}><a href={`${tour_details.site_links.checkout}#date/${slot.start_date.slice(0,10)}`}>INQUIRE</a></div>;
-        }
-        if (slot.status == 'AVAILABLE') {
-            return <div className={classnames(styles.btn, styles.departure_btn_set, 'btn')}><a href={`${tour_details.site_links.checkout}#date/${slot.start_date.slice(0,10)}`}>BOOK</a></div>;
-        }
-        return null;
-    };
     
     return (
         <section className={classnames(styles.adven_detl_sec4, 'pb_150')}>
@@ -119,61 +81,30 @@ const OurAdventureDetailSection5 = ({ tour, tour_details }: { tour: any; tour_de
                                 <table>
                                     <thead>
                                         <tr>
-                                            {isMobile ? (
-                                                // Mobile: Action column first
-                                                <>
-                                                    <th></th>
-                                                    <th>Start</th>
-                                                    <th>Ending</th>
-                                                    <th>Availability</th>
-                                                    <th>Prices from</th>
-                                                </>
-                                            ) : (
-                                                // Desktop: Normal order
-                                                <>
-                                                    <th>Start</th>
-                                                    <th>Ending</th>
-                                                    <th>Availability</th>
-                                                    <th>Prices from</th>
-                                                    <th></th>
-                                                </>
-                                            )}
+                                            <th>Start</th>
+                                            <th>Ending</th>
+                                            <th>Availability</th>
+                                            <th>Prices from</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
+
                                         {filteredSlots.map(slot => (
                                             <tr key={slot.start_date}>
-                                                {isMobile ? (
-                                                    // Mobile: Action column first
-                                                    <>
-                                                        <td>{renderActionButton(slot)}</td>
-                                                        <td>{formatDate(slot.start_date)}</td>
-                                                        <td>{formatDate(slot.finish_date)}</td>
-                                                        <td className={classnames({[styles.item_sold]: slot.status === "WAIT_LIST"})}>
-                                                            {statuses[slot.status]} {slot.status !== "WAIT_LIST" && `(${slot.spaces})`}
-                                                        </td>
-                                                        <td>
-                                                            {formatAmount(slot.price)} USD<br />
-                                                            <span className={classnames(styles.price_tax)}>(price includes taxes and fees)</span>
-                                                        </td>
-                                                    </>
-                                                ) : (
-                                                    // Desktop: Normal order
-                                                    <>
-                                                        <td>{formatDate(slot.start_date)}</td>
-                                                        <td>{formatDate(slot.finish_date)}</td>
-                                                        <td className={classnames({[styles.item_sold]: slot.status === "WAIT_LIST"})}>
-                                                            {statuses[slot.status]} {slot.status !== "WAIT_LIST" && `(${slot.spaces})`}
-                                                        </td>
-                                                        <td>
-                                                            {formatAmount(slot.price)} USD<br />
-                                                            <span className={classnames(styles.price_tax)}>(price includes taxes and fees)</span>
-                                                        </td>
-                                                        <td>{renderActionButton(slot)}</td>
-                                                    </>
-                                                )}
+                                                <td>{formatDate(slot.start_date)}</td>
+                                                <td>{formatDate(slot.finish_date)}</td>
+                                                <td className={classnames({[styles.item_sold]: slot.status === "WAIT_LIST"})}>{statuses[slot.status]} {slot.status !== "WAIT_LIST" && `(${slot.spaces})`}</td>
+                                                <td>{formatAmount(slot.price)} USD<br /><span className={classnames(styles.price_tax)}>(price includes taxes and fees)</span></td>
+                                                <td>
+                                                    {slot.status == 'WAIT_LIST' && (<div className={classnames(styles.btn, styles.sold_btn, 'btn')}><a>SOLD OUT</a></div>)}
+                                                    {slot.status == 'REQUEST_SPACE' && (<div className={classnames(styles.btn, styles.departure_btn_set, 'btn')}><a href={`${tour_details.site_links.checkout}#date/${slot.start_date.slice(0,10)}`}>INQUIRE</a></div>)}
+                                                    {slot.status == 'AVAILABLE' && (<div className={classnames(styles.btn, styles.departure_btn_set, 'btn')}><a href={`${tour_details.site_links.checkout}#date/${slot.start_date.slice(0,10)}`}>BOOK</a></div>)}
+                                                    
+                                                </td>
                                             </tr>
                                         ))}
+                                        
                                     </tbody>
                                 </table>
                             </div>
