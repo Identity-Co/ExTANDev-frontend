@@ -27,6 +27,7 @@ svg path{transition: 0.3s ease-in-out;}
 .container{max-width: 100%; margin: 0 auto; padding: 0 5.857vw;}
 input, textarea, select {-webkit-appearance: none;}
 .extra_bold{font-weight: 800;}
+.py_24{ padding: 1.250vw 0; }
 .py_150{padding: 10.981vw 0;}
 .pt_150{padding-top: 10.981vw;}
 .pb_150{padding-bottom: 10.981vw;}
@@ -169,8 +170,10 @@ section.home_section2{position: relative;}
 .adv_post_img_slide .slick-next{right: 0.512vw; z-index: 1; background: url(/images/front-pages/images/right-white-arrow-small.svg) center no-repeat !important; background-size: contain !important; width: 1.098vw; height: 1.611vw; opacity: 0.69; transition: 0.3s ease-in-out;}
 .adv_post_img_slide .slick-next:hover,
 .adventure_post_slide .slick-list .slick-next{opacity: 1;}
-.travel_stories_faq .slick-list{margin: 0 -0.659vw;}
-.travel_stories_faq .slick-list .slick-slide{padding: 0 0.659vw;}
+.travel_stories_faq .slick-list,
+.grpbx_content .slick-list{margin: 0 -0.659vw;}
+.travel_stories_faq .slick-list .slick-slide,
+.grpbx_content .slick-list .slick-slide{padding: 0 0.659vw;}
 
 @media only screen and (max-width: 768px){
   .adv_post_img_slide .slick-prev,
@@ -227,15 +230,15 @@ section.home_section2{position: relative;}
   .gap_48{gap:4.688vw;}
   .gap_56{gap:5.469vw;}
   .gap_64{gap:6.25vw !important;}
-  .py_150{padding: 14.648vw 0;}
-  .pt_150{padding-top: 14.648vw;}
-  .pb_150{padding-bottom: 14.648vw;}
-  .py_100{padding: 9.766vw 0;}
-  .pt_100{padding-top: 9.766vw;}
-  .pb_100{padding-bottom: 9.766vw;}
-  .py_50{padding: 4.883vw 0;}
-  .pt_50{padding-top: 4.883vw;}
-  .pb_50{padding-bottom: 4.883vw;}
+  .py_150{padding: 6.25vw 0;}
+  .pt_150{padding-top: 6.25vw;}
+  .pb_150{padding-bottom: 6.25vw;}
+  .py_100{padding: 5.469vw 0;}
+  .pt_100{padding-top: 5.469vw;}
+  .pb_100{padding-bottom: 5.469vw;}
+  .py_50{padding: 4.688vw 0;}
+  .pt_50{padding-top: 4.688vw;}
+  .pb_50{padding-bottom: 4.688vw;}
   .grid4{display: grid; grid-template-columns: repeat(2, 1fr);}
   body{font-size: 1.758vw !important; line-height: 2.441vw !important;}
   p{padding-bottom: 4.042vw;}
@@ -271,15 +274,15 @@ section.home_section2{position: relative;}
   .gap_48{gap:6.25vw;}
   .gap_56{gap:7.292vw;}
   .gap_64{gap:8.333vw !important;}
-  .py_150{padding: 14.531vw 0;}
-  .pt_150{padding-top: 14.531vw;}
-  .pb_150{padding-bottom: 14.531vw;}
-  .py_100{padding: 10.021vw 0;}
-  .pt_100{padding-top: 10.021vw;}
-  .pb_100{padding-bottom: 10.021vw;}
-  .py_50{padding: 6.51vw 0;}
-  .pt_50{padding-top: 6.51vw;}
-  .pb_50{padding-bottom: 6.51vw;}
+  .py_150{padding: 8.333vw 0;}
+  .pt_150{padding-top: 8.333vw;}
+  .pb_150{padding-bottom: 8.333vw;}
+  .py_100{padding: 7.292vw 0;}
+  .pt_100{padding-top: 7.292vw;}
+  .pb_100{padding-bottom: 7.292vw;}
+  .py_50{padding: 6.25vw 0;}
+  .pt_50{padding-top: 6.25vw;}
+  .pb_50{padding-bottom: 6.25vw;}
   .grid2{grid-template-columns: repeat(1, 1fr);}
   .grid3{grid-template-columns: repeat(1, 1fr);}
   .grid4{grid-template-columns: repeat(1, 1fr);}
@@ -295,7 +298,7 @@ section.home_section2{position: relative;}
   body .slick-dots{gap:2.5vw; }
   body .slick-dots li button{width: 3.245vw; height: 3.245vw; border-radius: 100%;}
   .btn a,
-  .btn button{font-size: 3.425vw; padding: 1.932vw 3.525vw;}
+  .btn button{font-size: 3.225vw; padding: 1.932vw 3.525vw;}
   .top-banner .keen-slider:not([data-keen-slider-disabled]) .keen-slider__slide { min-height: 80vh; }
 }
 
@@ -407,4 +410,149 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
   .amb_sec1_inner{max-width: 100%;}
   
 }
+
+
+/* MY ACCOUNT layout CSS */
+/*banner-start*/
+
+.ambassadorship_banner{min-height: 30.381vw;}
+
+.cta_section{background: #F85241; position: relative;}
+.cta_section:before{position: absolute; content: ""; background: url(/images/front-pages/images/tan-background.png) center no-repeat; background-size: 100% 100%; top: 0; left: 0; width: 100%; height: 100%; mix-blend-mode: multiply;}
+
+
+@media only screen and (max-width: 768px){
+  .ambassadorship_banner{min-height: 40.381vw;}  
+}
+
+.ambassadorship_sec3{position: relative;}
+.ambassadorship_sec3:before{position: absolute; content: ""; background: linear-gradient(180deg,rgba(255, 255, 255, 1) 10%, rgba(227, 227, 227, 1) 90%); bottom: 0; left: 0; right: 0; width: 100%; height: 60%; z-index: -1;}
+.ambassadorship_sec3 .ambassadorship_sec3_inner{max-width: 66.984vw; margin: 0 auto;}
+.signup_box{padding: 3.66vw; background-color: #ffffff;}
+.signup_box h4{font-size: 1.903vw; text-transform: uppercase; text-align: center; padding-bottom: 2.928vw; color: #000000; font-family: "Raleway", sans-serif; font-weight: 800;}
+.signup_box .input_row{display: flex; flex-wrap: wrap; gap:1.098vw;}
+.signup_box .input_row .input_full_box{width: 100%;}
+.signup_box .input_row .input_full_box:not(.checkbox_label) label{display: block; width: 100%;}
+.signup_box .input_row .input_full_box input:not([type="checkbox"], [type="submit"]){width: 100%; min-height: 4.319vw; padding: 1.464vw; background-color: #F4F8F7; border-radius: 0.293vw; font-size: 1.025vw; font-family: "Raleway", sans-serif; font-weight: 400; color: #868686; border: none; outline: none;}
+
+.signup_box .input_row .input_full_box.pass_ref{padding-top: 1.464vw;}
+.signup_box .input_row .input_full_box.pass_ref span{font-size: 0.952vw; font-family: "Raleway", sans-serif; font-weight: 400; color: #868686; text-align: center; display: block; line-height: 1.4;}
+.signup_box .input_row .input_full_box input[type="password"]{padding-left: 2.928vw; background: #F4F8F7 url(/images/sub-pages/lock.svg) center left 1.464vw no-repeat; background-size: 0.878vw 0.878vw;}
+.signup_box .input_row .input_full_box.checkbox_label{padding-top: 1.464vw; position: relative;}
+.signup_box .input_row .input_full_box.checkbox_label input{padding: 0; margin-bottom: 0; -webkit-appearance: auto; cursor: pointer; left: 0; right: 0; height: 1.464vw; z-index: 1; opacity: 0; bottom: 0; position: absolute;}
+.signup_box .input_row .input_full_box.checkbox_label label {position: relative;cursor: pointer; font-size: 1.025vw; font-family: "Raleway", sans-serif; font-weight: 400; color: #868686; display: flex; align-items: center; line-height: 1.4;}
+
+.signup_box .input_row .input_full_box.checkbox_label label:before { content:''; -webkit-appearance: none; background-color: transparent; border: 0.146vw solid #868686; width: 1.171vw; height: 1.171vw; display: inline-block; position: relative; vertical-align: middle; cursor: pointer; margin-right: 0.586vw; top: -0.146vw;}
+.signup_box .input_row .input_full_box.checkbox_label input:checked + label:after { content: ''; display: block; position: absolute; top: 0.04vw; left: 0.459vw; width: 0.39vw; height: 0.825vw; border: solid #127AC3; border-width: 0 0.146vw 0.146vw 0; transform: rotate(45deg);}
+.signup_box .input_row .input_full_box.checkbox_label a{color: #127AC3; position: relative; z-index: 2;}
+.signup_box .input_row .input_full_box.checkbox_label a:hover{color: #F85241;}
+.signup_box .input_row .input_full_box.submit_btn{padding-top: 1.83vw; text-align: center;}
+.signup_box .input_row input[type="submit"],
+.signup_box .input_row .input_full_box a.back_btn{background-color: #F85241; font-size: 1.025vw; font-family: "Raleway", sans-serif; color: #ffffff; text-align: center; display: inline-block; line-height: 1; text-transform: uppercase; border-radius: 3.66vw; font-weight: 600; padding: 1.098vw 3.66vw; border: none; outline: none; cursor: pointer; transition: 0.3s ease-in-out; letter-spacing: 0.10em;}
+.signup_box .input_row .input_full_box a.back_btn{background-color: #F4F8F7; color: #868686;}
+.signup_box .input_row .input_full_box a.back_btn:hover{background: rgb(31, 31, 31, 0.8); color: #ffffff;}
+.signup_box .input_row input[type="submit"]:hover{background: rgb(31, 31, 31, 0.8);}
+.signup_box .input_row .input_full_box.checkbox_label label a.forgot_pass{margin-left: auto;}
+.signup_box .input_row .input_full_box a{color: #127AC3; position: relative; z-index: 2;}
+.signup_box .input_row .input_full_box a:hover{color: #F85241;}
+.signup_box .input_row .input_full_box.email input[type="email"]{padding-left: 2.928vw; background: #F4F8F7 url(/images/sub-pages/email.svg) center left 1.464vw no-repeat; background-size: 1.025vw 0.805vw;}
+.grid_box .signup_box.account_box{margin-top: 1.464vw;}
+.signup_box .input_row .input_full_box.pass_ref.recovery{padding-top: 0;}
+.signup_box .btnset{display: flex; justify-content: space-between; flex-wrap: wrap; padding-top: 1.098vw;}
+.signup_box .input_row .btnset .submit_btn{padding-top: 0;}
+.signup_box.sign_in .input_row .input_full_box.submit_btn{padding-top: 0.732vw;}
+.signup_box.sign_in{padding-bottom: 2.296vw;}
+.signup_box.account_box h4{padding-bottom: 2.196vw;}
+
+
+@media only screen and (max-width: 1024px){
+  .ambassadorship_sec3 .ambassadorship_sec3_inner{max-width: 100%;}
+  .signup_box h4{font-size: 2.903vw;}
+  .signup_box .input_row .input_full_box input:not([type="checkbox"], [type="submit"]){font-size: 1.825vw;}
+  .signup_box .input_row .input_full_box.pass_ref span{font-size: 1.452vw;}
+  .signup_box .input_row .input_full_box input[type="password"]{background-size: 1.878vw 1.878vw; padding-left: 3.928vw;}
+  .signup_box .input_row .input_full_box.checkbox_label label{font-size: 1.452vw;}
+  .signup_box .input_row input[type="submit"], .signup_box .input_row .input_full_box a.back_btn{font-size: 1.825vw;}
+  .signup_box .input_row .input_full_box.email input[type="email"]{padding-left: 3.928vw; background-size: 2.025vw 1.805vw;}
+}
+
+@media only screen and (max-width: 768px){
+  .signup_box .input_row{gap: 2.098vw;}
+  .signup_box h4{font-size: 4.903vw;}
+  .signup_box .input_row .input_full_box input:not([type="checkbox"], [type="submit"]){font-size: 3.325vw; padding: 2.464vw;}
+  .signup_box .input_row .input_full_box.pass_ref span{font-size: 3.052vw;}
+  .signup_box .input_row .input_full_box input[type="password"]{background-size: 2.878vw 2.878vw; padding-left: 5.928vw;}
+  .signup_box .input_row .input_full_box.checkbox_label label{font-size: 3.052vw;}
+  .signup_box .input_row input[type="submit"], .signup_box .input_row .input_full_box a.back_btn{font-size: 3.325vw; padding: 2.598vw 5.66vw; border-radius: 7.66vw;}
+  .signup_box .input_row .input_full_box.email input[type="email"]{padding-left: 5.928vw; background-size: 3.025vw 2.805vw;}
+  .signup_box .input_row .input_full_box.checkbox_label label:before{width: 3.171vw; height: 3.171vw;}
+  .signup_box .input_row .input_full_box.checkbox_label input{height: 3.464vw;}
+  .signup_box .input_row .input_full_box.checkbox_label input:checked + label:after{top: 0.4vw; left: 0.859vw; width: 1.09vw; height: 1.825vw;}
+  .ambassadorship_sec3:before{height: 80%;}
+  .grid_box .signup_box.account_box{margin-top: 3.125vw;}
+}
+
+/*ambassadorship_sec3-end*/
+
+/* CUSTOM */
+
+.fullwidth { width: 100%; }
+.custom_error_class { color: var(--mui-palette-error-main); font-family: 'Inter','Inter Fallback'; font-weight: 400; font-size: 0.8125rem; text-align: left; margin-top: 0px; margin-bottom: 0; margin-left: 14px; margin-right: 14px; line-height: 1; letter-spacing: unset; --Grid-columns: 12; --Grid-columnSpacing: 1.25rem; --Grid-rowSpacing: 1.25rem; }
+.mt--18 { margin-top: -18px !important; }
+
+
+/*.submit_btn{background-color: #F85241; font-size: 1.025vw; font-family: "Raleway", sans-serif; color: #ffffff; text-align: center; display: inline-block; line-height: 1; text-transform: uppercase; border-radius: 3.66vw; font-weight: 600; padding: 1.098vw 3.66vw; border: none; outline: none; cursor: pointer; transition: 0.3s ease-in-out; letter-spacing: 0.10em;}
+.submit_btn:hover{background: rgb(31, 31, 31, 0.8);}*/
+
+
+.sidebar-box{max-width: 21.962vw;}
+.sidebar-box ul{list-style: none; padding: 0; margin: 0;}
+.sidebar-box ul li{padding: 0.732vw 0; border-bottom: solid 0.073vw #CECECE;}
+.sidebar-box ul li a:hover{color: #EA5647;}
+
+.level_main{display: flex; flex-wrap: wrap; gap: 2vw; justify-content: space-between; padding-top: 2vw;}
+.level_main .levelOuter p{padding-bottom: 0.852vw;}
+.level_main .levelOuter{position: relative; width: calc(50% - 1vw); padding-bottom: 3.4vw;}
+
+.level_main .levelOuter button{background-color: #F85241; font-size: 1.025vw; font-family: "Raleway", sans-serif; color: #ffffff; text-align: center; display: inline-block; line-height: 1; text-transform: uppercase; border-radius: 3.66vw; font-weight: 600; padding: 1.098vw 2.66vw; border: none; outline: none; cursor: pointer; transition: 0.3s ease-in-out; letter-spacing: 0.10em; position: absolute; bottom: 0; left: 0;}
+.level_main .levelOuter button:hover{background: rgb(31, 31, 31, 0.8);}
+
+@media only screen and (max-width: 768px){
+  .sidebar-box{max-width: 100%; padding-bottom: 5.459vw;}
+  .sidebar-box ul li{padding: 1.732vw 0;}
+  .level_main .levelOuter button{font-size: 3.325vw; padding: 2.598vw 5.66vw; border-radius: 7.66vw;}
+  .level_main .levelOuter{padding-bottom: 10vw;}
+  .level_main .levelOuter p{padding-bottom: 1.852vw;}
+
+}
+
+
+/*destinations_tab*/
+
+.destinations_tab{padding-top: 8.788vw; margin-bottom: -18.61vw;}
+.destinations_tab .MuiTabs-fixed{max-width: 51.245vw; margin: 0 auto; padding-bottom: 6.223vw;}
+.destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer{list-style: none; display: flex; flex-wrap: wrap; column-gap: 4.539vw; grid-row-gap: 1.757vw; justify-content: center; border-bottom: solid 0.0365vw #707070; font-family: "Raleway", sans-serif;}
+.destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button{font-size: 1.171vw; font-weight: 600; text-transform: uppercase; color: #1F1F1F; position: relative; display: block; line-height: 3; min-width: 1vw; min-height: 1vw; padding: 0; font-family: "Raleway", sans-serif; flex: 0 0 auto; padding-block-end:0; border-block-end:0;}
+.destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button:before{position: absolute; content: ""; width: 0%; height: 0.439vw; background-color: #F85241; left: 0; bottom: 0; transition: 0.3s ease-in-out;}
+.destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button.Mui-selected:before,
+.destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button:hover:before{width: 100%;}
+.destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button{text-decoration: none;}
+.destinations_tab .MuiTabs-indicator{display: none;}
+
+
+@media only screen and (max-width: 1024px){
+  .destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer{column-gap: 3.539vw;}
+  .destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button{font-size: 1.771vw;}
+
+}
+
+@media only screen and (max-width: 768px){
+  .destinations_tab .MuiTabs-fixed{max-width: 90%;}
+  .destinations_tab{padding-top: 21.788vw; margin-bottom: -32.61vw;}
+  .destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button{font-size: 2.971vw;}
+
+}
+
+/*destinations_tab*/
+
 
