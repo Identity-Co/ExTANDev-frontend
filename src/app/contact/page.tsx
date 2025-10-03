@@ -4,11 +4,15 @@ import LandingPageWrapper from '@views/sub-pages/contact'
 // Server Action Imports
 import { getServerMode } from '@core/utils/serverHelpers'
 
+import { getPageData } from '@/app/server/pages'
+
 const LandingPage = async () => {
   // Vars
   const mode = await getServerMode()
 
-  return <LandingPageWrapper mode={mode} />
+  const pgData = await getPageData("Contact Us");
+
+  return <LandingPageWrapper mode={mode} pgData={pgData} />
 }
 
 export default LandingPage

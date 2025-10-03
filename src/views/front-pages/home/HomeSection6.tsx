@@ -48,10 +48,6 @@ const HomeSection6 = ({ data, fieldNotes }: { data?: []; fieldNotes?: []; }) => 
     ]
   };
 
-  const staticImgs = ['https://adventure.deepripple.com/images/front-pages/images/guide1.jpg', 'https://adventure.deepripple.com/images/front-pages/images/guide2.jpg', 'https://adventure.deepripple.com/images/front-pages/images/guide3.jpg', 'https://adventure.deepripple.com/images/front-pages/images/guide2.jpg']
-
-  const staticLogos = ['https://adventure.deepripple.com/images/front-pages/images/bike.png', 'https://adventure.deepripple.com/images/front-pages/images/surfer-logo.png', 'https://adventure.deepripple.com/images/front-pages/images/powder-white-logo.png', 'https://adventure.deepripple.com/images/front-pages/images/surfer-logo.png']
-
   return (
     <section className={classnames(styles.home_section6, 'pb_150 home_section6')}>
       <div className="container">
@@ -67,24 +63,20 @@ const HomeSection6 = ({ data, fieldNotes }: { data?: []; fieldNotes?: []; }) => 
                     <div className={classnames(styles.adv_guide_box)}>
                       <div className={classnames(styles.adv_guide_top)}>
                         <div className={classnames(styles.adv_guide_img)}>
-                          {/*slide.image && (<img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${slide.image}`} alt={slide.title} />)*/}
-                          {slide.image && (<img src={`${staticImgs[index]}`} alt={slide.title} />)}
+                          {slide.feature_image && (<img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${slide.feature_image}`} alt={slide.title} />)}
                         </div>
                         <div className={classnames(styles.adv_guide_img_logo)}>
-                          {/*slide.logo && (<img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${slide.logo}`} alt={slide.title} />)*/}
-                          {slide.logo && (<img src={`${staticLogos[index]}`} alt={slide.title} />)}
+                          {slide.site_logo && (<img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${slide.site_logo}`} alt={slide.title} />)}
                         </div>
                       </div>
                       <div className={classnames(styles.adv_guide_bottom)}>
                         <div className={classnames(styles.adv_guide_text)}>
                           {slide.title && (<h4>{slide.title}</h4>)}
-                          {slide.description && (<p>{slide.description}</p>)}
+                          {slide.excerpt && (<p>{slide.excerpt}</p>)}
 
-                          {slide.button_text && slide.button_link && (
-                            <div className={classnames(styles.btn, 'btn')}>
-                              <a href={slide.button_link}>{slide.button_text}</a>
-                            </div>
-                          )}
+                          <div className={classnames(styles.btn, 'btn')}>
+                            <a href={`/adventure-guide/${slide.page_url}`}>Read More</a>
+                          </div>
                         </div>
                       </div>
                   </div>

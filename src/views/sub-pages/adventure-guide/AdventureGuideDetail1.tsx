@@ -18,7 +18,7 @@ const BlogDetailSection1 = ({ data, mainPgData }: { data?: []; mainPgData?: []; 
                       <div key={index} className={classnames(styles.grid_box)}>
                           <div className={classnames(styles.blog_box)}>
                               <div className={classnames(styles.shop_merch)}>
-                                  <a className={classnames(styles.fl_bx_lnk_glb, 'fl_bx_lnk_glb')} href={`${process.env.NEXT_PUBLIC_APP_URL}/adventure-guide/${item.page_url}`}></a>
+                                  <a className={classnames(styles.fl_bx_lnk_glb, 'fl_bx_lnk_glb')} href={`/adventure-guide/${item.page_url}`}></a>
                                     {item?.feature_image && (
                                         <div className={classnames(styles.shop_merch_img)}>
                                             <img className="bx_sd" src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/\\${item.feature_image}`} alt="" />
@@ -28,7 +28,7 @@ const BlogDetailSection1 = ({ data, mainPgData }: { data?: []; mainPgData?: []; 
                                     <div className={classnames(styles.merch_info)}>
                                       {item.title && (<h4>{item.title}</h4>)}
                                       <div className={classnames(styles.btn, 'btn')}>
-                                          <a href={`${process.env.NEXT_PUBLIC_APP_URL}/adventure-guide/${item.page_url}`}>Read More</a>
+                                          <a href={`/adventure-guide/${item.page_url}`}>Read More</a>
                                       </div>
                                     </div>
                             </div>
