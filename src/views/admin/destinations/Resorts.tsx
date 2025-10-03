@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import dynamic from 'next/dynamic'
 
@@ -45,7 +45,7 @@ import CustomIconButton from '@core/components/mui/IconButton'
 
 import { useNavigationStore } from '@/libs/navigation-store'
 
-// import { saveDestination, updateDestination } from '@/app/server/destinations'
+import { updateDestination } from '@/app/server/destinations'
 
 type FileProp = {
   name: string
@@ -56,17 +56,36 @@ type ErrorType = {
   message: string[]
 }
 
+type ResortProps = {
+	pgData: []
+	destinations: []
+	setFormId: () => void
+	getFormId: () => void
+}
+
 type FormData = InferInput<typeof schema>
 
 const schema = object({
-  about_title: pipe(string(), nonEmpty('This field is required')),
-  about_content: pipe(custom<string | null>((value) => {
-		if (!value || value == "<p><br></p>") return false;
+  banner_image: pipe(custom<File | null>((value) => {
+  	if (!value) return 'This field is required'; // allow empty
 
-		return true;
-	}, 'This field is required')),
+    const allowed = ["image/png", "image/jpeg", "image/gif"];
+
+    if (!allowed.includes(value.type)) return "Only PNG/JPG/GIF allowed";
+
+    const maxMB = 5;
+
+    if (value.size > maxMB * 1024 * 1024)
+
+      return `Max file size is ${maxMB} MB`;
+
+    return true;
+  })),
+  about_title: pipe(string(), nonEmpty('This field is required')),
+  about_content: optional(string()),
   about_button_text: optional(string()),
   about_button_link: pipe(string()),
+  resort_title: pipe(string()),
   resorts: array(
     object({
     	title: pipe(string(), nonEmpty('This field is required')),
@@ -91,6 +110,7 @@ const schema = object({
 
         return true;
       })),
+      idtxt: optional(string()),
       _preview: optional(string()),
     })
   ),
@@ -103,7 +123,7 @@ const schema = object({
   )
 })
 
-const Resorts = ({ pgData }: { pgData?: []; destinations?: []; }) => {
+const Resorts = ({ pgData, destinations, setFormId, getFormId }: ResortProps) => {
 	const router = useRouter()
 
   const setLoading = useNavigationStore((s) => s.setLoading)
@@ -112,7 +132,20 @@ const Resorts = ({ pgData }: { pgData?: []; destinations?: []; }) => {
 	const [isSubmitting , setIsSubmitting ] = useState(false)
 	const [editor, setEditor] = useState<Editor | null>(null)
 	const [message, setMessage] = useState(null);
-	const [resortOptions, setresortOptions] = useState<string[]>([])
+	const [fileInput, setFileInput] = useState('');
+
+	const [destOptions, setdestOptions] = useState<string[]>([])
+
+	const [destID, setdestID] = useState(getFormId());
+
+  useEffect(() => {
+    const obj = destinations?.map(item => ({
+      label: item._id,
+      value: item.title
+    }));
+
+    setdestOptions(obj);
+  }, [destinations]);
 
 	// States
   const [files, setFiles] = useState<File[]>([])
@@ -144,24 +177,26 @@ const Resorts = ({ pgData }: { pgData?: []; destinations?: []; }) => {
 	} = useForm<FormData>({
 		resolver: valibotResolver(schema),
 		defaultValues: {
-		  about_title: pgData?.about_title??'',
-		  about_content: pgData?.about_content??'',
-		  about_button_text: pgData?.about_button_text??'',
-		  about_button_link: pgData?.about_button_link??'',
-		  resorts: pgData?.resorts?.map(section => ({
+		  banner_image: pgData?.resorts?.banner_image??'',
+		  banner_image_preview: (pgData?.resorts?.banner_image) ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${pgData?.resorts?.banner_image}` : '',
+		  about_title: pgData?.resorts?.about_title??'',
+		  about_content: pgData?.resorts?.about_content??'',
+		  about_button_text: pgData?.resorts?.button_text??'',
+		  about_button_link: pgData?.resorts?.button_link??'',
+		  resort_title: pgData?.resort_title??'',
+		  resorts: pgData?.resorts?.resorts?.map(section => ({
         title: section.title ?? '',
         content: section.content ?? '',
         image: section.image ?? null,
         location: section.location ?? '',
         _preview: section._preview ?? '',
-      })) ?? [{title: '', content: '', image: null, location: '', _preview : ''}],
-		  adventure_posts: pgData?.adventure_posts??[],
-		  feature_destination_title: pgData?.feature_destination_title??'',
-		  feature_destinations: pgData?.feature_destinations??[],
+        idtxt: section._id ?? '',
+      })) ?? [{title: '', content: '', image: null, location: '', _preview : '', idtxt : ''}],
+		  adventure_posts: pgData?.resorts?.adventure_posts??[],
+		  feature_destination_title: pgData?.resorts?.feature_destinations_title??'',
+		  feature_destinations: pgData?.resorts?.feature_destinations??[],
 		}
 	})
-
-	console.log(errors)
 
 	const { fields, append, remove } = useFieldArray({
     control,
@@ -169,19 +204,45 @@ const Resorts = ({ pgData }: { pgData?: []; destinations?: []; }) => {
   });
 
 	const onUpdate: SubmitHandler<FormData> = async (data: FormData) => {
-		console.log(data);
-		
-		/*if (!imageInput && (pgData?.image == '' || pgData?.image === undefined)) {
-      setMessage('This field is required.');
-      return;
+		const isOnlyPBr = /^<p><br><\/p>$/;
+		const id = getFormId();
+
+		// Overview tab content
+    if (data.banner_image instanceof File) {
+    	fData.append('banner_image_file', data.banner_image);
+    }else{
+    	fData.append('resorts[banner_image]', pgData?.resorts?.banner_image);
     }
+    fData.append('resorts[about_title]', data.about_title);
+    fData.append('adventures[about_title]', data.about_title);
+    if (isOnlyPBr.test(data.about_content.trim())) {
+		  fData.append('resorts[about_content]', '');
+		} else {
+		  fData.append('resorts[about_content]', data.about_content);
+		}
+    fData.append('resorts[button_text]', data.about_button_text);
+    fData.append('resorts[button_link]', data.about_button_link);
+    fData.append('resorts[feature_destinations_title]', data.feature_destination_title);
+    data.feature_destinations.forEach((dest_id, i) => {
+			fData.append(`resorts[feature_destinations][${i}]`, dest_id);
+		})
 
-    setIsSubmitting(true)
+    fData.append('resorts[resort_title]', data.resort_title);
+    data.resorts.forEach((section, i) => {
+		  fData.append(`resorts_sections[${i}][title]`, section.title)
+		  fData.append(`resorts_sections[${i}][content]`, section.content)
+		  fData.append(`resorts_sections[${i}][location]`, section.location)
+		  fData.append(`resorts_sections[${i}][idtxt]`, section.idtxt)
+		  if (section.image) {
+		    fData.append(`resorts_sections[${i}][image]`, section.image)
+		  }
+		});
 
-    const log = await updatePageInfo('Our Destination', { 'name': 'Our Destination', ...data });
- 
+		setIsSubmitting(true)
+
+    const log = await updateDestination(id, fData);
     if (log && log._id) {
-      toast.success('Page updated successfully.')
+      toast.success('Resort tab data updated successfully.')
       setIsSubmitting(false)
     } else {
       if(log.errors) {
@@ -189,7 +250,7 @@ const Resorts = ({ pgData }: { pgData?: []; destinations?: []; }) => {
       }
       
       setIsSubmitting(false)
-    }*/
+    }
 	}
 
 	return (
@@ -199,8 +260,59 @@ const Resorts = ({ pgData }: { pgData?: []; destinations?: []; }) => {
       autoComplete='off'
       onSubmit={handleSubmit(onUpdate)}
     >
+    	<Grid container spacing={5} className="my-5">
+    	{/* Banner Section */}
+    	<Grid size={{ md: 12, xs: 12, lg: 12 }}>
+			  <h2>Banner Section</h2>
+			</Grid>
+    	<Grid size={{ md: 12, xs: 12, lg: 12 }}>
+        <div className='flex max-sm:flex-col items-center gap-6'>
+          {watch('banner_image_preview') ? (
+            <img height={100} width={100} className='rounded' src={watch('banner_image_preview') as string} alt='Section Image' />
+            ) : null}
+
+          <div className='flex flex-grow flex-col gap-4'>
+            <div className='flex flex-col sm:flex-row gap-4'>
+              <Button component='label' size='small' variant='contained' htmlFor='banner_image'>
+                Upload New Photo
+                <input
+                  hidden
+                  type='file'
+                  accept='image/png, image/jpeg'
+                  onChange={(e) => {
+                    const file = e.target.files?.[0] ?? null;
+                    const maxSize = 5 * (1024 * 1024); // 800 KB
+
+                    if (file && file.size > maxSize) {
+                      toast.error("File is too large. Maximum allowed size is 5MB.")
+
+                      return;
+                    }
+
+                    const url = file ? URL.createObjectURL(file) : null;
+                    const prev = (watch('banner_image_preview') as string | null) || null;
+                    
+                    if (prev) URL.revokeObjectURL(prev);
+                    setValue('banner_image_preview', url, { shouldDirty: true });
+                    setValue('banner_image', file, { shouldDirty: true });
+                  }}
+                  id='banner_image'
+                />
+              </Button>
+              <Button size='small' variant='outlined' color='error' onClick={(e) => {
+                setValue('banner_image', null, { shouldDirty: true });
+                setValue('banner_image_preview', null, { shouldDirty: true });
+              }}>
+                Reset
+              </Button>
+            </div>
+            <Typography>Allowed JPG, GIF or PNG. Max size of 800K</Typography>
+            {errors.banner_image && (<Typography color='error.main'>{String(errors.banner_image.message)}</Typography>)}
+          </div>
+        </div>
+      </Grid>
+
 			{/* About Us fields*/}
-			<Grid container spacing={5} className="my-5">  
 			<Grid size={{ md: 12, xs: 12, lg: 12 }}>
 			  <h2>About Section</h2>
 			</Grid>
@@ -236,7 +348,6 @@ const Resorts = ({ pgData }: { pgData?: []; destinations?: []; }) => {
 			  <Controller
 			    name='about_content'
 			    control={control}
-			    rules={{ required: true }}
 			    render={({ field }) => (
 			      <ReactQuill
               theme="snow"
@@ -352,6 +463,10 @@ const Resorts = ({ pgData }: { pgData?: []; destinations?: []; }) => {
                   {watch(`resorts.${index}._preview`) ? (
                     <img height={100} width={100} className='rounded' src={watch(`resorts.${index}._preview`) as string} alt='Section Image' />
                     ) : null}
+
+                  {destID && field.image && (
+                  	<img height={100} width={100} className='rounded' src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${field.image}`} alt='Section Image' />
+                  	) }
                   <div className='flex flex-grow flex-col gap-4'>
                     <div className='flex flex-col sm:flex-row gap-4'>
                       <Button component='label' size='small' variant='contained' htmlFor={`section_image_${index}`}>
@@ -480,6 +595,16 @@ const Resorts = ({ pgData }: { pgData?: []; destinations?: []; }) => {
                   </p>
                 )}
               </Grid>
+                <Controller
+                  name={`resorts.${index}.idtxt`}
+                  control={control}
+                  render={({ field }) => (
+                    <input
+							        {...field}
+							        type='hidden'
+							      />
+                  )}
+                />
               <Divider />
 
               <Grid size={{ md: 6, xs: 2, sm: 2 }}>
@@ -500,10 +625,10 @@ const Resorts = ({ pgData }: { pgData?: []; destinations?: []; }) => {
 			</Grid>
 			<Divider />
 
-			{/* Adventure Posts Section */}
+			{/* Stories Section */}
 			<Grid container spacing={5} className="my-5">  
 			<Grid size={{ md: 12, xs: 12, lg: 12 }}>
-			  <h2>Adventure Posts</h2>
+			  <h2>Stories</h2>
 			</Grid>
 
 			<Grid size={{ md: 12, xs: 12, lg: 12 }}>
@@ -548,9 +673,9 @@ const Resorts = ({ pgData }: { pgData?: []; destinations?: []; }) => {
 			  <input type="hidden" {...register("feature_destinations")} />
 			  <Autocomplete
 			    multiple
-			    options={resortOptions}
+			    options={destOptions}
 			    getOptionLabel={(option) => option.value} 
-			    value={resortOptions.filter(opt =>
+			    value={destOptions.filter(opt =>
 			      (watch("feature_destinations") || []).includes(opt.label)
 			    )}
 			    renderOption={(props, option) => (

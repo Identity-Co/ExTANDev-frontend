@@ -122,7 +122,6 @@ const DebouncedInput = ({
 const columnHelper = createColumnHelper<adventureguideTypesWithAction>()
 
 const AdventureGuideListTable = ({ tableData }: { tableData?: adventureguideTypes[] }) => {
-  console.log(tableData)
   const setLoading = useNavigationStore((s) => s.setLoading)
 
   // States
@@ -142,6 +141,23 @@ const AdventureGuideListTable = ({ tableData }: { tableData?: adventureguideType
 
   // Hooks
   const { lang: locale } = useParams()
+
+  const fetchData = async () => {
+    try {
+    // Fetch updated data
+    const refresh = await AdventureGuide.getAdventureGuides();
+    
+    // Ensure the returned data is of the correct type
+    if (Array.isArray(refresh)) {
+      setData(refresh); // Update state with new data
+    } else {
+      toast.error('Failed to fetch updated data');
+    }
+  } catch (error) {
+    toast.error('Error fetching updated data');
+    console.error('Fetch error:', error);
+  }
+  };
 
   const columns = useMemo<ColumnDef<adventureguideTypesWithAction, any>[]>(
     () => [
@@ -186,6 +202,11 @@ const AdventureGuideListTable = ({ tableData }: { tableData?: adventureguideType
     }
   }
 
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
+
+
   const handleDeleteList = async (id?: string) => {
     setId(id ?? '')
     setOpenDelete(true)
@@ -203,29 +224,12 @@ const AdventureGuideListTable = ({ tableData }: { tableData?: adventureguideType
 
       setOpenDelete(false)
 
-      fetchData();
+      await fetchData();
     } catch (error) {
       toast.error('Error deleting Adventure Guide');
       console.error('Delete error:', error);
     }  
   }
-
-  const fetchData = async () => {
-    try {
-    // Fetch updated data
-    const refresh = await AdventureGuide.getAdventureGuides();
-    
-    // Ensure the returned data is of the correct type
-    if (Array.isArray(refresh)) {
-      setData(refresh); // Update state with new data
-    } else {
-      toast.error('Failed to fetch updated data');
-    }
-  } catch (error) {
-    toast.error('Error fetching updated data');
-    console.error('Fetch error:', error);
-  }
-  };
 
   const table = useReactTable({
     data: filteredData as adventureguideTypes[],
@@ -363,10 +367,10 @@ const AdventureGuideListTable = ({ tableData }: { tableData?: adventureguideType
         }}
         closeAfterTransition={false}
       >
-        <DialogTitle id='alert-dialog-title' className='text-center'>Delete User?</DialogTitle>
+        <DialogTitle id='alert-dialog-title' className='text-center'>Delete Adventure Guide?</DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description' className='text-center'>
-            Are you sure you want to delete this User?
+            Are you sure you want to delete this Adventure Guide?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

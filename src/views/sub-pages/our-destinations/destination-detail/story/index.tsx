@@ -7,14 +7,13 @@ import { useEffect } from 'react'
 import type { Mode } from '@core/types'
 
 // Component Imports
-import BannerSection from './BannerSection'
 import StorySection1 from './StorySection1'
 import StorySection2 from './StorySection2'
 import StorySection3 from '@/views/shared/cta-section/CTASection'
 
 import { useSettings } from '@core/hooks/useSettings'
 
-const LandingPageWrapper = ({ mode }: { mode: Mode }) => {
+const LandingPageWrapper = ({ pgData, destinations}: AdventureProps) => {
   // Hooks
   const { updatePageSettings } = useSettings()
 
@@ -28,10 +27,9 @@ const LandingPageWrapper = ({ mode }: { mode: Mode }) => {
 
   return (
     <>
-      <BannerSection mode={mode} />
-      <StorySection1 />
-      <StorySection2 />
-      <StorySection3 />
+      <StorySection1 data={pgData?.stories ?? []} />
+      <StorySection2 data={pgData?.stories?.stories ?? []} />
+      <StorySection3 data={pgData ?? []} />
     </>
   )
 }

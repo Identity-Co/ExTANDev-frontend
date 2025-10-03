@@ -87,7 +87,7 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
 
 /*destination-overview-sec1-start*/
 
-section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 8.788vw;}
+section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 18.088vw;}
 section.home_section1.our_desti_sec1{ background: url(/images/front-pages/images/tan-background-copy.jpg) center no-repeat; background-size: cover; box-shadow: none; padding-bottom: 18.302vw; }
 .destination_overview_tab{max-width: 51.245vw; margin: 0 auto; padding-bottom: 6.223vw;}
 ul.destination_tab{list-style: none; display: flex; flex-wrap: wrap; column-gap: 4.539vw; grid-row-gap: 1.757vw; justify-content: center; border-bottom: solid 0.0365vw #707070;}
@@ -124,7 +124,7 @@ ul.destination_tab li a{font-size: 1.771vw;}
 }
 
 @media only screen and (max-width: 768px){
-section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 25.788vw;}
+section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 31.788vw;}
 .destination_overview_tab{max-width: 90%;}
 ul.destination_tab li a{font-size: 2.971vw;}
 .destination_overview_tab{padding-bottom: 9.223vw;}
@@ -136,14 +136,14 @@ ul.destination_tab li a{font-size: 2.971vw;}
 /*destination-overview-sec2-start*/
 
 .our_desti_sec2{margin-top: -10.981vw;}
-.destination_overview_sec2 .grid_box span{font-size: 1.757vw; font-weight: 800; font-style: italic; line-height: 1.2; padding-bottom: 1.464vw; display: block; color: #000000;}
+.destination_overview_sec2 .grid_box h3{font-size: 1.757vw; font-weight: 800; font-style: italic; line-height: 1.2; padding-bottom: 1.464vw; display: block; color: #000000; font-family: "Raleway", sans-serif; text-transform: none;}
 
 @media only screen and (max-width: 1024px){
-.destination_overview_sec2 .grid_box span{font-size: 2.757vw; padding-bottom: 2.464vw;}
+.destination_overview_sec2 .grid_box h3{font-size: 2.757vw; padding-bottom: 2.464vw;}
 }
 
 @media only screen and (max-width: 768px){
-.destination_overview_sec2 .grid_box span{font-size: 3.757vw; padding-bottom: 3.464vw;}
+.destination_overview_sec2 .grid_box h3{font-size: 3.757vw; padding-bottom: 3.464vw;}
 .destination_overview_sec2 .grid_box:first-child{order: 1;}
 .destination_overview_sec2 .grid_box:last-child{order: 0;}
 }
@@ -212,8 +212,8 @@ section.home_section2{position: relative;}
 .dr_quick{position: relative; text-align: center;}
 .dr_quick h2{font-size: 12.665vw; opacity: 0.07; letter-spacing: 0.005em; line-height: 1;}
 .dr_quick h4{color: #F85241; letter-spacing: 0.005em; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);}
-.destination_overview_sec5 .grid2{column-gap: 7.028vw;}
-.destination_overview_sec5 .grid2 .grid_box ul{list-style: none;}
+.destination_overview_sec5 .grid2{display: block;}
+.destination_overview_sec5 .grid2 .grid_box ul{list-style: none; column-count: 2; column-gap: 5vw;}
 .destination_overview_sec5 .grid2 .grid_box ul li{padding-bottom: 1.464vw; color: #000000;}
 .destination_overview_sec5 .grid2 .grid_box ul li span{font-size: 1.464vw;}
 
@@ -225,6 +225,7 @@ section.home_section2{position: relative;}
 }
 
 @media only screen and (max-width: 768px){
+  .destination_overview_sec5 .grid2 .grid_box ul{column-count: 1;}
 .destination_overview_sec5 .grid2 .grid_box ul li span{font-size: 3.604vw;}
 .destination_overview_sec5{background-size:85.807vw 58.984vw; background-position: center center;}
 .destination_overview_sec5 .grid2 .grid_box ul li{padding-bottom: 2.464vw;}

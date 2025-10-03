@@ -205,6 +205,16 @@ const VerticalMenu = ({  scrollMenu }: Props) => {
         </MenuItem>*/}
 
         <MenuItem
+          href='/admin/contact-enquiries/'
+          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/contact-enquiries/')}
+          exactMatch={false}
+          activeUrl='/admin/contact-enquiries'
+          icon={<i className='ri-survey-line' />}
+        >
+          Contact Enquiries
+        </MenuItem>
+
+        <MenuItem
           href='/admin/reports/'
           onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/reports/')}
           exactMatch={false}

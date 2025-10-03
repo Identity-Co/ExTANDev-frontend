@@ -46,8 +46,9 @@ export const metadata = {
 const AdventureGuideApp = async () => {
   const session = await Common.getUserSess()
 
-  // Vars
-  const data = await getAdventureGuides()
+  const data = await getAdventureGuides('title,created_at')
+
+  console.log(data)
 
   return <AdventureGuideLists adventureguides={data}  />
 }

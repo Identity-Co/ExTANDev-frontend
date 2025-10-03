@@ -17,8 +17,10 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import CircularProgress from '@mui/material/CircularProgress';
+import Autocomplete from "@mui/material/Autocomplete";
+import Tooltip from '@mui/material/Tooltip';
 
-import type { Editor } from '@tiptap/react'
+//import type { Editor } from '@tiptap/react'
 
 const TipTapEditor = dynamic(() => import('@/components/TipTap'), { ssr: false })
 
@@ -31,7 +33,7 @@ import { valibotResolver } from '@hookform/resolvers/valibot'
 
 import { object, string, pipe, nonEmpty, optional, custom } from 'valibot'
 
-import type { InferInput } from 'valibot'
+//import type { InferInput } from 'valibot'
 
 import CustomIconButton from '@core/components/mui/IconButton'
 
@@ -43,99 +45,125 @@ const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false })
 
 import 'react-quill-new/dist/quill.snow.css';
 
+interface ContentField {
+  type: string;
+  value: string;
+  caption?: string;
+  image?: File | string | null;
+  _preview?: string | null; // UI-only preview field
+  resort_title: string | null;
+  resorts_list: string | null;
+  reviews_list: string | null;
+}
+
+interface ContentSection {
+  fields: ContentField[];
+}
+
 type ErrorType = {
   message: string[]
 }
 
-type FormData = InferInput<typeof schema>
+//type FormData = InferInput<typeof schema>
+type FormData = {
+  title: string;
+  feature_image: File | null | string;
+  banner_image: File | null | string;
+  banner_description?: string;
+  content_sections: ContentSection[];
+  author_name?: string;
+  author_testimonial?: string;
+  author_image?: File | null | string;
+  excerpt?: string;
+  site_url?: string;
+  site_logo?: File | null | string;
+  page_url?: string;
+  meta_title?: string;
+  meta_description?: string;
+  meta_keywords?: string;
+  robots?: string;
+  author?: string;
+  publisher?: string;
+  copyright?: string;
+  revisit_after?: string;
+  classification?: string;
+  rating?: string;
+  post_date?: string;
+
+  banner_preview?: string | null;
+  author_image_preview?: string | null;
+  feature_image_preview?: string | null;
+  site_logo_preview?: string | null;
+}
 
 
 const schema = object({
   title: pipe(string(), nonEmpty('This field is required')),
-  feature_image: optional(custom<File | null>((value) => {
-    if (!value) return true; // allow empty
-    
-    const allowed = ["image/png", "image/jpeg", "image/gif"];
-    
-    if (!allowed.includes(value.type)) return "Only PNG/JPG/GIF allowed";
-    
-    const maxMB = 5;
-    
-    if (value.size > maxMB * 1024 * 1024)
-      return `Max file size is ${maxMB} MB`;
-    
-    return true;
-  })),
-  banner_image: optional(custom<File | null>((value) => {
-    if (!value) return true; // allow empty
-    
-    const allowed = ["image/png", "image/jpeg", "image/gif"];
-    
-    if (!allowed.includes(value.type)) return "Only PNG/JPG/GIF allowed";
-    
-    const maxMB = 5;
-    
-    if (value.size > maxMB * 1024 * 1024)
-      return `Max file size is ${maxMB} MB`;
-    
-    return true;
-  })),
+  feature_image: optional(
+    custom<File | null>((value) => {
+      if (!value) return true;
+      if (typeof value === 'string') return true; // Allow strings (existing images)
+      
+      const allowed = ["image/png", "image/jpeg", "image/gif"];
+      if (!allowed.includes(value.type)) return false;
+      
+      const maxMB = 5;
+      
+      return value.size <= maxMB * 1024 * 1024;
+    }, "Only PNG/JPG/GIF allowed and max file size is 5 MB")
+  ),
+  banner_image: optional(
+    custom<File | null>((value) => {
+      if (!value) return true;
+      if (typeof value === 'string') return true; // Allow strings (existing images)
+      
+      const allowed = ["image/png", "image/jpeg", "image/gif"];
+      if (!allowed.includes(value.type)) return false;
+      
+      const maxMB = 5;
+      return value.size <= maxMB * 1024 * 1024;
+    }, "Only PNG/JPG/GIF allowed and max file size is 5 MB")
+  ),
   banner_description: optional(string()),
-  content_sections: optional(custom((value) => {
-    // Check if content_sections is an array
-    if (!Array.isArray(value)) return "content_sections must be an array";
-
-    for (const section of value) {
-      if (!section.fields || !Array.isArray(section.fields)) {
-        return "Each content_section must have a fields array";
-      }
-
-      for (const field of section.fields) {
-        if (!field.type) return "Each field must have a type";
-        
-        // Check if the field type is "image" and validate the value
-        if (field.type === "image" && (!field.value || typeof field.value !== "string")) {
-          return "Image field must have a valid image URL";  // Ensure return is in the proper scope
-        }
-      }
-    }
-    
-    return true;  // End validation with a successful return
-  })),
-
+  content_sections: optional(
+    custom<any[]>((value) => {
+      if (!Array.isArray(value)) return false;
+      
+      return value.every(section => {
+        return section && typeof section === 'object' && Array.isArray(section.fields);
+      });
+    }, "content_sections must be an array of sections with fields")
+  ),
   author_name: optional(string()),
   author_testimonial: optional(string()),
-  author_image: optional(custom<File | null>((value) => {
-    if (!value) return true; // allow empty
-    
-    const allowed = ["image/png", "image/jpeg", "image/gif"];
-    
-    if (!allowed.includes(value.type)) return "Only PNG/JPG/GIF allowed";
-    
-    const maxMB = 5;
-    
-    if (value.size > maxMB * 1024 * 1024)
-      return `Max file size is ${maxMB} MB`;
-    
-    return true;
-  })),
+  author_image: optional(
+    custom<File | null>((value) => {
+      if (!value) return true;
+      if (typeof value === 'string') return true; // Allow strings (existing images)
+      
+      const allowed = ["image/png", "image/jpeg", "image/gif", "image/svg+xml"];
+      if (!allowed.includes(value.type)) return false;
+      
+      const maxMB = 5;
+      
+      return value.size <= maxMB * 1024 * 1024;
+    }, "Only PNG/JPG/GIF/SVG allowed and max file size is 5 MB")
+  ),
   excerpt: optional(string()),
   site_url: optional(string()),
-  site_logo: optional(custom<File | null>((value) => {
-    if (!value) return true; // allow empty
-    
-    const allowed = ["image/png", "image/jpeg", "image/gif"];
-    
-    if (!allowed.includes(value.type)) return "Only PNG/JPG/GIF allowed";
-    
-    const maxMB = 5;
-    
-    if (value.size > maxMB * 1024 * 1024)
-      return `Max file size is ${maxMB} MB`;
-    
-    return true;
-  })),
-
+  site_logo: optional(
+    custom<File | null>((value) => {
+      if (!value) return true;
+      if (typeof value === 'string') return true; // Allow strings (existing images)
+      
+      const allowed = ["image/png", "image/jpeg", "image/gif", "image/svg+xml"];
+      if (!allowed.includes(value.type)) return false;
+      
+      const maxMB = 5;
+      
+      return value.size <= maxMB * 1024 * 1024;
+    }, "Only PNG/JPG/GIF/SVG allowed and max file size is 5 MB")
+  ),
   page_url: optional(string()),
   meta_title: optional(string()),
   meta_description: optional(string()),
@@ -147,7 +175,15 @@ const schema = object({
   revisit_after: optional(string()),
   classification: optional(string()),
   rating: optional(string()),
-})
+  post_date: optional(string()),
+});
+
+const TooltipIfEnabled = ({ title, disabled, children }) =>
+  disabled ? children : (
+    <Tooltip title={title}>
+      <span style={{ display: 'inline-block' }}>{children}</span>
+    </Tooltip>
+  );
 
 const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide?: [] }) => {  
   const router = useRouter()
@@ -159,7 +195,30 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
   const [editor, setEditor] = useState<Editor | null>(null)
   const [message, setMessage] = useState(null);
 
-  //const [imgSrc, setImgSrc] = useState<string>(pgData?.image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${pgData?.image}` : '/images/avatars/1.png')
+  //const [imgSrc, setImgSrc] = useState<string>(adventureguide?.image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${adventureguide?.image}` : '/images/avatars/1.png')
+
+  const resortsLists = { r1: 'Resort 1', r2: 'Resort 2', r3: 'Resort 3', r4: 'Resort 4', r5: 'Resort 5', r6: 'Resort 6'};
+  const [resortsOptions, setResortsOptions] = useState(() => {
+    return Object.entries(resortsLists).map(([key, value]) => ({
+      label: key,
+      value: value
+    }));
+  });
+
+  const reviewsLists = { r1: 'Review 1', r2: 'Review 2', r3: 'Review 3' };
+  const [reviewsOptions, setreviewsOptions] = useState(() => {
+    return Object.entries(reviewsLists).map(([key, value]) => ({
+      label: key,
+      value: value
+    }));
+  });
+
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
 
   // Editor Toolbar
   const modules = {
@@ -189,6 +248,7 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
       title: adventureguide?.title??'',
       feature_image: adventureguide?.feature_image??null,
       banner_image: adventureguide?.banner_image??null,
+      banner_preview: adventureguide?.banner_image??'',
       banner_description: adventureguide?.banner_description??'',
       content_sections: Array.isArray(adventureguide?.content_sections) && adventureguide.content_sections.length > 0
     ? adventureguide.content_sections.map(section => ({
@@ -219,6 +279,11 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
       revisit_after: adventureguide?.revisit_after??'',
       classification: adventureguide?.classification??'',
       rating: adventureguide?.rating??'',
+      post_date: formatDate(new Date(adventureguide?.post_date)),
+      banner_preview: null,
+      author_image_preview: null,
+      feature_image_preview: null,
+      site_logo_preview: null,
     }
   })
 
@@ -284,30 +349,54 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
   const { fields: sectionFields, append: appendSection, remove: removeSection } = useFieldArray({
     control,
     name: "content_sections",
-  });
+  })
 
-  const fieldArrays = sectionFields.map((section, index) =>
-    useFieldArray({
-      control,
-      name: `content_sections.${index}.fields`,
-    })
-  );
-  
-  const addField = (sectionIndex, type) => {
-    const newField = { type, value: "", caption: "" };
+  // Create a single useFieldArray for all fields and manage section structure manually
+  const { fields: allFields, append: appendField, remove: removeField } = useFieldArray({
+    control,
+    name: "content_sections",
+  })
+
+  // Helper function to get fields for a specific section
+  const getFieldsForSection = (sectionIndex: number) => {
+    return sectionFields[sectionIndex]?.fields || []
+  }
+
+  // Helper function to add a field to a specific section
+  const addFieldToSection = (sectionIndex: number, field: ContentField) => {
+    const currentSections = [...(watch('content_sections') || [])]
     
-    //sectionFields[sectionIndex].fields.push(newField);
-    //setValue("content_sections", [...sectionFields]);
-    fieldArrays[sectionIndex].append(newField);  // ✅ proper way
-  };
+    if (!currentSections[sectionIndex]) {
+      currentSections[sectionIndex] = { fields: [] }
+    }
+    
+    currentSections[sectionIndex].fields.push(field)
+    setValue('content_sections', currentSections)
+  }
 
-  const removeField = (sectionIndex, fieldIndex) => {
-    //sectionFields[sectionIndex].fields.splice(fieldIndex, 1);
-    //setValue("content_sections", [...sectionFields]);
-    fieldArrays[sectionIndex].remove(fieldIndex);
-  };
+  // Helper function to remove a field from a specific section
+  const removeFieldFromSection = (sectionIndex: number, fieldIndex: number) => {
+    const currentSections = [...(watch('content_sections') || [])]
+    
+    if (currentSections[sectionIndex] && currentSections[sectionIndex].fields) {
+      currentSections[sectionIndex].fields.splice(fieldIndex, 1)
+      setValue('content_sections', currentSections)
+    }
+  }
 
-  const [sectionUploads, setSectionUploads] = useState<{ file: File; sectionIndex: number; fieldIndex: number }[]>([]);
+  const moveSection = (currentIndex: number, newIndex: number) => {
+    if (newIndex < 0 || newIndex >= sectionFields.length) return;
+
+    // Get current sections from form state
+    const currentSections = [...(watch('content_sections') || [])];
+    
+    // Remove from current position and insert at new position
+    const [movedSection] = currentSections.splice(currentIndex, 1);
+    currentSections.splice(newIndex, 0, movedSection);
+
+    // Update form state
+    setValue('content_sections', currentSections, { shouldDirty: true });
+  };
 
   const onUpdate: SubmitHandler<FormData> = async (data: FormData) => {
     try {
@@ -333,6 +422,7 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
       if (data.revisit_after) fd.append('revisit_after', data.revisit_after)
       if (data.classification) fd.append('classification', data.classification)
       if (data.rating) fd.append('rating', data.rating)
+      if (data.post_date) fd.append('post_date', data.post_date)
 
       // === Append images (single) ===
       if (data.feature_image instanceof File) {
@@ -359,36 +449,43 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
         fd.append("site_logo", adventureguide.site_logo);
       }
 
-      fd.append('sectionUploads', sectionUploads);
-
       // === Append repeater sections ===
       // send content_sections JSON without File objects
-      const cleanedSections = data.content_sections.map((s, i) => {
+      const cleanedSections = await Promise.all(data.content_sections.map(async (s, i) => {
+
         return {
-          fields: s.fields.map((f, fi) => {
+          fields: await Promise.all(s.fields.map(async (f, fi) => {
             if (f.type === 'image') {
               // append separately
-              if(f.image instanceof File){
-                fd.append('section_images', f.image)
-              }else{
-                fd.append('section_images', data.content_sections[i].fields[fi].value)
+              if (f.image instanceof File) {
+                fd.append('section_images', f.image);
+
+                // Wait for base64 encoding
+                const base64 = await new Promise((resolve, reject) => {
+                  const reader = new FileReader();
+                  reader.readAsDataURL(f.image);
+                  reader.onload = () => resolve(reader.result);
+                  reader.onerror = (err) => reject(err);
+                });
+                data.content_sections[i].fields[fi].value = base64;
+                //data.content_sections[i].fields[fi]._preview = f.image.name;
+              } else {
+                fd.append('section_images', f.value);
               }
-              
-              fd.append('section_refs', `${i}.${fi}`)
-              
-              return { ...f, image: '' }
+
+              fd.append('section_refs', `${i}.${fi}`);
+
+              return { ...f, image: '' };
             }
-            
-            return f
-          }),
-        }
-      })
-      
-      fd.append('content_sections', JSON.stringify(cleanedSections));
+
+            return f;
+          })),
+        };
+      }));
+
+      fd.append('content_sections', JSON.stringify(data.content_sections));
 
       const log = await AdventureGuide.updateAdventureGuide(setId, fd);
-
-      console.log(log)
    
       if (log && log._id) {
 
@@ -549,25 +646,46 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
 
                   {/* Content Sections */}
                   {sectionFields.map((section, sectionIndex) => {
-                    const {
-                      fields: fieldsArray,
-                      append: appendField,
-                      remove: removeField,
-                    } = useFieldArray({
-                      control,
-                      name: `content_sections.${sectionIndex}.fields`,
-                    });
+                    const fieldsArray = getFieldsForSection(sectionIndex)
 
                     return (
                       <Grid key={section.id} container spacing={5} className="my-5">
                         <Grid size={{ md: 12, xs: 12, lg: 12 }}>
-                          <h2>Content Section</h2>
+                          <div className="flex items-center justify-between">
+                            <h2>Content Section {sectionIndex + 1}</h2>
+                            
+                            {/* Move Controls - Only show for sections after the first one */}
+                            {sectionIndex > 0 && (
+                              <div className="flex gap-2">
+                                <TooltipIfEnabled title="Move Up" disabled={sectionIndex === 1}>
+                                  <CustomIconButton
+                                    color="primary"
+                                    size="small"
+                                    onClick={() => moveSection(sectionIndex, sectionIndex - 1)}
+                                    disabled={sectionIndex === 1} // Can't move section 0
+                                  >
+                                    <i className="ri-arrow-up-line"></i>
+                                  </CustomIconButton>
+                                </TooltipIfEnabled>
+                                
+                                <TooltipIfEnabled title="Move Down" disabled={sectionIndex === sectionFields.length - 1}>
+                                  <CustomIconButton
+                                    color="primary"
+                                    size="small"
+                                    onClick={() => moveSection(sectionIndex, sectionIndex + 1)}
+                                    disabled={sectionIndex === sectionFields.length - 1}
+                                  >
+                                    <i className="ri-arrow-down-line"></i>
+                                  </CustomIconButton>
+                                </TooltipIfEnabled>
+                              </div>
+                            )}
+                          </div>
                         </Grid>
 
                         <Grid size={{ md: 12, xs: 12, lg: 12 }}>
-                          <div>
                             {fieldsArray.map((field, fieldIndex) => (
-                              <Grid key={field.id} container spacing={6} className="mb-2">
+                              <Grid key={`${sectionIndex}-${fieldIndex}-${field.type}`} container spacing={6} className="mb-2">
                                 {field.type === "image" ? (
                                   <>
                                     <Grid size={{ md: 5, xs: 12, lg: 5 }} className="mb-4">
@@ -602,6 +720,7 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                                                 accept="image/png, image/jpeg"
                                                 onChange={(e) => {
                                                   const file = e.target.files?.[0] ?? null;
+
                                                   if (!file) return;
 
                                                   const url = URL.createObjectURL(file);
@@ -610,6 +729,7 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                                                     (watch(
                                                       `content_sections.${sectionIndex}.fields.${fieldIndex}._preview`
                                                     ) as string | null) || null;
+
                                                   if (prev) URL.revokeObjectURL(prev);
 
                                                   setValue(
@@ -646,6 +766,12 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                                               Reset
                                             </Button>
                                           </div>
+                                          <Typography>Allowed JPG, GIF or PNG. Max size of 800K</Typography>
+                                          {errors.content_sections?.[sectionIndex]?.fields?.[fieldIndex]?.image && (
+                                            <Typography color='error.main'>
+                                              {String((errors.content_sections[sectionIndex] as any)?.fields?.[fieldIndex]?.image?.message || '')}
+                                            </Typography>
+                                          )}
                                         </div>
                                       </div>
                                     </Grid>
@@ -667,7 +793,7 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                                       />
                                     </Grid>
                                   </>
-                                ) : (
+                                ) : field.type === "content" ? (
                                   <Grid size={{ md: 10, xs: 12, lg: 10 }} className="mb-4">
                                     <Typography variant="h6" color="#a3a3a3">
                                       Content
@@ -687,37 +813,135 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                                       )}
                                     />
                                   </Grid>
+                                ) : (
+                                  <>
+                                    <Grid size={{ xs: 10 }}>
+                                      <Controller
+                                        name={`content_sections.${sectionIndex}.fields.${fieldIndex}.resort_title`}
+                                        control={control}
+                                        rules={{ required: true }}
+                                        render={({ field }) => (
+                                          <TextField
+                                            {...field}
+                                            fullWidth
+                                            type='text'
+                                            label='Resort Section Title'
+                                            variant='outlined'
+                                            placeholder='Enter Title'
+                                            className='mbe-1'
+                                            onChange={e => {
+                                              field.onChange(e.target.value)
+                                              errorState !== null && setErrorState(null)
+                                            }}
+                                            {...((errors.content_sections?.[sectionIndex]?.fields?.[fieldIndex]?.resort_title || errorState !== null) && {
+                                              error: true,
+                                              helperText: String((errors.content_sections?.[sectionIndex] as any)?.fields?.[fieldIndex]?.resort_title?.message || errorState?.message[0])
+                                            })}
+                                          />
+                                        )}
+                                      />
+                                    </Grid>
+                                    <Grid size={{ xs: 10 }}>
+                                      <input type="hidden" {...register(`content_sections.${sectionIndex}.fields.${fieldIndex}.resorts_list`)} />
+                                      <Autocomplete
+                                        multiple
+                                        options={resortsOptions}
+                                        getOptionLabel={(option) => option.value} 
+                                        value={resortsOptions.filter(opt =>
+                                          (watch(`content_sections.${sectionIndex}.fields.${fieldIndex}.resorts_list`) || []).includes(opt.label)
+                                        )}
+                                        renderOption={(props, option) => (
+                                          <li {...props} key={option.label}> 
+                                            {option.value}
+                                          </li>
+                                        )}
+                                        renderInput={(params) => (
+                                          <TextField {...params} label="Search Resorts" variant="outlined" />
+                                        )}
+                                        onChange={(event, newValue) => {
+                                          setValue(
+                                            `content_sections.${sectionIndex}.fields.${fieldIndex}.resorts_list`,
+                                            newValue.map((item) => item.label), // array of values
+                                            { shouldValidate: true }
+                                          );
+                                        }}
+                                      />
+                                    </Grid>
+                                    <Grid size={{ xs: 10 }} className="mb-3">
+                                      <input type="hidden" {...register(`content_sections.${sectionIndex}.fields.${fieldIndex}.reviews_list`)} />
+                                      <Autocomplete
+                                        multiple
+                                        options={reviewsOptions}
+                                        getOptionLabel={(option) => option.value} 
+                                        value={reviewsOptions.filter(opt =>
+                                          (watch(`content_sections.${sectionIndex}.fields.${fieldIndex}.reviews_list`) || []).includes(opt.label)
+                                        )}
+                                        renderOption={(props, option) => (
+                                          <li {...props} key={option.label}> 
+                                            {option.value}
+                                          </li>
+                                        )}
+                                        renderInput={(params) => (
+                                          <TextField {...params} label="Search Reviews" variant="outlined" />
+                                        )}
+                                        onChange={(event, newValue) => {
+                                          setValue(
+                                            `content_sections.${sectionIndex}.fields.${fieldIndex}.reviews_list`,
+                                            newValue.map((item) => item.label), // array of values
+                                            { shouldValidate: true }
+                                          );
+                                        }}
+                                      />
+                                    </Grid>
+                                  </>
                                 )}
 
-                                {/* delete field button */}
-                                <Grid size={{ md: 2, xs: 12, lg: 2 }}>
-                                  <CustomIconButton
-                                    color="error"
-                                    size="large"
-                                    onClick={() => removeField(fieldIndex)}
-                                  >
-                                    <i className="ri-delete-bin-7-line"></i>
-                                  </CustomIconButton>
-                                </Grid>
+                                {/* delete field button onClick={() => removeField(fieldIndex)} */}
+                                {sectionIndex > 0 && (
+                                  <Grid size={{ md: 2, xs: 12, lg: 2 }}>
+                                    <CustomIconButton
+                                      color="error"
+                                      size="large"
+                                      onClick={() => removeFieldFromSection(sectionIndex, fieldIndex)}
+                                    >
+                                      <i className="ri-delete-bin-7-line"></i>
+                                    </CustomIconButton>
+                                  </Grid>
+                                )}
                               </Grid>
                             ))}
 
                             {/* Add buttons */}
-                            <Button
-                              size="small"
-                              variant="contained"
-                              onClick={() => appendField({ type: "content", value: "" })}
-                              sx={{ mr: 2 }}
-                            >
-                              + Add Content
-                            </Button>
-                            <Button
-                              size="small"
-                              variant="contained"
-                              onClick={() => appendField({ type: "image", value: "", caption: "" })}
-                            >
-                              + Add Image
-                            </Button>
+                            {sectionIndex > 0 && (
+                              <>
+                                <Button
+                                  size="small"
+                                  variant="contained"
+                                  onClick={() => addFieldToSection(sectionIndex, { type: "content", value: "" })}
+                                  sx={{ mr: 2 }}
+                                  disabled={section.fields?.some(field => field.type === "resort" )}
+                                >
+                                  + Add Content
+                                </Button>
+                                <Button
+                                  size="small"
+                                  variant="contained"
+                                  onClick={() => addFieldToSection(sectionIndex, { type: "image", value: "", caption: "" })}
+                                  sx={{ mr: 2 }}
+                                  disabled={section.fields?.some(field => field.type === "resort" )}
+                                >
+                                  + Add Image
+                                </Button>
+                                <Button
+                                  size='small'
+                                  variant="contained"
+                                  onClick={() => addFieldToSection(sectionIndex, { type: "resort", resort_title: "", resorts_list: "", reviews_list: "" })}
+                                  disabled={section.fields?.some(field => field.type === "image" || field.type === "content" || field.type === 'resort' )}
+                                >
+                                  + Add Resort Section
+                                </Button>
+                              </>
+                            )}
 
                             {/* Section controls */}
                             <Grid container spacing={6} className="my-5">
@@ -745,7 +969,6 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                                 ) : null}
                               </Grid>
                             </Grid>
-                          </div>
                           <Divider />
                         </Grid>
                       </Grid>
@@ -1194,10 +1417,38 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                     <Grid size={{ xs:12 }}>
                       <Grid container spacing={5}>
                         <Grid size={{ md: 12, xs: 12, lg: 12 }}>
+                          <Controller
+                            name='post_date'
+                            control={control}
+                            render={({ field }) => (
+                              <TextField 
+                                {...field}
+                                fullWidth
+                                type='date'
+                                label='Post Date'
+                                variant='outlined'
+                                placeholder='Select Date'
+                                className='mbe-0'
+                                InputLabelProps={{
+                                  shrink: true,
+                                }}
+                                onChange={e => {
+                                  field.onChange(e.target.value)
+                                  errorState !== null && setErrorState(null)
+                                }}
+                                {...((errors.meta_keywords || errorState !== null) && {
+                                  error: true,
+                                  helperText: errors?.meta_keywords?.message || errorState?.message[0]
+                                })}
+                              />
+                            )}
+                          />
+                        </Grid>
+                        <Grid size={{ md: 12, xs: 12, lg: 12 }}>
                           <Typography variant="h6" component="h6" color="primary" className="mb-2">Feature Image</Typography>
                           <div className='flex max-sm:flex-col items-center gap-6 flex-wrap'>
                             {watch('feature_image_preview') ? (
-                              <img height={100} width={100} className='rounded' src={watch('feature_image_preview')} alt='Site Logo Image' />
+                              <img height={100} width={100} className='rounded' src={watch('feature_image_preview')} alt='Feature Image' />
                             ) : null}
                             <div className='flex flex-grow flex-col gap-4'>
                               <div className='flex flex-col sm:flex-row gap-4'>
@@ -1287,7 +1538,7 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                                 {...field}
                                 fullWidth
                                 type='text'
-                                label='Site URL'
+                                label='Referance Site URL'
                                 variant='outlined'
                                 placeholder='Enter Site URL'
                                 className='mbe-1'
@@ -1304,10 +1555,10 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                           />
                         </Grid>
                         <Grid size={{ md: 12, xs: 12, lg: 12 }} className="mb-5">
-                          <Typography variant="h6" component="h6" color="primary" className="mb-2">Site Image</Typography>
+                          <Typography variant="h6" component="h6" color="primary" className="mb-2">Referance/Banner Logo</Typography>
                           <div className='flex max-sm:flex-col items-center gap-6 flex-wrap'>
                             {watch('site_logo_preview') ? (
-                              <img height={100} width={100} className='rounded' src={watch('site_logo_preview')} alt='Site Logo Image' />
+                              <img height={100} width={100} className='rounded' src={watch('site_logo_preview')} alt='Site Logo Image' style={{backgroundColor: '#F6F6F6'}} />
                             ) : null}
                             <div className='flex flex-grow flex-col gap-4'>
                               <div className='flex flex-col sm:flex-row gap-4'>

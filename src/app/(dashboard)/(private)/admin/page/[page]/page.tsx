@@ -4,6 +4,11 @@ import AdventurePage from '@views/admin/cms/adventure/PageSection'
 import TravelPage from '@views/admin/cms/travel/PageSection'
 import PrivacyPolicy from '@views/admin/cms/privacy-policy/PageSection'
 import Ambassadorship from '@views/admin/cms/ambassadorship/PageSection'
+import AdventureGuide from '@views/admin/cms/adventure-guide/PageSection'
+import ContactUs from '@views/admin/cms/contact-us/PageSection'
+import StaticPages from '@views/admin/cms/static-pages/PageSection'
+
+
 
 // import AmbassadorshipPage from '@views/admin/cms/ambassadorship/PageSection'
 
@@ -27,7 +32,7 @@ import Ambassadorship from '@views/admin/cms/ambassadorship/PageSection'
 
 import * as Common from '@/app/server/common'
 
-import {getPageData} from '@/app/server/pages'
+import { getPageData } from '@/app/server/pages'
 import { getDestinations } from '@/app/server/destinations'
 
 import config from '@/configs/themeConfig'
@@ -54,7 +59,11 @@ const _pages = {
   'total_travel': 'Total Travel',
   'privacy_policy': 'Privacy Policy',
   'ambassadorship': 'Ambassadorship',
-}
+  'adventure_guide': 'Adventure Guide',
+  'contact_us': 'Contact Us',
+} as const;
+
+type PageKey = keyof typeof _pages;
 
 const EditPage = async (props: { params: Promise<{ page: string }> }) => {
   const params = await props.params
@@ -63,10 +72,23 @@ const EditPage = async (props: { params: Promise<{ page: string }> }) => {
 
   const session = await Common.getUserSess()
 
-  // Vars
-  const data = await getPageData(_pages[_pg])
+  let data = [];
 
-  const _destinations = await getDestinations()
+  let _destinations = []
+
+  if(_pg != 'add'){
+    const isValidPage = (key: string): key is PageKey => {
+      return key in _pages;
+    };
+
+    if (!isValidPage(_pg) && !is) {
+      throw new Error(`Invalid page: ${_pg}`);
+    }
+    
+    data = await getPageData(_pages[_pg])
+
+    _destinations = await getDestinations()
+  }
 
   return ( 
     <>
@@ -75,6 +97,10 @@ const EditPage = async (props: { params: Promise<{ page: string }> }) => {
       {_pg=="total_travel" && (<TravelPage pgData={data} />) } 
       {_pg=="privacy_policy" && (<PrivacyPolicy pgData={data} />) } 
       {_pg=="ambassadorship" && (<Ambassadorship pgData={data} />) } 
+      {_pg=="adventure_guide" && (<AdventureGuide pgData={data} />) }
+      {_pg=="contact_us" && (<ContactUs pgData={data} />) }
+      {_pg=="add" && (<StaticPages pgData={data} />) }
+
     </>
   )
 }

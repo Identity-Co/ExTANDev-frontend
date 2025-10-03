@@ -7,41 +7,13 @@ import classnames from 'classnames'
 // Styles Imports
 import styles from './styles.module.css'
 
-const OverviewSection8 = () => {
+const OverviewSection8 = ({ data }: { data?: []; }) => {
 
   const [openIndex, setOpenIndex] = useState(0);
 
   const toggleAnswer = (index) => {
-    // Toggle the clicked item and close others
     setOpenIndex(openIndex === index ? null : index);
   };
-
-  const faqs = [
-    {
-      question: 'How do I get to the DR?',
-      answer: 'The Dominican Republic is a stunning Caribbean paradise where breathtaking natural beauty meets heart-pounding adventure. From its pristine white-sand beaches and lush mountain landscapes to its vibrant culture and warm hospitality, the island offers something for every traveler.',
-    },
-    {
-      question: 'Which documents do I need?',
-      answer: 'The Dominican Republic is a stunning Caribbean paradise where breathtaking natural beauty meets heart-pounding adventure. From its pristine white-sand beaches and lush mountain landscapes to its vibrant culture and warm hospitality, the island offers something for every traveler.',
-    },
-    {
-      question: 'What is the best time of year to visit?',
-      answer: 'The Dominican Republic is a stunning Caribbean paradise where breathtaking natural beauty meets heart-pounding adventure. From its pristine white-sand beaches and lush mountain landscapes to its vibrant culture and warm hospitality, the island offers something for every traveler.',
-    },
-    {
-      question: 'What is the legal drinking age?',
-      answer: 'The Dominican Republic is a stunning Caribbean paradise where breathtaking natural beauty meets heart-pounding adventure. From its pristine white-sand beaches and lush mountain landscapes to its vibrant culture and warm hospitality, the island offers something for every traveler.',
-    },
-    {
-      question: 'I don’t speak Spanish, is this a problem?',
-      answer: 'The Dominican Republic is a stunning Caribbean paradise where breathtaking natural beauty meets heart-pounding adventure. From its pristine white-sand beaches and lush mountain landscapes to its vibrant culture and warm hospitality, the island offers something for every traveler.',
-    },
-    {
-      question: 'Can I spend US dollars or Euros?',
-      answer: 'The Dominican Republic is a stunning Caribbean paradise where breathtaking natural beauty meets heart-pounding adventure. From its pristine white-sand beaches and lush mountain landscapes to its vibrant culture and warm hospitality, the island offers something for every traveler.',
-    },
-  ];
   
   return (
     <section className={classnames(styles.faq_section, 'pt_150')}>
@@ -50,14 +22,14 @@ const OverviewSection8 = () => {
                 <h2 className="fs_55">Faq’s</h2>
             </div>
             <div className={classnames(styles.faq)}>
-            {faqs.map((faq, index) => (
+            {data.map((data: string, index: number) => (
                 <div key={index} className={classnames(styles.faq_box)}>
-                    <div key={`${index}-${faq.question}`} className={classnames(styles.question, { [styles.open]: openIndex  === index, })} onClick={() => toggleAnswer(index)}>
-                        <h4>{faq.question}</h4>
+                    <div key={`${index}-${data.question}`} className={classnames(styles.question, { [styles.open]: openIndex  === index, })} onClick={() => toggleAnswer(index)}>
+                        <h4>{data.question}</h4>
                     </div>
                     <div className={classnames(styles.answercont, {[styles.show]: openIndex === index, })}>
                         <div className={classnames(styles.answer)}>
-                            <p>{faq.answer}</p>
+                            <p>{data.answer}</p>
                         </div>
                     </div>
                 </div>

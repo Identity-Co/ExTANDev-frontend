@@ -1,0 +1,80 @@
+a.fl_bx_lnk_glb:hover ~ .network_travel_img_text .btn a{background-color: #ffffff; color: #F85241;}
+a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
+
+/*banner-start*/
+
+.home_banner{position: relative;}
+
+.banner_bg_image{position: relative;}
+.banner_bg_image .banner_bg_image_hero{padding-bottom: 40.41vw; position: relative;}
+.banner_bg_image .banner_bg_image_hero img{position: absolute; width: 100%; height: 100%; object-fit: cover; top: 0; left: 0;}
+.banner_bg_image:before{position: absolute; content: ""; background: linear-gradient(180deg,rgba(0, 0, 0, 1) 0%, rgba(128, 128, 128, 0) 100%); mix-blend-mode: multiply; opacity: 0.4; top: 0; left: 0; width: 100%; height: 65%; z-index: 1;}
+.banner_bg_image:after{position: absolute; content: ""; background: linear-gradient(360deg,rgba(0, 0, 0, 1) 0%, rgba(128, 128, 128, 0) 100%); mix-blend-mode: multiply; opacity: 0.67; bottom: 0; left: 0; width: 100%; height: 35%; z-index: 1;}
+.banner_bg_image_text h1{color: #ffffff; letter-spacing: -0.020em;}
+.banner_bg_image_text{position: absolute; z-index: 2; bottom: 8.053vw; left: 0; right: 0; text-align: center;}
+
+
+@media only screen and (max-width: 1024px){
+  .banner_bg_image .banner_bg_image_hero{padding-bottom: 53.906vw;}
+  .banner_bg_image_text{bottom: 10.742vw;}
+}
+
+@media only screen and (max-width: 768px){
+  .banner_bg_image .banner_bg_image_hero{padding-bottom: 71.875vw;}
+  .banner_bg_image_text{top: 50%; transform: translateY(-50%); bottom: auto;}
+  .home_banner.destination_overview_banner .hero_slide_text{max-width: 100%;}
+
+  .search_row form .search_select.ss1 select,
+  .search_row form .search_select.ss2 select{font-size: 2.698vw; background-size: 2.964vw; min-height: 6.855vw; padding: 0.732vw 4.343vw; }
+}
+
+.banner_bg_image_text.banner_text_left{width: 100%; max-width: 80%; margin: 0 auto; padding: 0 5.208vw; text-align: left;}
+.banner_bg_image_text.banner_text_left h1{font-size: 5.857vw; line-height: 1;}
+.banner_bg_image_text.banner_text_left p{color: #ffffff; font-size: 1.318vw;}
+
+.surfing_row .surfing_text h3:not(first-of-tpe){padding-top: 1.659vw;}
+.moab_banner_icon{position: absolute; top: 11.347vw; right: 3.66vw; z-index: 2;}
+
+@media only screen and (max-width: 1024px){
+  .banner_bg_image_text.banner_text_left{max-width: 90%; padding: 0 1.757vw;}
+  .banner_bg_image_text.banner_text_left p{font-size: 1.918vw;}
+  .surfing_row .surfing_text h3:not(first-of-tpe){padding-top: 5.659vw;}
+  
+}
+
+@media only screen and (max-width: 768px){
+  .banner_bg_image_text.banner_text_left p{font-size: 3.518vw;}  
+}
+
+
+/*banner-end*/
+
+
+.blog_section .blog_box{height: 100%; border: solid 0.026vw #CECECE; box-shadow: 0 0.781vw 1.042vw rgb(0, 0, 0, 0.1); background-color: #ffffff;}
+.blog_section .blog_box .shop_merch_img:before{position: absolute; content: ""; background: linear-gradient(360deg,rgba(31, 31, 31, 1) 0%, rgba(105, 105, 105, 0) 100%); opacity: 0.24; mix-blend-mode: multiply; width: 100%; height: 100%; bottom: 0; left: 0; right: 0; z-index: 1;}
+.blog_section .blog_box .merch_info{position: relative; left: auto; top: auto; bottom: auto; right: auto; text-align: left; padding: 1.067vw;}
+.blog_section .blog_box .merch_info h4{letter-spacing: 0; color: #1F1F1F;}
+
+.ambassadorship_sec1{background: url(/images/sub-pages/tan-background-copy.jpg) center no-repeat; background-size: cover; box-shadow: none;}
+.ambassadorship_img{position: relative; margin-top: -9.960vw;}
+
+.shop_merch{position: relative;}
+.merch_sec1 .shop_merch:before{position: absolute; content: ""; border: solid 0.157vw #ffffff; top: 0.677vw; left: 0.677vw; right: 0.677vw; bottom: 0.677vw; z-index: 1; background: linear-gradient(180deg, rgba(31, 31, 31, 0) 70%, rgba(0, 0, 0, 1) 100%); opacity: 0.55;}
+.shop_merch .shop_merch_img{position: relative; padding-bottom: 95%; overflow: hidden;}
+.shop_merch .shop_merch_img img{position: absolute; width: 100%; height: 100%; object-fit: cover; top: 0; left: 0; transition: 0.3s ease-in-out;}
+.merch_info{position: absolute; bottom: 2.604vw; left: 0.677vw; right: 0.677vw; text-align: center; z-index: 2;}
+.merch_info h4{font-size: 1.407vw; color: #ffffff; letter-spacing: 0.2em; padding-bottom: 0.417vw;}
+.merch_info .btn a{font-family: "Bebas Neue", sans-serif; border-radius: 0; font-weight: 400; letter-spacing: 0.02em; min-width: 5.209vw;}
+a.fl_bx_lnk_glb:hover ~ .merch_info .btn a{background-color: #000000;}
+a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
+
+@media only screen and (max-width: 1024px){
+  .merch_info h4{font-size: 2.118vw;}
+  .merch_info .btn a{min-width: 8.766vw;}
+}
+
+@media only screen and (max-width: 768px){
+  .merch_info h4{font-size: 3.043vw; padding-bottom: 1.840vw;}
+  .merch_info .btn a{min-width: 13.035vw;}
+  .merch_info{bottom: 4.027vw;}
+}

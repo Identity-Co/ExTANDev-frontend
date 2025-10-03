@@ -2,6 +2,8 @@ import Destinations from '@views/admin/destinations/add'
 
 import config from '@/configs/themeConfig'
 
+import { getDestinations } from '@/app/server/destinations'
+
 export const metadata = {
   title: `Destination Management - ${config.appName}`,
   description:`${config.appName}`,
@@ -19,8 +21,9 @@ export const metadata = {
 }
 
 const ManageDestinations = async () => {
+  const destinations = await getDestinations();
 
-  return <Destinations pgData={[]} />
+  return <Destinations pgData={[]} destinations={destinations}/>
 }
 
 export default ManageDestinations

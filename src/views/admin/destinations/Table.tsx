@@ -53,7 +53,7 @@ import SmartLink from '@/components/SmartLink'
 // Style Imports
 import tableStyles from '@core/styles/table.module.css'
 
-import * as Page from '@/app/server/pages'
+import * as Destinations from '@/app/server/destinations'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -66,6 +66,8 @@ declare module '@tanstack/table-core' {
 
 type PageTypesWithAction = {
   _id?: string
+  title?: string
+  sub_title?: string
   page?: string
   status?: string
   action?: string
@@ -125,8 +127,8 @@ const ListTable = ({ tableData }: { tableData?: [] }) => {
   // States
   const [addUserOpen, setAddUserOpen] = useState(false)
   const [rowSelection, setRowSelection] = useState({})
-  const [data, setData] = useState(...[tableData])
-  const [filteredData, setFilteredData] = useState(data)
+  const [data, setData] = useState(tableData || [])
+  const [filteredData, setFilteredData] = useState(tableData || [])
   const [globalFilter, setGlobalFilter] = useState('')
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
@@ -136,9 +138,16 @@ const ListTable = ({ tableData }: { tableData?: [] }) => {
 
   const [openDelete, setOpenDelete] = useState(false)
 
-
   // Hooks
   const { lang: locale } = useParams()
+
+  // Handle tableData prop updates
+  useEffect(() => {
+    if (tableData) {
+      setData(tableData)
+      setFilteredData(tableData)
+    }
+  }, [tableData])
 
   const columns = useMemo<ColumnDef<PageTypesWithAction, any>[]>(
     () => [
@@ -190,36 +199,20 @@ const ListTable = ({ tableData }: { tableData?: [] }) => {
   };
 
   const handleDeleteAction = async () => {
-    const res = await Page.deletePage(pgId)
+    const res = await Destinations.deleteDestination(pgId)
 
-    toast.success('Page deleted successfully');
+    toast.success('Destination deleted successfully');
 
     setOpenDelete(false)
 
     fetchData();      
   }
 
-  const handleSwitchChange = async (id: any, event: React.ChangeEvent<HTMLInputElement>) => {    
-    const _status_ = event.target.checked ? 1 : 0;
-    const res = await Page.updatePage(id, {status: _status_})
-
-    if (res && res._id) {
-      if(_status_) {
-        toast.success('Page Activated successfully.')
-      } else {
-        toast.success('Page De-Activated successfully.')
-      }
-    } else {
-      if(res.errors) {
-        toast.error(res.errors)
-      }
-    }
-  }
-
   const fetchData = async () => {
-    const refresh = await Page.getAllPages();
+    const refresh = await Destinations.getDestinations();
     
     setData(refresh);
+    setFilteredData(refresh);
   };
 
   const table = useReactTable({
@@ -358,10 +351,10 @@ const ListTable = ({ tableData }: { tableData?: [] }) => {
         }}
         closeAfterTransition={false}
       >
-        <DialogTitle id='alert-dialog-title' className='text-center'>Delete Page?</DialogTitle>
+        <DialogTitle id='alert-dialog-title' className='text-center'>Delete Destination?</DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description' className='text-center'>
-            Are you sure you want to delete this Page?
+            Are you sure you want to delete this destination?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

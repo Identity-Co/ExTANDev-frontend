@@ -61,7 +61,7 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
 
 /*destination-resorts-sec1-start*/
 
-section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 8.788vw;}
+section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 18.088vw;}
 section.home_section1.our_desti_sec1{ background: url(/images/front-pages/images/tan-background-copy.jpg) center no-repeat; background-size: cover; box-shadow: none; padding-bottom: 18.302vw; }
 .destination_overview_tab{max-width: 51.245vw; margin: 0 auto; padding-bottom: 6.223vw;}
 ul.destination_tab{list-style: none; display: flex; flex-wrap: wrap; column-gap: 4.539vw; grid-row-gap: 1.757vw; justify-content: center; border-bottom: solid 0.0365vw #707070;}
@@ -97,7 +97,7 @@ ul.destination_tab li.active a{text-decoration: none;}
 }
 
 @media only screen and (max-width: 768px){
-  section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 25.788vw;}
+  section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 31.788vw;}
   .destination_overview_tab{max-width: 90%;}
   ul.destination_tab li a{font-size: 2.971vw;}
   .destination_overview_tab{padding-bottom: 9.223vw;}
@@ -163,6 +163,16 @@ ul.destination_tab li.active a{text-decoration: none;}
 .adv_post_img_slide .adv_post_img_box .post_api_img{padding-bottom: 85%; position: relative;}
 .adv_post_img_slide .adv_post_img_box .post_api_img img{position: absolute; width: 100%; height: 100%; top: 0; left: 0; object-fit: cover;}
 
+.grpbx_content .answercont{background-color: #ffffff; border: solid 0.0365vw #D6D3D3;box-shadow: 0 0.366vw 0.366vw rgb(0, 0, 0, 0.09);margin: 1.245vw 0 1.245vw;}
+.grpbx_content .answer{padding: 1.757vw 4.392vw 1.757vw;}
+.grpbx_content .answer .storie_content{padding-bottom: 2.05vw;}
+.grpbx_content .answer .storie_content p{font-size: 1.171vw; line-height: 1.611vw;}
+.grpbx_content .answer .storie_location{display: flex; align-items: center; gap:0.805vw; padding-bottom: 1.537vw;}
+.grpbx_content .answer .storie_location span{font-size: 1.537vw; font-weight: 800; color: #1F1F1F;}
+.grpbx_content .answer .storie_location img{width: 1.025vw; height: 1.537vw;}
+.grpbx_content .network_travel_likes{padding-top: 2.05vw;}
+.grpbx_content .network_travel_likes span{font-weight: 700; color: #F85241;}
+
 
 @media only screen and (max-width: 1024px){
   .travel_stories_faq .network_travel_profile_info h4{font-size: 3.196vw;}
@@ -171,10 +181,14 @@ ul.destination_tab li.active a{text-decoration: none;}
   .travel_stories_faq .network_travel_profile .adv_post_top_right .adv_trailblazer span{font-size: 1.798vw;}
   .travel_stories_faq .more_btn a{padding: 1.378vw 2.318vw 0.678vw; gap: 1.252vw; font-size: 2.464vw;}
   .travel_stories_faq .more_btn a svg{width: 2.025vw; height: 1.732vw;}
-  .travel_stories_faq .faq_box .answer .storie_location img{width: 1.525vw; height: 2.037vw;}
-  .travel_stories_faq .faq_box .answer .storie_location span{font-size: 2.037vw;}
-  .travel_stories_faq .faq_box .answer .storie_content p{font-size: 1.758vw; line-height: 1.4;}
-  .travel_stories_faq .faq_box .answer .storie_content{padding-bottom: 3.05vw;}
+  .travel_stories_faq .faq_box .answer .storie_location img,
+  .grpbx_content .answer .storie_location img{width: 1.525vw; height: 2.037vw;}
+  .travel_stories_faq .faq_box .answer .storie_location span,
+  .grpbx_content .answer .storie_location span{font-size: 2.037vw;}
+  .travel_stories_faq .faq_box .answer .storie_content p,
+  .grpbx_content .answer .storie_content p{font-size: 1.758vw; line-height: 1.4;}
+  .travel_stories_faq .faq_box .answer .storie_content,
+  .grpbx_content .answer .storie_content{padding-bottom: 3.05vw;}
 
   .network_travel_profile .adv_post_top_right .adv_trailblazer span{font-size: 1.678vw;}
   .network_travel_profile .adv_post_top_right{line-height: 1.1;}
@@ -193,16 +207,21 @@ ul.destination_tab li.active a{text-decoration: none;}
 @media only screen and (max-width: 768px){
   .travel_stories_faq .faq_box .question{padding: 3.757vw 4.392vw;}
   .travel_stories_faq .faq_box .answer{padding: 0 4.392vw 3.757vw;}
+  .grpbx_content .answer{padding: 3.757vw 4.392vw 3.757vw;}
   .travel_stories_faq .network_travel_profile_info h4{font-size: 5.196vw;}
   .travel_stories_faq .network_travel_follow a{font-size: 2.871vw;}
   .travel_stories_faq .network_travel_profile_info span{font-size: 2.798vw;}
   .travel_stories_faq .network_travel_profile .adv_post_top_right .adv_trailblazer span{font-size: 2.798vw;}
   .travel_stories_faq .more_btn a{padding: 1.678vw 3.318vw 0.978vw; gap: 1.652vw; font-size: 3.864vw;}
   .travel_stories_faq .more_btn a svg{width: 3.025vw; height: 2.732vw;}
-  .travel_stories_faq .faq_box .answer .storie_location img{width: 2.525vw; height: 4.037vw;}
-  .travel_stories_faq .faq_box .answer .storie_location span{font-size: 3.037vw;}
-  .travel_stories_faq .faq_box .answer .storie_content p{font-size: 3.344vw; line-height: 1.4;}
-  .travel_stories_faq .faq_box .answer .storie_location{padding-bottom: 3.537vw;}
+  .travel_stories_faq .faq_box .answer .storie_location img,
+  .grpbx_content .answer .storie_location img{width: 2.525vw; height: 4.037vw;}
+  .travel_stories_faq .faq_box .answer .storie_location span,
+  .grpbx_content .answer .storie_location span{font-size: 3.037vw;}
+  .travel_stories_faq .faq_box .answer .storie_content p,
+  .grpbx_content .answer .storie_content p{font-size: 3.344vw; line-height: 1.4;}
+  .travel_stories_faq .faq_box .answer .storie_location,
+  .grpbx_content .answer .storie_location{padding-bottom: 3.537vw;}
 
   .network_travel_profile .adv_post_top_right .adv_trailblazer span{font-size: 2.678vw;}
 
@@ -224,7 +243,6 @@ ul.destination_tab li.active a{text-decoration: none;}
 .faq_box .answercont {transition: 0.3s;}
 .faq_box .answer{padding: 0 2.635vw 2.269vw;}
 .faq_box .answer p{font-size: 1.098vw; line-height: 1.4;}
-.faq_box:last-child{margin: 0 !important;}
 
 @media only screen and (max-width: 1024px){
   .faq_box .question h4{font-size: 2.564vw;}

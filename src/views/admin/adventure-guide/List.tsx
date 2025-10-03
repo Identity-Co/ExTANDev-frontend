@@ -8,7 +8,7 @@ import type { adventureguideTypes } from '@/types/apps/adventureguideTypes'
 import ListTable from './ListTable'
 
 const AdventureGuideLists = ({ adventureguides }: { adventureguides?: adventureguideTypes[] }) => {
-  
+  console.log(adventureguides)
   return (
     <Grid container spacing={6}>
       <Grid size={{ xs: 12 }}>

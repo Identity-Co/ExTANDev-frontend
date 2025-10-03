@@ -7,7 +7,6 @@ import { useEffect } from 'react'
 import type { Mode } from '@core/types'
 
 // Component Imports
-import BannerSection from './BannerSection'
 import AdventuresSection1 from './AdventuresSection1'
 import AdventuresSection2 from './AdventuresSection2'
 import AdventuresSection3 from '@/views/shared/instagram-feed-slider-section/InstagramFeedSlider'
@@ -16,9 +15,16 @@ import AdventuresSection5 from '@/views/shared/cta-section/CTASection'
 
 import { useSettings } from '@core/hooks/useSettings'
 
-const LandingPageWrapper = ({ mode }: { mode: Mode }) => {
+const LandingPageWrapper = ({ pgData, destinations}: AdventureProps) => {
   // Hooks
   const { updatePageSettings } = useSettings()
+
+  let featuredResorts: any[] = [];
+  if(pgData?.adventures?.feature_resorts?.resorts){
+    pgData.adventures.feature_resorts.resorts.forEach((item: any, index: number) => {
+      featuredResorts?.push(pgData?.resorts?.resorts?.find(itemsub => itemsub._id == item))
+    });
+  }
 
   // For Page specific settings
   useEffect(() => {
@@ -33,39 +39,20 @@ const LandingPageWrapper = ({ mode }: { mode: Mode }) => {
   }
 
   const featuredResortsSectionProps = {
-    resorts : [
-        {   
-          title: 'Kalon Surf Resort',
-          sub_title: 'Guenacaste, Costa Rica',
-          description: 'An Idyllic Beach Retreat Set in Paradise on Costa Rica’s Pacific Coast',
-          image: '/images/sub-pages/resort1.jpg',
-        },
-        {
-          title: 'Tan resort jarabacoa',
-          sub_title: 'Jarabacoa, Dominican Republic',
-          description: 'An Idyllic Beach Retreat Set in Paradise on Costa Rica’s Pacific Coast',
-          image: '/images/sub-pages/resort2.jpg',
-        },
-        {
-          title: 'mashpi Lodge',
-          sub_title: 'Mashpi, Ecuador',
-          description: 'An Idyllic Beach Retreat Set in Paradise on Costa Rica’s Pacific Coast',
-          image: '/images/sub-pages/resort3.jpg',
-        },
-    ],
+    resorts : featuredResorts,
     heading_class: 'fs_35',
     class: 'our_desti_sec4',
     general_class: 'pb_150',
+    sectionHeading: pgData?.adventures?.feature_resorts?.title ?? ''
   }
 
   return (
     <>
-      <BannerSection mode={mode} />
-      <AdventuresSection1 />
+      <AdventuresSection1 data={pgData?.adventures ?? []} />
       <AdventuresSection2 />
       <AdventuresSection3 sectionProps={instagramSliderSectionProps} />
       <AdventuresSection4 sectionProps={featuredResortsSectionProps} />
-      <AdventuresSection5 />
+      <AdventuresSection5 data={pgData ?? []} />
     </>
   )
 }

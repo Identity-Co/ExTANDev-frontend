@@ -15,12 +15,12 @@ const LandingPage = async () => {
 
   const pgData = await getPageData("Our Destination");
 
-  const destinations = await getPageDestination(pgData?.destinations??[]);
+  const featuredDestinations = await getPageDestination(pgData?.feature_destinations??[]);
 
   return <LandingPageWrapper mode={mode}
       banners={banners}
       pgData={pgData}
-      destinations={destinations}
+      featuredDestinations={featuredDestinations}
    />
 }
 

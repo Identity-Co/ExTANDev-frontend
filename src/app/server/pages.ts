@@ -84,6 +84,9 @@ export const updatePage = async (id: any, data: any) => {
   });
 
   if (!response.ok) {
+    const json = await response.json();
+    
+    return json
     return {}
   } else {
     const json = await response.json();
@@ -99,13 +102,11 @@ export const getPageData = async (pg: any) => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + session?.user?.userToken
+      // 'Authorization': 'Bearer ' + session?.user?.userToken
     }
   }).catch(rejected => {
       console.log(rejected);
   })
-
-  console.log(res, pg);
 
   if (res && res.ok) {
     const log = await res.json()
@@ -118,8 +119,6 @@ export const getPageData = async (pg: any) => {
 
 export const updatePageInfo = async (pg: any, data: any) => {
   const session = await getServerSession(authOptions)
-
-  console.log(data);
   
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/page/update_data/${pg}`, {
     method: 'POST',
@@ -149,8 +148,6 @@ export const updateSectionImage = async (pg: any, data: any) => {
     },
     body: data
   });
-
-  console.log(response)
   
   if (!response.ok) {
     return {}
@@ -179,4 +176,117 @@ export const deletePage = async (id: string) => {
   const json = await response.json();
   
   return json
+}
+
+
+export const createStaticPage = async (data: any) => {
+  const session = await getServerSession(authOptions)
+
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/page/create/static_page`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${session?.user?.userToken}`
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    return {}
+  } else {
+    const json = await response.json();
+    
+    return json.data
+  }
+}
+
+export const updateStaticPage = async (id: any, data: any) => {
+  const session = await getServerSession(authOptions)
+  
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/page/update/static_page/${id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${session?.user?.userToken}`
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    return {}
+  } else {
+    const json = await response.json();
+    
+    return json.data
+  }
+}
+
+export const getStaticPageData = async (id: any) => {
+  const session = await getServerSession(authOptions);
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/page/static_page/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + session?.user?.userToken
+    }
+  }).catch(rejected => {
+      console.log(rejected);
+  })
+
+  if (res && res.ok) {
+    const log = await res.json()
+
+    return log.data
+  } else {
+    return {}
+  }
+}
+
+export const getStaticPage = async (pg: any) => {
+  const session = await getServerSession(authOptions);
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/page/get/static_page/${pg}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      //'Authorization': 'Bearer ' + session?.user?.userToken
+    }
+  }).catch(rejected => {
+      console.log(rejected);
+  })
+
+  if (res && res.ok) {
+    const log = await res.json()
+
+    return log.data
+  } else {
+    return {}
+  }
+}
+
+export const getPageBySlug = async (slug: any) => {
+  const session = await getServerSession(authOptions);
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/page/slug/${slug}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      //'Authorization': 'Bearer ' + session?.user?.userToken
+    }
+  }).catch(rejected => {
+      console.log(rejected);
+  })
+
+  /*const log = await res.json()
+
+    return log*/
+
+  if (res && res.ok) {
+    const log = await res.json()
+
+    return log.data
+  } else {
+    return {}
+  }
 }

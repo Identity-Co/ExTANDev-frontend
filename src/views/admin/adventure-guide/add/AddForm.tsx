@@ -1,7 +1,7 @@
 'use client'
 
-// React Imports
-import { useState } from 'react'
+// React Imports useRef
+import { useState, useEffect } from 'react'
 
 import { useRouter } from 'next/navigation'
 
@@ -17,8 +17,10 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import CircularProgress from '@mui/material/CircularProgress';
+import Autocomplete from "@mui/material/Autocomplete";
+import Tooltip from '@mui/material/Tooltip';
 
-import type { Editor } from '@tiptap/react'
+// import type { Editor } from '@tiptap/react'
 
 const TipTapEditor = dynamic(() => import('@/components/TipTap'), { ssr: false })
 
@@ -31,7 +33,7 @@ import { valibotResolver } from '@hookform/resolvers/valibot'
 
 import { object, string, pipe, nonEmpty, optional, custom } from 'valibot'
 
-import type { InferInput } from 'valibot'
+//import type { InferInput } from 'valibot'
 
 import CustomIconButton from '@core/components/mui/IconButton'
 
@@ -43,100 +45,131 @@ const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false })
 
 import 'react-quill-new/dist/quill.snow.css';
 
+type ReactQuillRef = {
+  getEditor: () => any;
+  focus?: () => void;
+  blur?: () => void;
+};
+
+
+interface ContentField {
+  type: string;
+  value: string;
+  caption?: string;
+  image?: File | string | null;
+  _preview?: string | null; // UI-only preview field
+  resort_title: string | null;
+  resorts_list: string | null;
+  reviews_list: string | null;
+}
+
+interface ContentSection {
+  fields: ContentField[];
+}
+
+type FormData = {
+  title: string;
+  feature_image: File | null | string;
+  banner_image: File | null | string;
+  banner_description?: string;
+  content_sections: ContentSection[];
+  author_name?: string;
+  author_testimonial?: string;
+  author_image?: File | null | string;
+  excerpt?: string;
+  site_url?: string;
+  site_logo?: File | null | string;
+  page_url?: string;
+  meta_title?: string;
+  meta_description?: string;
+  meta_keywords?: string;
+  robots?: string;
+  author?: string;
+  publisher?: string;
+  copyright?: string;
+  revisit_after?: string;
+  classification?: string;
+  rating?: string;
+  post_date?: string;
+
+  banner_preview?: string | null;
+  author_image_preview?: string | null;
+  feature_image_preview?: string | null;
+  site_logo_preview?: string | null;
+}
+
 type ErrorType = {
   message: string[]
 }
 
-type FormData = InferInput<typeof schema>
-
-
 const schema = object({
   title: pipe(string(), nonEmpty('This field is required')),
-  feature_image: optional(custom<File | null>((value) => {
-    if (!value) return true; // allow empty
-    
-    const allowed = ["image/png", "image/jpeg", "image/gif"];
-    
-    if (!allowed.includes(value.type)) return "Only PNG/JPG/GIF allowed";
-    
-    const maxMB = 5;
-    
-    if (value.size > maxMB * 1024 * 1024)
-      return `Max file size is ${maxMB} MB`;
-    
-    return true;
-  })),
-  banner_image: optional(custom<File | null>((value) => {
-    if (!value) return true; // allow empty
-    
-    const allowed = ["image/png", "image/jpeg", "image/gif"];
-    
-    if (!allowed.includes(value.type)) return "Only PNG/JPG/GIF allowed";
-    
-    const maxMB = 5;
-    
-    if (value.size > maxMB * 1024 * 1024)
-      return `Max file size is ${maxMB} MB`;
-    
-    return true;
-  })),
+  feature_image: optional(
+    custom<File | null>((value) => {
+      if (!value) return true;
+      if (typeof value === 'string') return true; // Allow strings (existing images)
+      
+      const allowed = ["image/png", "image/jpeg", "image/gif"];
+      if (!allowed.includes(value.type)) return false;
+      
+      const maxMB = 5;
+      
+      return value.size <= maxMB * 1024 * 1024;
+    }, "Only PNG/JPG/GIF allowed and max file size is 5 MB")
+  ),
+  banner_image: optional(
+    custom<File | null>((value) => {
+      if (!value) return true;
+      if (typeof value === 'string') return true; // Allow strings (existing images)
+      
+      const allowed = ["image/png", "image/jpeg", "image/gif"];
+      if (!allowed.includes(value.type)) return false;
+      
+      const maxMB = 5;
+      return value.size <= maxMB * 1024 * 1024;
+    }, "Only PNG/JPG/GIF allowed and max file size is 5 MB")
+  ),
   banner_description: optional(string()),
-  content_sections: optional(custom((value) => {
-    // Check if content_sections is an array
-    if (!Array.isArray(value)) return "content_sections must be an array";
-
-    for (const section of value) {
-      if (!section.fields || !Array.isArray(section.fields)) {
-        return "Each content_section must have a fields array";
-      }
-
-      for (const field of section.fields) {
-        if (!field.type) return "Each field must have a type";
-        
-        // Check if the field type is "image" and validate the value
-        if (field.type === "image" && (!field.value || typeof field.value !== "string")) {
-          return "Image field must have a valid image URL";  // Ensure return is in the proper scope
-        }
-      }
-    }
-    
-    return true;  // End validation with a successful return
-  })),
-
+  content_sections: optional(
+    custom<any[]>((value) => {
+      if (!Array.isArray(value)) return false;
+      
+      return value.every(section => {
+        return section && typeof section === 'object' && Array.isArray(section.fields);
+      });
+    }, "content_sections must be an array of sections with fields")
+  ),
   author_name: optional(string()),
   author_testimonial: optional(string()),
-  author_image: optional(custom<File | null>((value) => {
-    if (!value) return true; // allow empty
-    
-    const allowed = ["image/png", "image/jpeg", "image/gif"];
-    
-    if (!allowed.includes(value.type)) return "Only PNG/JPG/GIF allowed";
-    
-    const maxMB = 5;
-    
-    if (value.size > maxMB * 1024 * 1024)
-      return `Max file size is ${maxMB} MB`;
-    
-    return true;
-  })),
+  author_image: optional(
+    custom<File | null>((value) => {
+      if (!value) return true;
+      if (typeof value === 'string') return true; // Allow strings (existing images)
+      
+      const allowed = ["image/png", "image/jpeg", "image/gif"];
+      if (!allowed.includes(value.type)) return false;
+      
+      const maxMB = 5;
+      
+      return value.size <= maxMB * 1024 * 1024;
+    }, "Only PNG/JPG/GIF allowed and max file size is 5 MB")
+  ),
   excerpt: optional(string()),
   site_url: optional(string()),
-  site_logo: optional(custom<File | null>((value) => {
-    if (!value) return true; // allow empty
-    
-    const allowed = ["image/png", "image/jpeg", "image/gif"];
-    
-    if (!allowed.includes(value.type)) return "Only PNG/JPG/GIF allowed";
-    
-    const maxMB = 5;
-    
-    if (value.size > maxMB * 1024 * 1024)
-      return `Max file size is ${maxMB} MB`;
-    
-    return true;
-  })),
-
-  page_url: optional(string()),
+  site_logo: optional(
+    custom<File | null>((value) => {
+      if (!value) return true;
+      if (typeof value === 'string') return true; // Allow strings (existing images)
+      
+      const allowed = ["image/png", "image/jpeg", "image/gif", "image/svg+xml"];
+      if (!allowed.includes(value.type)) return false;
+      
+      const maxMB = 5;
+      
+      return value.size <= maxMB * 1024 * 1024;
+    }, "Only PNG/JPG/GIF allowed and max file size is 5 MB")
+  ),
+  page_url: pipe(string(), nonEmpty('This field is required')),
   meta_title: optional(string()),
   meta_description: optional(string()),
   meta_keywords: optional(string()),
@@ -147,7 +180,15 @@ const schema = object({
   revisit_after: optional(string()),
   classification: optional(string()),
   rating: optional(string()),
-})
+  post_date: optional(string()),
+});
+
+const TooltipIfEnabled = ({ title, disabled, children }) =>
+  disabled ? children : (
+    <Tooltip title={title}>
+      <span style={{ display: 'inline-block' }}>{children}</span>
+    </Tooltip>
+  );
 
 const PageSection = ({ pgData }: { pgData?: [] }) => {  
   const router = useRouter()
@@ -156,8 +197,31 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
 
   const [errorState, setErrorState] = useState<ErrorType | null>(null)
   const [isSubmitting , setIsSubmitting ] = useState(false)
-  const [editor, setEditor] = useState<Editor | null>(null)
+  const [editor, setEditor] = useState<any>(null);
   const [message, setMessage] = useState(null);
+
+  const resortsLists = { r1: 'Resort 1', r2: 'Resort 2', r3: 'Resort 3', r4: 'Resort 4', r5: 'Resort 5', r6: 'Resort 6'};
+  const [resortsOptions, setResortsOptions] = useState(() => {
+    return Object.entries(resortsLists).map(([key, value]) => ({
+      label: key,
+      value: value
+    }));
+  });
+
+  const reviewsLists = { r1: 'Review 1', r2: 'Review 2', r3: 'Review 3' };
+  const [reviewsOptions, setreviewsOptions] = useState(() => {
+    return Object.entries(reviewsLists).map(([key, value]) => ({
+      label: key,
+      value: value
+    }));
+  });
+
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
 
   // Editor Toolbar
   const modules = {
@@ -184,35 +248,39 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
   } = useForm<FormData>({
     resolver: valibotResolver(schema),
     defaultValues: {
-      title: pgData?.title??'',
+      title: '',
       feature_image: null,
       banner_image: null,
-      banner_description: pgData?.banner_description??'',
+      banner_description: '',
       content_sections:[
         {
           fields: [
-            // { type: "content", value: "" },
-            // { type: "image", value: "", caption: "" },
+            { type: "content", value: "" }
           ]
         }
       ],
-      author_name: pgData?.author_name??'',
-      author_testimonial: pgData?.author_testimonial??'',
+      author_name: '',
+      author_testimonial: '',
       author_image: null,
-      excerpt: pgData?.excerpt??'',
-      site_url: pgData?.site_url??'',
+      excerpt: '',
+      site_url: '',
       site_logo: null,
-      page_url: pgData?.page_url??'',
-      meta_title: pgData?.meta_title??'',
-      meta_description: pgData?.meta_description??'',
-      meta_keywords: pgData?.meta_keywords??'',
-      robots: pgData?.robots??'',
-      author: pgData?.author??'',
-      publisher: pgData?.publisher??'',
-      copyright: pgData?.copyright??'',
-      revisit_after: pgData?.revisit_after??'',
-      classification: pgData?.classification??'',
-      rating: pgData?.rating??'',
+      page_url: '',
+      meta_title: '',
+      meta_description: '',
+      meta_keywords: '',
+      robots: '',
+      author: '',
+      publisher: '',
+      copyright: '',
+      revisit_after: '',
+      classification: '',
+      rating: '',
+      banner_preview: null,
+      author_image_preview: null,
+      feature_image_preview: null,
+      site_logo_preview: null,
+      post_date: formatDate(new Date()),
     }
   })
 
@@ -221,23 +289,52 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
     name: "content_sections",
   });
   
-  const addField = (sectionIndex, type) => {
-    const newField = { type, value: "", caption: "" };
+  const addFieldToSection = (sectionIndex: number, field: ContentField) => {
+    const currentSections = [...(watch('content_sections') || [])]
     
-    sectionFields[sectionIndex].fields.push(newField);
-    setValue("content_sections", [...sectionFields]);
+    if (!currentSections[sectionIndex]) {
+      currentSections[sectionIndex] = { fields: [] }
+    }
+    
+    currentSections[sectionIndex].fields.push(field)
+    setValue('content_sections', currentSections)
+  }
+
+  const removeFieldFromSection = (sectionIndex: number, fieldIndex: number) => {
+    const currentSections = [...(watch('content_sections') || [])]
+    
+    if (currentSections[sectionIndex] && currentSections[sectionIndex].fields) {
+      currentSections[sectionIndex].fields.splice(fieldIndex, 1)
+      setValue('content_sections', currentSections)
+    }
+  }
+
+  const moveSection = (currentIndex: number, newIndex: number) => {
+    if (newIndex < 0 || newIndex >= sectionFields.length) return;
+
+    // Get current sections from form state
+    const currentSections = [...(watch('content_sections') || [])];
+    
+    // Remove from current position and insert at new position
+    const [movedSection] = currentSections.splice(currentIndex, 1);
+    currentSections.splice(newIndex, 0, movedSection);
+
+    // Update form state
+    setValue('content_sections', currentSections, { shouldDirty: true });
   };
 
-  const removeField = (sectionIndex, fieldIndex) => {
-    sectionFields[sectionIndex].fields.splice(fieldIndex, 1);
-    setValue("content_sections", [...sectionFields]);
-  };
-
-  const [sectionUploads, setSectionUploads] = useState<{ file: File; sectionIndex: number; fieldIndex: number }[]>([]);
+  const generateSlug = text => {
+    return text
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, '')   // remove invalid chars
+      .replace(/\s+/g, '-')           // replace spaces with -
+      .replace(/-+/g, '-')            // remove multiple -
+  }
 
   const onUpdate: SubmitHandler<FormData> = async (data: FormData) => {
     try {
-      setIsSubmitting(true)
+      //setIsSubmitting(true)
 
       const fd = new FormData()
 
@@ -259,14 +356,13 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
       if (data.revisit_after) fd.append('revisit_after', data.revisit_after)
       if (data.classification) fd.append('classification', data.classification)
       if (data.rating) fd.append('rating', data.rating)
+      if (data.post_date) fd.append('post_date', data.post_date)
 
       // === Append images (single) ===
       if (data.feature_image instanceof File) fd.append('feature_image', data.feature_image)
       if (data.banner_image instanceof File) fd.append('banner_image', data.banner_image)
       if (data.author_image instanceof File) fd.append('author_image', data.author_image)
       if (data.site_logo instanceof File) fd.append('site_logo', data.site_logo)
-
-      fd.append('sectionUploads', sectionUploads);
 
       // === Append repeater sections ===
       // send content_sections JSON without File objects
@@ -285,10 +381,12 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
           }),
         }
       })
-
+      
       fd.append('content_sections', JSON.stringify(cleanedSections))
 
       const log = await AdventureGuide.createAdventureGuide(fd);
+
+      console.log(log)
    
       if (log && log._id) {
 
@@ -339,6 +437,10 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
                             className='mbe-1'
                             onChange={e => {
                               field.onChange(e.target.value)
+
+                              const slug = generateSlug(e.target.value)
+                              setValue('page_url', slug)
+
                               errorState !== null && setErrorState(null)
                             }}
                             {...((errors.title || errorState !== null) && {
@@ -453,22 +555,61 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
                   {sectionFields.map((section, index) => (
                     <Grid key={section.id} container spacing={5} className="my-5">  
                       <Grid size={{ md: 12, xs: 12, lg: 12 }}>
-                        <h2>Content Section</h2>
+                       <div className="flex items-center justify-between">
+                          <h2>Content Section {index + 1}</h2>
+                          
+                          {/* Move Controls - Only show for sections after the first one */}
+                          {index > 0 && (
+                            <div className="flex gap-2">
+                              <TooltipIfEnabled title="Move Up" disabled={index === 1}>
+                                <CustomIconButton
+                                  color="primary"
+                                  size="small"
+                                  onClick={() => moveSection(index, index - 1)}
+                                  disabled={index === 1} // Can't move section 0
+                                >
+                                  <i className="ri-arrow-up-line"></i>
+                                </CustomIconButton>
+                              </TooltipIfEnabled>
+                              
+                              <TooltipIfEnabled title="Move Down" disabled={index === sectionFields.length - 1}>
+                                <CustomIconButton
+                                  color="primary"
+                                  size="small"
+                                  onClick={() => moveSection(index, index + 1)}
+                                  disabled={index === sectionFields.length - 1}
+                                >
+                                  <i className="ri-arrow-down-line"></i>
+                                </CustomIconButton>
+                              </TooltipIfEnabled>
+                            </div>
+                          )}
+                        </div>
                       </Grid>
 
                       <Grid size={{ md: 12, xs: 12, lg: 12 }}>
-                        <div spacing={5}>
+                        <Grid spacing={5}>
                             {section.fields.map((field, fieldIndex) => (
                               <Grid key={fieldIndex} container spacing={6} className="mb-2">
                                 {field.type === "image" ? (
                                   <>
                                     <Grid size={{ md: 5, xs: 12, lg: 5 }} className="mb-4">
                                       <div className='flex max-sm:flex-col items-center gap-6'>
-                                        {watch(`content_sections.${index}.fields.${fieldIndex}._preview`) ? (
-                                          <img height={100} width={100} className='rounded' src={watch(`content_sections.${index}.fields.${fieldIndex}._preview`) as string} alt='Content Image' />
-                                          ) : null}
-
-                                        {!watch(`content_sections.${index}.fields.${fieldIndex}._preview`) && field.image && (<img height={100} width={100} className='rounded' src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${field.image}`} alt='Section Image' />)}
+                                        {watch(
+                                          `content_sections.${index}.fields.${fieldIndex}._preview`
+                                        ) ? (
+                                          <img
+                                            height={100}
+                                            width={100}
+                                            className="rounded"
+                                            src={
+                                              watch(
+                                                `content_sections.${index}.fields.${fieldIndex}._preview`
+                                              ) as string
+                                            }
+                                            alt="Content Image"
+                                          />
+                                        ) : null}
 
                                         <div className='flex flex-grow flex-col gap-4'>
                                           <div className='flex flex-col sm:flex-row gap-4'>
@@ -481,38 +622,52 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
                                                 onChange={(e) => {
                                                   const file = e.target.files?.[0] ?? null;
 
-                                                  const maxSize = 800 * 1024; // 800 KB
-                                                  
-                                                  if (file && file.size > maxSize) {
-                                                    toast.error("File is too large. Maximum allowed size is 800KB.")
-                                                    
-                                                    return;
-                                                  }
+                                                  if (!file) return;
 
-                                                  if(file){ setSectionUploads((prev) => [...prev, { file: file, sectionIndex: index, fieldIndex: fieldIndex }]); }
+                                                  const url = URL.createObjectURL(file);
 
-                                                  // set preview url for UI only
-                                                  const url = file ? URL.createObjectURL(file) : null;
-                                                  
-                                                  // revoke previous
-                                                  const prev = (watch(`content_sections.${index}.fields.${fieldIndex}._preview`) as string | null) || null;
-                                                  
+                                                  const prev =
+                                                    (watch(
+                                                      `content_sections.${index}.fields.${fieldIndex}._preview`
+                                                    ) as string | null) || null;
+
                                                   if (prev) URL.revokeObjectURL(prev);
-                                                  setValue(`content_sections.${index}.fields.${fieldIndex}._preview`, url, { shouldDirty: true });
-                                                  setValue(`content_sections.${index}.fields.${fieldIndex}.image`, file, { shouldDirty: true });
+
+                                                  setValue(
+                                                    `content_sections.${index}.fields.${fieldIndex}._preview`,
+                                                    url,
+                                                    { shouldDirty: true }
+                                                  );
+                                                  setValue(
+                                                    `content_sections.${index}.fields.${fieldIndex}.image`,
+                                                    file,
+                                                    { shouldDirty: true }
+                                                  );
                                                 }}
                                                 id={`content_sections.${index}.fields.${fieldIndex}`}
                                               />
                                             </Button>
-                                            <Button size='small' variant='outlined' color='error' onClick={(e) => {
-                                              setValue(`content_sections.${index}.fields.${fieldIndex}.image`, null, { shouldDirty: true });
-                                              setValue(`content_sections.${index}.fields.${fieldIndex}._preview`, null, { shouldDirty: true });
-                                            }}>
+                                            <Button size='small' variant='outlined' color='error' onClick={() => {
+                                                setValue(
+                                                  `content_sections.${index}.fields.${fieldIndex}.image`,
+                                                  null,
+                                                  { shouldDirty: true }
+                                                );
+                                                setValue(
+                                                  `content_sections.${index}.fields.${fieldIndex}._preview`,
+                                                  null,
+                                                  { shouldDirty: true }
+                                                );
+                                              }} >
                                               Reset
                                             </Button>
                                           </div>
                                           <Typography>Allowed JPG, GIF or PNG. Max size of 800K</Typography>
-                                          {errors.content_sections?.[index]?.image && (<Typography color='error.main'>{String(errors.content_sections[index]?.image?.message)}</Typography>)}
+                                          {errors.content_sections?.[index]?.fields?.[fieldIndex]?.image && (
+                                            <Typography color='error.main'>
+                                              {String((errors.content_sections[index] as any)?.fields?.[fieldIndex]?.image?.message || '')}
+                                            </Typography>
+                                          )}
                                         </div>
                                       </div>
                                     </Grid>
@@ -534,16 +689,16 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
                                               field.onChange(e.target.value)
                                               errorState !== null && setErrorState(null)
                                             }}
-                                            {...((errors.content_sections?.[index]?.caption || errorState !== null) && {
+                                            {...((errors.content_sections?.[index]?.fields?.[fieldIndex]?.caption || errorState !== null) && {
                                               error: true,
-                                              helperText: errors.content_sections?.[index].caption?.message || errorState?.message[0]
+                                              helperText: String((errors.content_sections?.[index] as any)?.fields?.[fieldIndex]?.caption?.message || errorState?.message[0])
                                             })}
                                           />
                                         )}
                                       />
                                     </Grid>
                                   </>
-                                ) : (
+                                ) : field.type === "content" ? (
                                   <Grid size={{ md: 10, xs: 12, lg: 10 }} className="mb-4">
                                     <Typography variant='h6' color='#a3a3a3'>Content</Typography>
                                       <Controller
@@ -552,49 +707,147 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
                                         control={control}
                                         rules={{ required: true }}
                                         render={({ field }) => (
-                                          <ReactQuill
-                                            theme="snow"
-                                            value={field.value ?? ''}
-                                            onChange={field.onChange}
-                                            onReady={(editorInstance) => setEditor(editorInstance)}
-                                            modules={modules}
-                                            placeholder="Write something amazing..."
-                                            style={{ height: "300px", marginBottom: "60px" }}
-                                          />
-                                        )}
+                                            <ReactQuill
+                                              theme="snow"
+                                              value={field.value ?? ""}
+                                              onChange={field.onChange}
+                                              modules={modules}
+                                              placeholder="Write something amazing..."
+                                              style={{ height: "300px", marginBottom: "60px" }}
+                                            />
+                                          )
+                                        }
                                       />
-                                      {errors.content_sections?.[index]?.content && (
+                                      {errors.content_sections?.[index]?.fields?.[fieldIndex]?.content && (
                                         <p className='text-red-500 text-sm mt-1'>
-                                          {errors.content_sections[index]?.content?.message}
+                                          {String((errors.content_sections[index] as any)?.fields?.[fieldIndex]?.content?.message)}
                                         </p>
                                       )}
                                   </Grid>
+                                ) : (
+                                  <>
+                                    <Grid size={{ xs: 10 }}>
+                                      <Controller
+                                        name={`content_sections.${index}.fields.${fieldIndex}.resort_title`}
+                                        control={control}
+                                        rules={{ required: true }}
+                                        render={({ field }) => (
+                                          <TextField
+                                            {...field}
+                                            fullWidth
+                                            type='text'
+                                            label='Resort Section Title'
+                                            variant='outlined'
+                                            placeholder='Enter Title'
+                                            className='mbe-1'
+                                            onChange={e => {
+                                              field.onChange(e.target.value)
+                                              errorState !== null && setErrorState(null)
+                                            }}
+                                            {...((errors.content_sections?.[index]?.fields?.[fieldIndex]?.resort_title || errorState !== null) && {
+                                              error: true,
+                                              helperText: String((errors.content_sections?.[index] as any)?.fields?.[fieldIndex]?.resort_title?.message || errorState?.message[0])
+                                            })}
+                                          />
+                                        )}
+                                      />
+                                    </Grid>
+                                    <Grid size={{ xs: 10 }}>
+                                      <input type="hidden" {...register(`content_sections.${index}.fields.${fieldIndex}.resorts_list`)} />
+                                      <Autocomplete
+                                        multiple
+                                        options={resortsOptions}
+                                        getOptionLabel={(option) => option.value} 
+                                        /*value={destOptions.filter(opt =>
+                                          (watch("resorts_list") || []).includes(opt.label)
+                                        )}*/
+                                        renderOption={(props, option) => (
+                                          <li {...props} key={option.label}> 
+                                            {option.value}
+                                          </li>
+                                        )}
+                                        renderInput={(params) => (
+                                          <TextField {...params} label="Search Resorts" variant="outlined" />
+                                        )}
+                                        onChange={(event, newValue) => {
+                                          setValue(
+                                            `content_sections.${index}.fields.${fieldIndex}.resorts_list`,
+                                            newValue.map((item) => item.label), // array of values
+                                            { shouldValidate: true }
+                                          );
+                                        }}
+                                      />
+                                    </Grid>
+                                    <Grid size={{ xs: 10 }} className="mb-3">
+                                      <input type="hidden" {...register(`content_sections.${index}.fields.${fieldIndex}.reviews_list`)} />
+                                      <Autocomplete
+                                        multiple
+                                        options={reviewsOptions}
+                                        getOptionLabel={(option) => option.value} 
+                                        /*value={destOptions.filter(opt =>
+                                          (watch("reviews_lists") || []).includes(opt.label)
+                                        )}*/
+                                        renderOption={(props, option) => (
+                                          <li {...props} key={option.label}> 
+                                            {option.value}
+                                          </li>
+                                        )}
+                                        renderInput={(params) => (
+                                          <TextField {...params} label="Search Reviews" variant="outlined" />
+                                        )}
+                                        onChange={(event, newValue) => {
+                                          setValue(
+                                            `content_sections.${index}.fields.${fieldIndex}.reviews_list`,
+                                            newValue.map((item) => item.label), // array of values
+                                            { shouldValidate: true }
+                                          );
+                                        }}
+                                      />
+                                    </Grid>
+                                  </>
                                 )}
-                                {fieldIndex >= 0 ? 
-                                  (<Grid size={{ md: 2, xs: 12, lg: 2 }}><CustomIconButton aria-label='capture screenshot' color='error' size='large' onClick={() => removeField(index, fieldIndex)}>
+                                {index > 0 && fieldIndex >= 0 ? 
+                                  (<Grid size={{ md: 2, xs: 12, lg: 2 }}><CustomIconButton aria-label='capture screenshot' color='error' size='large' onClick={() => removeFieldFromSection(index, fieldIndex)}>
                                   <i className="ri-delete-bin-7-line"></i>
                                 </CustomIconButton></Grid>) 
                                 : null }
                               </Grid>
                             ))}
-                            <Button
-                              size='small'
-                              variant="contained"
-                              onClick={() => addField(index, "content")}
-                              sx={{ mr: 2 }}
-                            >
-                              + Add Content
-                            </Button>
-                            <Button
-                              size='small'
-                              variant="contained"
-                              onClick={() => addField(index, "image")}
-                            >
-                              + Add Image
-                            </Button>
+                            
+                            {index > 0 && (
+                              <>
+                                <Button
+                                  size='small'
+                                  variant="contained"
+                                  onClick={() => addFieldToSection(index, { type: "content", value: "" })}
+                                  sx={{ mr: 2 }}
+                                  disabled={section.fields?.some(field => field.type === "resort" )}
+                                >
+                                  + Add Content
+                                </Button>
+
+                                <Button
+                                  size='small'
+                                  variant="contained"
+                                  onClick={() => addFieldToSection(index, { type: "image", value: "", caption: "" })}
+                                  sx={{ mr: 2 }}
+                                  disabled={section.fields?.some(field => field.type === "resort" )}
+                                >
+                                  + Add Image
+                                </Button>
+                                <Button
+                                  size='small'
+                                  variant="contained"
+                                  onClick={() => addFieldToSection(index, { type: "resort", resort_title: "", resorts_list: "", reviews_list: "" })}
+                                  disabled={section.fields?.some(field => field.type === "image" || field.type === "content" || field.type === 'resort' )}
+                                >
+                                  + Add Resort Section
+                                </Button>
+                                </>
+                            )}
                             <Grid container spacing={6} className="my-5">
                               <Grid size={{ md: 6, xs: 2, sm: 2 }}>
-                                { sectionFields.length === index+1 ? (<Button aria-label='capture screenshot' onClick={() => appendSection([{ fields: [] }])} color='secondary' size='small' variant="contained" startIcon={<i className='ri-add-line' />} >
+                                { sectionFields.length === index+1 ? (<Button aria-label='capture screenshot' onClick={() => appendSection({ fields: [] })} color='secondary' size='small' variant="contained" startIcon={<i className='ri-add-line' />} >
                                   Add Section
                                 </Button>) : null }
 
@@ -605,7 +858,7 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
                                 : null }                  
                               </Grid>
                             </Grid>
-                        </div>
+                        </Grid>
                         <Divider />
                       </Grid>
                       <Divider />
@@ -650,7 +903,7 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
                                       
                                       // revoke previous
                                       const prev = (watch('author_image_preview') as string | null) || null;
-
+                                      
                                       if (prev) URL.revokeObjectURL(prev);
                                       setValue('author_image_preview', url, { shouldDirty: true });
                                       setValue('author_image', file, { shouldDirty: true });
@@ -1054,10 +1307,38 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
                     <Grid size={{ xs:12 }}>
                       <Grid container spacing={5}>
                         <Grid size={{ md: 12, xs: 12, lg: 12 }}>
+                          <Controller
+                            name='post_date'
+                            control={control}
+                            render={({ field }) => (
+                              <TextField 
+                                {...field}
+                                fullWidth
+                                type='date'
+                                label='Post Date'
+                                variant='outlined'
+                                placeholder='Select Date'
+                                className='mbe-0'
+                                InputLabelProps={{
+                                  shrink: true,
+                                }}
+                                onChange={e => {
+                                  field.onChange(e.target.value)
+                                  errorState !== null && setErrorState(null)
+                                }}
+                                {...((errors.meta_keywords || errorState !== null) && {
+                                  error: true,
+                                  helperText: errors?.meta_keywords?.message || errorState?.message[0]
+                                })}
+                              />
+                            )}
+                          />
+                        </Grid>
+                        <Grid size={{ md: 12, xs: 12, lg: 12 }}>
                           <Typography variant="h6" component="h6" color="primary" className="mb-2">Feature Image</Typography>
                           <div className='flex max-sm:flex-col items-center gap-6 flex-wrap'>
                             {watch('feature_image_preview') ? (
-                              <img height={100} width={100} className='rounded' src={watch('feature_image_preview')} alt='Site Logo Image' />
+                              <img height={100} width={100} className='rounded' src={watch('feature_image_preview')} alt='Feature Image' />
                             ) : null}
                             <div className='flex flex-grow flex-col gap-4'>
                               <div className='flex flex-col sm:flex-row gap-4'>
@@ -1147,7 +1428,7 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
                                 {...field}
                                 fullWidth
                                 type='text'
-                                label='Site URL'
+                                label='Referance Site URL'
                                 variant='outlined'
                                 placeholder='Enter Site URL'
                                 className='mbe-1'
@@ -1164,10 +1445,10 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
                           />
                         </Grid>
                         <Grid size={{ md: 12, xs: 12, lg: 12 }} className="mb-5">
-                          <Typography variant="h6" component="h6" color="primary" className="mb-2">Site Image</Typography>
+                          <Typography variant="h6" component="h6" color="primary" className="mb-2">Referance/Banner Logo</Typography>
                           <div className='flex max-sm:flex-col items-center gap-6 flex-wrap'>
                             {watch('site_logo_preview') ? (
-                              <img height={100} width={100} className='rounded' src={watch('site_logo_preview')} alt='Site Logo Image' />
+                              <img height={100} width={100} className='rounded' src={watch('site_logo_preview')} alt='Site Logo Image' style={{backgroundColor: '#F6F6F6'}} />
                             ) : null}
                             <div className='flex flex-grow flex-col gap-4'>
                               <div className='flex flex-col sm:flex-row gap-4'>

@@ -120,9 +120,20 @@ const DebouncedInput = ({
 // Column Definitions
 const columnHelper = createColumnHelper<PageTypesWithAction>()
 
-const fixPages = ['Homepage', 'Our Destination','Our Adventure','Total Travel','Field Notes','Ambassadorship']
+//const fixPages = ['Homepage', 'Our Destination','Our Adventure','Total Travel','Field Notes','Ambassadorship', 'Adventure Guide']
+const fixPages = {
+  'Homepage' : 'homepage',
+  'Our Destination' : 'our-destinations/',
+  'Our Adventure' : 'our-adventure/',
+  'Total Travel' : 'total-travel/',
+  'Field Notes' : 'blog/',
+  'Ambassadorship' : 'my-account/', 
+  'Adventure Guide' : 'adventure-guide/',
+  'Contact Us' : 'adventure-guide/'
+};
 
 const ListTable = ({ tableData }: { tableData?: [] }) => {
+
   const setLoading = useNavigationStore((s) => s.setLoading)
 
   // States
@@ -138,6 +149,12 @@ const ListTable = ({ tableData }: { tableData?: [] }) => {
   const [onSubmit, setSubmit] = useState<() => Promise<void>>(() => async () => {});
 
   const [openDelete, setOpenDelete] = useState(false)
+
+  const fetchData = async () => {
+    const refresh = await Page.getAllPages();
+    
+    setData(refresh);
+  };
 
 
   // Hooks
@@ -168,9 +185,23 @@ const ListTable = ({ tableData }: { tableData?: [] }) => {
           <div className='flex items-center'>
 
             {/* == "home" ? '5' : row.original.page_url*/}
-            <IconButton sx={{color: 'info.main'}} href={row.original.page_url??'/'} target="_blank" className='flex'>
-              <i className='ri-eye-line' />
-            </IconButton>
+            {(Object.keys(fixPages).includes(row.original.name) && row.original.name != "Homepage") && (
+              <IconButton sx={{color: 'info.main'}} href={'/'+fixPages[row.original.name]??'/'} target="_blank" className='flex'>
+                <i className='ri-eye-line' />
+              </IconButton>
+            )}
+
+            {(row.original.name == "Homepage") && (
+              <IconButton sx={{color: 'info.main'}} href={row.original.page_url??'/'} target="_blank" className='flex'>
+                <i className='ri-eye-line' />
+              </IconButton>
+            )}
+
+            {row.original.static_page && (
+              <IconButton sx={{color: 'info.main'}} href={row.original.page_url??'/'} target="_blank" className='flex'>
+                <i className='ri-eye-line' />
+              </IconButton>
+            )}
 
             {row.original.name == "Homepage" && (
               <IconButton sx={{color: 'warning.main'}} href={'/admin/cms_home'} className='flex'>
@@ -178,16 +209,23 @@ const ListTable = ({ tableData }: { tableData?: [] }) => {
               </IconButton>
             )}
 
-            {fixPages.includes(row.original.name) && row.original.name != "Homepage" && (
+            {(Object.keys(fixPages).includes(row.original.name) && row.original.name != "Homepage") && (
               <IconButton sx={{color: 'warning.main'}} href={'/admin/page/'+(row.original.name).trim().toLowerCase().replace(/\s+/g, "_")+'/'} className='flex'>
                 <i className='ri-edit-box-line' />
               </IconButton>
             )}
 
-            {!fixPages.includes(row.original.name) && (
+            {row.original.static_page && (
+              <IconButton sx={{color: 'warning.main'}} href={'/admin/page/edit/'+(row.original.pge_id)+'/'} className='flex'>
+                <i className='ri-edit-box-line' />
+              </IconButton>
+            )}
+
+            {((!Object.keys(fixPages).includes(row.original.name) || row.static_page == 1) && (
               <IconButton sx={{color: 'error.main'}} onClick={() => handleDeleteList(row.original._id)}>
                 <i className='ri-delete-bin-7-line' />
               </IconButton>
+              )
             )}
           </div>
         ),
@@ -224,7 +262,7 @@ const ListTable = ({ tableData }: { tableData?: [] }) => {
 
     setOpenDelete(false)
 
-    fetchData();      
+    await fetchData();   
   }
 
   const handleSwitchChange = async (id: any, event: React.ChangeEvent<HTMLInputElement>) => {    
@@ -243,12 +281,6 @@ const ListTable = ({ tableData }: { tableData?: [] }) => {
       }
     }
   }
-
-  const fetchData = async () => {
-    const refresh = await Page.getAllPages();
-    
-    setData(refresh);
-  };
 
   const table = useReactTable({
     data: filteredData as [],

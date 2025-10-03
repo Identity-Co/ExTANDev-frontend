@@ -10,7 +10,7 @@ import styles from './styles.module.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const OverviewSection4 = () => {
+const OverviewSection4 = ({ data }: { data?: []; }) => {
   const [centerPadding, setCenterPadding] = useState("0px");
 
   useEffect(() => {
@@ -39,28 +39,16 @@ const OverviewSection4 = () => {
     centerPadding,
   };
 
-  const slides = [
-    {
-      image: '/images/sub-pages/over1.jpg',
-    },
-    {
-      image: '/images/sub-pages/over2.jpg',
-    },
-    {
-      image: '/images/sub-pages/over3.jpg',
-    }
-  ]
-
   return (
 
     <section key={`section-3`} className={classnames(styles.home_section2, 'home_section2 py_100')}>
         <div className={classnames(styles.home_slider, 'home_slider')}>
           <Slider {...settings} className={classnames(styles.home_slider2, 'home_slider2')}>
-              {slides?.map((item, index) => (
+              {data?.map((item, index) => (
                   <div key={'slide-' + index} className={classnames(styles.resort_box_main)}>
                     <div className={classnames(styles.resort_box)}>
                       <div className={classnames(styles.resort_img)}>
-                        <img src={item.image} />
+                        <img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${item}`} />
                       </div>
                     </div>
                   </div>

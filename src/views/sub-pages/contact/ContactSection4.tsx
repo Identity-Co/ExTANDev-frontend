@@ -4,17 +4,23 @@ import classnames from 'classnames'
 // Styles Imports
 import styles from './styles.module.css'
 
-const ContactSection4 = () => {
-  
+const ContactSection4 = ({ data }: { data?: [] }) => {
+    
   return (
     <section className={classnames(styles.contact_sec4)}>
         <div className={classnames(styles.get_out)}>
             <div className="full_img">
-                <img src="/images/sub-pages/hiker-contact.jpg" />
+                {data?.cta_background && (
+                    <img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${data?.cta_background}`} />
+                )}
             </div>
             <div className={classnames(styles.get_out_text)}>
-                <h2>Get out there</h2>
-                <p>Travel Like You Mean It</p>
+                {data?.cta_title && (
+                    <h2>{data?.cta_title}</h2>
+                )}
+                {data?.cta_subtitle && (
+                    <p>{data?.cta_subtitle}</p>
+                )}
             </div>
         </div>
     </section>

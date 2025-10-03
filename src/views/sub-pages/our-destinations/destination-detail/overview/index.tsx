@@ -7,7 +7,6 @@ import { useEffect } from 'react'
 import type { Mode } from '@core/types'
 
 // Component Imports
-import BannerSection from './BannerSection'
 import OverviewSection1 from './OverviewSection1'
 import OverviewSection2 from './OverviewSection2'
 import OverviewSection3 from './OverviewSection3'
@@ -20,9 +19,16 @@ import OverviewSection9 from '@/views/shared/instagram-feed-section/InstagramFee
 import OverviewSection10 from '@/views/shared/cta-section/CTASection'
 import { useSettings } from '@core/hooks/useSettings'
 
-const LandingPageWrapper = ({ mode }: { mode: Mode }) => {
+const LandingPageWrapper = ({ pgData, destinations}: OverviewProps) => {
   // Hooks
   const { updatePageSettings } = useSettings()
+
+  let featuredResorts: any[] = [];
+  if(pgData?.overview?.feature_resorts?.resorts){
+    pgData.overview.feature_resorts.resorts.forEach((item: any, index: number) => {
+      featuredResorts?.push(pgData?.resorts?.resorts?.find(itemsub => itemsub._id == item))
+    });
+  }
 
   // For Page specific settings
   useEffect(() => {
@@ -37,28 +43,10 @@ const LandingPageWrapper = ({ mode }: { mode: Mode }) => {
   }
 
   const featuredResortsSectionProps = {
-    resorts : [
-        {   
-          title: 'Kalon Surf Resort',
-          sub_title: 'Guenacaste, Costa Rica',
-          description: 'An Idyllic Beach Retreat Set in Paradise on Costa Rica’s Pacific Coast',
-          image: '/images/front-pages/images/resort1.jpg',
-        },
-        {
-          title: 'Tan resort jarabacoa',
-          sub_title: 'Jarabacoa, Dominican Republic',
-          description: 'An Idyllic Beach Retreat Set in Paradise on Costa Rica’s Pacific Coast',
-          image: '/images/front-pages/images/resort2.jpg',
-        },
-        {
-          title: 'mashpi Lodge',
-          sub_title: 'Mashpi, Ecuador',
-          description: 'An Idyllic Beach Retreat Set in Paradise on Costa Rica’s Pacific Coast',
-          image: '/images/front-pages/images/resort3.jpg',
-        },
-    ],
+    resorts: featuredResorts,
     heading_class: 'fs_35',
-    class: ''
+    class: '',
+    sectionHeading: pgData?.overview?.feature_resorts?.title ?? ''
   }
 
   const instagramFeedSectionProps = {
@@ -68,19 +56,23 @@ const LandingPageWrapper = ({ mode }: { mode: Mode }) => {
 
   return (
     <>
-      <BannerSection mode={mode} />
-      <OverviewSection1 />
-      <OverviewSection2 />
-      <OverviewSection3 />
-      <OverviewSection4 />
-      <OverviewSection5 />
+      <OverviewSection1 data={pgData?.overview ?? []} />
+      
+      {pgData?.overview?.sections.map((section: any, index: number) => {
+        return section?.direction === 'content_first' 
+          ? <OverviewSection2 key={index} data={section ?? []} />
+          : <OverviewSection3 key={index} data={section ?? []} />;
+
+      })}
+      <OverviewSection4 data={pgData?.overview?.slider_images ?? []} />
+      <OverviewSection5 data={pgData?.overview?.facts ?? []} />
       <OverviewSection6 sectionProps={instagramSliderSectionProps} />
+
       <OverviewSection7 sectionProps={featuredResortsSectionProps} />
-      <OverviewSection8 />
+      <OverviewSection8 data={pgData?.overview?.faq ?? []} />
       <OverviewSection9 sectionProps={instagramFeedSectionProps} />
-      <OverviewSection10 />
+      <OverviewSection10 data={pgData ?? []} />
     </>
   )
 }
-
 export default LandingPageWrapper

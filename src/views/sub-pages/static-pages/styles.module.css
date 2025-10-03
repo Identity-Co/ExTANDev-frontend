@@ -1,0 +1,79 @@
+a.fl_bx_lnk_glb:hover ~ .network_travel_img_text .btn a{background-color: #ffffff; color: #F85241;}
+a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
+
+/*banner-start*/
+
+.home_banner{position: relative;}
+
+.banner_bg_image{position: relative;}
+.banner_bg_image .banner_bg_image_hero{padding-bottom: 40.41vw; position: relative;}
+.banner_bg_image .banner_bg_image_hero img{position: absolute; width: 100%; height: 100%; object-fit: cover; top: 0; left: 0;}
+.banner_bg_image:before{position: absolute; content: ""; background: linear-gradient(180deg,rgba(0, 0, 0, 1) 0%, rgba(128, 128, 128, 0) 100%); mix-blend-mode: multiply; opacity: 0.4; top: 0; left: 0; width: 100%; height: 65%; z-index: 1;}
+.banner_bg_image:after{position: absolute; content: ""; background: linear-gradient(360deg,rgba(0, 0, 0, 1) 0%, rgba(128, 128, 128, 0) 100%); mix-blend-mode: multiply; opacity: 0.67; bottom: 0; left: 0; width: 100%; height: 35%; z-index: 1;}
+.banner_bg_image_text h1{color: #ffffff; letter-spacing: -0.020em;}
+.banner_bg_image_text{position: absolute; z-index: 2; bottom: 8.053vw; left: 0; right: 0; text-align: center;}
+
+
+@media only screen and (max-width: 1024px){
+  .banner_bg_image .banner_bg_image_hero{padding-bottom: 53.906vw;}
+  .banner_bg_image_text{bottom: 10.742vw;}
+}
+
+@media only screen and (max-width: 768px){
+  .banner_bg_image .banner_bg_image_hero{padding-bottom: 71.875vw;}
+  .banner_bg_image_text{top: 50%; transform: translateY(-50%); bottom: auto;}
+  .home_banner.destination_overview_banner .hero_slide_text{max-width: 100%;}
+
+  .search_row form .search_select.ss1 select,
+  .search_row form .search_select.ss2 select{font-size: 2.698vw; background-size: 2.964vw; min-height: 6.855vw; padding: 0.732vw 4.343vw; }
+}
+
+.banner_bg_image_text.banner_text_left{width: 100%; max-width: 80%; margin: 0 auto; padding: 0 5.208vw; text-align: left;}
+.banner_bg_image_text.banner_text_left h1{font-size: 5.857vw; line-height: 1;}
+.banner_bg_image_text.banner_text_left p{color: #ffffff; font-size: 1.318vw;}
+
+.surfing_row .surfing_text h3:not(first-of-tpe){padding-top: 1.659vw;}
+.moab_banner_icon{position: absolute; top: 11.347vw; right: 3.66vw; z-index: 2;}
+
+@media only screen and (max-width: 1024px){
+  .banner_bg_image_text.banner_text_left{max-width: 90%; padding: 0 1.757vw;}
+  .banner_bg_image_text.banner_text_left p{font-size: 1.918vw;}
+  .surfing_row .surfing_text h3:not(first-of-tpe){padding-top: 5.659vw;}
+  
+}
+
+@media only screen and (max-width: 768px){
+  .banner_bg_image_text.banner_text_left p{font-size: 3.518vw;}  
+}
+
+
+/*banner-end*/
+
+/*blog-detail-sec1-start*/
+
+/*section.home_section1.our_desti_sec1.destination_overview_sec1.stories_details_sec1 .container{max-width: 80%;}*/
+section.home_section1.our_desti_sec1.destination_overview_sec1.stories_details_sec1 .surfing_row .advanture_text1{margin-left: 2.928vw;}
+.surfing_row .surfing_text h3{padding: 3.294vw 0 0.878vw; letter-spacing: 0;}
+section.home_section1 h2{font-size: 4.026vw; text-align: center;}
+
+/*section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 8.788vw; padding-bottom: 8.788vw;}*/
+
+.our_desti_sec1 .head_text_center{max-width: 60.615vw;}
+.our_desti_sec1 .head_text_center h2{color: #1F1F1F; letter-spacing: 0; line-height: 1; padding-bottom: 1.611vw;}
+.our_desti_sec1 .head_text_center p{max-width: 53.514vw; margin: 0 auto; padding-bottom: 1.611vw;}
+
+
+@media only screen and (max-width: 1024px){
+  section.home_section1.our_desti_sec1.destination_overview_sec1.stories_details_sec1 .container{max-width: 100%;}
+
+  .our_desti_sec1 .head_text_center{max-width: 100%;}
+  .our_desti_sec1 .head_text_center p{max-width: 100%;}
+}
+
+@media only screen and (max-width: 768px){
+  /*section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 25.788vw; padding-bottom: 25.788vw;}*/
+  .surfing_row .surfing_text h3{padding: 3.294vw 0 1.878vw;}
+  section.home_section1 h2{font-size: 8.026vw;}
+}
+
+/*blog-detail-sec1-end*/

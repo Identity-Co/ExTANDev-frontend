@@ -72,7 +72,8 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
 .contact_form_row label{font-size: 1.098vw; font-weight: 600; font-family: "Raleway", sans-serif; margin-bottom: 0.732vw; display: block; width: 100%; line-height: 1.2;}
 .contact_form_row input:not([type="checkbox"], [type="submit"]),
 .contact_form_row select,
-.contact_form_row textarea{width: 100%; min-height: 3.66vw; padding: 1.098vw; background-color: #FFFFFF; border-radius: 0; font-size: 1.025vw; font-family: "Raleway", sans-serif; font-weight: 400; color: #868686; border: none; outline: none; border-bottom: solid 0.22vw #707070;}
+.contact_form_row textarea{width: 100%; min-height: 1vw; padding: 1.464vw; background:transparent; border-radius: 0; font-size: 1.025vw; font-family: "Raleway", sans-serif; font-weight: 400; color: #868686; border: none; outline: none;/* border-bottom: solid 0.22vw #707070;*/}
+.contact_form_row textarea{padding:0;}
 .contact_form_row input:focus:not([type="checkbox"], [type="submit"]),
 .contact_form_row select:focus,
 .contact_form_row textarea:focus{border-color: #F85241;}
@@ -81,37 +82,42 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
 .contact_form_row .checkbox_label{position: relative;}
 .contact_form_row .checkbox_label input{padding: 0; margin-bottom: 0; -webkit-appearance: auto; cursor: pointer; left: 0; right: 0; height: 1.464vw; z-index: 1; opacity: 0; bottom: 0; position: absolute;}
 .contact_form_row .checkbox_label label {position: relative;cursor: pointer; margin: 0; display: flex; align-items: center; font-weight: 500;}
-.contact_form_row .checkbox_label label:before { content:''; -webkit-appearance: none; background-color: #ffffff; border: 0.146vw solid #868686; width: 1.171vw; height: 1.171vw; display: inline-block; position: relative; vertical-align: middle; cursor: pointer; margin-right: 0.586vw; top: -0.146vw;}
+.contact_form_row .checkbox_label [type="checkbox"]:before { content:''; -webkit-appearance: none; background-color: #ffffff; border: 0.146vw solid #868686; width: 1.171vw; height: 1.171vw; display: inline-block; position: relative; vertical-align: middle; cursor: pointer; margin-right: 0.586vw; top: -0.146vw;}
 .contact_form_row .checkbox_label input:checked + label:after { content: ''; display: block; position: absolute; top: 0.04vw; left: 0.459vw; width: 0.39vw; height: 0.825vw; border: solid #127AC3; border-width: 0 0.146vw 0.146vw 0; transform: rotate(45deg);}
 .contact_form_row p{font-size: 1.098vw;}
 .contact_form_row p a{color: #1F1F1F; text-decoration: underline;}
 .contact_form_row p a:hover{color: #F85241;}
-.contact_form_row input[type="submit"]{background-color: #F85241; font-size: 1.098vw; font-family: "Raleway", sans-serif; color: #ffffff; text-align: center; display: inline-block; line-height: 1; text-transform: uppercase; font-weight: 800; padding: 1.098vw 3.66vw; border: none; outline: none; cursor: pointer; transition: 0.3s ease-in-out; width: 100%;}
-.contact_form_row input[type="submit"]:hover{background: rgb(31, 31, 31, 0.8);}
+.contact_form_row button.submit_btn{background-color: #F85241; font-size: 1.098vw; font-family: "Raleway", sans-serif; color: #ffffff; text-align: center; display: inline-block; line-height: 1; text-transform: uppercase; font-weight: 800; padding: 1.098vw 3.66vw; border: none; outline: none; cursor: pointer; transition: 0.3s ease-in-out; width: 100%;}
+.contact_form_row button.submit_btn:hover{background: rgb(31, 31, 31, 0.8);}
+
+.contact_form_row fieldset legend{font-size:1.098vw; font-family:"Raleway", sans-serif;}
+.contact_form_row fieldset legend span{font-size:1vw;}
 
 @media only screen and (max-width: 1024px){
   .contact_form_row label{font-size: 1.798vw; margin-bottom: 1.732vw;}
   .contact_form_row input:not([type="checkbox"], [type="submit"]), .contact_form_row select, .contact_form_row textarea{min-height: 5.66vw; font-size: 1.798vw;}
   .contact_form_row .checkbox_label input{height: 2.464vw;}
-  .contact_form_row .checkbox_label label:before{width: 2.171vw; height: 2.171vw;}
+  .contact_form_row .checkbox_label [type="checkbox"]:before{width: 2.171vw; height: 2.171vw;}
   .contact_form_row .checkbox_label input:checked + label:after{top: 0.02vw; left: 0.759vw; width: 0.59vw; height: 1.425vw;}
   .contact_form_row p{font-size: 1.658vw;}
-  .contact_form_row input[type="submit"]{font-size: 1.898vw; padding: 1.598vw 3.66vw;}
+  .contact_form_row button.submit_btn{font-size: 1.898vw; padding: 1.598vw 3.66vw;}
   .contact_form_row select{background-size: 1.478vw 1.486vw;}
-  .contact_form{padding: 3.66vw;}
+  .contact_form{padding:5.66vw 3.66vw 3.66vw;}
 }
 
 @media only screen and (max-width: 768px){
   .contact_form_row{grid-row-gap: 2.645vw;}
   .contact_form_row .contact_half_box{width: 100%;}
-  .contact_form_row label{font-size: 2.598vw;}
+  .contact_form_row label{font-size: 2.598vw; top:4px;}
   .contact_form_row input:not([type="checkbox"], [type="submit"]), .contact_form_row select, .contact_form_row textarea{min-height: 7.66vw; font-size: 2.798vw;}
-  .contact_form_row input[type="submit"]{font-size: 2.898vw; padding: 2.598vw 3.66vw;}
+  .contact_form_row button.submit_btn{font-size: 2.898vw; padding: 2.598vw 3.66vw;}
   .contact_form_row select{background-size: 1.978vw 1.986vw;}
-  .contact_form_row .checkbox_label label:before{width: 3.171vw; height: 3.171vw;}
+  .contact_form_row .checkbox_label [type="checkbox"]:before{width: 3.171vw; height: 3.171vw;}
   .contact_form_row .checkbox_label input{height: 3.464vw;}
   .contact_form_row .checkbox_label input:checked + label:after{top: 0.4vw; left: 0.859vw; width: 1.09vw; height: 1.825vw;}
-  .contact_form_row p{font-size: 2.658vw;}  
+  .contact_form_row p{font-size: 2.658vw;}
+  .contact_form_row fieldset legend{font-size:2.598vw;}
+  .contact_form_row fieldset legend span{font-size:2.4vw;}
 }
 
 /*contact_sec2-end */

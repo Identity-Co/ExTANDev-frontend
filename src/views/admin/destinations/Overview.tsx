@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // Next Imports
 import Link from 'next/link'
@@ -58,7 +58,7 @@ import CustomIconButton from '@core/components/mui/IconButton'
 
 import { useNavigationStore } from '@/libs/navigation-store'
 
-// import { updatePageInfo } from '@/app/server/pages'
+import { saveDestination, updateDestination } from '@/app/server/destinations'
 
 type FileProp = {
   name: string
@@ -69,20 +69,54 @@ type ErrorType = {
   message: string[]
 }
 
+type OverviewProps = {
+	pgData: []
+	destinations: []
+	setFormId: () => void
+	getFormId: () => void
+}
+
 type FormData = InferInput<typeof schema>
 
 const schema = object({
   title: pipe(string(), nonEmpty('This field is required')),
   sub_title: pipe(string(), nonEmpty('This field is required')),
+  banners: array(
+    object({
+    	title: pipe(string(), nonEmpty('This field is required')),
+    	content: pipe(custom<string | null>((value) => {
+    		if (!value || value == "<p><br></p>") return false;
+
+    		return true;
+    	}, 'This field is required')),
+    	location: pipe(string(), nonEmpty('This field is required')),
+      image: pipe(custom<File | null>((value) => {
+      	if (!value) return 'This field is required'; // allow empty
+
+        const allowed = ["image/png", "image/jpeg", "image/gif"];
+
+        if (!allowed.includes(value.type)) return "Only PNG/JPG/GIF allowed";
+
+        const maxMB = 5;
+
+        if (value.size > maxMB * 1024 * 1024)
+
+          return `Max file size is ${maxMB} MB`;
+
+        return true;
+      })),
+      _preview: optional(string()),
+    })
+  ),
   about_title: pipe(string(), nonEmpty('This field is required')),
-  about_content: pipe(string(), nonEmpty('This field is required')),
+  about_content: optional(string()),
   about_button_text: optional(string()),
   about_button_link: pipe(string()),
   about_sections: array(
     object({
     	content: pipe(string(), nonEmpty('This field is required')),
     	direction: pipe(string(), nonEmpty('This field is required')),
-      image: optional(custom<File | null>((value) => {
+      image: pipe(custom<File | null>((value) => {
       	if (!value) return 'This field is required'; // allow empty
 
         const allowed = ["image/png", "image/jpeg", "image/gif"];
@@ -137,8 +171,10 @@ const schema = object({
   rating: optional(string()),
 })
 
-const Overview = ({ pgData }: { pgData?: []; destinations?: []; }) => {
+const Overview = ({ pgData, destinations, setFormId, getFormId }: OverviewProps) => {
 	const router = useRouter()
+
+	let form_id = getFormId();
 
   const setLoading = useNavigationStore((s) => s.setLoading)
 
@@ -150,12 +186,26 @@ const Overview = ({ pgData }: { pgData?: []; destinations?: []; }) => {
 	const [imgSrc, setImgSrc] = useState<string>(pgData?.image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${pgData?.image}` : '/images/avatars/1.png')
 	const [imageInput, setImageInput] = useState<File | null>(null)
 
+	const [resorts, setResorts] = useState(pgData?.resorts?.resorts??[])
 	const [resortOptions, setresortOptions] = useState<string[]>([])
+
+	const [uploadedImages, setUploadedImages] = useState<string[]>(pgData?.overview?.slider_images??[])
+
+	const [destID, setdestID] = useState(getFormId());
 
 	// States
   const [files, setFiles] = useState<File[]>([])
 
 	const fData = new FormData();
+
+	useEffect(() => {
+    const obj = resorts.map(item => ({
+      label: item._id,
+      value: item.title
+    }));
+
+    setresortOptions(obj);
+  }, [resorts]);
 
 	// Editor Toolbar
 	const modules = {
@@ -184,23 +234,30 @@ const Overview = ({ pgData }: { pgData?: []; destinations?: []; }) => {
 		defaultValues: {
 		  title: pgData?.title??'',
 		  sub_title: pgData?.sub_title??'',
-		  about_title: pgData?.about_title??'',
-		  about_content: pgData?.about_content??'',
-		  about_button_text: pgData?.about_button_text??'',
-		  about_button_link: pgData?.about_button_link??'',
-		  about_sections: pgData?.about_sections?.map(section => ({
+		  banners: pgData?.overview?.banners?.map(section => ({
+        title: section.title ?? '',
+        content: section.content ?? '',
+        image: section.image ? `${section.image}` : '',
+        location: section.location ?? '',
+        _preview: section.image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${section.image}` : '',
+      })) ?? [{title: '', content: '', image: null, location: '', _preview : ''}],
+		  about_title: pgData?.overview?.about_title??'',
+		  about_content: pgData?.overview?.about_content??'',
+		  about_button_text: pgData?.overview?.about_button_text??'',
+		  about_button_link: pgData?.overview?.about_button_link??'',
+		  about_sections: pgData?.overview?.sections?.map(section => ({
         content: section.content ?? '',
         image: section.image ?? null,
         direction: section.direction ?? '',
         _preview: section._preview ?? '',
       })) ?? [{content: '', image: null, direction: '', _preview : ''}],
-      quick_facts: pgData?.quick_facts?.map(fact => ({
-        label: fact.content ?? '',
-        content: fact.image ?? null,
+      quick_facts: pgData?.overview?.facts?.map(fact => ({
+        label: fact.label ?? '',
+        content: fact.content ?? null,
       })) ?? [{label: '', content: ''}],
-		  feature_resorts_title: pgData?.feature_resorts_title??'',
-		  feature_resorts: pgData?.feature_resorts??[],
-		  faqs: pgData?.faqs?.map(faq => ({
+		  feature_resorts_title: pgData?.overview?.feature_resorts?.title??'',
+		  feature_resorts: pgData?.overview?.feature_resorts?.resorts??[],
+		  faqs: pgData?.overview?.faq?.map(faq => ({
         question: faq.question ?? '',
         answer: faq.answer ?? null,
       })) ?? [{question: '', answer: ''}],
@@ -228,7 +285,10 @@ const Overview = ({ pgData }: { pgData?: []; destinations?: []; }) => {
 		}
 	})
 
-	console.log(errors)
+	const { fields, append, remove } = useFieldArray({
+    control,
+    name: "banners",
+  });
 
 	const { fields: secFields, append: appendSec, remove: removeSec } = useFieldArray({
     control,
@@ -244,6 +304,18 @@ const Overview = ({ pgData }: { pgData?: []; destinations?: []; }) => {
     control,
     name: "faqs",
   });
+
+  useEffect(() => {
+	  if (fields.length === 0) {
+	    append({ title: '', location: '', content: '', image: null, _preview: null });
+	  }	
+	}, [fields.length, append]);
+
+  /*useEffect(() => {
+	  if (fields.length === 0) {
+	    append({ title: '', location: '', content: '', image: null, _preview: null });
+	  }
+	}, [fields.length, append]);*/
 
 	const handleFileInputChange = (file: ChangeEvent) => {
     const { files } = file.target as HTMLInputElement
@@ -280,62 +352,114 @@ const Overview = ({ pgData }: { pgData?: []; destinations?: []; }) => {
     setImgSrc('/images/avatars/1.png')
   }
 
-	const onUpdate: SubmitHandler<FormData> = async (data: FormData) => {
-		console.log(data);
-	    
-	  // image: data.,
-    /*overview: data.,
-    resorts:data.,
-    adventures:data.,
-    stories:data.,*/
+  const generateSlug = text => {
+    return text
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, '')   // remove invalid chars
+      .replace(/\s+/g, '-')           // replace spaces with -
+      .replace(/-+/g, '-')            // remove multiple -
+  }
 
-		const fdata = {
-			'title': data.title,
-	    'sub_title': data.sub_title,
-	    'overview': {
-	    	'about_title': data.about_title,
-				'about_content': data.about_content,
-		    'button_text': data.about_button_text,
-		    'button_link': data.about_button_link,
-		    'slider_images': [],
-		    'facts': data.faqs,
-		    'feature_resorts': {
-		    	'title': '',
-    			'resorts': [],
-		    }
-	    },
-	    'meta_description': data.meta_description,
-	    'meta_keywords': data.meta_keywords,
-	    'meta_title': data.meta_title,
-	    'page_url': data.page_url,
-	    'author': data.author,
-	    'publisher': data.publisher,
-	    'copyright': data.copyright,
-	    'rating': data.rating,
-	    'revisit_after': data.revisit_after,
-	    'robots': data.robots,
-	    'classification': data.classification,
-	    'share_button_link': data.share_button_link,
-	    'share_button_text': data.share_button_text,
-	    'share_sub_title':data.share_sub_title,
-	    'share_title': data.share_title,
-	    'subscribe_button_link': data.subscribe_button_link,
-	    'subscribe_button_text': data.subscribe_button_text,
-	    'subscribe_sub_title': data.subscribe_sub_title,
-	    'subscribe_title': data.subscribe_title,
-		}
-		
-		/*if (!imageInput && (pgData?.image == '' || pgData?.image === undefined)) {
+	const onUpdate: SubmitHandler<FormData> = async (data: FormData) => {
+		const isOnlyPBr = /^<p><br><\/p>$/;
+
+		if (!imageInput && (pgData?.image == '' || pgData?.image === undefined)) {
       setMessage('This field is required.');
+      
       return;
     }
 
+		if (imageInput) { 
+      fData.append('destination_image', imageInput);
+    }
+
+    fData.append('title', data.title);
+    fData.append('sub_title', data.sub_title);
+    fData.append('meta_description', data.meta_description);
+    fData.append('meta_keywords', data.meta_keywords);
+    fData.append('meta_title', data.meta_title);
+    fData.append('page_url', data.page_url);
+    fData.append('author', data.author);
+    fData.append('publisher', data.publisher);
+    fData.append('copyright', data.copyright);
+    fData.append('rating', data.rating);
+    fData.append('revisit_after', data.revisit_after);
+    fData.append('robots', data.robots);
+    fData.append('classification', data.classification);
+    fData.append('share_button_link', data.share_button_link);
+    fData.append('share_button_text', data.share_button_text);
+    fData.append('share_sub_title', data.share_sub_title);
+    fData.append('share_title', data.share_title);
+    fData.append('subscribe_button_link', data.subscribe_button_link);
+    fData.append('subscribe_button_text', data.subscribe_button_text);
+    fData.append('subscribe_sub_title', data.subscribe_sub_title);
+    fData.append('subscribe_title', data.subscribe_title);
+
+    // Overview tab content
+    fData.append('overview[about_title]', data.about_title);
+
+    if (isOnlyPBr.test(data.about_content.trim())) {
+		  fData.append('overview[about_content]', '');
+		} else {
+		  fData.append('overview[about_content]', data.about_content);
+		}
+    fData.append('overview[button_text]', data.about_button_text);
+    fData.append('overview[button_link]', data.about_button_link);
+
+
+    files.forEach((file, i) => {
+		  fData.append(`overview_slider_images[${i}]`, file)
+		})
+
+		uploadedImages.forEach((file, i) => {
+			fData.append(`overview_slider_images_old[${i}]`, file)
+		})
+
+    data.about_sections.forEach((section, i) => {
+		  fData.append(`about_sections[${i}][content]`, section.content)
+		  fData.append(`about_sections[${i}][direction]`, section.direction)
+		  if (section.image) {
+		    fData.append(`about_sections[${i}][image]`, section.image)
+		  }
+		});
+
+		data.quick_facts.forEach((section, i) => {
+		  fData.append(`facts[${i}][label]`, section.label)
+		  fData.append(`facts[${i}][content]`, section.content)
+		});
+
+    data.faqs.forEach((section, i) => {
+		  fData.append(`faq[${i}][question]`, section.question)
+		  fData.append(`faq[${i}][answer]`, section.answer)
+		});
+
+		fData.append('overview[feature_resorts_title]', data.feature_resorts_title);
+		data.feature_resorts.forEach((resortId, i) => {
+			fData.append(`overview[feature_resorts][${i}]`, resortId);
+		})
+
+		data.banners.forEach((section, i) => {
+		  fData.append(`overview_banners[${i}][title]`, section.title)
+		  fData.append(`overview_banners[${i}][content]`, section.content)
+		  fData.append(`overview_banners[${i}][location]`, section.location)
+		  if (section.image) {
+		    fData.append(`overview_banners[${i}][image]`, section.image)
+		  }
+		});
     setIsSubmitting(true)
 
-    const log = await updatePageInfo('Our Destination', { 'name': 'Our Destination', ...data });
- 
+    var log = null;
+    if(form_id === null) {
+    	log = await saveDestination(fData);
+    	router.replace(`/admin/destination/edit/${log._id}`)
+    } else {
+    	log = await updateDestination(form_id, fData);
+    }
+
     if (log && log._id) {
-      toast.success('Page updated successfully.')
+      toast.success('Overview data saved successfully.')
+      setFormId(log._id);
       setIsSubmitting(false)
     } else {
       if(log.errors) {
@@ -343,7 +467,7 @@ const Overview = ({ pgData }: { pgData?: []; destinations?: []; }) => {
       }
       
       setIsSubmitting(false)
-    }*/
+    }
 	}
 
   	// Hooks
@@ -382,6 +506,24 @@ const Overview = ({ pgData }: { pgData?: []; destinations?: []; }) => {
 	        </div>
 	      </div>
 	      <IconButton onClick={() => handleRemoveFile(file)}>
+	        <i className='ri-close-line text-xl' />
+	      </IconButton>
+	    </ListItem>
+	))
+
+	const handleRemoveUploaded = (file: FileProp) => {
+		const uploadedFiles = uploadedImages
+		const filtered = uploadedFiles.filter((i: FileProp) => i !== file)
+
+		setUploadedImages([...filtered])
+	}
+
+	const uploadedList = uploadedImages.map((file: FileProp) => (
+	    <ListItem key={file}>
+	      <div className='file-details'>
+	        <div className='file-preview'><img width={38} height={38} alt={file.name} src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${file}`} /></div>
+	      </div>
+	      <IconButton onClick={() => handleRemoveUploaded(file)}>
 	        <i className='ri-close-line text-xl' />
 	      </IconButton>
 	    </ListItem>
@@ -442,6 +584,10 @@ const Overview = ({ pgData }: { pgData?: []; destinations?: []; }) => {
 				        className='mbe-1'
 				        onChange={e => {
 				          field.onChange(e.target.value)
+				          if(form_id === null) {
+					          const slug = generateSlug(e.target.value)
+										setValue('page_url', slug)
+									}
 				          errorState !== null && setErrorState(null)
 				        }}
 				        {...((errors.title || errorState !== null) && {
@@ -479,9 +625,164 @@ const Overview = ({ pgData }: { pgData?: []; destinations?: []; }) => {
 				  />
 				</Grid>
 			</Grid>
+			{/* Banner Section */}
+			<Grid container spacing={5} className="my-5">
+	    	<Grid size={{ md: 12, xs: 12, lg: 12 }}>
+				  <h2>Banner Section</h2>
+				</Grid>
+	    	<Grid size={{ md: 12, xs: 12, lg: 12 }}>
+	        {fields.map((field, index) => (
+	          <div key={field.id} spacing={5}>
+	            <Grid container spacing={6}>
+		            <Grid size={{ md: 6, xs: 12, sm: 12, lg: 6 }}>
+	                <FormControl fullWidth>
+	                  <Controller
+	                    name={`banners.${index}.title`}
+	                    control={control}
+	                    render={({ field }) => (
+	                    	<TextField
+									        {...field}
+									        fullWidth
+									        type='text'
+									        label='Title'
+									        variant='outlined'
+									        placeholder='Enter Title'
+									        className='mbe-1'
+									        onChange={e => {
+									          field.onChange(e.target.value)
+									          errorState !== null && setErrorState(null)
+									        }}
+									        {...((errors.banners?.[index]?.title || errorState !== null) && {
+									          error: true,
+									          helperText: errors.banners?.[index]?.title?.message || errorState?.message[0]
+									        })}
+									      />
+	                    )}
+	                  />
+	                </FormControl>
+	              </Grid>
 
+	              <Grid size={{ md: 6, xs: 12, sm: 12, lg: 6 }}>
+	                <FormControl fullWidth>
+	                  <Controller
+	                    name={`banners.${index}.location`}
+	                    control={control}
+	                    render={({ field }) => (
+	                      <TextField
+									        {...field}
+									        fullWidth
+									        type='text'
+									        label='Location'
+									        variant='outlined'
+									        placeholder='Enter Location'
+									        className='mbe-1'
+									        onChange={e => {
+									          field.onChange(e.target.value)
+									          errorState !== null && setErrorState(null)
+									        }}
+									        {...((errors.banners?.[index]?.location || errorState !== null) && {
+									          error: true,
+									          helperText: errors.banners?.[index]?.location?.message || errorState?.message[0]
+									        })}
+									      />
+	                    )}
+	                  />
+	                </FormControl>
+	              </Grid>
+	              <Grid size={{ md: 6, xs: 12, lg: 6 }}>
+	                <div className='flex max-sm:flex-col items-center gap-6'>
+	                  {watch(`banners.${index}._preview`) ? (
+	                    <img height={100} width={100} className='rounded' src={watch(`banners.${index}._preview`) as string} alt='Banner Image' />
+	                    ) : null}
+	                  <div className='flex flex-grow flex-col gap-4'>
+	                    <div className='flex flex-col sm:flex-row gap-4'>
+	                      <Button component='label' size='small' variant='contained' htmlFor={`banner_image_${index}`}>
+	                        Upload New Photo
+	                        <input
+	                          hidden
+	                          type='file'
+	                          accept='image/png, image/jpeg'
+	                          onChange={(e) => {
+	                            const file = e.target.files?.[0] ?? null;
+	                            const maxSize = 800 * 1024;
+
+	                            if (file && file.size > maxSize) {
+	                              toast.error("File is too large. Maximum allowed size is 800KB.")
+
+	                              return;
+	                            }
+
+	                            const url = file ? URL.createObjectURL(file) : null;
+	                            const prev = (watch(`banners.${index}._preview`) as string | null) || null;
+	                            
+	                            if (prev) URL.revokeObjectURL(prev);
+	                            setValue(`banners.${index}._preview`, url, { shouldDirty: true });
+	                            setValue(`banners.${index}.image`, file, { shouldDirty: true });
+	                          }}
+	                          id={`banner_image_${index}`}
+	                        />
+	                      </Button>
+	                      <Button size='small' variant='outlined' color='error' onClick={(e) => {
+	                        setValue(`banners.${index}.image`, null, { shouldDirty: true });
+	                        setValue(`banners.${index}._preview`, null, { shouldDirty: true });
+	                      }}>
+	                        Reset
+	                      </Button>
+	                    </div>
+	                    <Typography>Allowed JPG, GIF or PNG. Max size of 800K</Typography>
+	                    {errors.banners?.[index]?.image && (<Typography color='error.main'>{String(errors.banners[index]?.image?.message)}</Typography>)}
+	                  </div>
+	                </div>
+	              </Grid>
+
+	              <Grid size={{ md: 6, xs: 12, lg: 6 }} style={{ marginBottom: "30px" }}>
+	              	<Typography variant='h6' color='#a3a3a3'>Content</Typography>
+						      {/*<TipTapEditoror
+						        value={field.value ?? ''}
+						        onChange={field.onChange}
+						        onReady={(editorInstance) => setEditor(editorInstance)}
+						      />*/}
+								  <Controller
+								    name={`banners.${index}.content`}
+								    control={control}
+								    rules={{ required: true }}
+								    render={({ field }) => (
+								      <ReactQuill
+					              theme="snow"
+					              value={field.value ?? ''}
+					          		onChange={field.onChange}
+					          		onInit={(editorInstance) => setEditor(editorInstance)}
+					              modules={modules}
+					              placeholder="Write something amazing..."
+					              style={{ height: "200px", marginBottom: "60px" }}
+					            />
+								    )}
+								  />
+								  {errors.banners?.[index]?.content && (
+								    <p className="text-red-500 text-sm mt-1">{errors.banners?.[index]?.content.message}</p>
+								  )}
+	              </Grid>
+	              <Divider />
+
+	              <Grid size={{ md: 6, xs: 2, sm: 2 }}>
+	                { fields.length === index+1 ? (<Button aria-label='capture screenshot' onClick={() => append({content: '', image: null})} color='secondary' size='medium' variant="contained" startIcon={<i className='ri-add-line' />} >
+	                  Add More
+	                </Button>) : null }
+
+	                {index > 0 ? 
+	                  (<CustomIconButton aria-label='capture screenshot' color='error' size='medium' onClick={() => remove(index)}>
+	                  <i className="ri-delete-bin-7-line"></i>
+	                </CustomIconButton>) 
+	                : null }                  
+	              </Grid>
+	            </Grid>
+	          </div>
+	        ))}
+	        </Grid>
+				</Grid>
+			<Divider />
 			{/* About Us fields*/}
-			<Grid container spacing={5} className="my-5">  
+			<Grid container spacing={5} className="my-5">
 			<Grid size={{ md: 12, xs: 12, lg: 12 }}>
 			  <h2>About Section</h2>
 			</Grid>
@@ -528,7 +829,7 @@ const Overview = ({ pgData }: { pgData?: []; destinations?: []; }) => {
               theme="snow"
               value={field.value ?? ''}
           		onChange={field.onChange}
-          		onReady={(editorInstance) => setEditor(editorInstance)}
+          		onInit={(editorInstance) => setEditor(editorInstance)}
               modules={modules}
               placeholder="Write something amazing..."
               style={{ height: "300px" }}
@@ -612,6 +913,10 @@ const Overview = ({ pgData }: { pgData?: []; destinations?: []; }) => {
                   {watch(`about_sections.${index}._preview`) ? (
                     <img height={100} width={100} className='rounded' src={watch(`about_sections.${index}._preview`) as string} alt='Section Image' />
                     ) : null}
+
+                  {destID && field.image && (
+                  	<img height={100} width={100} className='rounded' src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${field.image}`} alt='Section Image' />
+                  	) }
                   <div className='flex flex-grow flex-col gap-4'>
                     <div className='flex flex-col sm:flex-row gap-4'>
                       <Button component='label' size='small' variant='contained' htmlFor={`section_image_${index}`}>
@@ -765,6 +1070,7 @@ const Overview = ({ pgData }: { pgData?: []; destinations?: []; }) => {
 				          </div>
 				        </>
 			      	) : null}
+			      	{uploadedList}
 				</Grid>
 			</Grid>
 			<Divider />
@@ -852,10 +1158,10 @@ const Overview = ({ pgData }: { pgData?: []; destinations?: []; }) => {
 			</Grid>
 			<Divider />
 
-			{/* Adventure Posts Section */}
+			{/* Stories Section */}
 			<Grid container spacing={5} className="my-5">  
 			<Grid size={{ md: 12, xs: 12, lg: 12 }}>
-			  <h2>Adventure Posts</h2>
+			  <h2>Stories</h2>
 			</Grid>
 
 			<Grid size={{ md: 12, xs: 12, lg: 12 }}>
@@ -897,7 +1203,7 @@ const Overview = ({ pgData }: { pgData?: []; destinations?: []; }) => {
 			  />
 			</Grid>
 			<Grid size={{ md: 12, xs: 12, lg: 12 }}>
-			  <input type="hidden" {...register("feature_resorts")} />
+        <input type="hidden" {...register("feature_resorts")} />
 			  <Autocomplete
 			    multiple
 			    options={resortOptions}
@@ -911,7 +1217,7 @@ const Overview = ({ pgData }: { pgData?: []; destinations?: []; }) => {
 			      </li>
 			    )}
 			    renderInput={(params) => (
-			      <TextField {...params} label="Search Resort" variant="outlined" />
+			      <TextField {...params} label="Search Destination" variant="outlined" />
 			    )}
 			    onChange={(event, newValue) => {
 			      setValue(

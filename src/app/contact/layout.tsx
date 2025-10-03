@@ -26,7 +26,7 @@ import '@/app/globals-front.css'
 import '@assets/iconify-icons/generated-icons.css'
 
 export const metadata = {
-  title: 'Adventure Network | Our Adventure',
+  title: 'Adventure Network | Contact Us',
   description:
     ''
 }

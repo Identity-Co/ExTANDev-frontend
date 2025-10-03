@@ -28,7 +28,7 @@ export const getDestinations = async () => {
   }
 }
 
-export const getPageDestination = async (ids) => {
+export const getPageDestination = async (ids: (string | number)[]) => {
   const session = await getServerSession(authOptions);
 
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/destination/list`, {
@@ -77,10 +77,11 @@ export const saveDestination = async (data: any) => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/destination`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/json',
       Authorization: `Bearer ${session?.user?.userToken}`
     },
-    body: JSON.stringify(data)
+    // body: JSON.stringify(data)
+    body: data
   });
 
   if (!response.ok) {
@@ -93,15 +94,17 @@ export const saveDestination = async (data: any) => {
 }
 
 export const updateDestination = async (id: any, data: any) => {
+  console.log('updateDestination')
   const session = await getServerSession(authOptions)
   
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/destination/update/${id}`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/json',
       Authorization: `Bearer ${session?.user?.userToken}`
     },
-    body: JSON.stringify(data)
+    // body: JSON.stringify(data)
+    body: data
   });
 
   if (!response.ok) {
@@ -152,4 +155,26 @@ export const deleteDestination = async (id: string) => {
   const json = await response.json();
   
   return json
+}
+
+export const getDestinationBySlug = async (slug: any) => {
+  const session = await getServerSession(authOptions);
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/destination/slug/${slug}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + session?.user?.userToken
+    }
+  }).catch(rejected => {
+      console.log(rejected);
+  })
+
+  if (res && res.ok) {
+    const log = await res.json()
+
+    return log.data
+  } else {
+    return {}
+  }
 }
