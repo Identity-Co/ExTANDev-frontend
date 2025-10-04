@@ -2,7 +2,7 @@ import Sections from '@views/admin/cms/home/PageSection'
 
 import * as Common from '@/app/server/common'
 import { getPageData } from '@/app/server/home_page'
-import { getFieldNotes } from '@/app/server/field_notes'
+import { getAdventureGuides } from '@/app/server/adventure_guide'
 import { getDestinations } from '@/app/server/destinations'
 
 import config from '@/configs/themeConfig'
@@ -29,7 +29,7 @@ const CmsHome = async () => {
   // Vars
   const data = await getPageData();
 
-  const field_notes = await getFieldNotes();
+  const field_notes = await getAdventureGuides();
 
   const destinations = await getDestinations();
 

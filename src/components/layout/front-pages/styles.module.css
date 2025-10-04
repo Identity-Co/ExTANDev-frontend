@@ -78,7 +78,7 @@ footer.footer{background-color: #000000; text-align: center;}
 .foot_bot_inner ul.foot_social li:nth-child(3) svg{width: 1.391vw; height: 0.952vw;}
 .foot_bot_inner ul.foot_social li:nth-child(4) svg{width: 1.245vw; height: 1.245vw;}
 
-.foot_rights{padding-top: 2.343vw;}
+.foot_rights{padding-top: 2.343vw; display: flex; justify-content: center;}
 .foot_rights p{font-size: 0.805vw; text-transform: uppercase; line-height: 1.171vw; color: #FFFFFF; opacity: 0.75; max-width: 45.168vw; margin: 0 auto;}
 
 @media only screen and (max-width: 1024px){

@@ -10,6 +10,8 @@ import classnames from 'classnames'
 import styles from './styles.module.css'
 
 const Footer = () => {
+    const year = new Date().getFullYear();
+
   return (
     <footer className={classnames(styles.footer)}>
         <div className={classnames(styles.footer_top, 'py_100')}>
@@ -57,7 +59,7 @@ const Footer = () => {
                     </ul>
                 </div>
                 <div className={classnames(styles.foot_rights)}>
-                    <p>2025  ADVENTURE NETWORK<br />THE ADVENTURE NETWORK IS A REGISTERED TRADEMARK OF I-DENTITY BRAND AND DEVELOPMENT. ALL RIGHTS ARE RESERVED. USE OF THIS SITE CONSTITUTES ACCEPTANCE OF OUR TERMS OF USE AND PRIVACY POLICY.</p>
+                    <p>{year} ADVENTURE NETWORK<br />THE ADVENTURE NETWORK IS A REGISTERED TRADEMARK OF I-DENTITY BRAND AND DEVELOPMENT. ALL RIGHTS ARE RESERVED. USE OF THIS SITE CONSTITUTES ACCEPTANCE OF OUR TERMS OF USE AND PRIVACY POLICY.</p>
                 </div>
             </div>
         </div>

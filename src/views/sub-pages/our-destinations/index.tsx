@@ -16,11 +16,10 @@ import OurDestinationsSection5 from '@/views/shared/instagram-feed-section/Insta
 import OurDestinationsSection6 from '@/views/shared/cta-section/CTASection'
 import { useSettings } from '@core/hooks/useSettings'
 
-const DestinationDetailPage = ({ mode, banners, pgData, destinations }: { mode: Mode; banners?: []; pgData?: []; destinations?: []; }) => {
+const DestinationDetailPage = ({ mode, banners, pgData, featuredDestinations }: { mode: Mode; banners?: []; pgData?: []; destinations?: []; }) => {
+  console.log(featuredDestinations)
   // Hooks
   const { updatePageSettings } = useSettings()
-
-  console.log(pgData)
 
   // For Page specific settings
   useEffect(() => {
@@ -41,7 +40,7 @@ const DestinationDetailPage = ({ mode, banners, pgData, destinations }: { mode: 
   }
 
   const featuredDestinationsSectionProps = {
-    destinations : pgData?.feature_destinations??[],
+    destinations : featuredDestinations??[],
     heading_class: 'fs_40',
     class: 'our_desti_sec2',
     box_title_class: 'fs_60'
