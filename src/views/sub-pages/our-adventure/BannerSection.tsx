@@ -139,7 +139,7 @@ const BannerSection = ({ mode, banners, filter_categories }: { mode: Mode; banne
                             <div className={classnames(styles.search_select, styles.ss1)}>
                                 <label>Activity</label>
                                 <select name="category" id="category" required value={selectedCategory} onChange={handleCategoryChange}>
-                                  <option value="">Select a Travel Style</option>
+                                  <option value="">Choose an Activity</option>
                                   {filter_categories.map((loc) => (
                                     <option key={loc._id} value={loc.category_name} data-id={loc._id}>
                                       {loc.category_name}
