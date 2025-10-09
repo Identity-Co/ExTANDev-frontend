@@ -1,3 +1,7 @@
+'use client'
+
+import { useEffect } from 'react'
+
 // Third-party Imports
 import classnames from 'classnames'
 
@@ -5,6 +9,56 @@ import classnames from 'classnames'
 import styles from './styles.module.css'
 
 const TotalTravelSection1 = ({ data }: { data?: [] }) => {
+
+    useEffect(() => {
+        // Function to dynamically load the travel client script
+        const script = document.createElement('script')
+        script.src = 'https://booking.accessdevelopment.com/scripts/travel.client.v2.js'
+        script.async = true
+
+        script.onload = () => {
+          console.log('Travel Client script loaded.')
+
+          // Wait a bit for the library to attach itself to window
+          const checkClient = setInterval(() => {
+            if (window.travelClient) {
+              clearInterval(checkClient)
+
+              try {
+                window.travelClient.start({
+                  // session_token: "ACCESS_SESSION_k-KHNZ85sjl5NGrFfS-6BXzpsnMMNEv_", // LIVE
+                  session_token: 'ACCESS_SESSION_RAzUKJ7B5Q5NS0kowVQgnGIw4zxqrlNz', // STAGE
+                  container: '.hotel_search_selector',
+                  navigate_to: {
+                    view: 'cars',
+                    destination: 'MCO - Orlando International Airport - Orlando United States',
+                    return_destination: 'TPA - Tampa International Airport - Tampa United States',
+                    pickup_date_time: '2025-10-15T10:00',
+                    return_date_time: '2025-10-17T14:00',
+                  },
+                })
+
+                window.travelClient.on('error', function (err) {
+                  console.error('Travel Client error:', err)
+                })
+              } catch (err) {
+                console.error('Error initializing travelClient:', err)
+              }
+            }
+          }, 500)
+        }
+
+        script.onerror = () => {
+          console.error('Failed to load Travel Client script.')
+        }
+
+        document.body.appendChild(script)
+
+        // Cleanup on unmount
+        return () => {
+          if (script.parentNode) script.parentNode.removeChild(script)
+        }
+    }, [])
   
   return (
     <section className={classnames(styles.home_section1, styles.our_desti_sec1)}>
@@ -19,6 +73,9 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
                 </div>
             </div>
         </div>
+
+        <div className='hotel_search_selector'></div>
+
     </section>
   )
 }
