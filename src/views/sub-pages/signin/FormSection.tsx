@@ -48,6 +48,9 @@ const FormSection = () => {
     const [errorState, setErrorState] = useState<ErrorType | null>(null)
     const [isSubmitting , setIsSubmitting ] = useState(false)
 
+    const [signInFrm, setSignInFrm] = useState('block')
+    const [forgotPass, setForgotPass] = useState('none')
+
     // Hooks
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -65,6 +68,14 @@ const FormSection = () => {
             password: ''
         }
     })
+
+    const toggleForm = () => {
+      let v1 = (signInFrm == "block") ? 'none' : 'block';
+      setSignInFrm(v1)
+
+      let v2 = (forgotPass == "block") ? 'none' : 'block';
+      setForgotPass(v2)
+    }
   
     return (
         <section className={classnames(styles.ambassadorship_sec3, 'pb_100')}>
@@ -78,13 +89,13 @@ const FormSection = () => {
                         </div>
                     </div>
                     <div className={classnames(styles.grid_box)}>
-                        <div className={classnames(styles.signup_box, styles.sign_in)}>
+                        <div className={classnames(styles.signup_box, styles.sign_in)} style={{ display: `${signInFrm}` }}>
                             <h4>SIGN IN</h4>
-                            <SigninForm />
+                            <SigninForm toggleForm={toggleForm}/>
                         </div>
-                        <div className={classnames(styles.signup_box, styles.account_box)}>
+                        <div className={classnames(styles.signup_box, styles.account_box)} style={{ display: `${forgotPass}` }}>
                             <h4>ACCOUNT RECOVERY</h4>
-                            <ForgotpwdForm />
+                            <ForgotpwdForm toggleForm={toggleForm} />
                         </div>
                     </div>
                     </div>

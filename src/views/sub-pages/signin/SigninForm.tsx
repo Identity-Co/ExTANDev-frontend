@@ -51,12 +51,21 @@ const schema = object({
 // Styles Imports
 import styles from './styles.module.css'
 
-const SigninForm = () => {
+type SignInProps = {
+  toggleForm: () => void
+}
+
+const SigninForm = ({ toggleForm }: SignInProps) => {
 
     // States
     const [isPasswordShown, setIsPasswordShown] = useState(false)
     const [errorState, setErrorState] = useState<ErrorType | null>(null)
     const [isSubmitting , setIsSubmitting ] = useState(false)
+
+    const [signInFrm, setSignInFrm] = useState('block')
+    const [forgotPass, setForgotPass] = useState('none')
+    const [forgotMessage, setForgotMessage] = useState(null)
+    const [recoveryEmail, setRecoveryEmail] = useState('')
 
     // Hooks
     const router = useRouter()
@@ -90,10 +99,10 @@ const SigninForm = () => {
         console.log('res: ', res)
 
         if (res && res.ok && res.error === null) {
-            setLoading(true)
+            // setLoading(true)
 
             // Vars
-            const redirectURL = searchParams.get('redirectTo') ?? '/admin/'
+            const redirectURL = searchParams.get('redirectTo') ?? '/my-account/'
 
             router.replace(redirectURL)
         } else {
@@ -113,11 +122,11 @@ const SigninForm = () => {
                 action={() => {}}
                 autoComplete='off'
                 onSubmit={handleSubmit(onSubmit)}
-                className='flex flex-col gap-5'
+                className='flex flex-col gap-5 custom-reset-fld'
             >
 
                 <div className={classnames(styles.input_row)}>
-                    <div className={classnames(styles.input_full_box, styles.email)}>
+                    <div className={classnames(styles.input_full_box , 'input_full_box')}>
                         <Controller
                           name='email'
                           control={control}
@@ -132,6 +141,15 @@ const SigninForm = () => {
                                 field.onChange(e.target.value)
                                 errorState !== null && setErrorState(null)
                               }}
+                              slotProps={{
+                                input: {
+                                  startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <i className='ri-mail-line' />
+                                    </InputAdornment>
+                                  )
+                                }
+                              }}
                               {...((errors.email || errorState !== null) && {
                                 error: true,
                                 helperText: errors?.email?.message || errorState?.message[0]
@@ -140,7 +158,7 @@ const SigninForm = () => {
                           )}
                         />
                     </div>
-                    <div className={classnames(styles.input_full_box)}>
+                    <div className={classnames(styles.input_full_box , 'input_full_box')}>
                         <Controller
                           name='password'
                           control={control}
@@ -170,6 +188,11 @@ const SigninForm = () => {
                                         <i className={isPasswordShown ? 'ri-eye-off-line' : 'ri-eye-line'} />
                                       </IconButton>
                                     </InputAdornment>
+                                  ),
+                                  startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <i className='ri-lock-line' />
+                                    </InputAdornment>
                                   )
                                 }
                               }}
@@ -181,7 +204,7 @@ const SigninForm = () => {
 
                     <div className='flex justify-between items-center flex-wrap gap-x-3 gap-y-1'>
                       <FormControlLabel control={<Checkbox defaultChecked />} label='Remember me' />
-                      <Typography className='text-end' color='primary.main' component={Link} href='/forgot-password'>
+                      <Typography className='text-end' color='primary.main' sx={{ cursor: 'pointer' }} onClick={toggleForm}>
                         Forgot password?
                       </Typography>
                     </div>
@@ -190,27 +213,6 @@ const SigninForm = () => {
                           Log In
                           {isSubmitting ? <CircularProgress style={{marginLeft: '8px', color: 'white'}} size={20} thickness={6} /> : ''}
                         </Button>
-                    </div>
-                </div>
-
-                <div className={classnames(styles.input_row)}>
-                    <div className={classnames(styles.input_full_box, styles.email)}>
-                        <label>E-mail</label>
-                        <input type="email" placeholder="E-mail" />
-                    </div>
-                    <div className={classnames(styles.input_full_box)}>
-                        <label>Password</label>
-                        <input type="password" placeholder="Password" />
-                    </div>
-                    <div className={classnames(styles.input_full_box, styles.checkbox_label)}>
-                        <input type="checkbox" />
-                        <label>Remember <a className={classnames(styles.forgot_pass)} href="#">Forgot your password?</a></label>
-                    </div>
-                    <div className={classnames(styles.input_full_box, styles.submit_btn)}>
-                        <input type="submit" value="Sign in" />
-                    </div>
-                    <div className={classnames(styles.input_full_box, styles.pass_ref)}>
-                        <span>New member? <a href="#">Create account</a></span>
                     </div>
                 </div>
             </form>
