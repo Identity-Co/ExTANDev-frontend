@@ -29,7 +29,7 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
               try {
                 window.travelClient.start({
                   //session_token: "ACCESS_SESSION_s0xdt6nlUYd4ryTlmsUjNuKvw4ZVLsUF", // LIVE
-                  session_token: '293bbf4', // STAGE
+                  session_token: 'ACCESS_SESSION_A3jX3eBpsDhVLRvd5VejDiW56vr5JwDG', // STAGE
                   container: '.hotel_search_selector',
                   navigate_to: {
                     view: 'cars',
