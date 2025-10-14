@@ -13,7 +13,9 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
     useEffect(() => {
         // Function to dynamically load the travel client script
         const script = document.createElement('script')
-        script.src = 'https://booking.accessdevelopment.com/scripts/travel.client.v2.js'
+        
+        //script.src = 'https://booking.accessdevelopment.com/scripts/travel.client.v2.js'
+        script.src = 'https://booking-stage.accessdevelopment.com/scripts/travel.client.v2.js'
         script.async = true
 
         script.onload = () => {
@@ -26,15 +28,15 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
 
               try {
                 window.travelClient.start({
-                  session_token: "ACCESS_SESSION_s0xdt6nlUYd4ryTlmsUjNuKvw4ZVLsUF", // LIVE
-                  //session_token: 'ACCESS_SESSION_RAzUKJ7B5Q5NS0kowVQgnGIw4zxqrlNz', // STAGE
+                  //session_token: "ACCESS_SESSION_s0xdt6nlUYd4ryTlmsUjNuKvw4ZVLsUF", // LIVE
+                  session_token: 'ACCESS_SESSION_rYFzdeSNCbPYYiG8M9ZU9oU7XZsuCZ-y', // STAGE
                   container: '.hotel_search_selector',
                   navigate_to: {
                     view: 'cars',
                     destination: 'MCO - Orlando International Airport - Orlando United States',
                     return_destination: 'TPA - Tampa International Airport - Tampa United States',
-                    pickup_date_time: '2025-10-15T10:00',
-                    return_date_time: '2025-10-17T14:00',
+                    pickup_date_time: '2025-10-20T10:00',
+                    return_date_time: '2025-10-22T14:00',
                   },
                 })
 
