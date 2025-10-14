@@ -2,8 +2,8 @@
 
 // React Imports
 import { useState, useRef, React, useEffect } from 'react'
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements, useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
+// import { Elements, useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
 
 // Next Imports
 import Link from 'next/link'
@@ -48,7 +48,8 @@ import { createPaymentIntent } from '@/app/server/payments'
 // Styles Imports
 import styles from './styles.module.css'
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISH_KEY);
+// const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISH_KEY);
+const stripePromise = '';
 
 type ErrorType = {
   message: string[]
@@ -797,11 +798,11 @@ const SignupForm = () => {
               )}
 
               {selectedLevel === 2 && clientSecret && currentStep == 2 && (
-                <div className="paymentFormBox">
+                /*<div className="paymentFormBox">
                   <Elements stripe={stripePromise} options={{ clientSecret }}>
                     <PremiumPaymentSection handleSignup={handleSignup} captchaValue={captchaValue} />
                   </Elements>
-                </div>
+                </div>*/
               )}
 
             </div>
@@ -817,8 +818,11 @@ export default SignupForm
 // PremiumPaymentSection
 // ---------------------------
 const PremiumPaymentSection = ({ handleSignup, captchaValue }) => {
-  const stripe = useStripe()
-  const elements = useElements()
+  //const stripe = useStripe()
+  //const elements = useElements()
+
+  const stripe = '';
+  const elements = '';
 
   const handlePayment = async (e) => {
     e.preventDefault()
@@ -858,7 +862,7 @@ const PremiumPaymentSection = ({ handleSignup, captchaValue }) => {
 
   return (
     <form onSubmit={handlePayment}>
-      <PaymentElement />
+      {/*<PaymentElement />*/}
       <div className={classnames(styles.input_full_box, styles.submit_btn)}>
           <input type="submit" value="Confirm Payment & Signup" />
       </div>
