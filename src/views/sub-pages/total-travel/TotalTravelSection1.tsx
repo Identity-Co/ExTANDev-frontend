@@ -13,7 +13,7 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
     useEffect(() => {
         // Function to dynamically load the travel client script
         const script = document.createElement('script')
-        
+
         //script.src = 'https://booking.accessdevelopment.com/scripts/travel.client.v2.js'
         script.src = 'https://booking-stage.accessdevelopment.com/scripts/travel.client.v2.js'
         script.async = true
@@ -29,7 +29,7 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
               try {
                 window.travelClient.start({
                   //session_token: "ACCESS_SESSION_s0xdt6nlUYd4ryTlmsUjNuKvw4ZVLsUF", // LIVE
-                  session_token: 'ACCESS_SESSION_rYFzdeSNCbPYYiG8M9ZU9oU7XZsuCZ-y', // STAGE
+                  session_token: '293bbf4', // STAGE
                   container: '.hotel_search_selector',
                   navigate_to: {
                     view: 'cars',
