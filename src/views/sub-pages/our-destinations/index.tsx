@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 // Type Imports
 import type { Mode } from '@core/types'
@@ -13,13 +13,29 @@ import OurDestinationsSection2 from '@/views/shared/destination-featured-destina
 import OurDestinationsSection3 from '@/views/shared/instagram-feed-slider-section/InstagramFeedSlider'
 import OurDestinationsSection4 from '@/views/shared/destination-featured-resorts-section/OurDestinationsFeaturedResorts'
 import OurDestinationsSection5 from '@/views/shared/instagram-feed-section/InstagramFeed'
-import OurDestinationsSection6 from '@/views/shared/cta-section/CTASection'
+import OurDestinationsSection6 from '@/views/shared/review-form-section/ReviewFormSection'
+import OurDestinationsSection7 from '@/views/shared/cta-section/CTASection'
 import { useSettings } from '@core/hooks/useSettings'
 
+import * as Common from '@/app/server/common'
+
 const DestinationDetailPage = ({ mode, banners, pgData, featuredDestinations }: { mode: Mode; banners?: []; pgData?: []; destinations?: []; }) => {
-  console.log(featuredDestinations)
   // Hooks
   const { updatePageSettings } = useSettings()
+
+  const [isUserLoggedIn, setisUserLoggedIn] = useState(null)
+  const [userData, setuserData] = useState(null)
+
+  useEffect(() => {
+    const getSessData = async () => {
+      const sess = await Common.getUserSess();
+      if(sess && sess?.user?.role == 'user'){
+        setuserData(sess)
+        setisUserLoggedIn(true);
+      }
+    };
+    getSessData();
+  }, []);
 
   // For Page specific settings
   useEffect(() => {
@@ -59,7 +75,10 @@ const DestinationDetailPage = ({ mode, banners, pgData, featuredDestinations }: 
       <OurDestinationsSection3 data={pgData} sectionProps={instagramSliderSectionProps} />
       <OurDestinationsSection4 data={pgData} sectionProps={featuredResortsSectionProps} />
       <OurDestinationsSection5 sectionProps={instagramFeedSectionProps} />
-      <OurDestinationsSection6 data={pgData} />
+      {isUserLoggedIn &&(
+        <OurDestinationsSection6 data={userData?.user?.id} />
+      )}
+      <OurDestinationsSection7 data={pgData} />
     </>
   )
 }
