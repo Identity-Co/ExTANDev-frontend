@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from 'react'
 
+import { createAccessUserToken } from '@/app/server/total-travel';
+
 // Third-party Imports
 import classnames from 'classnames'
 
@@ -11,86 +13,62 @@ import styles from './styles.module.css'
 const TotalTravelSection1 = ({ data }: { data?: [] }) => {
 
     const isLoadRef = useRef(false)
-    const isLoaded = useRef(false)
 
     const fetchCarsData = async () => {
 
-      
+      const res = await createAccessUserToken();
 
+      if (res && res.session_token) {
 
-      const res = await fetch(`https://auth.adcrws-stage.com/api/v1/tokens`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          "member_key" : "AN202510140004",
-          "email"      : "access004@gmail.com",
-          "first_name" : "John",
-          "last_name"  : "Two",
-          "scope"      : "travel"
-        })
-      });
+        // Function to dynamically load the travel client script
+        const script = document.createElement('script')
 
-      //const res = {"session_token":"ACCESS_SESSION_YXixlZT-e7tzylrhUfOVnCRFUfOFWcWO"};
+        //script.src = 'https://booking.accessdevelopment.com/scripts/travel.client.v2.js'
+        script.src = 'https://booking-stage.accessdevelopment.com/scripts/travel.client.v2.js'
+        script.async = true
 
-      //const log = await res.json()
+        script.onload = () => {
+          console.log('Travel Client script loaded.')
 
-      console.log(' New Login :: ', res)
+          // Wait a bit for the library to attach itself to window
+          const checkClient = setInterval(() => {
+            if (window.travelClient) {
+              clearInterval(checkClient)
 
-      /*if (res && res.ok) {
+              try {
+                window.travelClient.start({
+                  session_token: res.session_token,
+                  container: '.hotel_search_selector',
+                  navigate_to: {
+                    view: 'cars',
+                    destination: 'MCO - Orlando International Airport - Orlando United States',
+                    return_destination: 'TPA - Tampa International Airport - Tampa United States',
+                    pickup_date_time: '2025-10-20T10:00',
+                    return_date_time: '2025-10-22T14:00',
+                  },
+                })
 
-      // Function to dynamically load the travel client script
-      const script = document.createElement('script')
-
-      //script.src = 'https://booking.accessdevelopment.com/scripts/travel.client.v2.js'
-      script.src = 'https://booking-stage.accessdevelopment.com/scripts/travel.client.v2.js'
-      script.async = true
-
-      script.onload = () => {
-        console.log('Travel Client script loaded.')
-
-        // Wait a bit for the library to attach itself to window
-        const checkClient = setInterval(() => {
-          if (window.travelClient) {
-            clearInterval(checkClient)
-
-            try {
-              window.travelClient.start({
-                //session_token: "ACCESS_SESSION_s0xdt6nlUYd4ryTlmsUjNuKvw4ZVLsUF", // LIVE
-                session_token: 'ACCESS_SESSION_itR_bDu1Lg7HGM7msqxejJa8LyKBJnJv', // STAGE
-                container: '.hotel_search_selector',
-                navigate_to: {
-                  view: 'cars',
-                  destination: 'MCO - Orlando International Airport - Orlando United States',
-                  return_destination: 'TPA - Tampa International Airport - Tampa United States',
-                  pickup_date_time: '2025-10-20T10:00',
-                  return_date_time: '2025-10-22T14:00',
-                },
-              })
-
-              window.travelClient.on('error', function (err) {
-                console.error('Travel Client error:', err)
-              })
-            } catch (err) {
-              console.error('Error initializing travelClient:', err)
+                window.travelClient.on('error', function (err) {
+                  console.error('Travel Client error:', err)
+                })
+              } catch (err) {
+                console.error('Error initializing travelClient:', err)
+              }
             }
-          }
-        }, 500)
+          }, 500)
+        }
+
+        script.onerror = () => {
+          console.error('Failed to load Travel Client script.')
+        }
+
+        document.body.appendChild(script)
+
+        // Cleanup on unmount
+        return () => {
+          if (script.parentNode) script.parentNode.removeChild(script)
+        }
       }
-
-      script.onerror = () => {
-        console.error('Failed to load Travel Client script.')
-      }
-
-      document.body.appendChild(script)
-
-      // Cleanup on unmount
-      return () => {
-        if (script.parentNode) script.parentNode.removeChild(script)
-      }*/
-
-      isLoaded.current = true
 
     };
 
