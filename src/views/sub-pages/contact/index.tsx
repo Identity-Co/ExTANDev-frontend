@@ -15,7 +15,7 @@ import ContactSection4 from './ContactSection4'
 
 import { useSettings } from '@core/hooks/useSettings'
 
-const LandingPageWrapper = ({ mode, pgData, reviews }: { mode: Mode; pgData?: []; reviews?: [] }) => {
+const LandingPageWrapper = ({ mode, pgData }: { mode: Mode; pgData?: []; }) => {
   // Hooks
   const { updatePageSettings } = useSettings()
 
@@ -37,7 +37,7 @@ const LandingPageWrapper = ({ mode, pgData, reviews }: { mode: Mode; pgData?: []
       <BannerSection mode={mode} data={pgData?.banner_image?? ''} />
       <ContactSection1 data={pgData} />
       <ContactSection2 />
-      <ContactSection3 reviews={reviews} />
+      <ContactSection3 />
       <ContactSection4 data={pgData} />
     </>
   )

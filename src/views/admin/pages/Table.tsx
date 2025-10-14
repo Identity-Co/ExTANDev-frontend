@@ -129,7 +129,7 @@ const fixPages = {
   'Field Notes' : 'blog/',
   'Ambassadorship' : 'my-account/', 
   'Adventure Guide' : 'adventure-guide/',
-  'Contact Us' : 'contact/'
+  'Contact Us' : 'adventure-guide/'
 };
 
 const ListTable = ({ tableData }: { tableData?: [] }) => {
