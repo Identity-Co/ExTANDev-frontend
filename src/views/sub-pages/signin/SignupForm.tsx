@@ -278,7 +278,7 @@ const SignupForm = () => {
 
     return (
         <>
-          {!selectedLevel && (
+          {selectedLevel === null && (
             <div className="levelsDiv">
               <h3>Membership Level</h3>
               <div className="level_main">
