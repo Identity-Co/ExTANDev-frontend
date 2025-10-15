@@ -1,7 +1,7 @@
 'use client'
 
-// React Imports
-import { useEffect, useState } from 'react'
+// React Imports useRef
+import { useState, useEffect } from 'react'
 
 import { useRouter } from 'next/navigation'
 
@@ -20,7 +20,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Autocomplete from "@mui/material/Autocomplete";
 import Tooltip from '@mui/material/Tooltip';
 
-//import type { Editor } from '@tiptap/react'
+// import type { Editor } from '@tiptap/react'
 
 const TipTapEditor = dynamic(() => import('@/components/TipTap'), { ssr: false })
 
@@ -40,11 +40,19 @@ import CustomIconButton from '@core/components/mui/IconButton'
 import { useNavigationStore } from '@/libs/navigation-store'
 
 import * as AdventureGuide from '@/app/server/adventure_guide'
-import { getSingleUser } from '@/app/server/users'
+
+import * as Common from '@/app/server/common'
 
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false })
 
 import 'react-quill-new/dist/quill.snow.css';
+
+type ReactQuillRef = {
+  getEditor: () => any;
+  focus?: () => void;
+  blur?: () => void;
+};
+
 
 interface ContentField {
   type: string;
@@ -61,11 +69,6 @@ interface ContentSection {
   fields: ContentField[];
 }
 
-type ErrorType = {
-  message: string[]
-}
-
-//type FormData = InferInput<typeof schema>
 type FormData = {
   title: string;
   feature_image: File | null | string;
@@ -97,6 +100,9 @@ type FormData = {
   site_logo_preview?: string | null;
 }
 
+type ErrorType = {
+  message: string[]
+}
 
 const schema = object({
   title: pipe(string(), nonEmpty('This field is required')),
@@ -142,13 +148,13 @@ const schema = object({
       if (!value) return true;
       if (typeof value === 'string') return true; // Allow strings (existing images)
       
-      const allowed = ["image/png", "image/jpeg", "image/gif", "image/svg+xml"];
+      const allowed = ["image/png", "image/jpeg", "image/gif"];
       if (!allowed.includes(value.type)) return false;
       
       const maxMB = 5;
       
       return value.size <= maxMB * 1024 * 1024;
-    }, "Only PNG/JPG/GIF/SVG allowed and max file size is 5 MB")
+    }, "Only PNG/JPG/GIF allowed and max file size is 5 MB")
   ),
   excerpt: optional(string()),
   site_url: optional(string()),
@@ -163,9 +169,9 @@ const schema = object({
       const maxMB = 5;
       
       return value.size <= maxMB * 1024 * 1024;
-    }, "Only PNG/JPG/GIF/SVG allowed and max file size is 5 MB")
+    }, "Only PNG/JPG/GIF allowed and max file size is 5 MB")
   ),
-  page_url: optional(string()),
+  page_url: pipe(string(), nonEmpty('This field is required')),
   meta_title: optional(string()),
   meta_description: optional(string()),
   meta_keywords: optional(string()),
@@ -186,19 +192,15 @@ const TooltipIfEnabled = ({ title, disabled, children }) =>
     </Tooltip>
   );
 
-const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide?: [] }) => {  
+const PageSection = ({ pgData }: { pgData?: [] }) => {  
   const router = useRouter()
 
   const setLoading = useNavigationStore((s) => s.setLoading)
 
   const [errorState, setErrorState] = useState<ErrorType | null>(null)
   const [isSubmitting , setIsSubmitting ] = useState(false)
-  const [isPostedby , setIsPostedby ] = useState(adventureguide?.posted_user?? '')
-  const [postedUser, setPostedUser] = useState<string>('')
-  const [editor, setEditor] = useState<Editor | null>(null)
+  const [editor, setEditor] = useState<any>(null);
   const [message, setMessage] = useState(null);
-
-  //const [imgSrc, setImgSrc] = useState<string>(adventureguide?.image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${adventureguide?.image}` : '/images/avatars/1.png')
 
   const resortsLists = { r1: 'Resort 1', r2: 'Resort 2', r3: 'Resort 3', r4: 'Resort 4', r5: 'Resort 5', r6: 'Resort 6'};
   const [resortsOptions, setResortsOptions] = useState(() => {
@@ -239,35 +241,6 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
     ],
   }
 
-  useEffect(() => {
-    const fetchPostedUser = async () => {
-      if (isPostedby) {
-        try {
-          const _user = await getSingleUser(isPostedby)
-          if (_user) {
-            const firstName = _user.first_name || ''
-            const lastName = _user.last_name || ''
-            
-            const fullName = `${firstName} ${lastName}`.trim()
-            
-            let userDisplayString
-            if (fullName) {
-              userDisplayString = `${fullName} (${_user.email})`
-            } else {
-              userDisplayString = _user.email
-            }
-            
-            setPostedUser(userDisplayString)
-          }
-        } catch (error) {
-          console.error('Error fetching user details:', error)
-        }
-      }
-    }
-
-    fetchPostedUser()
-  }, [isPostedby])
-
   const {
     control,
     register,
@@ -277,124 +250,47 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
   } = useForm<FormData>({
     resolver: valibotResolver(schema),
     defaultValues: {
-      title: adventureguide?.title??'',
-      feature_image: adventureguide?.feature_image??null,
-      banner_image: adventureguide?.banner_image??null,
-      banner_preview: adventureguide?.banner_image??'',
-      banner_description: adventureguide?.banner_description??'',
-      content_sections: Array.isArray(adventureguide?.content_sections) && adventureguide.content_sections.length > 0
-    ? adventureguide.content_sections.map(section => ({
-        fields: Array.isArray(section.fields) ? section.fields : []
-      }))
-    : [
+      title: '',
+      feature_image: null,
+      banner_image: null,
+      banner_description: '',
+      content_sections:[
         {
           fields: [
-            { type: "content", value: "" },
-            { type: "image", value: "", caption: "" },
+            { type: "content", value: "" }
           ]
         }
       ],
-      author_name: adventureguide?.author_name??'',
-      author_testimonial: adventureguide?.author_testimonial??'',
-      author_image: adventureguide?.author_image??null,
-      excerpt: adventureguide?.excerpt??'',
-      site_url: adventureguide?.site_url??'',
-      site_logo: adventureguide?.site_logo??null,
-      page_url: adventureguide?.page_url??'',
-      meta_title: adventureguide?.meta_title??'',
-      meta_description: adventureguide?.meta_description??'',
-      meta_keywords: adventureguide?.meta_keywords??'',
-      robots: adventureguide?.robots??'',
-      author: adventureguide?.author??'',
-      publisher: adventureguide?.publisher??'',
-      copyright: adventureguide?.copyright??'',
-      revisit_after: adventureguide?.revisit_after??'',
-      classification: adventureguide?.classification??'',
-      rating: adventureguide?.rating??'',
-      post_date: formatDate(new Date(adventureguide?.post_date)),
+      author_name: '',
+      author_testimonial: '',
+      author_image: null,
+      excerpt: '',
+      site_url: '',
+      site_logo: null,
+      page_url: '',
+      meta_title: '',
+      meta_description: '',
+      meta_keywords: '',
+      robots: '',
+      author: '',
+      publisher: '',
+      copyright: '',
+      revisit_after: '',
+      classification: '',
+      rating: '',
       banner_preview: null,
       author_image_preview: null,
       feature_image_preview: null,
       site_logo_preview: null,
+      post_date: formatDate(new Date()),
     }
   })
-
-  useEffect(() => {
-    if (adventureguide?.feature_image) {
-      setValue(
-        "feature_image_preview",
-        `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${adventureguide.feature_image}`,
-        { shouldDirty: false }
-      );
-      setValue("feature_image", null, { shouldDirty: false });
-    }
-
-    if (adventureguide?.banner_image) {
-      setValue(
-        "banner_preview",
-        `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${adventureguide.banner_image}`,
-        { shouldDirty: false }
-      );
-      setValue("banner_image", null, { shouldDirty: false });
-    }
-
-    if (adventureguide?.author_image) {
-      setValue(
-        "author_image_preview",
-        `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${adventureguide.author_image}`,
-        { shouldDirty: false }
-      );
-      setValue("author_image", null, { shouldDirty: false });
-    }
-
-    if (adventureguide?.site_logo) {
-      setValue(
-        "site_logo_preview",
-        `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${adventureguide.site_logo}`,
-        { shouldDirty: false }
-      );
-      setValue("site_logo", null, { shouldDirty: false });
-    }
-  }, [adventureguide, setValue]);
-
-  useEffect(() => {
-    if (adventureguide?.content_sections) {
-      adventureguide.content_sections.forEach((section, sIdx) => {
-        section.fields.forEach((field, fIdx) => {
-          if (field.type === "image" && field.value) {
-            setValue(
-              `content_sections.${sIdx}.fields.${fIdx}._preview`,
-              `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${field.value}`,
-              { shouldDirty: false }
-            );
-            setValue(
-              `content_sections.${sIdx}.fields.${fIdx}.image`,
-              null,
-              { shouldDirty: false }
-            );
-          }
-        });
-      });
-    }
-  }, [adventureguide, setValue]);
 
   const { fields: sectionFields, append: appendSection, remove: removeSection } = useFieldArray({
     control,
     name: "content_sections",
-  })
-
-  // Create a single useFieldArray for all fields and manage section structure manually
-  const { fields: allFields, append: appendField, remove: removeField } = useFieldArray({
-    control,
-    name: "content_sections",
-  })
-
-  // Helper function to get fields for a specific section
-  const getFieldsForSection = (sectionIndex: number) => {
-    return sectionFields[sectionIndex]?.fields || []
-  }
-
-  // Helper function to add a field to a specific section
+  });
+  
   const addFieldToSection = (sectionIndex: number, field: ContentField) => {
     const currentSections = [...(watch('content_sections') || [])]
     
@@ -406,7 +302,6 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
     setValue('content_sections', currentSections)
   }
 
-  // Helper function to remove a field from a specific section
   const removeFieldFromSection = (sectionIndex: number, fieldIndex: number) => {
     const currentSections = [...(watch('content_sections') || [])]
     
@@ -415,8 +310,6 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
       setValue('content_sections', currentSections)
     }
   }
-
-
 
   const moveSection = (currentIndex: number, newIndex: number) => {
     if (newIndex < 0 || newIndex >= sectionFields.length) return;
@@ -432,10 +325,20 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
     setValue('content_sections', currentSections, { shouldDirty: true });
   };
 
+  const generateSlug = text => {
+    return text
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, '')   // remove invalid chars
+      .replace(/\s+/g, '-')           // replace spaces with -
+      .replace(/-+/g, '-')            // remove multiple -
+  }
+
   const onUpdate: SubmitHandler<FormData> = async (data: FormData) => {
     try {
       setIsSubmitting(true)
 
+      const session = await Common.getUserSess()
       const fd = new FormData()
 
       // Append text fields
@@ -459,77 +362,51 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
       if (data.post_date) fd.append('post_date', data.post_date)
 
       // === Append images (single) ===
-      if (data.feature_image instanceof File) {
-        fd.append("feature_image", data.feature_image);
-      } else if (adventureguide?.feature_image) {
-        fd.append("feature_image", adventureguide.feature_image);
-      }
-
-      if (data.banner_image instanceof File) {
-        fd.append("banner_image", data.banner_image);
-      } else if (adventureguide?.banner_image) {
-        fd.append("banner_image", adventureguide.banner_image);
-      }
-
-      if (data.author_image instanceof File) {
-        fd.append("author_image", data.author_image);
-      } else if (adventureguide?.author_image) {
-        fd.append("author_image", adventureguide.author_image);
-      }
-
-      if (data.site_logo instanceof File) {
-        fd.append("site_logo", data.site_logo);
-      } else if (adventureguide?.site_logo) {
-        fd.append("site_logo", adventureguide.site_logo);
-      }
+      if (data.feature_image instanceof File) fd.append('feature_image', data.feature_image)
+      if (data.banner_image instanceof File) fd.append('banner_image', data.banner_image)
+      if (data.author_image instanceof File) fd.append('author_image', data.author_image)
+      if (data.site_logo instanceof File) fd.append('site_logo', data.site_logo)
 
       // === Append repeater sections ===
       // send content_sections JSON without File objects
-      const cleanedSections = await Promise.all(data.content_sections.map(async (s, i) => {
 
+      if(!session?.user?.id || session?.user?.role != 'ambassador') {
+        toast.error('Please login agian to save Adventure Guide')
+      }
+
+      fd.append('posted_user', session?.user?.id)
+
+      const cleanedSections = data.content_sections.map((s, i) => {
         return {
-          fields: await Promise.all(s.fields.map(async (f, fi) => {
-            if (f.type === 'image') {
+          fields: s.fields.map((f, fi) => {
+            if (f.type === 'image' && f.image instanceof File) {
               // append separately
-              if (f.image instanceof File) {
-                fd.append('section_images', f.image);
-
-                // Wait for base64 encoding
-                const base64 = await new Promise((resolve, reject) => {
-                  const reader = new FileReader();
-                  reader.readAsDataURL(f.image);
-                  reader.onload = () => resolve(reader.result);
-                  reader.onerror = (err) => reject(err);
-                });
-                data.content_sections[i].fields[fi].value = base64;
-                //data.content_sections[i].fields[fi]._preview = f.image.name;
-              } else {
-                fd.append('section_images', f.value);
-              }
-
-              fd.append('section_refs', `${i}.${fi}`);
-
-              return { ...f, image: '' };
+              fd.append('section_images', f.image)
+              fd.append('section_refs', `${i}.${fi}`)
+              
+              return { ...f, image: '' }
             }
 
-            return f;
-          })),
-        };
-      }));
+            return f
+          }),
+        }
+      })
+      
+      fd.append('content_sections', JSON.stringify(cleanedSections))
 
-      fd.append('content_sections', JSON.stringify(data.content_sections));
-
-      const log = await AdventureGuide.updateAdventureGuide(setId, fd);
+      const log = await AdventureGuide.createAdventureGuide(fd);
    
       if (log && log._id) {
 
-        toast.success('Adventure Guide updated successfully.')
-        setIsSubmitting(false)
+        toast.success('Adventure Guide added successfully.')
+        router.replace(`/my-account/adventure-guides/`)
       } else {
-        console.log(log)
-        
-        setIsSubmitting(false)
+        if(log.errors) {
+          toast.error(log.errors.message)
+        }
       }
+
+      setIsSubmitting(false)
     }catch(err: any){
       console.error(err)
       toast.error(err.message || 'Error saving Adventure Guide')
@@ -568,6 +445,10 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                             className='mbe-1'
                             onChange={e => {
                               field.onChange(e.target.value)
+
+                              const slug = generateSlug(e.target.value)
+                              setValue('page_url', slug)
+
                               errorState !== null && setErrorState(null)
                             }}
                             {...((errors.title || errorState !== null) && {
@@ -679,53 +560,51 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                   <Divider />
 
                   {/* Content Sections */}
-                  {sectionFields.map((section, sectionIndex) => {
-                    const fieldsArray = getFieldsForSection(sectionIndex)
+                  {sectionFields.map((section, index) => (
+                    <Grid key={section.id} container spacing={5} className="my-5">  
+                      <Grid size={{ md: 12, xs: 12, lg: 12 }}>
+                       <div className="flex items-center justify-between">
+                          <h2>Content Section {index + 1}</h2>
+                          
+                          {/* Move Controls - Only show for sections after the first one */}
+                          {index > 0 && (
+                            <div className="flex gap-2">
+                              <TooltipIfEnabled title="Move Up" disabled={index === 1}>
+                                <CustomIconButton
+                                  color="primary"
+                                  size="small"
+                                  onClick={() => moveSection(index, index - 1)}
+                                  disabled={index === 1} // Can't move section 0
+                                >
+                                  <i className="ri-arrow-up-line"></i>
+                                </CustomIconButton>
+                              </TooltipIfEnabled>
+                              
+                              <TooltipIfEnabled title="Move Down" disabled={index === sectionFields.length - 1}>
+                                <CustomIconButton
+                                  color="primary"
+                                  size="small"
+                                  onClick={() => moveSection(index, index + 1)}
+                                  disabled={index === sectionFields.length - 1}
+                                >
+                                  <i className="ri-arrow-down-line"></i>
+                                </CustomIconButton>
+                              </TooltipIfEnabled>
+                            </div>
+                          )}
+                        </div>
+                      </Grid>
 
-                    return (
-                      <Grid key={section.id} container spacing={5} className="my-5">
-                        <Grid size={{ md: 12, xs: 12, lg: 12 }}>
-                          <div className="flex items-center justify-between">
-                            <h2>Content Section {sectionIndex + 1}</h2>
-                            
-                            {/* Move Controls - Only show for sections after the first one */}
-                            {sectionIndex > 0 && (
-                              <div className="flex gap-2">
-                                <TooltipIfEnabled title="Move Up" disabled={sectionIndex === 1}>
-                                  <CustomIconButton
-                                    color="primary"
-                                    size="small"
-                                    onClick={() => moveSection(sectionIndex, sectionIndex - 1)}
-                                    disabled={sectionIndex === 1} // Can't move section 0
-                                  >
-                                    <i className="ri-arrow-up-line"></i>
-                                  </CustomIconButton>
-                                </TooltipIfEnabled>
-                                
-                                <TooltipIfEnabled title="Move Down" disabled={sectionIndex === sectionFields.length - 1}>
-                                  <CustomIconButton
-                                    color="primary"
-                                    size="small"
-                                    onClick={() => moveSection(sectionIndex, sectionIndex + 1)}
-                                    disabled={sectionIndex === sectionFields.length - 1}
-                                  >
-                                    <i className="ri-arrow-down-line"></i>
-                                  </CustomIconButton>
-                                </TooltipIfEnabled>
-                              </div>
-                            )}
-                          </div>
-                        </Grid>
-
-                        <Grid size={{ md: 12, xs: 12, lg: 12 }}>
-                            {fieldsArray.map((field, fieldIndex) => (
-                              <Grid key={`${sectionIndex}-${fieldIndex}-${field.type}`} container spacing={6} className="mb-2">
+                      <Grid size={{ md: 12, xs: 12, lg: 12 }}>
+                        <Grid spacing={5}>
+                            {section.fields.map((field, fieldIndex) => (
+                              <Grid key={fieldIndex} container spacing={6} className="mb-2">
                                 {field.type === "image" ? (
                                   <>
                                     <Grid size={{ md: 5, xs: 12, lg: 5 }} className="mb-4">
-                                      <div className="flex max-sm:flex-col items-center gap-6">
+                                      <div className='flex max-sm:flex-col items-center gap-6'>
                                         {watch(
-                                          `content_sections.${sectionIndex}.fields.${fieldIndex}._preview`
+                                          `content_sections.${index}.fields.${fieldIndex}._preview`
                                         ) ? (
                                           <img
                                             height={100}
@@ -733,25 +612,21 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                                             className="rounded"
                                             src={
                                               watch(
-                                                `content_sections.${sectionIndex}.fields.${fieldIndex}._preview`
+                                                `content_sections.${index}.fields.${fieldIndex}._preview`
                                               ) as string
                                             }
                                             alt="Content Image"
                                           />
                                         ) : null}
 
-                                        <div className="flex flex-grow flex-col gap-4">
-                                          <div className="flex flex-col sm:flex-row gap-4">
-                                            <Button
-                                              component="label"
-                                              size="small"
-                                              variant="contained"
-                                            >
+                                        <div className='flex flex-grow flex-col gap-4'>
+                                          <div className='flex flex-col sm:flex-row gap-4'>
+                                            <Button component='label' size='small' variant='contained' htmlFor={`content_sections.${index}.fields.${fieldIndex}`} key={fieldIndex}>
                                               Upload New Photo
                                               <input
                                                 hidden
-                                                type="file"
-                                                accept="image/png, image/jpeg"
+                                                type='file'
+                                                accept='image/png, image/jpeg'
                                                 onChange={(e) => {
                                                   const file = e.target.files?.[0] ?? null;
 
@@ -761,67 +636,71 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
 
                                                   const prev =
                                                     (watch(
-                                                      `content_sections.${sectionIndex}.fields.${fieldIndex}._preview`
+                                                      `content_sections.${index}.fields.${fieldIndex}._preview`
                                                     ) as string | null) || null;
 
                                                   if (prev) URL.revokeObjectURL(prev);
 
                                                   setValue(
-                                                    `content_sections.${sectionIndex}.fields.${fieldIndex}._preview`,
+                                                    `content_sections.${index}.fields.${fieldIndex}._preview`,
                                                     url,
                                                     { shouldDirty: true }
                                                   );
                                                   setValue(
-                                                    `content_sections.${sectionIndex}.fields.${fieldIndex}.image`,
+                                                    `content_sections.${index}.fields.${fieldIndex}.image`,
                                                     file,
                                                     { shouldDirty: true }
                                                   );
                                                 }}
+                                                id={`content_sections.${index}.fields.${fieldIndex}`}
                                               />
                                             </Button>
-
-                                            <Button
-                                              size="small"
-                                              variant="outlined"
-                                              color="error"
-                                              onClick={() => {
+                                            <Button size='small' variant='outlined' color='error' onClick={() => {
                                                 setValue(
-                                                  `content_sections.${sectionIndex}.fields.${fieldIndex}.image`,
+                                                  `content_sections.${index}.fields.${fieldIndex}.image`,
                                                   null,
                                                   { shouldDirty: true }
                                                 );
                                                 setValue(
-                                                  `content_sections.${sectionIndex}.fields.${fieldIndex}._preview`,
+                                                  `content_sections.${index}.fields.${fieldIndex}._preview`,
                                                   null,
                                                   { shouldDirty: true }
                                                 );
-                                              }}
-                                            >
+                                              }} >
                                               Reset
                                             </Button>
                                           </div>
                                           <Typography>Allowed JPG, GIF or PNG. Max size of 800K</Typography>
-                                          {errors.content_sections?.[sectionIndex]?.fields?.[fieldIndex]?.image && (
+                                          {errors.content_sections?.[index]?.fields?.[fieldIndex]?.image && (
                                             <Typography color='error.main'>
-                                              {String((errors.content_sections[sectionIndex] as any)?.fields?.[fieldIndex]?.image?.message || '')}
+                                              {String((errors.content_sections[index] as any)?.fields?.[fieldIndex]?.image?.message || '')}
                                             </Typography>
                                           )}
                                         </div>
                                       </div>
                                     </Grid>
-
                                     <Grid size={{ md: 5, xs: 12, lg: 5 }} className="mb-4">
                                       <Controller
-                                        name={`content_sections.${sectionIndex}.fields.${fieldIndex}.caption`}
+                                        name={`content_sections.${index}.fields.${fieldIndex}.caption`}
                                         control={control}
+                                        rules={{ required: true }}
                                         render={({ field }) => (
                                           <TextField
                                             {...field}
                                             fullWidth
-                                            type="text"
-                                            label="Caption"
-                                            variant="outlined"
-                                            placeholder="Enter Caption"
+                                            type='text'
+                                            label='Caption'
+                                            variant='outlined'
+                                            placeholder='Enter Caption'
+                                            className='mbe-1'
+                                            onChange={e => {
+                                              field.onChange(e.target.value)
+                                              errorState !== null && setErrorState(null)
+                                            }}
+                                            {...((errors.content_sections?.[index]?.fields?.[fieldIndex]?.caption || errorState !== null) && {
+                                              error: true,
+                                              helperText: String((errors.content_sections?.[index] as any)?.fields?.[fieldIndex]?.caption?.message || errorState?.message[0])
+                                            })}
                                           />
                                         )}
                                       />
@@ -829,29 +708,35 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                                   </>
                                 ) : field.type === "content" ? (
                                   <Grid size={{ md: 10, xs: 12, lg: 10 }} className="mb-4">
-                                    <Typography variant="h6" color="#a3a3a3">
-                                      Content
-                                    </Typography>
-                                    <Controller
-                                      name={`content_sections.${sectionIndex}.fields.${fieldIndex}.value`}
-                                      control={control}
-                                      render={({ field }) => (
-                                        <ReactQuill
-                                          theme="snow"
-                                          value={field.value ?? ""}
-                                          onChange={field.onChange}
-                                          modules={modules}
-                                          placeholder="Write something amazing..."
-                                          style={{ height: "300px", marginBottom: "60px" }}
-                                        />
+                                    <Typography variant='h6' color='#a3a3a3'>Content</Typography>
+                                      <Controller
+                                        key={fieldIndex}
+                                        name={`content_sections.${index}.fields.${fieldIndex}.value`}
+                                        control={control}
+                                        rules={{ required: true }}
+                                        render={({ field }) => (
+                                            <ReactQuill
+                                              theme="snow"
+                                              value={field.value ?? ""}
+                                              onChange={field.onChange}
+                                              modules={modules}
+                                              placeholder="Write something amazing..."
+                                              style={{ height: "300px", marginBottom: "60px" }}
+                                            />
+                                          )
+                                        }
+                                      />
+                                      {errors.content_sections?.[index]?.fields?.[fieldIndex]?.content && (
+                                        <p className='text-red-500 text-sm mt-1'>
+                                          {String((errors.content_sections[index] as any)?.fields?.[fieldIndex]?.content?.message)}
+                                        </p>
                                       )}
-                                    />
                                   </Grid>
                                 ) : (
                                   <>
                                     <Grid size={{ xs: 10 }}>
                                       <Controller
-                                        name={`content_sections.${sectionIndex}.fields.${fieldIndex}.resort_title`}
+                                        name={`content_sections.${index}.fields.${fieldIndex}.resort_title`}
                                         control={control}
                                         rules={{ required: true }}
                                         render={({ field }) => (
@@ -867,23 +752,23 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                                               field.onChange(e.target.value)
                                               errorState !== null && setErrorState(null)
                                             }}
-                                            {...((errors.content_sections?.[sectionIndex]?.fields?.[fieldIndex]?.resort_title || errorState !== null) && {
+                                            {...((errors.content_sections?.[index]?.fields?.[fieldIndex]?.resort_title || errorState !== null) && {
                                               error: true,
-                                              helperText: String((errors.content_sections?.[sectionIndex] as any)?.fields?.[fieldIndex]?.resort_title?.message || errorState?.message[0])
+                                              helperText: String((errors.content_sections?.[index] as any)?.fields?.[fieldIndex]?.resort_title?.message || errorState?.message[0])
                                             })}
                                           />
                                         )}
                                       />
                                     </Grid>
                                     <Grid size={{ xs: 10 }}>
-                                      <input type="hidden" {...register(`content_sections.${sectionIndex}.fields.${fieldIndex}.resorts_list`)} />
+                                      <input type="hidden" {...register(`content_sections.${index}.fields.${fieldIndex}.resorts_list`)} />
                                       <Autocomplete
                                         multiple
                                         options={resortsOptions}
                                         getOptionLabel={(option) => option.value} 
-                                        value={resortsOptions.filter(opt =>
-                                          (watch(`content_sections.${sectionIndex}.fields.${fieldIndex}.resorts_list`) || []).includes(opt.label)
-                                        )}
+                                        /*value={destOptions.filter(opt =>
+                                          (watch("resorts_list") || []).includes(opt.label)
+                                        )}*/
                                         renderOption={(props, option) => (
                                           <li {...props} key={option.label}> 
                                             {option.value}
@@ -894,7 +779,7 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                                         )}
                                         onChange={(event, newValue) => {
                                           setValue(
-                                            `content_sections.${sectionIndex}.fields.${fieldIndex}.resorts_list`,
+                                            `content_sections.${index}.fields.${fieldIndex}.resorts_list`,
                                             newValue.map((item) => item.label), // array of values
                                             { shouldValidate: true }
                                           );
@@ -902,14 +787,14 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                                       />
                                     </Grid>
                                     <Grid size={{ xs: 10 }} className="mb-3">
-                                      <input type="hidden" {...register(`content_sections.${sectionIndex}.fields.${fieldIndex}.reviews_list`)} />
+                                      <input type="hidden" {...register(`content_sections.${index}.fields.${fieldIndex}.reviews_list`)} />
                                       <Autocomplete
                                         multiple
                                         options={reviewsOptions}
                                         getOptionLabel={(option) => option.value} 
-                                        value={reviewsOptions.filter(opt =>
-                                          (watch(`content_sections.${sectionIndex}.fields.${fieldIndex}.reviews_list`) || []).includes(opt.label)
-                                        )}
+                                        /*value={destOptions.filter(opt =>
+                                          (watch("reviews_lists") || []).includes(opt.label)
+                                        )}*/
                                         renderOption={(props, option) => (
                                           <li {...props} key={option.label}> 
                                             {option.value}
@@ -920,7 +805,7 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                                         )}
                                         onChange={(event, newValue) => {
                                           setValue(
-                                            `content_sections.${sectionIndex}.fields.${fieldIndex}.reviews_list`,
+                                            `content_sections.${index}.fields.${fieldIndex}.reviews_list`,
                                             newValue.map((item) => item.label), // array of values
                                             { shouldValidate: true }
                                           );
@@ -929,38 +814,30 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                                     </Grid>
                                   </>
                                 )}
-
-                                {/* delete field button onClick={() => removeField(fieldIndex)} */}
-                                {sectionIndex > 0 && (
-                                  <Grid size={{ md: 2, xs: 12, lg: 2 }}>
-                                    <CustomIconButton
-                                      color="error"
-                                      size="large"
-                                      onClick={() => removeFieldFromSection(sectionIndex, fieldIndex)}
-                                    >
-                                      <i className="ri-delete-bin-7-line"></i>
-                                    </CustomIconButton>
-                                  </Grid>
-                                )}
+                                {index > 0 && fieldIndex >= 0 ? 
+                                  (<Grid size={{ md: 2, xs: 12, lg: 2 }}><CustomIconButton aria-label='capture screenshot' color='error' size='large' onClick={() => removeFieldFromSection(index, fieldIndex)}>
+                                  <i className="ri-delete-bin-7-line"></i>
+                                </CustomIconButton></Grid>) 
+                                : null }
                               </Grid>
                             ))}
-
-                            {/* Add buttons */}
-                            {sectionIndex > 0 && (
+                            
+                            {index > 0 && (
                               <>
                                 <Button
-                                  size="small"
+                                  size='small'
                                   variant="contained"
-                                  onClick={() => addFieldToSection(sectionIndex, { type: "content", value: "" })}
+                                  onClick={() => addFieldToSection(index, { type: "content", value: "" })}
                                   sx={{ mr: 2 }}
                                   disabled={section.fields?.some(field => field.type === "resort" )}
                                 >
                                   + Add Content
                                 </Button>
+
                                 <Button
-                                  size="small"
+                                  size='small'
                                   variant="contained"
-                                  onClick={() => addFieldToSection(sectionIndex, { type: "image", value: "", caption: "" })}
+                                  onClick={() => addFieldToSection(index, { type: "image", value: "", caption: "" })}
                                   sx={{ mr: 2 }}
                                   disabled={section.fields?.some(field => field.type === "resort" )}
                                 >
@@ -969,45 +846,32 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                                 <Button
                                   size='small'
                                   variant="contained"
-                                  onClick={() => addFieldToSection(sectionIndex, { type: "resort", resort_title: "", resorts_list: "", reviews_list: "" })}
+                                  onClick={() => addFieldToSection(index, { type: "resort", resort_title: "", resorts_list: "", reviews_list: "" })}
                                   disabled={section.fields?.some(field => field.type === "image" || field.type === "content" || field.type === 'resort' )}
                                 >
                                   + Add Resort Section
                                 </Button>
-                              </>
+                                </>
                             )}
-
-                            {/* Section controls */}
                             <Grid container spacing={6} className="my-5">
-                              <Grid size={{ md: 6, xs: 12 }}>
-                                {sectionFields.length === sectionIndex + 1 ? (
-                                  <Button
-                                    onClick={() => appendSection({ fields: [] })}
-                                    color="secondary"
-                                    size="small"
-                                    variant="contained"
-                                    startIcon={<i className="ri-add-line" />}
-                                  >
-                                    Add Section
-                                  </Button>
-                                ) : null}
+                              <Grid size={{ md: 6, xs: 2, sm: 2 }}>
+                                { sectionFields.length === index+1 ? (<Button aria-label='capture screenshot' onClick={() => appendSection({ fields: [] })} color='secondary' size='small' variant="contained" startIcon={<i className='ri-add-line' />} >
+                                  Add Section
+                                </Button>) : null }
 
-                                {sectionIndex > 0 ? (
-                                  <CustomIconButton
-                                    color="error"
-                                    size="large"
-                                    onClick={() => removeSection(sectionIndex)}
-                                  >
-                                    <i className="ri-delete-bin-7-line"></i>
-                                  </CustomIconButton>
-                                ) : null}
+                                {index > 0 ? 
+                                  (<CustomIconButton aria-label='capture screenshot' color='error' size='large' onClick={() => removeSection(index)}>
+                                  <i className="ri-delete-bin-7-line"></i>
+                                </CustomIconButton>) 
+                                : null }                  
                               </Grid>
                             </Grid>
-                          <Divider />
                         </Grid>
+                        <Divider />
                       </Grid>
-                    );
-                  })}
+                      <Divider />
+                    </Grid>
+                  ))}
 
                   {/* Author Sections */}
                   <Grid container spacing={5} className="my-5">  
@@ -1203,7 +1067,7 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                                 {...field}
                                 fullWidth
                                 multiline
-                                rows={4}
+                                rows={3.6}
                                 type='text'
                                 label='Meta Description'
                                 variant='outlined'
@@ -1451,18 +1315,6 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                     <Grid size={{ xs:12 }}>
                       <Grid container spacing={5}>
                         <Grid size={{ md: 12, xs: 12, lg: 12 }}>
-                          <Typography sx={{ fontWeight: 'bold' }}>Created By</Typography>
-                          <Typography>{isPostedby ? 'Ambassador' : 'Admin'}</Typography>
-                        </Grid>
-                        {isPostedby && (
-                          <Grid size={{ md: 12, xs: 12, lg: 12 }}>
-                            <Typography sx={{ fontWeight: 'bold' }}>Ambassador</Typography>
-                            <Typography>{postedUser}</Typography>
-                          </Grid>
-                        )}
-                        <Divider sx={{width: '100%'}} />
-
-                        <Grid size={{ md: 12, xs: 12, lg: 12 }}>
                           <Controller
                             name='post_date'
                             control={control}
@@ -1661,7 +1513,7 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                     <Grid>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <Button variant='contained' type='submit' disabled={isSubmitting}>
-                          Update
+                          Submit
                         </Button>
                         {isSubmitting ? <CircularProgress style={{marginLeft: '8px'}} size={24} thickness={6} /> : ''}
                       </div>

@@ -13,7 +13,7 @@ import ChangePassword from './ChangePassword'
 
 import { useSettings } from '@core/hooks/useSettings'
 
-const LandingPageWrapper = ({ mode }: { mode: Mode }) => {
+const LandingPageWrapper = ({ mode, user }: { mode: Mode; user: {} }) => {
   // Hooks
   const { updatePageSettings } = useSettings()
 
@@ -27,9 +27,7 @@ const LandingPageWrapper = ({ mode }: { mode: Mode }) => {
 
   return (
     <>
-      <BannerSection mode={mode} />
-      <AmbassadorshipSection1 />
-      <ChangePassword />
+      <ChangePassword  user={user}/>
     </>
   )
 }

@@ -40,7 +40,6 @@ import CustomIconButton from '@core/components/mui/IconButton'
 import { useNavigationStore } from '@/libs/navigation-store'
 
 import * as AdventureGuide from '@/app/server/adventure_guide'
-import { getSingleUser } from '@/app/server/users'
 
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false })
 
@@ -193,8 +192,6 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
 
   const [errorState, setErrorState] = useState<ErrorType | null>(null)
   const [isSubmitting , setIsSubmitting ] = useState(false)
-  const [isPostedby , setIsPostedby ] = useState(adventureguide?.posted_user?? '')
-  const [postedUser, setPostedUser] = useState<string>('')
   const [editor, setEditor] = useState<Editor | null>(null)
   const [message, setMessage] = useState(null);
 
@@ -238,35 +235,6 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
       ['clean'],
     ],
   }
-
-  useEffect(() => {
-    const fetchPostedUser = async () => {
-      if (isPostedby) {
-        try {
-          const _user = await getSingleUser(isPostedby)
-          if (_user) {
-            const firstName = _user.first_name || ''
-            const lastName = _user.last_name || ''
-            
-            const fullName = `${firstName} ${lastName}`.trim()
-            
-            let userDisplayString
-            if (fullName) {
-              userDisplayString = `${fullName} (${_user.email})`
-            } else {
-              userDisplayString = _user.email
-            }
-            
-            setPostedUser(userDisplayString)
-          }
-        } catch (error) {
-          console.error('Error fetching user details:', error)
-        }
-      }
-    }
-
-    fetchPostedUser()
-  }, [isPostedby])
 
   const {
     control,
@@ -415,8 +383,6 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
       setValue('content_sections', currentSections)
     }
   }
-
-
 
   const moveSection = (currentIndex: number, newIndex: number) => {
     if (newIndex < 0 || newIndex >= sectionFields.length) return;
@@ -1450,18 +1416,6 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                   <Grid size={{ xs: 12 }} className='flex gap-4 mt-5 flex-wrap' justifyContent="space-between" container>
                     <Grid size={{ xs:12 }}>
                       <Grid container spacing={5}>
-                        <Grid size={{ md: 12, xs: 12, lg: 12 }}>
-                          <Typography sx={{ fontWeight: 'bold' }}>Created By</Typography>
-                          <Typography>{isPostedby ? 'Ambassador' : 'Admin'}</Typography>
-                        </Grid>
-                        {isPostedby && (
-                          <Grid size={{ md: 12, xs: 12, lg: 12 }}>
-                            <Typography sx={{ fontWeight: 'bold' }}>Ambassador</Typography>
-                            <Typography>{postedUser}</Typography>
-                          </Grid>
-                        )}
-                        <Divider sx={{width: '100%'}} />
-
                         <Grid size={{ md: 12, xs: 12, lg: 12 }}>
                           <Controller
                             name='post_date'

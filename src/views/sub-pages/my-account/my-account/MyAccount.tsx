@@ -30,25 +30,9 @@ const MyAccount = () => {
     }
   
     return (
-      <section className={classnames(styles.ambassadorship_sec3, 'pb_100')}>
-          <div className="container">
-              <div className={classnames(styles.ambassadorship_sec3_inner)}>
-                  <div className="grid gap_24">
-                      <div className={classnames(styles.grid_box)}>
-                          <div className={classnames(styles.signup_box)}>
-                              <h4>My Account</h4>
-                              <div className="grid2 gap_24">
-                                <AccountSidebar />
-                                <div className={classnames(styles.grid_box)}>
-                                  Content here...
-                                </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </section>
+      <div className={classnames(styles.grid_box)}>
+        Content here...
+      </div>
     )
 }
 

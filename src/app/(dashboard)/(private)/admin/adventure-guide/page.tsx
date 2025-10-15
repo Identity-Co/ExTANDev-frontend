@@ -48,8 +48,6 @@ const AdventureGuideApp = async () => {
 
   const data = await getAdventureGuides('title,created_at')
 
-  console.log(data)
-
   return <AdventureGuideLists adventureguides={data}  />
 }
 

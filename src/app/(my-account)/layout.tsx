@@ -1,8 +1,10 @@
+// app/(my-account)/layout.tsx
 // MUI Imports
 import Button from '@mui/material/Button'
 
 // Third-party Imports
 import 'react-perfect-scrollbar/dist/css/styles.css'
+import classnames from 'classnames'
 
 // Type Imports
 import type { ChildrenType } from '@core/types'
@@ -29,10 +31,12 @@ import '@/app/globals-front.css'
 // Generated Icon CSS Imports
 import '@assets/iconify-icons/generated-icons.css'
 
+// Client Component Import
+import AccountLayoutClient from '@components/layout/front-pages/AccountLayoutClient'
+
 export const metadata = {
   title: 'Adventure Network | Our Adventure',
-  description:
-    ''
+  description: ''
 }
 
 const Layout = async ({ children }: ChildrenType) => {
@@ -41,32 +45,32 @@ const Layout = async ({ children }: ChildrenType) => {
 
   if(!session?.user?.id || session?.user?.id == '') {
     redirect('/signin/')
-
     return;
   }
 
   const systemMode = await getSystemMode()
 
   return (
-    
-        <Providers direction='ltr'>
-          <BlankLayout systemMode={systemMode}>
-            <IntersectionProvider>
-              <FrontLayout>
-                {children}
-                <ScrollToTop className='mui-fixed'>
-                  <Button
-                    variant='contained'
-                    className='is-10 bs-10 rounded-full p-0 min-is-0 flex items-center justify-center'
-                  >
-                    <i className='ri-arrow-up-line' />
-                  </Button>
-                </ScrollToTop>
-              </FrontLayout>
-            </IntersectionProvider>
-          </BlankLayout>
-        </Providers>
-      
+    <Providers direction='ltr'>
+      <BlankLayout systemMode={systemMode}>
+        <IntersectionProvider>
+          <FrontLayout>
+            <AccountLayoutClient systemMode={systemMode}>
+              {children}
+            </AccountLayoutClient>
+            
+            <ScrollToTop className='mui-fixed'>
+              <Button
+                variant='contained'
+                className='is-10 bs-10 rounded-full p-0 min-is-0 flex items-center justify-center'
+              >
+                <i className='ri-arrow-up-line' />
+              </Button>
+            </ScrollToTop>
+          </FrontLayout>
+        </IntersectionProvider>
+      </BlankLayout>
+    </Providers>
   )
 }
 

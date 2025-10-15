@@ -26,11 +26,7 @@ const LandingPageWrapper = ({ mode }: { mode: Mode }) => {
   }, [])
 
   return (
-    <>
-      <BannerSection mode={mode} />
-      <AmbassadorshipSection1 />
       <MyAccount />
-    </>
   )
 }
 
