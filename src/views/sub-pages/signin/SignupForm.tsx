@@ -304,497 +304,404 @@ const SignupForm = () => {
 
           {selectedLevel && (
             <div className="formDiv">
-              {/* <form noValidate action={() => {}} autoComplete='off' onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-5 custom-reset-fld'> */}
-              {/* <form noValidate autoComplete='off' onSubmit={handleSubmit(async () => {
-                if (!captchaValue) {
-                  setCaptchaErr('Please complete CAPTCHA');
-                  return;
-                }
-
-                console.log("SUBMIT:", selectedLevel, clientSecret);
-
-                if (selectedLevel === 2) {
-                  if (!clientSecret) return; // wait for PaymentIntent
-                }
-
-                if (selectedLevel === 2 && clientSecret) {
-                  // Premium: Payment + Signup
-                  return (
-                    <Elements stripe={stripePromise} options={{ clientSecret }}>
-                      <PremiumPaymentSection handleSignup={handleSignup} />
-                    </Elements>
-                  )
-                } else {
-                  // Basic: just signup
-                  await handleSignup()
-                }
-              })} className='flex flex-col gap-5 custom-reset-fld'> */}
-
-              {/* <form noValidate autoComplete="off" className="flex flex-col gap-5 custom-reset-fld"> */}
-
               {currentStep == 1 && (
                 <form
-                  action={() => {}}
-                  noValidate
-                  autoComplete="off"
-                  onSubmit={handleSubmit(async () => {
-                    if (!captchaValue) {
-                      setCaptchaErr('Please complete CAPTCHA')
-                      return
-                    }
+                noValidate
+                action={() => {}}
+                autoComplete='off'
+                onSubmit={handleSubmit(onSubmit)}
+                className='flex flex-col gap-5'
+              >
 
-                    if (selectedLevel === 1) {
-                      await handleSignup()
-                    } else if(selectedLevel == 2) {
-                      setCurrentStep(2)
-                    }
-                    // For level=2 we render Stripe form instead, so no submit here
-                  })}
-                  className="flex flex-col gap-5 custom-reset-fld"
-                >
-                  <div className={classnames(styles.input_row)}>
-                      <div className={classnames(styles.input_full_box, 'input_full_box')}>
-                          <Controller
-                            name='first_name'
-                            control={control}
-                            rules={{ required: true }}
-                            render={({ field }) => (
-                              <TextField
-                                {...field}
-                                fullWidth
-                                autoFocus
-                                type='first_name'
-                                label='First Name *'
-                                onChange={e => {
-                                  field.onChange(e.target.value)
-                                  errorState !== null && setErrorState(null)
-                                }}
-                                slotProps={{
-                                  input: {
-                                    startAdornment: (
-                                      <InputAdornment position='start'>
-                                          <i className='ri-user-line' />
-                                      </InputAdornment>
-                                    )
-                                  }
-                                }}
-                                {...((errors.first_name || errorState !== null) && {
-                                  error: true,
-                                  helperText: errors?.first_name?.message || errorState?.message[0]
-                                })}
-                              />
-                            )}
-                          />
-                      </div>
-                      <div className={classnames(styles.input_full_box, 'input_full_box')}>
-                          <Controller
-                            name='last_name'
-                            control={control}
-                            rules={{ required: true }}
-                            render={({ field }) => (
-                              <TextField
-                                {...field}
-                                fullWidth
-                                type='last_name'
-                                label='Last Name *'
-                                onChange={e => {
-                                  field.onChange(e.target.value)
-                                  errorState !== null && setErrorState(null)
-                                }}
-                                slotProps={{
-                                  input: {
-                                    startAdornment: (
-                                      <InputAdornment position='start'>
-                                          <i className='ri-user-line' />
-                                      </InputAdornment>
-                                    )
-                                  }
-                                }}
-                                {...((errors.last_name || errorState !== null) && {
-                                  error: true,
-                                  helperText: errors?.last_name?.message || errorState?.message[0]
-                                })}
-                              />
-                            )}
-                          />
-                      </div>
-                      <div className={classnames(styles.input_full_box, 'input_full_box')}>
-                          <Controller
-                            name='email'
-                            control={control}
-                            rules={{ required: true }}
-                            render={({ field }) => (
-                              <TextField
-                                {...field}
-                                fullWidth
-                                type='email'
-                                label='Email *'
-                                onChange={e => {
-                                  field.onChange(e.target.value)
-                                  errorState !== null && setErrorState(null)
-                                }}
-                                slotProps={{
-                                  input: {
-                                    startAdornment: (
-                                      <InputAdornment position='start'>
-                                          <i className='ri-mail-line' />
-                                      </InputAdornment>
-                                    )
-                                  }
-                                }}
-                                {...((errors.email || errorState !== null) && {
-                                  error: true,
-                                  helperText: errors?.email?.message || errorState?.message[0]
-                                })}
-                              />
-                            )}
-                          />
-                      </div>
-                      <div className={classnames(styles.input_full_box, 'input_full_box')}>
-                          <Controller
-                            name='phone'
-                            control={control}
-                            rules={{ required: true,
-                              pattern: {
-                                value: /^[0-9]+$/,
-                                message: "Only numbers are allowed",
-                              },
-                            }}
-                            render={({ field }) => (
-                              <TextField
-                                {...field}
-                                fullWidth
-                                type='phone'
-                                label='Phone Number *'
-                                inputProps={{
-                                  inputMode: "numeric",
-                                  pattern: "[0-9]*",
-                                }}
-                                onChange={e => {
-                                  const value = e.target.value.replace(/\D/g, "");
-                                  field.onChange(value);
-                                  errorState !== null && setErrorState(null)
-                                }}
-                                slotProps={{
-                                  input: {
-                                    startAdornment: (
-                                      <InputAdornment position='start'>
-                                          <i className='ri-phone-line' />
-                                      </InputAdornment>
-                                    )
-                                  }
-                                }}
-                                {...((errors.phone || errorState !== null) && {
-                                  error: true,
-                                  helperText: errors?.phone?.message || errorState?.message[0]
-                                })}
-                              />
-                            )}
-                          />
-                      </div>
-                      <div className={classnames(styles.input_full_box, 'input_full_box')}>
-                          <Controller
-                            name='password'
-                            control={control}
-                            rules={{ required: true }}
-                            render={({ field }) => (
-                              <TextField
-                                {...field}
-                                fullWidth
-                                label='Password *'
-                                id='login-password'
-                                type={isPasswordShown ? 'text' : 'password'}
-                                onChange={e => {
-                                  field.onChange(e.target.value)
-                                  errorState !== null && setErrorState(null)
-                                }}
-                                slotProps={{
-                                  input: {
-                                    endAdornment: (
-                                      <InputAdornment position='end'>
-                                        <IconButton
-                                          size='small'
-                                          edge='end'
-                                          onClick={handleClickShowPassword}
-                                          onMouseDown={e => e.preventDefault()}
-                                          aria-label='toggle password visibility'
-                                        >
-                                          <i className={isPasswordShown ? 'ri-eye-off-line' : 'ri-eye-line'} />
-                                        </IconButton>
-                                      </InputAdornment>
-                                    ),
-                                    startAdornment: (
-                                      <InputAdornment position='start'>
-                                          <i className='ri-lock-line' />
-                                      </InputAdornment>
-                                    )
-                                  }
-                                }}
-                                {...(errors.password && { error: true, helperText: errors.password.message })}
-                              />
-                            )}
-                          />
-                      </div>
-                      <div className={classnames(styles.input_full_box, 'input_full_box')}>
-                          <Controller
-                            name='re_password'
-                            control={control}
-                            rules={{ required: true }}
-                            render={({ field }) => (
-                              <TextField
-                                {...field}
-                                fullWidth
-                                label='Confirm Password *'
-                                id='login-re_password'
-                                type={isPasswordShownRe ? 'text' : 'password'}
-                                onChange={e => {
-                                  field.onChange(e.target.value)
-                                  errorState !== null && setErrorState(null)
-                                }}
-                                slotProps={{
-                                  input: {
-                                    endAdornment: (
-                                      <InputAdornment position='end'>
-                                        <IconButton
-                                          size='small'
-                                          edge='end'
-                                          onClick={handleClickShowPasswordRe}
-                                          onMouseDown={e => e.preventDefault()}
-                                          aria-label='toggle password visibility'
-                                        >
-                                          <i className={isPasswordShownRe ? 'ri-eye-off-line' : 'ri-eye-line'} />
-                                        </IconButton>
-                                      </InputAdornment>
-                                    ),
-                                    startAdornment: (
-                                      <InputAdornment position='start'>
-                                          <i className='ri-lock-line' />
-                                      </InputAdornment>
-                                    )
-                                  }
-                                }}
-                                {...(errors.re_password && { error: true, helperText: errors.re_password.message })}
-                              />
-                            )}
-                          />
-                      </div>
-                      <div className={classnames(styles.input_full_box, 'input_full_box')}>
-                        <Typography className='font-medium whitespace-nowrap flex-grow min-is-[225px]'>Travel Interests</Typography>
-                        <FormGroup>
-                          {interests.map((interest, index) => (
-                            <FormControlLabel
-                              key={`interest-${index}`}
-                              className='mie-0'
-                              control={
-                                <Checkbox
-                                  id={`interest-${index}`}
-                                  onChange={() => toggleInterests(interest)}
-                                  checked={selectedInterests.includes(interest)}
-                                />
-                              }
-                              label={interest}
-                            />
-                          ))}
-                        </FormGroup>
-                      </div>
-                      <div className={classnames(styles.input_full_box, 'input_full_box')}>
-                        <Typography className='font-medium whitespace-nowrap flex-grow min-is-[225px]'>Preferred Destinations</Typography>
-                        <FormGroup>
-                          {destinations.map((destination, index) => (
-                            <FormControlLabel
-                              key={`destination-${index}`}
-                              className='mie-0'
-                              control={
-                                <Checkbox
-                                  id={`destination-${index + 1}`}
-                                  onChange={() => toggleDestinations(destination)}
-                                  checked={selectedDestinations.includes(destination)}
-                                />
-                              }
-                              label={destination}
-                            />
-                          ))}
-                        </FormGroup>
-                      </div>
-
-                      <div className={classnames(styles.input_full_box, 'input_full_box')}>
+                <div className={classnames(styles.input_row)}>
+                    <div>
                         <Controller
-                          name='travel_frequency'
+                          name='first_name'
                           control={control}
-                          rules={{ required: 'This field is required' }}
+                          rules={{ required: true }}
                           render={({ field }) => (
-                            <FormControl fullWidth>
-                              <InputLabel id='travel_frequency-select'>Select Travel Frequency *</InputLabel>
-                              <Select
-                                {...field}
-                                fullWidth
-                                id='select-travel_frequency'
-                                label='Select Travel Frequency *'
-                                className='mbe-1'
-                                onChange={e => {
-                                  field.onChange(e.target.value)
-                                  errorState !== null && setErrorState(null)
-                                }}
-                                labelId='travel_frequency-select'
-                                inputProps={{ placeholder: 'Select Travel Frequency *' }}
-                              >
-                                <MenuItem value='Rarely'>Rarely</MenuItem>
-                                <MenuItem value='Once a Year'>Once a Year</MenuItem>
-                                <MenuItem value='2–3 Times a Year'>2–3 Times a Year</MenuItem>
-                                <MenuItem value='Monthly'>Monthly</MenuItem>
-                                <MenuItem value='Weekly'>Weekly</MenuItem>
-                              </Select>
-                              {errors.travel_frequency ?
-                                <p className="custom-error-class">{errors?.travel_frequency?.message}</p>
-                              :''}
-                            </FormControl>
-                          )}
-                        />
-                      </div>
-
-                      <div className={classnames(styles.input_full_box, 'input_full_box')}>
-                          <Controller
-                            name='budget'
-                            control={control}
-                            rules={{ required: true }}
-                            render={({ field }) => (
-                              <TextField
-                                {...field}
-                                fullWidth
-                                type='budget'
-                                label='Budget *'
-                                onChange={e => {
-                                  field.onChange(e.target.value)
-                                  errorState !== null && setErrorState(null)
-                                }}
-                                slotProps={{
-                                  input: {
-                                    startAdornment: (
-                                      <InputAdornment position='start'>
-                                          <i className='ri-money-dollar-circle-line' />
-                                      </InputAdornment>
-                                    )
-                                  }
-                                }}
-                                {...((errors.budget || errorState !== null) && {
-                                  error: true,
-                                  helperText: errors?.budget?.message || errorState?.message[0]
-                                })}
-                              />
-                            )}
-                          />
-                      </div>
-
-                      <div className={classnames(styles.input_full_box , 'input_full_box')}>
-                        <Controller
-                          name="opt_in"
-                          control={control}
-                          defaultValue={true}
-                          render={({ field }) => (
-                            <FormControlLabel
-                              control={
-                                <Checkbox
-                                  {...field}
-                                  checked={field.value}
-                                />
-                              }
-                              label="Opt-in for Marketing"
+                            <TextField
+                              {...field}
+                              fullWidth
+                              autoFocus
+                              type='first_name'
+                              label='First Name *'
+                              onChange={e => {
+                                field.onChange(e.target.value)
+                                errorState !== null && setErrorState(null)
+                              }}
+                              slotProps={{
+                                input: {
+                                  startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <i className='ri-user-line' />
+                                    </InputAdornment>
+                                  )
+                                }
+                              }}
+                              {...((errors.first_name || errorState !== null) && {
+                                error: true,
+                                helperText: errors?.first_name?.message || errorState?.message[0]
+                              })}
                             />
                           )}
                         />
-                      </div>
+                    </div>
+                    <div>
+                        <Controller
+                          name='last_name'
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <TextField
+                              {...field}
+                              fullWidth
+                              type='last_name'
+                              label='Last Name *'
+                              onChange={e => {
+                                field.onChange(e.target.value)
+                                errorState !== null && setErrorState(null)
+                              }}
+                              slotProps={{
+                                input: {
+                                  startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <i className='ri-user-line' />
+                                    </InputAdornment>
+                                  )
+                                }
+                              }}
+                              {...((errors.last_name || errorState !== null) && {
+                                error: true,
+                                helperText: errors?.last_name?.message || errorState?.message[0]
+                              })}
+                            />
+                          )}
+                        />
+                    </div>
+                    <div>
+                        <Controller
+                          name='email'
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <TextField
+                              {...field}
+                              fullWidth
+                              type='email'
+                              label='Email *'
+                              onChange={e => {
+                                field.onChange(e.target.value)
+                                errorState !== null && setErrorState(null)
+                              }}
+                              slotProps={{
+                                input: {
+                                  startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <i className='ri-mail-line' />
+                                    </InputAdornment>
+                                  )
+                                }
+                              }}
+                              {...((errors.email || errorState !== null) && {
+                                error: true,
+                                helperText: errors?.email?.message || errorState?.message[0]
+                              })}
+                            />
+                          )}
+                        />
+                    </div>
+                    <div>
+                        <Controller
+                          name='phone'
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <TextField
+                              {...field}
+                              fullWidth
+                              type='phone'
+                              label='Phone Number *'
+                              onChange={e => {
+                                field.onChange(e.target.value)
+                                errorState !== null && setErrorState(null)
+                              }}
+                              slotProps={{
+                                input: {
+                                  startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <i className='ri-phone-line' />
+                                    </InputAdornment>
+                                  )
+                                }
+                              }}
+                              {...((errors.phone || errorState !== null) && {
+                                error: true,
+                                helperText: errors?.phone?.message || errorState?.message[0]
+                              })}
+                            />
+                          )}
+                        />
+                    </div>
+                    <div>
+                        <Controller
+                          name='password'
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <TextField
+                              {...field}
+                              fullWidth
+                              label='Password *'
+                              id='login-password'
+                              type={isPasswordShown ? 'text' : 'password'}
+                              onChange={e => {
+                                field.onChange(e.target.value)
+                                errorState !== null && setErrorState(null)
+                              }}
+                              slotProps={{
+                                input: {
+                                  endAdornment: (
+                                    <InputAdornment position='end'>
+                                      <IconButton
+                                        size='small'
+                                        edge='end'
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={e => e.preventDefault()}
+                                        aria-label='toggle password visibility'
+                                      >
+                                        <i className={isPasswordShown ? 'ri-eye-off-line' : 'ri-eye-line'} />
+                                      </IconButton>
+                                    </InputAdornment>
+                                  ),
+                                  startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <i className='ri-lock-line' />
+                                    </InputAdornment>
+                                  )
+                                }
+                              }}
+                              {...(errors.password && { error: true, helperText: errors.password.message })}
+                            />
+                          )}
+                        />
+                    </div>
+                    <div>
+                        <Controller
+                          name='re_password'
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <TextField
+                              {...field}
+                              fullWidth
+                              label='Confirm Password *'
+                              id='login-re_password'
+                              type={isPasswordShownRe ? 'text' : 'password'}
+                              onChange={e => {
+                                field.onChange(e.target.value)
+                                errorState !== null && setErrorState(null)
+                              }}
+                              slotProps={{
+                                input: {
+                                  endAdornment: (
+                                    <InputAdornment position='end'>
+                                      <IconButton
+                                        size='small'
+                                        edge='end'
+                                        onClick={handleClickShowPasswordRe}
+                                        onMouseDown={e => e.preventDefault()}
+                                        aria-label='toggle password visibility'
+                                      >
+                                        <i className={isPasswordShownRe ? 'ri-eye-off-line' : 'ri-eye-line'} />
+                                      </IconButton>
+                                    </InputAdornment>
+                                  ),
+                                  startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <i className='ri-lock-line' />
+                                    </InputAdornment>
+                                  )
+                                }
+                              }}
+                              {...(errors.re_password && { error: true, helperText: errors.re_password.message })}
+                            />
+                          )}
+                        />
+                    </div>
+                    <div>
+                      <Typography className='font-medium whitespace-nowrap flex-grow min-is-[225px]'>Travel Interests</Typography>
+                      <FormGroup>
+                        {interests.map((interest, index) => (
+                          <FormControlLabel
+                            key={`interest-${index}`}
+                            className='mie-0'
+                            control={
+                              <Checkbox
+                                id={`interest-${index}`}
+                                onChange={() => toggleInterests(interest)}
+                                checked={selectedInterests.includes(interest)}
+                              />
+                            }
+                            label={interest}
+                          />
+                        ))}
+                      </FormGroup>
+                    </div>
+                    <div>
+                      <Typography className='font-medium whitespace-nowrap flex-grow min-is-[225px]'>Preferred Destinations</Typography>
+                      <FormGroup>
+                        {destinations.map((destination, index) => (
+                          <FormControlLabel
+                            key={`destination-${index}`}
+                            className='mie-0'
+                            control={
+                              <Checkbox
+                                id={`destination-${index + 1}`}
+                                onChange={() => toggleDestinations(destination)}
+                                checked={selectedDestinations.includes(destination)}
+                              />
+                            }
+                            label={destination}
+                          />
+                        ))}
+                      </FormGroup>
+                    </div>
 
-                      <div>
-                        <ReCAPTCHA sitekey="6Ldfpq4rAAAAAEZ8oYMZQSOei2zToLoQ1z1zojiu" onChange={setCaptchaValue} />
-                        {captchaErr && (
-                          <p className={classnames(styles.custom_error_class)}>{captchaErr}</p>
+                    <div className={classnames(styles.fullwidth)}>
+                      <Controller
+                        name='travel_frequency'
+                        control={control}
+                        rules={{ required: 'This field is required' }}
+                        render={({ field }) => (
+                          <FormControl fullWidth>
+                            <InputLabel id='travel_frequency-select'>Select Travel Frequency *</InputLabel>
+                            <Select
+                              {...field}
+                              fullWidth
+                              id='select-travel_frequency'
+                              label='Select Travel Frequency *'
+                              className='mbe-1'
+                              onChange={e => {
+                                field.onChange(e.target.value)
+                                errorState !== null && setErrorState(null)
+                              }}
+                              labelId='travel_frequency-select'
+                              inputProps={{ placeholder: 'Select Travel Frequency *' }}
+                            >
+                              <MenuItem value='Rarely'>Rarely</MenuItem>
+                              <MenuItem value='Once a Year'>Once a Year</MenuItem>
+                              <MenuItem value='2–3 Times a Year'>2–3 Times a Year</MenuItem>
+                              <MenuItem value='Monthly'>Monthly</MenuItem>
+                              <MenuItem value='Weekly'>Weekly</MenuItem>
+                            </Select>
+                            {errors.travel_frequency ?
+                              <p className="custom-error-class">{errors?.travel_frequency?.message}</p>
+                            :''}
+                          </FormControl>
                         )}
-                      </div>
+                      />
+                    </div>
 
-                      <div className={classnames(styles.input_full_box , 'input_full_box')}>
+                    <div>
                         <Controller
-                          name="terms"
+                          name='budget'
                           control={control}
-                          rules={{ required: 'You must agree to continue' }}
-                          defaultValue={false}
+                          rules={{ required: true }}
                           render={({ field }) => (
-                            <FormControlLabel
-                              control={
-                                <Checkbox
-                                  {...field}
-                                  checked={field.value}
-                                  onChange={e => {
-                                    field.onChange(e.target.checked)
-                                    errorState !== null && setErrorState(null)
-                                  }}
-                                />
-                              }
-                              label={
-                                <>
-                                  I agree to the{' '}
-                                  <Link href="/terms-of-use/" target="_blank">Terms of Service</Link> &{' '}
-                                  <Link href="/privacy-policy/" target="_blank">Privacy Policy</Link>
-                                </>
-                              }
+                            <TextField
+                              {...field}
+                              fullWidth
+                              type='budget'
+                              label='Budget *'
+                              onChange={e => {
+                                field.onChange(e.target.value)
+                                errorState !== null && setErrorState(null)
+                              }}
+                              slotProps={{
+                                input: {
+                                  startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <i className='ri-money-dollar-circle-line' />
+                                    </InputAdornment>
+                                  )
+                                }
+                              }}
+                              {...((errors.budget || errorState !== null) && {
+                                error: true,
+                                helperText: errors?.budget?.message || errorState?.message[0]
+                              })}
                             />
                           )}
                         />
-                        {errors.terms && (
-                          <p className={classnames(styles.custom_error_class)}>{errors.terms.message}</p>
-                        )}
-                      </div>
+                    </div>
 
-                      {/* Basic signup */}
-                      {selectedLevel === 1 && (
+                    <div>
+                      <Controller
+                        name="opt_in"
+                        control={control}
+                        defaultValue={true}
+                        render={({ field }) => (
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                {...field}
+                                checked={field.value}
+                              />
+                            }
+                            label="Opt-in for Marketing"
+                          />
+                        )}
+                      />
+                    </div>
+
+                    <div>
+                      <ReCAPTCHA sitekey="6Ldfpq4rAAAAAEZ8oYMZQSOei2zToLoQ1z1zojiu" onChange={setCaptchaValue} />
+                      {captchaErr && (
+                        <p className={classnames(styles.custom_error_class)}>{captchaErr}</p>
+                      )}
+                    </div>
+
+                    <div>
+                      <Controller
+                        name="terms"
+                        control={control}
+                        rules={{ required: 'You must agree to continue' }}
+                        defaultValue={false}
+                        render={({ field }) => (
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                {...field}
+                                checked={field.value}
+                                onChange={e => {
+                                  field.onChange(e.target.checked)
+                                  errorState !== null && setErrorState(null)
+                                }}
+                              />
+                            }
+                            label={
+                              <>
+                                I agree to the{' '}
+                                <Link href="/terms-of-use/" target="_blank">Terms of Service</Link> &{' '}
+                                <Link href="/privacy-policy/" target="_blank">Privacy Policy</Link>
+                              </>
+                            }
+                          />
+                        )}
+                      />
+
+                      {errors.terms && (
+                        <p className={classnames(styles.custom_error_class)}>{errors.terms.message}</p>
+                      )}
+
+                    </div>
+
+                    <div className={classnames(styles.input_full_box, styles.submit_btn)}>
                         <input type="submit" value="Create an account" />
-                      )}
-                      {selectedLevel === 2 && (
-                        <input type="submit" value="Continue" />
-                      )}
-
-                      {/* selectedLevel === 1 && (
-                        <div className={classnames(styles.input_full_box, styles.submit_btn)}>
-                          <input type="button" value="Create an account"
-                            onClick={async () => {
-                              if (!captchaValue) {
-                                setCaptchaErr("Please complete CAPTCHA")
-                                return
-                              }
-                              await handleSignup()
-                            }}
-                          />
-                        </div>
-                      ) */}
-
-                      {/* selectedLevel === 1 && (
-                        <div className={classnames(styles.input_full_box, styles.submit_btn)}>
-                            <input type="submit" value="Create an account" />
-                        </div>
-                      ) */}
-
-                      {/* selectedLevel==2 && (
-                        <>
-                            <Elements stripe={stripePromise} options={{clientSecret}}>
-                              <PaymentElement />
-                            </Elements>
-                        </>
-                      ) */}
-
-                      {/* Premium signup */}
-                      {/* selectedLevel === 2 && clientSecret && (
-                        <Elements stripe={stripePromise} options={{ clientSecret }}>
-                          <PremiumPaymentSection handleSignup={handleSignup} captchaValue={captchaValue} />
-                        </Elements>
-                      ) */}
-
-                      {/* selectedLevel === 2 && clientSecret && (
-                        <Elements stripe={stripePromise} options={{ clientSecret }}>
-                          <PremiumPaymentSection handleSignup={handleSignup} />
-                        </Elements>
-                      ) */}
-
-                  </div>
-                </form>
+                    </div>
+                </div>
+              </form>
               )}
 
               {selectedLevel === 2 && clientSecret && currentStep == 2 && (
