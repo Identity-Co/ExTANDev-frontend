@@ -216,3 +216,32 @@ export const updateAdventureGuide = async (id: string, data: any, files: File[])
     return json.data
   }
 };
+
+
+export const getAdventureGuidesByCurrentUser = async (fields: string = '') => {
+  const session = await getServerSession(authOptions);
+  const roles = ['admin', 'ambassador'];
+
+  if(roles.includes(session.user.role) && session.user.id){
+    let fieldsParam: string = '';
+    fieldsParam = '?userid='+session.user.id
+    fieldsParam += fields ? '&fields='+fields : '';
+    
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/adventure_guide/public/user${fieldsParam}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + session?.user?.userToken
+      }
+    })
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    } else {
+      const json = await response.json();
+      
+      return json.data
+    }
+  }else{
+    throw new Error(`Permission Denied`);
+  }
+}
