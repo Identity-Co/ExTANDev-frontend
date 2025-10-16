@@ -155,6 +155,7 @@ export const deleteUserData = async (id: string) => {
   return json
 }
 
+// General Users Signup
 export const signUp = async (data: any) => {
   console.log('POST: ', `${process.env.NEXT_PUBLIC_API_URL}/users/signup`)
   console.log('Post data: ', data)
@@ -172,7 +173,7 @@ export const signUp = async (data: any) => {
     if(c_data.success) {
       console.error('c_data.success: ', c_data.success);
 
-      /*const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/signup`, {
+      const u_response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -180,18 +181,19 @@ export const signUp = async (data: any) => {
         body: JSON.stringify(data)
       });
 
-      console.log('response :: ', response)
-
-      if (!response.ok) {
+      if (!u_response.ok) {
         return {}
       } else {
-        const json = await response.json();
+        const json = await u_response.json();
         
+        console.log('json.data :: ', json.data)
+
         return json.data
-      }*/
+      }
 
     } else {
       console.error('Failed: Captcha verification failed');
+      return {'status': false, 'message': 'Invalid Captcha'}
     }
   } catch (error) {
     console.error('error: ', error);
