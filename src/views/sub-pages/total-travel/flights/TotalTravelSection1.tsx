@@ -43,8 +43,8 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
                   container: '.flights_search_selector',
                   navigate_to: {
                     view: 'flights',
-                    departure: 'RAJ - Rajkot Airport - Rajkot, India',
-                    destination: 'AMD - Sardar Vallabhbhai Patel International Airport - Ahmedabad, India',
+                    origin: 'RAJ',
+                    destination: 'AMD',
                   },
                 })
 
