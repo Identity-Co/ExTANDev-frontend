@@ -43,8 +43,8 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
                   container: '.flights_search_selector',
                   navigate_to: {
                     view: 'flights',
-                    departure: 'Ahmedabad - Sardar Vallabhbhai Patel International Airport',
-                    destination: 'MCO - Orlando International Airport - Orlando United States',
+                    departure: 'RAJ - Rajkot Airport - Rajkot, India',
+                    destination: 'AMD - Sardar Vallabhbhai Patel International Airport - Ahmedabad, India',
                   },
                 })
 
