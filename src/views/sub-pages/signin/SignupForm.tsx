@@ -79,13 +79,14 @@ const SignupForm = () => {
     const [intentID, setIntentID] = useState("");
     const [clientSecret, setClientSecret] = useState("");
     const [currentStep, setCurrentStep] = useState(1);
+    const [is_success, setIsSuccess] = useState(false);
 
     // States
     const [isPasswordShown, setIsPasswordShown] = useState(false)
     const [isPasswordShownRe, setIsPasswordShownRe] = useState(false)
     const [errorState, setErrorState] = useState<ErrorType | null>(null)
     const [isSubmitting , setIsSubmitting ] = useState(false)
-    const [selectedLevel, setSelectedLevel] = useState(null);
+    const [selectedLevel, setSelectedLevel] = useState(1);
 
     const [selectedInterests, setSelectedInterests] = useState<string[]>([])
     const [selectedDestinations, setSelectedDestinations] = useState<string[]>([])
@@ -211,7 +212,8 @@ const SignupForm = () => {
       if (user?.status === false) {
         setCaptchaErr(user.message)
       } else {
-        router.push('/success')
+        setIsSuccess(true)
+        //router.push('/success')
       }
     }
 
@@ -278,7 +280,7 @@ const SignupForm = () => {
 
     return (
         <>
-          {selectedLevel === null && (
+          {!is_success && selectedLevel === null && (
             <div className="levelsDiv">
               <h3>Membership Level</h3>
               <div className="level_main">
@@ -302,7 +304,7 @@ const SignupForm = () => {
             </div>
           )}
 
-          {selectedLevel && (
+          {!is_success && selectedLevel && (
             <div className="formDiv">
               {/* <form noValidate action={() => {}} autoComplete='off' onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-5 custom-reset-fld'> */}
               {/* <form noValidate autoComplete='off' onSubmit={handleSubmit(async () => {
@@ -807,6 +809,15 @@ const SignupForm = () => {
 
             </div>
           )}
+
+          {is_success && (
+            <div className="paymentFormBox">
+              <Typography variant='h3' className='text-center mb-2'>Thank You!</Typography>
+              <Typography variant='h6' className='text-center mb-2'>Your registration process has been completed.</Typography>
+              <Typography variant='h6' className='text-center mb-2'>Please login using your email and password to access your account.</Typography>
+            </div>
+          )}
+          
         </>
     )
 }

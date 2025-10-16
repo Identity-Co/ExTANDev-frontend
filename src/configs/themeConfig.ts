@@ -52,6 +52,9 @@ export type Config = {
   footer: Footer
   disableRipple: boolean
   toastPosition: ToastPosition
+  access_url: string
+  access_token: string
+  travel_client_script_url: string
 }
 
 const themeConfig: Config = {
@@ -80,7 +83,10 @@ const themeConfig: Config = {
     detached: true //! true, false (This will not work in the Horizontal Layout)
   },
   disableRipple: false, // true, false
-  toastPosition: 'top-right' // 'top-right', 'top-center', 'top-left', 'bottom-right', 'bottom-center', 'bottom-left'
+  toastPosition: 'top-right', // 'top-right', 'top-center', 'top-left', 'bottom-right', 'bottom-center', 'bottom-left'
+  access_url: 'https://auth.adcrws-stage.com',
+  access_token: 'caea7d71f7e98bfe2d55efdf6e72904dfaf9105bad13aab0c31a08ba6293bbf4',
+  travel_client_script_url: 'https://booking-stage.accessdevelopment.com/scripts/travel.client.v2.js'
 } as unknown as Config
 
 export default themeConfig

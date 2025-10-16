@@ -66,6 +66,7 @@ export const authOptions: NextAuthOptions = {
                 "role": data.data.role,
                 "ambassador_status": data.data.ambassador_status,
                 "membership_level": data.data.membership_level,
+                "access_uid": data.data.access_uid,
             }
 
             return final_data //data
@@ -130,6 +131,7 @@ export const authOptions: NextAuthOptions = {
         token.role  = user.role
         token.ambassador_status  = user.ambassador_status
         token.membership_level   = user.membership_level
+        token.access_uid   = user.access_uid
       }
 
       return token
@@ -145,6 +147,7 @@ export const authOptions: NextAuthOptions = {
         session.user.userToken  = token?.token as string
         session.user.ambassador_status  = token?.ambassador_status as number
         session.user.membership_level   = token?.membership_level as number
+        session.user.access_uid   = token?.access_uid as string
       }
 
       return session

@@ -9,18 +9,24 @@ import { getServerSession } from "next-auth/next"
 
 import { authOptions } from '@/libs/auth'
 
+// Config Imports
+import themeConfig from '@configs/themeConfig'
+
 export const createAccessUserToken = async () => {
-  const response = await fetch("https://auth.adcrws-stage.com/api/v1/tokens", {
+  const session = await getServerSession(authOptions);
+
+  const access_url = `${themeConfig.access_url}/api/v1/tokens`
+  const access_token = themeConfig.access_token
+
+  const response = await fetch(access_url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer caea7d71f7e98bfe2d55efdf6e72904dfaf9105bad13aab0c31a08ba6293bbf4'
+      'Authorization': `Bearer ${access_token}`
     },
     body: JSON.stringify({
-      "member_key" : "AN202510140004",
-      "email"      : "access004@gmail.com",
-      "first_name" : "John",
-      "last_name"  : "Two",
+      "member_key" : session?.user?.access_uid ?? '',
+      "email"      : session?.user?.email,
       "scope"      : "travel"
     })
   });
