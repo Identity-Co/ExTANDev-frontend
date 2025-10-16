@@ -427,7 +427,7 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
 
 .ambassadorship_sec3{position: relative;}
 .ambassadorship_sec3:before{position: absolute; content: ""; background: linear-gradient(180deg,rgba(255, 255, 255, 1) 10%, rgba(227, 227, 227, 1) 90%); bottom: 0; left: 0; right: 0; width: 100%; height: 60%; z-index: -1;}
-.ambassadorship_sec3 .ambassadorship_sec3_inner{max-width: 66.984vw; margin: 0 auto;}
+.ambassadorship_sec3 .ambassadorship_sec3_inner{max-width: 47.656vw; margin: 0 auto;}
 .signup_box{padding: 3.66vw; background-color: #ffffff;}
 .signup_box h4{font-size: 1.903vw; text-transform: uppercase; text-align: center; padding-bottom: 2.928vw; color: #000000; font-family: "Raleway", sans-serif; font-weight: 800;}
 .signup_box .input_row{display: flex; flex-wrap: wrap; gap:1.098vw;}
@@ -464,6 +464,12 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
 .signup_box.sign_in{padding-bottom: 2.296vw;}
 .signup_box.account_box h4{padding-bottom: 2.196vw;}
 
+.ambassadorship_sec3 .ambassadorship_sec3_inner.full_width{ max-width: 100%; }
+.ambassadorship_sec3 .ambassadorship_sec3_inner.full_width .grid2{ grid-template-columns: 25% 75%; }
+.ambassadorship_sec3 .ambassadorship_sec3_inner.full_width.no_sidebar .grid2{ grid-template-columns: 100%; }
+.ambassadorship_sec3 .ambassadorship_sec3_inner.full_width .btn_adv_back{ position: absolute; top: 2.419vw; right: 2.554vw; }
+.ambassadorship_sec3 .ambassadorship_sec3_inner.full_width .signup_box{ position: relative; }
+
 
 @media only screen and (max-width: 1024px){
   .ambassadorship_sec3 .ambassadorship_sec3_inner{max-width: 100%;}
@@ -474,6 +480,7 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
   .signup_box .input_row .input_full_box.checkbox_label label{font-size: 1.452vw;}
   .signup_box .input_row input[type="submit"], .signup_box .input_row .input_full_box a.back_btn{font-size: 1.825vw;}
   .signup_box .input_row .input_full_box.email input[type="email"]{padding-left: 3.928vw; background-size: 2.025vw 1.805vw;}
+  .ambassadorship_sec3 .ambassadorship_sec3_inner.full_width .grid2{grid-template-columns: 40% 60%;}
 }
 
 @media only screen and (max-width: 768px){

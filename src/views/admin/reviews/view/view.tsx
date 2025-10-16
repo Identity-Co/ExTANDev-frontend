@@ -80,7 +80,8 @@ const ContactEntryView = ({ data }: { string; data?: [] }) => {
       day: 'numeric',
       hour: 'numeric',
       minute: 'numeric',
-      hour12: true,  // This will show AM/PM
+      hour12: true,
+      timeZone: 'UTC'
     };
     
     const date = new Date(dateString);

@@ -67,6 +67,21 @@ declare module '@tanstack/table-core' {
   }
 }
 
+const formatDate = (dateString) => {
+  const options = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+    timeZone: 'UTC'
+  };
+  
+  const date = new Date(dateString);
+  return date.toLocaleString('en-US', options); // Format the date
+};
+
 type adventureguideTypesWithAction = adventureguideTypes & {
   action?: string
   title?: string
@@ -167,7 +182,7 @@ const AdventureGuideListTable = ({ tableData }: { tableData?: adventureguideType
       }),
       columnHelper.accessor('created_at', {
         header: 'Created at',
-        cell: ({ row }) => <Typography>{row.original.created_at}</Typography>
+        cell: ({ row }) => <Typography>{formatDate(row.original.created_at)}</Typography>
       }),
       columnHelper.accessor('action', {
         header: 'Action',
