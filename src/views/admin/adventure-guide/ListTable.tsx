@@ -67,20 +67,25 @@ declare module '@tanstack/table-core' {
   }
 }
 
-const formatDate = (dateString) => {
-  const options = {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true,
-    timeZone: 'UTC'
-  };
-  
+const formatDate = (dateString: string) => {
   const date = new Date(dateString);
-  return date.toLocaleString('en-US', options); // Format the date
+
+  const year = date.getUTCFullYear();
+  const month = date.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' });
+  const day = date.getUTCDate();
+  const hours = date.getUTCHours();
+  const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  const formattedHours = hours % 12 || 12;
+
+  return `${month} ${day}, ${year} ${formattedHours}:${minutes} ${ampm}`;
 };
+
+type adventureguideTypesWithAction = adventureguideTypes & {
+  action?: string
+  title?: string
+  _id?: string
+}
 
 type adventureguideTypesWithAction = adventureguideTypes & {
   action?: string
