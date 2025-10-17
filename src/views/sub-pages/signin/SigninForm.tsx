@@ -150,10 +150,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
                                   )
                                 }
                               }}
-                              {...((errors.email || errorState !== null) && {
-                                error: true,
-                                helperText: errors?.email?.message || errorState?.message[0]
-                              })}
+                              error={Boolean(errors.email || errorState)}
                             />
                           )}
                         />
@@ -200,6 +197,18 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
                             />
                           )}
                         />
+                    </div>
+                    <div className={classnames(styles.input_full_box , 'input_full_box')}>
+                      {/* 👇 External error message */}
+                      {(errors.email || errorState) && (
+                        <Typography
+                          variant='caption'
+                          color='error'
+                          sx={{ display: 'block', mt: 0.5, ml: 1 }}
+                        >
+                          Invalid Username or Password.
+                        </Typography>
+                      )}
                     </div>
 
                     <div className='flex justify-between items-center flex-wrap gap-x-3 gap-y-1'>
