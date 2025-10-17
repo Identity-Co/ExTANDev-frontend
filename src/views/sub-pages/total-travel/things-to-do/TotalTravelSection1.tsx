@@ -96,7 +96,7 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
 
         <div className='activities_search_selector'></div>
 
-        {loginErr && (
+        {loginErr == 1 && (
           <div className='login-err-msg'>
             Please <a href={`/signin/`}>Login</a> or <a href={`/signin/`}>Signup</a> to access Flights data.
           </div>

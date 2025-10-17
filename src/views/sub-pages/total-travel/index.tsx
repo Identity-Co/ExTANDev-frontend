@@ -30,16 +30,18 @@ const FlightsTab = dynamic(() => import('@views/sub-pages/total-travel/flights')
 const CarsTab = dynamic(() => import('@views/sub-pages/total-travel/cars'))
 const PackagesTab = dynamic(() => import('@views/sub-pages/total-travel/packages'))
 const ThingsToDoTab = dynamic(() => import('@views/sub-pages/total-travel/things-to-do'))
-const CruisesTab = dynamic(() => import('@views/sub-pages/total-travel/cruises'))
+
+//const CruisesTab = dynamic(() => import('@views/sub-pages/total-travel/cruises'))
 
 const tabContentList = (props): { [key: string]: ReactElement } => ({
   stays: <StaysTab {...props}/>,
   flights: <FlightsTab {...props}/>,
   cars: <CarsTab {...props}/>,
   packages: <PackagesTab {...props}/>,
-  thingstodo: <ThingsToDoTab {...props}/>,
-  cruises: <CruisesTab {...props}/>
+  thingstodo: <ThingsToDoTab {...props}/>
 })
+
+  //cruises: <CruisesTab {...props}/>
 
 const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: []; pgData?: []; }) => {
   // Hooks
@@ -70,7 +72,7 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
           <Tab value='cars' label='Cars' />
           <Tab value='packages' label='Packages' />
           <Tab value='thingstodo' label='Things to do' />
-          <Tab value='cruises' label='Cruises' />
+          {/* <Tab value='cruises' label='Cruises' /> */}
         </TabList>
         <div className={classnames(styles.search_box, styles.search_box_total)}>
             <div className={classnames(styles.container, 'container')}>
