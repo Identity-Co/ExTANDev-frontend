@@ -206,7 +206,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
                           color='error'
                           sx={{ display: 'block', mt: 0.5, ml: 1 }}
                         >
-                          Invalid Username or Password.
+                          Invalid Email or Password.
                         </Typography>
                       )}
                     </div>
