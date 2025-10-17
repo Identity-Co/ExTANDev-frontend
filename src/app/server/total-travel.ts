@@ -32,7 +32,11 @@ export const createAccessUserToken = async () => {
   });
 
   if (!response.ok) {
-    return {}
+    if(session?.user?.id != '') {
+      return {}
+    } else {
+      return {'LoginErr': 1}
+    }
   } else {
     const json = await response.json();
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { createAccessUserToken } from '@/app/server/total-travel';
 
@@ -14,6 +14,8 @@ import styles from './styles.module.css'
 import themeConfig from '@configs/themeConfig'
 
 const TotalTravelSection1 = ({ data }: { data?: [] }) => {
+
+    const [loginErr, setLoginErr] = useState(0)
 
     const isLoadRef = useRef(false)
 
@@ -70,6 +72,8 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
         return () => {
           if (script.parentNode) script.parentNode.removeChild(script)
         }
+      } else if (res && res.LoginErr) {
+        setLoginErr(res.LoginErr)
       }
 
     };
@@ -94,6 +98,12 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
         </div> */}
 
         <div className='cars_search_selector'></div>
+
+        {loginErr && (
+          <div className='login-err-msg'>
+            Please <a href={`/signin/`}>Login</a> or <a href={`/signin/`}>Signup</a> to access Flights data.
+          </div>
+        )}
 
     </section>
   )
