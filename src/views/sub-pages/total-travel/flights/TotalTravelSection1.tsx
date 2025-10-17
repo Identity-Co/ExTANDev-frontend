@@ -42,12 +42,7 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
                   session_token: res.session_token,
                   container: '.flights_search_selector',
                   navigate_to: {
-                    view: 'flights',
-                    departure_airport: "LAX - Los Angeles International Airport - Los Angeles, United States",
-                    arrival_airport: "BOS - General Edward Lawrence Logan International Airport - Boston, United States",
-                    departure_dts: "2025-10-21",
-                    return_dts: "2025-10-22",
-                    number_of_passengers: 4
+                    view: 'flights'
                   },
                 })
 

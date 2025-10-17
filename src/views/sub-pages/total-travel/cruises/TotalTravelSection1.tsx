@@ -43,7 +43,6 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
                   container: '.cruises_search_selector',
                   navigate_to: {
                     view: 'parks',
-                    destination: 'southwest',
                     category: "cruise"
                   },
                 })

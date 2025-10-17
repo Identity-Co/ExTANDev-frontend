@@ -42,8 +42,7 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
                   session_token: res.session_token,
                   container: '.activities_search_selector',
                   navigate_to: {
-                    view: 'home',
-                    start_tab: "activities"
+                    view: 'activities'
                   },
                 })
 
