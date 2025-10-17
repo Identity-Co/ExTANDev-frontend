@@ -42,7 +42,8 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
                   session_token: res.session_token,
                   container: '.packages_search_selector',
                   navigate_to: {
-                    view: 'parks',
+                    start_tab: "parks",
+                    view: 'tour',
                     category: "tour"
                   },
                 })
