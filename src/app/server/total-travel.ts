@@ -15,6 +15,10 @@ import themeConfig from '@configs/themeConfig'
 export const createAccessUserToken = async () => {
   const session = await getServerSession(authOptions);
 
+  if(!session?.user?.id) {
+    return {'LoginErr': 1}
+  }
+
   const access_url = `${themeConfig.access_url}/api/v1/tokens`
   const access_token = themeConfig.access_token
 
@@ -32,10 +36,10 @@ export const createAccessUserToken = async () => {
   });
 
   if (!response.ok) {
-    if(session?.user?.id != '') {
-      return {}
-    } else {
+    if(!session?.user?.id) {
       return {'LoginErr': 1}
+    } else {
+      return {}
     }
   } else {
     const json = await response.json();

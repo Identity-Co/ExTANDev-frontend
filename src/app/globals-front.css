@@ -546,10 +546,15 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
 .destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button{text-decoration: none;}
 .destinations_tab .MuiTabs-indicator{display: none;}
 
+.destinations_tab.total_travel_tab{padding-top: 0; margin-bottom: 0; margin-top: -4.5vw; position: relative; z-index: 2; border: none;}
+.destinations_tab.total_travel_tab .MuiTabs-fixed{padding-bottom: 0; max-width: 49.844vw;}
+.destinations_tab.total_travel_tab .MuiTabs-fixed .MuiTabs-flexContainer{gap: 1.667vw; border: none;}
+
 
 @media only screen and (max-width: 1024px){
   .destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer{column-gap: 3.539vw;}
   .destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button{font-size: 1.771vw;}
+  .destinations_tab.total_travel_tab{margin-top: -11vw;}
 
 }
 
@@ -557,6 +562,8 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
   .destinations_tab .MuiTabs-fixed{max-width: 90%;}
   .destinations_tab{padding-top: 21.788vw; margin-bottom: -32.61vw;}
   .destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button{font-size: 2.971vw;}
+  .destinations_tab.total_travel_tab .MuiTabs-fixed{max-width: 90%;}
+  .destinations_tab.total_travel_tab{margin-top: -37vw;}
 
 }
 
@@ -575,3 +582,7 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
 .contact-fmain .MuiFormControl-root .MuiSelect-select{min-height:7.66vw;}
 }
 
+
+.login-err-msg{text-align: center; font-size: 1.01vw;}
+.login-err-msg a{color: #F85241;}
+.login-err-msg a:hover{color: #014040;}

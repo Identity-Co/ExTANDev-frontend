@@ -110,7 +110,9 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
 
         {loginErr == 1 && (
           <div className='login-err-msg'>
-            Please <a href={`/signin/`}>Login</a> or <a href={`/signin/`}>Signup</a> to access Flights data.
+            <div className="container">
+              Please <a href={`/signin/`}>Login</a> or <a href={`/signin/`}>Signup</a> to access Stays data.
+            </div>
           </div>
         )}
 
