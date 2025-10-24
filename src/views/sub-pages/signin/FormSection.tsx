@@ -4,7 +4,7 @@
 import { useState } from 'react'
 
 // Next Imports
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 
 // Third-party Imports
 import { useForm } from 'react-hook-form'
@@ -54,6 +54,9 @@ const FormSection = () => {
     // Hooks
     const router = useRouter()
     const searchParams = useSearchParams()
+    const pathname = usePathname();
+
+    const isTotalTravel = pathname.includes('total-travel');
 
     const { settings } = useSettings()
 
@@ -78,7 +81,7 @@ const FormSection = () => {
     }
   
     return (
-        <section className={classnames(styles.ambassadorship_sec3, 'pb_100')}>
+        <section className={classnames(styles.ambassadorship_sec3, 'pb_100', (isTotalTravel?styles.travelSignin:'') )}>
             <div className="container">
                 <div className={classnames(styles.ambassadorship_sec3_inner)}>
                     <div className="grid2 gap_24">

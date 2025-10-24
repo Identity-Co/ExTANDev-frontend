@@ -170,4 +170,10 @@ section.home_section1.our_desti_sec1{ background: url(/images/front-pages/images
   .smart_travel_row.rivers_row .smart_travel_small{order: 1 !important;}
 }
 
+@media only screen and (max-width: 575px){
+  .smart_travel_row .smart_travel_small h4{font-size: 3.955vw}
+}
+
 /*travel_sec2*/
+
+

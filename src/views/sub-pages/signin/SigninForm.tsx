@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 // Next Imports
 import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 
 // MUI Imports
 import Typography from '@mui/material/Typography'
@@ -70,6 +70,9 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
     // Hooks
     const router = useRouter()
     const searchParams = useSearchParams()
+    const pathname = usePathname();
+
+    const isTotalTravel = pathname.includes('total-travel');
 
     const { settings } = useSettings()
 
@@ -101,8 +104,16 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
         if (res && res.ok && res.error === null) {
             // setLoading(true)
 
+            let redirectURL = '';
+
             // Vars
-            const redirectURL = searchParams.get('redirectTo') ?? '/my-account/'
+            if(isTotalTravel == 1) {
+              //redirectURL = '/total-travel/';
+              window.location.reload();
+              return;
+            } else {
+              redirectURL = searchParams.get('redirectTo') ?? '/my-account/'
+            }
 
             router.replace(redirectURL)
         } else {

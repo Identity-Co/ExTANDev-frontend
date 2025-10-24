@@ -13,7 +13,7 @@ import styles from './styles.module.css'
 // Config Imports
 import themeConfig from '@configs/themeConfig'
 
-const TotalTravelSection1 = ({ data }: { data?: [] }) => {
+const TotalTravelSection1 = ({ data, isMore, setIsMore, setOpenAccess }: { data?: []; isMore?: string; setIsMore: string; setOpenAccess: string; }) => {
 
     const [loginErr, setLoginErr] = useState(0)
 
@@ -80,6 +80,7 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
         }
       } else if (res && res.LoginErr) {
         setLoginErr(res.LoginErr)
+        setIsMore(1)
       }
 
     };
@@ -92,6 +93,16 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
 
     }, [])
 
+    // Extract <strong> or <b> text only
+    const extractBoldText = (html) => {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = html;
+      const strongText = tempDiv.querySelector('strong, b');
+      return strongText ? strongText.textContent : '';
+    };
+
+    const boldText = extractBoldText(data?.about_content);
+
   return (
     <section className={classnames(styles.home_section1, styles.our_desti_sec1)}>
         <div className="container">
@@ -99,9 +110,34 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
                 <div className={classnames(styles.adventure_right_text)}>
                     {data.about_title ? (<h2 className="fs_55">{data.about_title}</h2>) : null}
 
-                    {data?.about_content && (
-                        <div dangerouslySetInnerHTML={{ __html: data?.about_content }} ></div>
+                    {/* isMore==1 && (
+                      data?.about_content && (
+                          <div dangerouslySetInnerHTML={{ __html: data?.about_content }} ></div>
+                      )
+                    ) */}
+
+                    {isMore === 0 ? (
+                      <>
+                        <p><strong>{boldText}</strong></p>
+                        <button
+                          onClick={() => setIsMore(1)}
+                          style={{
+                            background: '#007bff',
+                            color: '#fff',
+                            border: 'none',
+                            padding: '8px 14px',
+                            borderRadius: '6px',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          More
+                        </button>
+                      </>
+                    ) : (
+                      <div dangerouslySetInnerHTML={{ __html: data?.about_content }} ></div>
                     )}
+
+
                 </div>
             </div>
         </div>
@@ -111,7 +147,7 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
         {loginErr == 1 && (
           <div className='login-err-msg'>
             <div className="container">
-              Please <a href={`/signin/`}>Login</a> or <a href={`/signin/`}>Signup</a> to access Stays data.
+              Please <a href="#" onClick={(e) => { e.preventDefault(); setOpenAccess(true); }}>Login</a> or <a href="#" onClick={(e) => { e.preventDefault(); setOpenAccess(true); }}>Signup</a> to access Stays data.
             </div>
           </div>
         )}

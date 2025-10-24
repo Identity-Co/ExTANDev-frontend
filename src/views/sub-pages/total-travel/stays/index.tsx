@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 // Type Imports
 import type { Mode } from '@core/types'
@@ -12,9 +12,11 @@ import TotalTravelSection2 from './TotalTravelSection2'
 
 import { useSettings } from '@core/hooks/useSettings'
 
-const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: []; pgData?: []; }) => {
+const LandingPageWrapper = ({ mode, banners, pgData, setOpenAccess }: { mode: Mode; banners?: []; pgData?: []; setOpenAccess?:string }) => {
   // Hooks
   const { updatePageSettings } = useSettings()
+
+  const [isMore, setIsMore] = useState(0)
 
   // For Page specific settings
   useEffect(() => {
@@ -26,8 +28,8 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
 
   return (
     <>
-      <TotalTravelSection1 data={pgData} />
-      <TotalTravelSection2 data={pgData} />
+      <TotalTravelSection1 data={pgData} isMore={isMore} setIsMore={setIsMore} setOpenAccess={setOpenAccess} />
+      <TotalTravelSection2 data={pgData} isMore={isMore} setIsMore={setIsMore} />
     </>
   )
 }

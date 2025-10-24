@@ -13,6 +13,13 @@ import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import TabContext from '@mui/lab/TabContext'
 
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContentText from '@mui/material/DialogContentText'
+
 // Type Imports
 import type { Mode } from '@core/types'
 
@@ -20,6 +27,8 @@ import type { Mode } from '@core/types'
 import BannerSection from './BannerSection'
 /*import TotalTravelSection1 from './TotalTravelSection1'
 import TotalTravelSection2 from './TotalTravelSection2'*/
+
+import FormSection from '../signin/FormSection'
 
 import { useSettings } from '@core/hooks/useSettings'
 
@@ -46,6 +55,10 @@ const tabContentList = (props): { [key: string]: ReactElement } => ({
 const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: []; pgData?: []; }) => {
   // Hooks
   const [val, setVal] = useState<string>('stays')
+  
+  //const [isFirstTime, setIsFirstTime] = useState(true)
+  const [openAccess, setOpenAccess] = useState(false)
+
 
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setVal(newValue)
@@ -61,6 +74,12 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+
+  const handleAccessClose = () => {
+    //setIsFirstTime(false)
+    setOpenAccess(false)
+  };
+
   return (
     <>
       <BannerSection mode={mode} banners={banners?? []} />
@@ -74,7 +93,7 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
           <Tab value='thingstodo' label='Things to do' />
           {/* <Tab value='cruises' label='Cruises' /> */}
         </TabList>
-        <div className={classnames(styles.search_box, styles.search_box_total)}>
+        {/* <div className={classnames(styles.search_box, styles.search_box_total)}>
             <div className={classnames(styles.container, 'container')}>
                 <div className={classnames(styles.search_box_inner)}>
                     <div className={classnames(styles.search_row)}>
@@ -113,11 +132,41 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
                     </div>
                 </div>
             </div>
-        </div>
+        </div> */}
         <TabPanel value={val} className='pbs-0'>
-            {tabContentList({ pgData: pgData })[val]}
+            {tabContentList({ pgData: pgData, setOpenAccess: setOpenAccess })[val]}
         </TabPanel>
       </TabContext>
+
+
+      <Dialog
+        open={openAccess}
+        disableEscapeKeyDown
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
+        onClose={(event, reason) => {
+          if (reason !== 'backdropClick') {
+            handleAccessClose()
+          }
+        }}
+        closeAfterTransition={false}
+        PaperProps={{
+          sx: {
+            width: '750px',
+            maxWidth: '95%',
+          },
+        }}
+      >
+        <DialogTitle id='alert-dialog-title' className='text-center'>Login/Signup</DialogTitle>
+        <DialogContent>
+            <FormSection />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleAccessClose} variant='outlined' color='secondary'>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   )
 }

@@ -152,7 +152,7 @@
 @media only screen and (max-width: 1024px){
   .ambassadorship_sec3 .ambassadorship_sec3_inner{max-width: 100%;}
   .signup_box h4{font-size: 2.065vw;}
-  .signup_box .input_row .input_full_box input:not([type="checkbox"], [type="submit"]){font-size: 1.298vw;}
+  .signup_box .input_row .input_full_box input:not([type="checkbox"], [type="submit"]){font-size: 1.298vw; padding: 2.042vw;}
   .signup_box .input_row .input_full_box.pass_ref span{font-size: 1.033vw;}
   .signup_box .input_row .input_full_box input[type="password"]{background-size: 1.336vw 1.336vw; padding-left: 2.795vw;}
   .signup_box .input_row .input_full_box.checkbox_label label{font-size: 1.033vw;}
@@ -177,6 +177,12 @@
   .grid_box .signup_box.account_box{margin-top: 2.223vw;}
 }
 
+
+@media only screen and (max-width: 575px){
+  .signup_box .input_row{gap: 2.493vw;}
+  .signup_box .input_row .input_full_box input:not([type="checkbox"], [type="submit"]){padding: 3.453vw; font-size: 3.366vw;}
+}
+
 /*ambassadorship_sec3-end*/
 
 /* CUSTOM */
@@ -185,3 +191,7 @@
 .custom_error_class { color: var(--mui-palette-error-main); font-family: 'Inter','Inter Fallback'; font-weight: 400; font-size: 0.8125rem; text-align: left; margin-top: 0px; margin-bottom: 0; margin-left: 14px; margin-right: 14px; line-height: 1; letter-spacing: unset; --Grid-columns: 12; --Grid-columnSpacing: 1.25rem; --Grid-rowSpacing: 1.25rem; }
 .mt--18 { margin-top: -18px !important; }
 
+
+
+.travelSignin .signup_box{padding: 0.604vw !important;}
+.travelSignin.ambassadorship_sec3 .ambassadorship_sec3_inner{max-width: 100%;}

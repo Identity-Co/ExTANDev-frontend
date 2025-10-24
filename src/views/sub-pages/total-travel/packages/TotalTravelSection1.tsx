@@ -13,7 +13,7 @@ import styles from './styles.module.css'
 // Config Imports
 import themeConfig from '@configs/themeConfig'
 
-const TotalTravelSection1 = ({ data }: { data?: [] }) => {
+const TotalTravelSection1 = ({ data, setOpenAccess }: { data?: []; setOpenAccess: string; }) => {
 
     const [loginErr, setLoginErr] = useState(0)
 
@@ -100,7 +100,7 @@ const TotalTravelSection1 = ({ data }: { data?: [] }) => {
         {loginErr == 1 && (
           <div className='login-err-msg'>
             <div className="container">
-              Please <a href={`/signin/`}>Login</a> or <a href={`/signin/`}>Signup</a> to access Packages.
+              Please <a href="#" onClick={(e) => { e.preventDefault(); setOpenAccess(true); }}>Login</a> or <a href="#" onClick={(e) => { e.preventDefault(); setOpenAccess(true); }}>Signup</a> to access Packages.
             </div>
           </div>
         )}
