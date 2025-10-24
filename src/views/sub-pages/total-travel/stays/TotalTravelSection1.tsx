@@ -142,9 +142,7 @@ const TotalTravelSection1 = ({ data, isMore, setIsMore, setOpenAccess }: { data?
             </div>
         </div>
 
-        {isMore === 1 && (
-          <div className='hotel_search_selector'></div>
-        )}
+        <div className='hotel_search_selector' style={{ display: isMore === 0 ? 'none' : 'block' }}></div>
 
         {loginErr == 1 && (
           <div className='login-err-msg'>
