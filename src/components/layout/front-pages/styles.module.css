@@ -3,21 +3,21 @@ header.header{position: fixed; top: 0; left: 0; width: 100%; z-index: 9999; padd
 header.header.sticky{background-color: #014040;}
 header.header .headMain{display: flex; align-items: center; justify-content: space-between;}
 header.header .headerLogo a{display: block;}
-header.header .headerLogo a img{max-width: 14.568vw;}
-header.header .navMenu ul{list-style: none; display: flex; align-items: center; column-gap: 2.928vw;}
-header.header .navMenu ul li a{text-transform: uppercase; font-size: 1.171vw; font-weight: 400; letter-spacing: 0.005em; line-height: 1; color: #ffffff; font-family: "Bebas Neue", sans-serif; position: relative;}
-header.header .navMenu ul li a:before{position: absolute; content: ""; width: 0%; height: 0.439vw; background-color: #F85241; left: 0; bottom: -0.732vw; transition: 0.3s ease-in-out;}
+header.header .headerLogo a img{max-width: 10.37vw;}
+header.header .navMenu ul{list-style: none; display: flex; align-items: center; column-gap: 2.604vw;}
+header.header .navMenu ul li a{text-transform: uppercase; font-size: 0.833vw; font-weight: 400; letter-spacing: 0.005em; line-height: 1; color: #ffffff; font-family: "Bebas Neue", sans-serif; position: relative;}
+header.header .navMenu ul li a:before{position: absolute; content: ""; width: 0%; height: 0.312vw; background-color: #F85241; left: 0; bottom: -0.521vw; transition: 0.3s ease-in-out;}
 header.header .navMenu ul li.active a:before,
 header.header .navMenu ul li a:hover:before{width: 100%;}
 header.header .navMenu ul li.hide_desktop{display: none;}
-header.header .head_right .head_buttons{display: flex; flex-wrap: wrap; gap:1.611vw; align-items: center;}
-header.header .head_right .head_buttons a{font-size: 1.171vw; font-weight: 400; color: #ffffff; background-color: rgb(31, 31, 31, 0.8); border: solid 0.073vw rgb(240, 237, 237, 0.54); border-radius: 0.104vw; text-transform: uppercase; padding: 0.734vw 0.586vw 0.539vw; display: inline-block; line-height: 1; font-family: "Bebas Neue", sans-serif; letter-spacing: 0.005em;}
+header.header .head_right .head_buttons{display: flex; flex-wrap: wrap; gap:1.146vw; align-items: center;}
+header.header .head_right .head_buttons a{font-size: 0.833vw; font-weight: 400; color: #ffffff; background-color: rgb(31, 31, 31, 0.8); border: solid 0.052vw rgb(240, 237, 237, 0.54); border-radius: 0.104vw; text-transform: uppercase; padding: 0.734vw 0.586vw 0.539vw; display: inline-block; line-height: 1; font-family: "Bebas Neue", sans-serif; letter-spacing: 0.005em;}
 header.header .head_right .head_buttons a:hover{background-color: #ffffff; color: #000000;}
 header.header .head_right .head_buttons .head_btn2 a span{color: #F85241;}
-header.header .head_right .head_buttons .head_btn3 a{font-size: 0.878vw; font-weight: 500; color: #1F1F1F; background-color: #FDFCFC; border: solid 0.073vw #ffffff; border-radius: 0.146vw; padding: 0.526vw; line-height: 1; display: flex; align-items: center; gap:0.293vw; text-transform: none; font-family: "Raleway", sans-serif; font-style: italic; letter-spacing:-0.025em; }
+header.header .head_right .head_buttons .head_btn3 a{font-size: 0.625vw; font-weight: 500; color: #1F1F1F; background-color: #FDFCFC; border: solid 0.0365vw #ffffff; border-radius: 0.104vw; padding: 0.526vw; line-height: 1; display: flex; align-items: center; gap:0.293vw; text-transform: none; font-family: "Raleway", sans-serif; font-style: italic; letter-spacing:-0.025em; }
 header.header .head_right .head_buttons .head_btn3 a:hover{background-color: #ffffff;}
 header.header .head_right .head_buttons .head_btn3 a svg{width: 1.318vw; height: 1.318vw;}
-header.header .navMenu ul{ padding-inline-start: 0; }
+header.header .navMenu ul{ padding-inline-start: 0;}
 
 .menu_button_container{display: none;}
 .hamburger .line{width: 4.395vw; height: 0.391vw; background-color: #F85241; display: block; margin: 0 0 0.977vw;-webkit-transition: all 0.3s ease-in-out;-o-transition: all 0.3s ease-in-out;transition: all 0.3s ease-in-out; border-radius:0.732vw;}
@@ -31,9 +31,17 @@ header.header .navMenu ul{ padding-inline-start: 0; }
 .hamburger.is_active .line:nth-child(3){-webkit-transform: translateY(-1.344vw) rotate(90deg);-ms-transform: translateY(-1.344vw) rotate(90deg);-o-transform: translateY(-1.344vw) rotate(90deg);transform: translateY(-1.344vw) rotate(90deg);}
 
 
+@media only screen and (max-width: 1366px){
+  header.header .navMenu ul li a{font-size: 1.279vw;}
+  header.header .head_right .head_buttons a,
+  header.header .head_right .head_buttons .head_btn3 a{font-size: 1.279vw;}
+
+}
+
+
 @media only screen and (max-width: 1024px){
   .menu_button_container{display: block; position: relative; z-index: 99;}
-  header.header .navMenu{position: fixed; max-width: 100%; width: 100%; background: #000000; height: 100vh; top: 0; right: auto; bottom: auto; padding: 6.25vw 2.344vw 2.344vw 2.344vw; z-index: 9; left: -100vw; transition: 0.3s ease-in-out; display: flex; align-items: center; justify-content: center;}
+  header.header .navMenu{position: fixed; max-width: 100%; width: 100%; background: #000000; height: 100vh; top: 0; right: auto; bottom: auto; padding: 6.25vw 2.344vw 2.344vw 2.344vw; z-index: 9; left: -100%; transition: 0.3s ease-in-out; display: flex; align-items: center; justify-content: center;}
   header.header .navMenu.open{left: 0;}
   header.header .head_right .head_buttons .head_btn1,
   header.header .head_right .head_buttons .head_btn3{display: none;}
@@ -66,12 +74,12 @@ header.header .navMenu ul{ padding-inline-start: 0; }
 footer.footer{background-color: #000000; text-align: center;}
 .footer_top{border-bottom: solid 0.0365vw #FFFFFF;}
 .foot_logo a{display: inline-block;}
-.foot_logo a img{max-width: 22.474vw;}
+.foot_logo a img{max-width: 15.99vw;}
 .foot_bot_inner{display: flex; flex-wrap: wrap; gap:2.196vw; align-items: center; justify-content: center;}
 .foot_bot_inner ul.foot_menu{display: flex; column-gap: 2.928vw; list-style: none; grid-row-gap: 1.318vw;}
-.foot_bot_inner ul.foot_menu li a{font-size: 1.025vw; font-weight: 600; color: #ffffff;}
+.foot_bot_inner ul.foot_menu li a{font-size: 0.729vw; font-weight: 600; color: #ffffff;}
 .foot_bot_inner ul.foot_menu li a:hover{color: #F85241;}
-.foot_bot_inner ul.foot_social{display: flex; column-gap: 1.318vw; list-style: none;}
+.foot_bot_inner ul.foot_social{display: flex; column-gap: 1.318vw; list-style: none; align-items: center;}
 .foot_bot_inner ul.foot_social li a:hover svg path{fill: #F85241;}
 .foot_bot_inner ul.foot_social li:nth-child(1) svg{width: 1.245vw; height: 1.245vw;}
 .foot_bot_inner ul.foot_social li:nth-child(2) svg{width: 0.805vw; height: 1.464vw;}
@@ -79,9 +87,10 @@ footer.footer{background-color: #000000; text-align: center;}
 .foot_bot_inner ul.foot_social li:nth-child(4) svg{width: 1.245vw; height: 1.245vw;}
 
 .foot_rights{padding-top: 2.343vw; display: flex; justify-content: center;}
-.foot_rights p{font-size: 0.805vw; text-transform: uppercase; line-height: 1.171vw; color: #FFFFFF; opacity: 0.75; max-width: 45.168vw; margin: 0 auto;}
+.foot_rights p{font-size: 0.573vw; text-transform: uppercase; line-height: 0.833vw; color: #FFFFFF; opacity: 0.75; max-width: 32.146vw; margin: 0 auto;}
 
 @media only screen and (max-width: 1024px){
+.foot_logo a img{max-width: 20.99vw;}
 .foot_bot_inner ul.foot_menu li a{font-size: 1.571vw;}
 .foot_rights p{font-size: 1.505vw; max-width: 100%; line-height: 1.2;}
 .foot_bot_inner ul.foot_social li:nth-child(1) svg{width: 1.66vw; height: 1.66vw;}
