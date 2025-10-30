@@ -92,6 +92,23 @@ export const saveUser = async (data: any) => {
   }
 }
 
+export const changePassword = async (data: any) => {
+  const session = await getServerSession(authOptions)
+  
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/change_pass`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${session?.user?.userToken}`
+    },
+    body: JSON.stringify(data)
+  });
+
+  console.log(response)
+
+  return await response.json()
+}
+
 export const updateUser = async (id: any, data: any) => {
   const session = await getServerSession(authOptions)
   
