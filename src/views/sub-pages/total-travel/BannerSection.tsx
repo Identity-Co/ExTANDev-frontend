@@ -11,7 +11,7 @@ const BannerSection = ({ mode, banners }: { mode: Mode; banners?: [] }) => {
     const mainBanner = banners[0];
 
     return (
-        <div className={classnames(styles.home_banner, styles.travel_banner, styles.search_box_3)}>
+        <div className={classnames(styles.home_banner, styles.travel_banner, styles.travel_banner_new, styles.search_box_3)}>
             {mainBanner && (
                 <div className={classnames(styles.travel_banner_bg_image)}>
                     {mainBanner.banner_image ? (
