@@ -29,6 +29,7 @@ const BannerSection = ({ mode, banners }: { mode: Mode; banners?: [] }) => {
                 </div>
             )}
         </div>
+        
     )
 }
 
