@@ -90,7 +90,7 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
           <Tab value='flights' label='flights' />
           <Tab value='cars' label='Cars' />
           <Tab value='packages' label='Packages' />
-          <Tab value='thingstodo' label='Things To-Do' />
+          <Tab value='thingstodo' label='Things To Do' />
           {/* <Tab value='cruises' label='Cruises' /> */}
         </TabList>
         {/* <div className={classnames(styles.search_box, styles.search_box_total)}>
