@@ -12,7 +12,7 @@ import Button from '@mui/material/Button'
 //import type { companyType } from '@/types/apps/companyType'
 
 // Component imports
-import ViewComment from '@views/admin/comments/View/'
+import ViewComment from '@views/admin/comments/View'
 
 import { getCommentById } from '@/app/server/comments'
 import * as Common from '@/app/server/common'
