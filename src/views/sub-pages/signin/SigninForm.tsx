@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import { useState } from 'react'
+import { useState, useEffect  } from 'react'
 
 // Next Imports
 import Link from 'next/link'
@@ -66,6 +66,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
     const [forgotPass, setForgotPass] = useState('none')
     const [forgotMessage, setForgotMessage] = useState(null)
     const [recoveryEmail, setRecoveryEmail] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
 
     // Hooks
     const router = useRouter()
@@ -124,6 +125,96 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
                 setErrorState({"message": Array(error)})
             }
         }
+    }
+
+    // Google Login
+    useEffect(() => {
+      // 1. Create script element
+      const script = document.createElement("script");
+      script.src = "https://accounts.google.com/gsi/client";
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        /* global google */
+        google.accounts.id.initialize({
+          client_id: "899760202984-plt5aioi3p8ctsr3tvroku9v9hm4ad25.apps.googleusercontent.com",
+          callback: handleGoogleResponse,
+        });
+        google.accounts.id.renderButton(
+          document.getElementById("googleSignIn"),
+          { theme: "outline", size: "large" }
+        );
+      };
+
+      document.body.appendChild(script);
+
+      return () => {
+        document.body.removeChild(script);
+      };
+    }, []);
+
+    const handleGoogleResponse = async (response) => {
+      setErrorMessage('')
+
+      try {
+        console.log(response)
+        /*const res = await axios.post("http://localhost:5001/v1/api/auth/google-login", {
+          token: response.credential,
+        });*/
+        const _res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/google-login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            //'Authorization': `Bearer ${session?.user?.userToken}`
+          },
+          body: JSON.stringify({'token': response.credential})
+        })
+
+        const data = await _res.json();
+        console.log("Google login success:", data);
+
+        if (data?.data) {
+          const res = await signIn('credentials', {
+              email: data?.data.email,
+              password: data?.data.email+'_'+data?.data.googleId,
+              redirect: false
+          })
+
+          console.log('res: ', res)
+
+          if (res && res.ok && res.error === null) {
+              // setLoading(true)
+
+              let redirectURL = '';
+
+              // Vars
+              if(isTotalTravel == 1) {
+                //redirectURL = '/total-travel/';
+                window.location.reload();
+                return;
+              } else {
+                redirectURL = searchParams.get('redirectTo') ?? '/my-account/'
+              }
+
+              router.replace(redirectURL)
+          } else {
+              if (res?.error) {
+                  setIsSubmitting(false)
+                  const error = res?.error
+
+                  setErrorState({"message": Array(error)})
+              }
+          }
+        } else {
+          setErrorMessage(data?.message)
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const responseFacebook = async (response) => {
+      console.log(response)
     }
   
     return (
@@ -236,6 +327,43 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
                     </div>
                 </div>
             </form>
+
+            <div style={{ marginTop: "20px" }}>
+              <div id="googleSignIn"></div>
+              {/*<button onClick={() => signIn("google")}>Sign in with Google</button>*/}
+            </div>
+
+
+            <div style={{ marginTop: "20px" }}>
+              <button onClick={() => signIn("facebook")} style={{
+                  backgroundColor: "#1877F2",
+                  color: "white",
+                  padding: "10px 16px",
+                  border: "none",
+                  borderRadius: "6px",
+                  width: "100%",
+                  cursor: "pointer"
+                }}
+              >Sign in with Facebook</button>
+              {/*<FacebookLogin
+                appId={process.env.NEXT_PUBLIC_FACEBOOK_APP_ID}
+                autoLoad={false}
+                fields="name,email,picture"
+                callback={responseFacebook}
+              />*/}
+            </div>
+
+            <div className={classnames(styles.input_full_box , 'input_full_box')}>
+              {errorMessage && (
+                <Typography
+                  variant='caption'
+                  color='red'
+                  sx={{ display: 'block', mt: 0.5, ml: 1 }}
+                >
+                  {errorMessage}
+                </Typography>
+              )}
+            </div>
         </>
     )
 }

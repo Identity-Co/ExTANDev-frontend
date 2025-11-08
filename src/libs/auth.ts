@@ -1,6 +1,7 @@
 // Third-party Imports
 import CredentialProvider from 'next-auth/providers/credentials'
 import GoogleProvider from 'next-auth/providers/google'
+import FacebookProvider from "next-auth/providers/facebook";
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { PrismaClient } from '@prisma/client'
 import type { NextAuthOptions, User } from 'next-auth'
@@ -46,6 +47,8 @@ export const authOptions: NextAuthOptions = {
 
           const data = await res.json()
 
+          console.log('Social Login:: ', data);
+
           if (res.status === 401) {
             throw new Error(JSON.stringify(data))
           }
@@ -79,9 +82,14 @@ export const authOptions: NextAuthOptions = {
       }
     }),
 
+    FacebookProvider({
+      clientId: "1380308580372397",
+      clientSecret: "4807d7ca449f3aa6b6bbffcd324ac23c",
+    }),
+
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
+      clientId: "899760202984-plt5aioi3p8ctsr3tvroku9v9hm4ad25.apps.googleusercontent.com",
+      clientSecret: "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"
     })
 
     // ** ...add more providers here
@@ -109,6 +117,8 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/login'
   },
+
+  secret: process.env.NEXTAUTH_SECRET,
 
   // ** Please refer to https://next-auth.js.org/configuration/options#callbacks for more `callbacks` options
   callbacks: {
