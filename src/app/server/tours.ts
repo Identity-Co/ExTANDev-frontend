@@ -267,3 +267,48 @@ export const getActivitiesByIds = async (activity_ids: number[]) => {
     return Array.isArray(json.data) ? json.data : [];
   }
 }
+
+export const getAllTours = async (fields: string = '') => {
+  const session = await getServerSession(authOptions);
+
+  const fieldsParam = fields ? '?fields='+fields : '';
+  
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tours/list-all${fieldsParam}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + session?.user?.userToken
+    }
+  })
+  
+  if (!response.ok) {
+    //throw new Error(`HTTP error! status: ${response.status}`);
+    return []
+  } else {
+    const json = await response.json();
+    
+    return json.data
+  }
+}
+
+
+export const getToursByIds = async (tours_ids: string[]) => {
+  const session = await getServerSession(authOptions);
+
+  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/tours/get-tours-by-ids`);
+  url.searchParams.append("tours_ids", tours_ids.join(","));
+
+  const response = await fetch(url.toString(), {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + session?.user?.userToken
+    }
+  })
+
+  if (!response.ok) {
+    return []
+  } else {
+    const json = await response.json();
+
+    return Array.isArray(json.data) ? json.data : [];
+  }
+}

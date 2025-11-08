@@ -4,6 +4,7 @@ import * as Common from '@/app/server/common'
 import { getPageData } from '@/app/server/home_page'
 import { getAdventureGuides } from '@/app/server/adventure_guide'
 import { getDestinations } from '@/app/server/destinations'
+import { getAllTours } from '@/app/server/tours'
 
 import config from '@/configs/themeConfig'
 
@@ -33,9 +34,12 @@ const CmsHome = async () => {
 
   const destinations = await getDestinations();
 
+  const adventurePosts = await getAllTours('id,name');
+
   return <Sections pgData={data} 
     fnotes={field_notes} 
     destinations={destinations??[]}
+    adventurePosts={adventurePosts??[]}
   />
 }
 

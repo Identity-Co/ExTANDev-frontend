@@ -99,7 +99,7 @@ const schema = object({
   rating: optional(string()),
 })
 
-const PageSection = ({ pgData, fnotes, destinations }: { pgData?: []; fnotes?: []; destinations?: []; }) => {  
+const PageSection = ({ pgData, fnotes, destinations, adventurePosts }: { pgData?: []; fnotes?: []; destinations?: []; adventurePosts?: []; }) => {  
   const router = useRouter()
 
   const setLoading = useNavigationStore((s) => s.setLoading)
@@ -117,6 +117,7 @@ const PageSection = ({ pgData, fnotes, destinations }: { pgData?: []; fnotes?: [
 
   const [noteOptions, setnoteOptions] = useState<string[]>([])
   const [destOptions, setdestOptions] = useState<string[]>([])
+  const [advPostsOptions, setadvPostsOptions] = useState<string[]>([])
 
   const modules = {
     toolbar: [
@@ -152,6 +153,15 @@ const PageSection = ({ pgData, fnotes, destinations }: { pgData?: []; fnotes?: [
 
     setdestOptions(obj);
   }, [destinations]);
+
+  useEffect(() => {
+    const obj = adventurePosts.map(item => ({
+      label: item._id,
+      value: item.name
+    }));
+
+    setadvPostsOptions(obj);
+  }, [adventurePosts]);
   
   const [aboutfileInput, setaboutFileInput] = useState('')
   const [aboutimgSrc, setaboutImgSrc] = useState<string>(pgData?.about_image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${pgData?.about_image}` : '/images/avatars/1.png')
@@ -712,9 +722,9 @@ const PageSection = ({ pgData, fnotes, destinations }: { pgData?: []; fnotes?: [
                       <input type="hidden" {...register("adventure_slides")} />
                       <Autocomplete
                         multiple
-                        options={noteOptions}
+                        options={advPostsOptions}
                         getOptionLabel={(option) => option.value} 
-                        value={noteOptions.filter(opt =>
+                        value={advPostsOptions.filter(opt =>
                           (watch("adventure_slides") || []).includes(opt.label)
                         )}
                         renderOption={(props, option) => (
