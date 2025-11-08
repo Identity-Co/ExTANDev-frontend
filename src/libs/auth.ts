@@ -85,12 +85,12 @@ export const authOptions: NextAuthOptions = {
     FacebookProvider({
       clientId: "1380308580372397",
       clientSecret: "4807d7ca449f3aa6b6bbffcd324ac23c",
-    }),
+    })
 
-    GoogleProvider({
+    /*GoogleProvider({
       clientId: "899760202984-plt5aioi3p8ctsr3tvroku9v9hm4ad25.apps.googleusercontent.com",
       clientSecret: "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"
-    })
+    })*/
 
     // ** ...add more providers here
   ],
