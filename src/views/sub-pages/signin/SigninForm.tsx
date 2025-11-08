@@ -26,8 +26,6 @@ import classnames from 'classnames'
 import type { SubmitHandler } from 'react-hook-form'
 import type { InferInput } from 'valibot'
 
-import FacebookLogin from "react-facebook-login";
-
 // import GoogleAuthButton from "@/components/GoogleAuthButton";
 
 //import { useNavigationStore } from '@/libs/navigation-store'
@@ -332,9 +330,8 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
                 </div>
             </form>
 
-            <div style={{ marginTop: "20px" }}>
+            {/*<div style={{ marginTop: "20px" }}>
               <div id="googleSignIn"></div>
-              {/*<button onClick={() => signIn("google")}>Sign in with Google</button>*/}
             </div>
 
 
@@ -349,13 +346,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
                   cursor: "pointer"
                 }}
               >Sign in with Facebook</button>
-              {/*<FacebookLogin
-                appId={process.env.NEXT_PUBLIC_FACEBOOK_APP_ID}
-                autoLoad={false}
-                fields="name,email,picture"
-                callback={responseFacebook}
-              />*/}
-            </div>
+            </div>*/}
 
             <div className={classnames(styles.input_full_box , 'input_full_box')}>
               {errorMessage && (
