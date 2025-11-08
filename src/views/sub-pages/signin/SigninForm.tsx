@@ -330,7 +330,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
                 </div>
             </form>
 
-            {/*<div style={{ marginTop: "20px" }}>
+            <div style={{ marginTop: "20px" }}>
               <div id="googleSignIn"></div>
             </div>
 
@@ -346,7 +346,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
                   cursor: "pointer"
                 }}
               >Sign in with Facebook</button>
-            </div>*/}
+            </div>
 
             <div className={classnames(styles.input_full_box , 'input_full_box')}>
               {errorMessage && (
