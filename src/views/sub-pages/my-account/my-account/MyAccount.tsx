@@ -33,7 +33,7 @@ const MyAccount = ({ session, history }: { session: any; history: any }) => {
   
     return (
       <div className={classnames(styles.grid_box)}>
-        <p>Your referral link: {process.env.NEXT_PUBLIC_APP_URL}/signin/?ref_id={session.user.id}</p>
+        <p>Your referral link: {process.env.NEXT_PUBLIC_APP_URL}/signin/?ref_id={session?.user.id}</p>
         <p>Total Points Earned: <strong>{history.total_earned}</strong>,
           Points Redeemed: <strong>{history.total_redeemed}</strong>,
           Current Balance: <strong>{history.current_balance}</strong>

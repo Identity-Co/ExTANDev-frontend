@@ -355,39 +355,39 @@ export const useComment = ({
       
       const commentLists_tmp = await getComments(formData);
 
-      const commentLists = commentLists_tmp.map(item => {
-        const userId = userData?.user?.id;
+      if(commentLists_tmp){
+        const commentLists = commentLists_tmp.map(item => {
+          const userId = userData?.user?.id;
 
-        const hasUpvoted = item?.upvotes?.includes(userId);
-        const hasMarkedHelpful = item?.helpfules?.includes(userId);
-        const hasReportedByUser = item?.reports?.some(report => report.user_id === userId);
+          const hasUpvoted = item?.upvotes?.includes(userId);
+          const hasMarkedHelpful = item?.helpfules?.includes(userId);
+          const hasReportedByUser = item?.reports?.some(report => report.user_id === userId);
 
-        const repliesWithFlags = item.replies?.map(reply => {
-          const replyUpvoted = reply?.upvotes?.includes(userId);
-          const replyMarkedHelpful = reply?.helpfules?.includes(userId);
-          const replyReportedByUser = reply?.reports?.some(report => report.user_id === userId);
+          const repliesWithFlags = item.replies?.map(reply => {
+            const replyUpvoted = reply?.upvotes?.includes(userId);
+            const replyMarkedHelpful = reply?.helpfules?.includes(userId);
+            const replyReportedByUser = reply?.reports?.some(report => report.user_id === userId);
+
+            return {
+              ...reply,
+              upvoted_by_user: replyUpvoted,
+              marked_helpful_by_user: replyMarkedHelpful,
+              reported_by_user: replyReportedByUser,
+            };
+          }) || [];
 
           return {
-            ...reply,
-            upvoted_by_user: replyUpvoted,
-            marked_helpful_by_user: replyMarkedHelpful,
-            reported_by_user: replyReportedByUser,
+            ...item,
+            upvoted_by_user: hasUpvoted,
+            marked_helpful_by_user: hasMarkedHelpful,
+            reported_by_user: hasReportedByUser,
+            replies: repliesWithFlags
           };
-        }) || [];
+        });
 
-        return {
-          ...item,
-          upvoted_by_user: hasUpvoted,
-          marked_helpful_by_user: hasMarkedHelpful,
-          reported_by_user: hasReportedByUser,
-          replies: repliesWithFlags
-        };
-      });
-
-      console.log(commentLists)
-
-      setComments(commentLists);
-      setCommentsCount(commentLists.length);
+        setComments(commentLists);
+        setCommentsCount(commentLists.length);
+      }
     } catch (error) {
       console.error('Error fetching comments:', error);
     } finally {
