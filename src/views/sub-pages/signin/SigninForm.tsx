@@ -163,7 +163,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
         /*const res = await axios.post("http://localhost:5001/v1/api/auth/google-login", {
           token: response.credential,
         });*/
-        const _res = await fetch(`https://https://adventureapi.deepripple.com/v1/api/auth/google-login`, {
+        const _res = await fetch(`https://adventureapi.deepripple.com/v1/api/auth/google-login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
