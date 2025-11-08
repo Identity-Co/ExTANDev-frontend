@@ -17,7 +17,7 @@ header.header .head_right .head_buttons .head_btn2 a span{color: #F85241;}
 header.header .head_right .head_buttons .head_btn3 a{font-size: 0.625vw; font-weight: 500; color: #1F1F1F; background-color: #FDFCFC; border: solid 0.0365vw #ffffff; border-radius: 0.104vw; padding: 0.526vw; line-height: 1; display: flex; align-items: center; gap:0.293vw; text-transform: none; font-family: "Raleway", sans-serif; font-style: italic; letter-spacing:-0.025em; }
 header.header .head_right .head_buttons .head_btn3 a:hover{background-color: #ffffff;}
 header.header .head_right .head_buttons .head_btn3 a svg{width: 1.318vw; height: 1.318vw;}
-header.header .navMenu ul{ padding-inline-start: 0;}
+header.header .navMenu ul{ padding-inline-start: 0; }
 
 .menu_button_container{display: none;}
 .hamburger .line{width: 4.395vw; height: 0.391vw; background-color: #F85241; display: block; margin: 0 0 0.977vw;-webkit-transition: all 0.3s ease-in-out;-o-transition: all 0.3s ease-in-out;transition: all 0.3s ease-in-out; border-radius:0.732vw;}
@@ -114,35 +114,36 @@ footer.footer{background-color: #000000; text-align: center;}
 .foot_bot_inner ul.foot_social li:nth-child(4) svg{width: 3.214vw; height: 3.214vw;}
 
 }
+/*footer-end*/
 
 /*footer.footer{background-color: #000000; text-align: center;}
-footer .footer_top{border-bottom: solid 0.073vw #FFFFFF;}
+footer .footer_top{border-bottom: solid 0.052vw #FFFFFF;}
 footer .foot_logo a{display: block;}
-footer .foot_logo a img{max-width: 22.474vw;}
-footer .foot_bot_inner{display: flex; flex-wrap: wrap; gap:2.196vw; align-items: center; justify-content: center;}
-footer .foot_bot_inner ul.foot_menu{display: flex; column-gap: 2.928vw; list-style: none; grid-row-gap: 1.318vw;}
-footer .foot_bot_inner ul.foot_menu li a{font-size: 1.025vw; font-weight: 600; color: #ffffff;}
+footer .foot_logo a img{max-width: 15.989vw;}
+footer .foot_bot_inner{display: flex; flex-wrap: wrap; gap:1.562vw; align-items: center; justify-content: center;}
+footer .foot_bot_inner ul.foot_menu{display: flex; column-gap: 2.083vw; list-style: none; grid-row-gap: 0.938vw;}
+footer .foot_bot_inner ul.foot_menu li a{font-size: 0.729vw; font-weight: 600; color: #ffffff;}
 footer .foot_bot_inner ul.foot_menu li a:hover{color: #F85241;}
-footer .foot_bot_inner ul.foot_social{display: flex; column-gap: 1.318vw; list-style: none;}
+footer .foot_bot_inner ul.foot_social{display: flex; column-gap: 0.938vw; list-style: none;}
 footer .foot_bot_inner ul.foot_social li a:hover svg path{fill: #F85241;}
-footer .foot_rights{padding-top: 2.343vw;}
-footer .foot_rights p{font-size: 0.805vw; text-transform: uppercase; line-height: 1.171vw; color: #FFFFFF; opacity: 0.75; max-width: 45.168vw; margin: 0 auto;}
+footer .foot_rights{padding-top: 1.667vw;}
+footer .foot_rights p{font-size: 0.573vw; text-transform: uppercase; line-height: 0.833vw; color: #FFFFFF; opacity: 0.75; max-width: 32.135vw; margin: 0 auto;}
 
 
 @media only screen and (max-width: 1024px){
-  footer .foot_bot_inner ul.foot_menu li a{font-size: 1.571vw;}
-  footer .foot_rights p{font-size: 1.505vw; max-width: 100%; line-height: 1.2;}
+  footer .foot_bot_inner ul.foot_menu li a{font-size: 1.118vw;}
+  footer .foot_rights p{font-size: 1.071vw; max-width: 100%; line-height: 1.2;}
   
 }
 
 @media only screen and (max-width: 768px){
-  footer .foot_logo a img{max-width: 30.615vw;}
-  footer .foot_bot_inner{flex-direction: column; gap: 3.196vw;}
+  footer .foot_logo a img{max-width: 21.781vw;}
+  footer .foot_bot_inner{flex-direction: column; gap: 2.274vw;}
   footer .foot_bot_inner ul.foot_menu{flex-wrap: wrap; justify-content: center;}
-  footer .foot_bot_inner ul.foot_menu li a{font-size: 2.571vw;}
-  footer .foot_rights p{font-size: 2.505vw; max-width: 100%; line-height: 1.2;}
-  footer .foot_bot_inner ul.foot_social{column-gap: 4.318vw;}
-  footer .foot_rights{padding-top: 3.343vw;}
+  footer .foot_bot_inner ul.foot_menu li a{font-size: 1.829vw;}
+  footer .foot_rights p{font-size: 1.782vw; max-width: 100%; line-height: 1.2;}
+  footer .foot_bot_inner ul.foot_social{column-gap: 3.072vw;}
+  footer .foot_rights{padding-top: 2.378vw;}
   
 }*/
 

@@ -28,8 +28,6 @@ const tabContentList = (props): { [key: string]: ReactElement } => ({
 
 const PageSection = ({ pgData, id, resortDestinations }: { pgData?: []; id?: String; resortDestinations?: []; }) => {
 
-  console.log(resortDestinations)
-
   const [val, setVal] = useState<string>('overview')
 
   const handleChange = (event: SyntheticEvent, newValue: string) => {

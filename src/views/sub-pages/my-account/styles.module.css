@@ -173,6 +173,12 @@
   .grid_box .signup_box.account_box{margin-top: 2.223vw;}
 }
 
+
+@media only screen and (max-width: 575px){
+  .signup_box .input_row input[type="submit"], .signup_box .input_row .input_full_box a.back_btn, .submit_btn button{font-size: 3.437vw; padding: 2.375vw 4.508vw;}
+
+}
+
 /*ambassadorship_sec3-end*/
 
 /* CUSTOM */
@@ -183,3 +189,188 @@
 
 /*.submit_btn button{width: 100%;}*/
 
+
+
+/* Liked Items - START */
+
+/* Main Container */
+
+
+.likes_share_page .likes_content {
+  background: transparent;
+  padding: 0 2.083vw; /* 40px */
+}
+
+/* Filter Section */
+.likes_share_page .filter_section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.521vw; /* 10px */
+  margin-bottom: 1.563vw; /* 30px */
+  padding-bottom: 1.042vw; /* 20px */
+}
+
+.likes_share_page .filter_section button {
+  font-size: 0.833vw; font-weight: 700; color: #ffffff; background-color: rgb(31, 31, 31, 0.8); border-radius:0.156vw; text-transform: uppercase; padding: 0.625vw 0.833vw; display: inline-block; line-height: 1.2; font-family: "Raleway", sans-serif; text-align: center; cursor: pointer;
+}
+
+.likes_share_page .filter_section button:hover {
+  background: #EA5647;
+}
+
+.likes_share_page .filter_section button.active {
+  background: #EA5647;
+}
+
+/* List View */
+.likes_share_page .liked_posts_list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.521vw; /* 10px */
+}
+
+/* List Item - Smaller Height */
+.likes_share_page .post_list_item {
+  display: flex;
+  align-items: center;
+  border: 0.052vw solid #e2e8f0; /* 1px */
+  border-radius: 0.521vw; /* 10px */
+  padding: 0.781vw; /* 15px */
+  transition: all 0.3s ease;
+  gap: 0.781vw; /* 15px */
+  min-height: 3.646vw; /* 70px */
+}
+
+
+/* Post Image in List - Smaller */
+.likes_share_page .post_list_image {
+  width: 3.125vw; /* 60px */
+  height: 3.125vw; /* 60px */
+  border-radius: 100%; /* 5px */
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.likes_share_page .post_list_image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+
+/* Post Content in List */
+.likes_share_page .post_list_content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.781vw; /* 15px */
+}
+
+.likes_share_page .post_list_info {
+  flex: 1;
+}
+
+.likes_share_page .post_list_title {
+  font-size: 1.233vw; /* 16px */
+  color: #1F1F1F;
+  margin: 0 0 0.26vw 0; /* 5px */
+  line-height: 1.2;
+  display: flex;
+    align-items: center;
+    column-gap: 0.584vw;
+}
+
+/* No Likes State */
+.likes_share_page .no_likes {
+  text-align: center;
+  padding: 3.125vw 2.083vw; /* 60px 40px */
+  color: #1F1F1F;
+  background: white;
+  border-radius: 0.521vw; /* 10px */
+  border: 0.052vw solid #e2e8f0; /* 1px */
+}
+
+.post_list_info .review_text{padding-bottom: 0;}
+
+.post_list_image .contact_review_img_default{width: 100%; height: 100%;}
+
+.likes_share_page .no_likes h3 {
+  margin-bottom: 0.521vw; /* 10px */
+  color: #1f1f1f;
+  font-size: 1.233vw; /* 24px */
+}
+
+.likes_share_page .no_likes p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Loading State */
+.likes_share_page .loading {
+  text-align: center;
+  padding: 3.125vw 2.083vw; /* 60px 40px */
+  color: #1F1F1F;
+  font-size: 1.042vw; /* 20px */
+  background: white;
+  border-radius: 0.521vw; /* 10px */
+  border: 0.052vw solid #e2e8f0; /* 1px */
+}
+
+.destination_name a{font-weight: 600;}
+.dislike_btn{background: none;}
+
+/* Responsive Design for smaller screens */
+@media (max-width: 768px) {
+  .likes_share_page {
+    padding: 0;
+  }
+  
+  .likes_share_page .likes_content {
+    padding: 0;
+  }
+  
+  .likes_share_page .post_list_item {
+    flex-direction: column;
+    text-align: center;
+    gap: 2vw;
+    min-height: auto;
+    padding: 3vw;
+  }
+  
+  .likes_share_page .post_list_image {
+    width: 15vw;
+    height: 15vw;
+  }
+  
+  .likes_share_page .post_list_content {
+    flex-direction: column;
+    gap: 2vw;
+  }
+  
+  .likes_share_page .filter_section {
+    flex-direction: column;
+    gap: 1.521vw;
+  }
+
+  .likes_share_page .liked_posts_list{
+    gap: 1.521vw;
+
+  }
+  
+  .likes_share_page .filter_section button {
+    width: 100%;
+    padding: 2vw 3vw;
+    font-size: 3vw;
+    border-radius: 1vw;
+  }
+  
+  .likes_share_page .no_likes h3,
+  .likes_share_page .post_list_title {
+    font-size: 5vw;
+    justify-content: center;
+  }
+}
+
+/* Liked Items - END */

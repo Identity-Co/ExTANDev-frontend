@@ -14,7 +14,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import type { VerticalMenuContextProps } from '@menu/components/vertical-menu/Menu'
 
 // Component Imports SubMenu, MenuSection
-import { Menu, MenuItem } from '@menu/vertical-menu'
+import { Menu, MenuItem, SubMenu } from '@menu/vertical-menu'
 
 // import { GenerateVerticalMenu } from '@components/GenerateMenu'
 
@@ -224,6 +224,14 @@ const VerticalMenu = ({  scrollMenu }: Props) => {
           Reviews
         </MenuItem>
 
+        <SubMenu
+          label='Comments'
+          icon={<i className='ri-discuss-line' />}
+        >
+          <MenuItem href='/admin/comments/'>All Comments</MenuItem>
+          <MenuItem href='/admin/comments/reported/'>Reported Comments</MenuItem>
+        </SubMenu>
+
         <MenuItem
           href='/admin/reports/'
           onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/reports/')}
@@ -232,6 +240,16 @@ const VerticalMenu = ({  scrollMenu }: Props) => {
           icon={<i className='ri-file-chart-line' />}
         >
           Reports
+        </MenuItem>
+
+        <MenuItem
+          href='/admin/royalty-settings/'
+          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/royalty-settings/')}
+          exactMatch={false}
+          activeUrl='/admin/royalty-settings'
+          icon={<i className='ri-money-dollar-circle-line' />}
+        >
+          Royalty Settings
         </MenuItem>
 
         <MenuItem

@@ -156,10 +156,10 @@ code {
 .golden_avatar { border: 3px solid #FFD700; border-radius: 50%; }
 
 
-.custom-reset-fld .input_full_box > div > div{background: #F4F8F7; border-radius: .293vw;}
-.custom-reset-fld .input_full_box p{font-size: .952vw; font-family: Raleway, sans-serif; font-weight: 400; color: #868686; text-align: center; display: block; line-height: 1.4;}
+.custom-reset-fld .input_full_box > div > div{background: #F4F8F7; border-radius: 0.208vw;}
+.custom-reset-fld .input_full_box p{font-size: 0.677vw; font-family: Raleway, sans-serif; font-weight: 400; color: #868686; text-align: center; display: block; line-height: 1.4;}
 .custom-reset-fld .input_full_box label{margin: 0;}
-.custom-reset-fld .input_full_box label span:first-child{padding: 0 0.5vw 0 0;}
-.custom-reset-fld .input_full_box label span:last-child{position: relative; cursor: pointer; font-size: 1.025vw; font-family: Raleway, sans-serif; font-weight: 400; color: #868686; line-height: 1.4;}
+.custom-reset-fld .input_full_box label span:first-child{padding: 0 0.356vw 0 0;}
+.custom-reset-fld .input_full_box label span:last-child{position: relative; cursor: pointer; font-size: 0.729vw; font-family: Raleway, sans-serif; font-weight: 400; color: #868686; line-height: 1.4;}
 .custom-reset-fld .input_full_box label span:last-child a{color: #127ac3;}
 .custom-reset-fld .input_full_box label span:last-child a:hover{color: #f85241;}

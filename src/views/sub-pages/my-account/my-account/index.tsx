@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 // Type Imports
 import type { Mode } from '@core/types'
@@ -13,9 +13,12 @@ import MyAccount from './MyAccount'
 
 import { useSettings } from '@core/hooks/useSettings'
 
-const LandingPageWrapper = ({ mode }: { mode: Mode }) => {
+import * as Royalty from '@/app/server/royalty'
+
+const LandingPageWrapper = ({ mode, session }: { mode: Mode; session: any }) => {
   // Hooks
   const { updatePageSettings } = useSettings()
+  const [history, setHistory] = useState<any>(null)
 
   // For Page specific settings
   useEffect(() => {
@@ -25,9 +28,26 @@ const LandingPageWrapper = ({ mode }: { mode: Mode }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const mData = { user_id: session?.user.id }
+        const res = await Royalty.getCurrentBalance(mData)
+        console.log('history log: ', res)
+        setHistory(res)
+      } catch (err) {
+        console.error('Error fetching history:', err)
+      }
+    }
+
+    fetchHistory()
+  }, [session?.user.id])
+
   return (
-      <MyAccount />
-  )
+    <>
+      {history && <MyAccount session={session} history={history} />}
+    </>
+  );
 }
 
 export default LandingPageWrapper

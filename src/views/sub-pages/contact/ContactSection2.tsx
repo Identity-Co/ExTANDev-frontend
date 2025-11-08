@@ -109,8 +109,6 @@ const ContactForm = () => {
         'ip_address': ipResponse?.data?.ip
       }
 
-      console.log('Submitting data:', formData)
-
       const res = await createEntry(formData)
     
       if(res.success || res._id) {

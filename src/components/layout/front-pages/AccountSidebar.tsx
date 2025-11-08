@@ -7,9 +7,6 @@ import Link from 'next/link'
 
 import * as Common from '@/app/server/common'
 
-// MUI Imports
-import Typography from '@mui/material/Typography'
-
 // Third-party Imports
 import { signOut } from 'next-auth/react'
 import classnames from 'classnames'
@@ -40,16 +37,29 @@ const AccountSidebar = () => {
       <div className={classnames(styles.grid_box), "sidebar-box"}>
         {session && (
           <>
-            <Typography>Welcome {session?.user?.name}!</Typography>
+            <p className="welcome_user">Welcome {session?.user?.name}!</p>
             <ul>
               <li>
                 <Link href="/edit-profile/">Edit Profile</Link>
               </li>
+              {session?.user?.role == 'user' && (
+                <>
+                  <li>
+                    <Link href="/my-account/liked-items/">Liked Items</Link>
+                  </li>
+                  <li>
+                    <Link href="/my-account/saved-items/">Saved Items</Link>
+                  </li>
+                </>
+              )}
               {session?.user?.role == 'ambassador' && (
                 <li>
                   <Link href="/my-account/adventure-guides/">Adventure Guide</Link>
                 </li>
               )}
+              <li>
+                <Link href="/my-account/points-history/">Points History</Link>
+              </li>
               <li>
                 <Link href="/change-password/">Change Password</Link>
               </li>
