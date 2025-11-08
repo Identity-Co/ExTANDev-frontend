@@ -336,7 +336,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
 
 
             <div style={{ marginTop: "20px" }}>
-              <button onClick={() => signIn("facebook")} style={{
+              <button onClick={() => signIn("facebook", { callbackUrl: "http://localhost:3001/my-account" })} style={{
                   backgroundColor: "#1877F2",
                   color: "white",
                   padding: "10px 16px",
