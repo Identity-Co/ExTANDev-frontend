@@ -118,6 +118,8 @@ export const authOptions: NextAuthOptions = {
     signIn: '/login'
   },
 
+  debug: true,
+
   secret: process.env.NEXTAUTH_SECRET,
 
   // ** Please refer to https://next-auth.js.org/configuration/options#callbacks for more `callbacks` options
