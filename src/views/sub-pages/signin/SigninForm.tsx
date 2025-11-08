@@ -336,7 +336,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
 
 
             <div style={{ marginTop: "20px" }}>
-              <button onClick={() => signIn("facebook", { callbackUrl: "http://https://adventure.deepripple.com/my-account" })} style={{
+              <button onClick={() => signIn("facebook", { callbackUrl: "http://adventure.deepripple.com/my-account" })} style={{
                   backgroundColor: "#1877F2",
                   color: "white",
                   padding: "10px 16px",
