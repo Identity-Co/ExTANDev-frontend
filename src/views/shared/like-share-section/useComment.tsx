@@ -356,7 +356,7 @@ export const useComment = ({
       const commentLists_tmp = await getComments(formData);
       console.log(commentLists_tmp)
 
-      if(Array.isArray(commentLists_tmp)){
+      if(commentLists_tmp){
         const commentLists = commentLists_tmp?.map(item => {
           const userId = userData?.user?.id;
 
