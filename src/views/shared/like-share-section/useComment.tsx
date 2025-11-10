@@ -354,7 +354,7 @@ export const useComment = ({
       };
       
       const commentLists_tmp = await getComments(formData);
-      console.log(commentLists_tmp)
+      console.log(commentLists_tmp, formData)
 
       if(commentLists_tmp){
         const commentLists = commentLists_tmp?.map(item => {
