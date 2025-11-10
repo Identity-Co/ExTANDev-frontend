@@ -1136,7 +1136,7 @@ export const useComment = ({
           <div className={styles.commentUser}>
             <div className={styles.userAvatar}>
               {comment?.user_id?.profile_picture ? (
-                <img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${comment?.user_id?.profile_picture}`} alt="User Profile" />
+                <img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${comment?.user?.profile_picture}`} alt="User Profile" />
               ) : (
                 <Avatar
                   className={classnames(styles.contact_review_img_default)}
@@ -1144,7 +1144,7 @@ export const useComment = ({
                     bgcolor: 'primary.main',
                   }}
                 >
-                  {comment?.user_id.first_name?.charAt(0).toUpperCase()} {comment?.user_id.last_name?.charAt(0).toUpperCase()}
+                  {comment?.user.first_name?.charAt(0).toUpperCase()} {comment?.user.last_name?.charAt(0).toUpperCase()}
                 </Avatar>
               )}
             </div>
@@ -1174,8 +1174,8 @@ export const useComment = ({
                 <div className={styles.commentHeader}>
                   <div className={styles.commentUser}>
                     <div className={styles.userAvatar}>
-                      {reply?.user_id?.profile_picture ? (
-                        <img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${reply?.user_id?.profile_picture}`} alt="User Profile" />
+                      {reply?.user?.profile_picture ? (
+                        <img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${reply?.user?.profile_picture}`} alt="User Profile" />
                       ) : (
                         <Avatar
                           className={classnames(styles.contact_review_img_default)}
@@ -1183,12 +1183,12 @@ export const useComment = ({
                             bgcolor: 'primary.main',
                           }}
                         >
-                          {reply?.user_id.first_name?.charAt(0).toUpperCase()} {reply?.user_id.last_name?.charAt(0).toUpperCase()}
+                          {reply?.user.first_name?.charAt(0).toUpperCase()} {reply?.user.last_name?.charAt(0).toUpperCase()}
                         </Avatar>
                       )}
                     </div>
                     <div>
-                      <div className={styles.userName}>{reply?.user_id?.first_name} {reply?.user_id?.last_name}</div>
+                      <div className={styles.userName}>{reply?.user?.first_name} {reply?.user?.last_name}</div>
                     </div>
                   </div>
                   <span className={styles.commentDate}>{formatDate(reply.created_at)}</span>
