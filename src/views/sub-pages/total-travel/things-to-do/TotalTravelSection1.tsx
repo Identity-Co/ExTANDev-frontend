@@ -86,7 +86,7 @@ const TotalTravelSection1 = ({ data, setOpenAccess, accessToken }: { data?: []; 
 
               try {
                 window.travelClient.start({
-                  session_token: res.session_token,
+                  session_token: accessToken,
                   container: '.activities_search_selector',
                   navigate_to: {
                     start_tab: "parks",
