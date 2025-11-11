@@ -64,6 +64,7 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
   //const [isFirstTime, setIsFirstTime] = useState(true)
   const [openAccess, setOpenAccess] = useState(false)
   const [accessToken, setAccessToken] = useState('')
+  const [isLoaded, setIsLoaded] = useState(false)
 
   const isLoadRef = useRef(false)
 
@@ -102,34 +103,12 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
 
       script.onload = () => {
         console.log('Travel Client script loaded from index...')
-
-        // Wait a bit for the library to attach itself to window
-        /* const checkClient = setInterval(() => {
-          if (window.travelClient) {
-            clearInterval(checkClient)
-
-            try {
-              window.travelClient.start({
-                session_token: res.session_token,
-                container: '.packages_search_selector',
-                navigate_to: {
-                  view: 'parks_search',
-                  category: "tours"
-                },
-              })
-
-              window.travelClient.on('error', function (err) {
-                //console.error('Travel Client error:', err)
-              })
-            } catch (err) {
-              //console.error('Error initializing travelClient:', err)
-            }
-          }
-        }, 500) */
+        setIsLoaded(true)
       }
 
       script.onerror = () => {
         console.error('Failed to load Travel Client script.')
+        setIsLoaded(true)
       }
 
       document.body.appendChild(script)
@@ -138,6 +117,8 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
       return () => {
         if (script.parentNode) script.parentNode.removeChild(script)
       }
+    } else {
+      setIsLoaded(true)
     }
 
   };
@@ -150,63 +131,67 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
 
   }, [])
 
+
+
   return (
     <>
       <BannerSection mode={mode} banners={banners?? []} />
       
-      <TabContext value={val} className="my-5">
-        <TabList variant='fullWidth' onChange={handleChange} aria-label='full width tabs example' className="destinations_tab total_travel_tab">
-          <Tab value='stays' label='Stays' />
-          <Tab value='flights' label='flights' />
-          <Tab value='cars' label='Cars' />
-          <Tab value='packages' label='Packages' />
-          <Tab value='thingstodo' label='Things to do' />
-          {/* <Tab value='cruises' label='Cruises' /> */}
-        </TabList>
-        {/* <div className={classnames(styles.search_box, styles.search_box_total)}>
-            <div className={classnames(styles.container, 'container')}>
-                <div className={classnames(styles.search_box_inner)}>
-                    <div className={classnames(styles.search_row)}>
-                        <form>
-                            <div className={classnames(styles.search_select, styles.ss1)}>
-                                <label>Destinations</label>
-                                <select name="cars" id="cars">
-                                  <option value="">Destinations 1</option>
-                                  <option value="">Destinations 2</option>
-                                  <option value="">Destinations 3</option>
-                                  <option value="">Destinations 4</option>
-                                </select>
-                            </div>
-                            <div className={classnames(styles.search_select, styles.ss2)}>
-                                <label>Dates</label>
-                                <select name="cars" id="cars">
-                                  <option value="">Dates 1</option>
-                                  <option value="">Dates 2</option>
-                                  <option value="">Dates 3</option>
-                                  <option value="">Dates 4</option>
-                                </select>
-                            </div>
-                            <div className={classnames(styles.search_select, styles.ss3)}>
-                                <label>Travelers</label>
-                                <select name="cars" id="cars">
-                                  <option value="">Travelers 1</option>
-                                  <option value="">Travelers 2</option>
-                                  <option value="">Travelers 3</option>
-                                  <option value="">Travelers 4</option>
-                                </select>
-                            </div>
-                            <div className={classnames(styles.search_btn)}>
-                                <input type="submit" name="" value="Search" />
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div> */}
-        <TabPanel value={val} className='pbs-0'>
-            {tabContentList({ pgData: pgData, setOpenAccess: setOpenAccess, accessToken: accessToken })[val]}
-        </TabPanel>
-      </TabContext>
+      {isLoaded && (
+        <TabContext value={val} className="my-5">
+          <TabList variant='fullWidth' onChange={handleChange} aria-label='full width tabs example' className="destinations_tab total_travel_tab">
+            <Tab value='stays' label='Stays' />
+            <Tab value='flights' label='flights' />
+            <Tab value='cars' label='Cars' />
+            <Tab value='packages' label='Packages' />
+            <Tab value='thingstodo' label='Things to do' />
+            {/* <Tab value='cruises' label='Cruises' /> */}
+          </TabList>
+          {/* <div className={classnames(styles.search_box, styles.search_box_total)}>
+              <div className={classnames(styles.container, 'container')}>
+                  <div className={classnames(styles.search_box_inner)}>
+                      <div className={classnames(styles.search_row)}>
+                          <form>
+                              <div className={classnames(styles.search_select, styles.ss1)}>
+                                  <label>Destinations</label>
+                                  <select name="cars" id="cars">
+                                    <option value="">Destinations 1</option>
+                                    <option value="">Destinations 2</option>
+                                    <option value="">Destinations 3</option>
+                                    <option value="">Destinations 4</option>
+                                  </select>
+                              </div>
+                              <div className={classnames(styles.search_select, styles.ss2)}>
+                                  <label>Dates</label>
+                                  <select name="cars" id="cars">
+                                    <option value="">Dates 1</option>
+                                    <option value="">Dates 2</option>
+                                    <option value="">Dates 3</option>
+                                    <option value="">Dates 4</option>
+                                  </select>
+                              </div>
+                              <div className={classnames(styles.search_select, styles.ss3)}>
+                                  <label>Travelers</label>
+                                  <select name="cars" id="cars">
+                                    <option value="">Travelers 1</option>
+                                    <option value="">Travelers 2</option>
+                                    <option value="">Travelers 3</option>
+                                    <option value="">Travelers 4</option>
+                                  </select>
+                              </div>
+                              <div className={classnames(styles.search_btn)}>
+                                  <input type="submit" name="" value="Search" />
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div> */}
+          <TabPanel value={val} className='pbs-0'>
+              {tabContentList({ pgData: pgData, setOpenAccess: setOpenAccess, accessToken: accessToken })[val]}
+          </TabPanel>
+        </TabContext>
+      )}
 
 
       <Dialog
