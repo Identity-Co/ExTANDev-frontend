@@ -142,7 +142,7 @@ interface UseCommentProps {
 
 interface Comment {
   _id: string;
-  user_id: {
+  user: {
     first_name: string;
     last_name: string;
     profile_picture?: string;
@@ -612,7 +612,7 @@ export const useComment = ({
       if (isCommentSaved) {
         const mockComment: Comment = {
           _id: isCommentSaved._id,
-          user_id: {
+          user: {
             first_name: userData?.user?.name.split(" ")[0],
             last_name: userData?.user?.name.split(" ")[1],
             profile_picture: userData?.user?.image,
@@ -686,7 +686,7 @@ export const useComment = ({
       if (isCommentSaved) {
         const mockReply: Comment = {
           _id: isCommentSaved._id,
-          user_id: {
+          user: {
             first_name: userData?.user?.name.split(" ")[0],
             last_name: userData?.user?.name.split(" ")[1],
             profile_picture: userData?.user?.image,
@@ -1053,21 +1053,25 @@ export const useComment = ({
   ), [newComment, commentImages, isCommentExpanded, isUploading, isUserLoggedIn, showPopupOnce]);
 
   // Render reply form with image upload
-  const renderReplyForm = useCallback((commentId: string, isReply: boolean = false) => {
+  const renderReplyForm = useCallback((commentId: string, replyID: string = '', isReply: boolean = false) => {
     const currentReplyImages = replyImages[commentId] || [];
+    let commentIdTmp = commentId;
+    if(replyID){
+      commentIdTmp = replyID;
+    }
     
     return (
       <div className={classnames(styles.replyForm, {
-        [styles.expanded]: isReplyExpanded === commentId,
-        [styles.collapsed]: isReplyExpanded !== commentId
+        [styles.expanded]: isReplyExpanded === commentIdTmp,
+        [styles.collapsed]: isReplyExpanded !== commentIdTmp
       })}>
-        {isReplyExpanded === commentId ? (
+        {isReplyExpanded === commentIdTmp ? (
           <>
             <div className={styles.editorWrapper}>
               <ReactQuill
                 ref={(el) => {
                   if (el) {
-                    replyEditorRefs.current[commentId] = el;
+                    replyEditorRefs.current[commentIdTmp] = el;
                   }
                 }}
                 value={replyContent}
@@ -1083,8 +1087,8 @@ export const useComment = ({
             {/* Image upload for reply */}
             {renderImageUpload(
               currentReplyImages, 
-              (index) => removeImage(index, true, commentId), 
-              (files) => handleImageUpload(files, true, commentId),
+              (index) => removeImage(index, true, commentIdTmp), 
+              (files) => handleImageUpload(files, true, commentIdTmp),
               true
             )}
             
@@ -1097,7 +1101,7 @@ export const useComment = ({
                 {isUploading ? 'Uploading...' : 'Post Reply'}
               </button>
               <button 
-                onClick={() => collapseReplyEditor(commentId)}
+                onClick={() => collapseReplyEditor(commentIdTmp)}
                 className={styles.cancelReplyButton}
                 disabled={isUploading}
               >
@@ -1135,7 +1139,7 @@ export const useComment = ({
         <div className={styles.commentHeader}>
           <div className={styles.commentUser}>
             <div className={styles.userAvatar}>
-              {comment?.user_id?.profile_picture ? (
+              {comment?.user?.profile_picture ? (
                 <img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${comment?.user?.profile_picture}`} alt="User Profile" />
               ) : (
                 <Avatar
@@ -1149,7 +1153,7 @@ export const useComment = ({
               )}
             </div>
             <div>
-              <div className={styles.userName}>{comment?.user_id?.first_name} {comment?.user_id?.last_name}</div>
+              <div className={styles.userName}>{comment?.user?.first_name} {comment?.user?.last_name}</div>
             </div>
           </div>
           <span className={styles.commentDate}>{formatDate(comment.created_at)}</span>
@@ -1200,7 +1204,7 @@ export const useComment = ({
 
                 {reportingComment === reply._id && renderReportForm(reply._id)}
 
-                {replyingTo === reply._id && isUserLoggedIn && renderReplyForm(reply._id, true)}
+                {replyingTo === reply._id && isUserLoggedIn && renderReplyForm(comment._id, reply._id, true)}
               </div>
             ))}
           </div>
