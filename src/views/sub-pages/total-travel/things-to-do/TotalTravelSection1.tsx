@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-import { createAccessUserToken } from '@/app/server/total-travel';
+import { createAccessUserToken, checkUserLogin } from '@/app/server/total-travel';
 
 // Third-party Imports
 import classnames from 'classnames'
@@ -13,13 +13,13 @@ import styles from './styles.module.css'
 // Config Imports
 import themeConfig from '@configs/themeConfig'
 
-const TotalTravelSection1 = ({ data, setOpenAccess }: { data?: []; setOpenAccess: string; }) => {
+const TotalTravelSection1 = ({ data, setOpenAccess, accessToken }: { data?: []; setOpenAccess: string; accessToken?: string; }) => {
 
     const [loginErr, setLoginErr] = useState(0)
 
     const isLoadRef = useRef(false)
 
-    const fetchCarsData = async () => {
+    /* const fetchCarsData = async () => {
       const res = await createAccessUserToken();
       console.log(res)
 
@@ -71,6 +71,43 @@ const TotalTravelSection1 = ({ data, setOpenAccess }: { data?: []; setOpenAccess
         }
       } else if (res && res.LoginErr) {
         setLoginErr(res.LoginErr)
+      }
+
+    }; */
+
+    const fetchCarsData = async () => {
+
+      if (accessToken) {
+
+          // Wait a bit for the library to attach itself to window
+          const checkClient = setInterval(() => {
+            if (window.travelClient) {
+              clearInterval(checkClient)
+
+              try {
+                window.travelClient.start({
+                  session_token: res.session_token,
+                  container: '.activities_search_selector',
+                  navigate_to: {
+                    start_tab: "parks",
+                    view: 'activities'
+                  },
+                })
+
+                window.travelClient.on('error', function (err) {
+                  //console.error('Travel Client error:', err)
+                })
+              } catch (err) {
+                //console.error('Error initializing travelClient:', err)
+              }
+            }
+          }, 500)
+        
+      } else {
+        const res = await checkUserLogin();
+        if (res && res.LoginErr) {
+          setLoginErr(1)
+        }
       }
 
     };

@@ -47,3 +47,13 @@ export const createAccessUserToken = async () => {
     return json
   }
 }
+
+export const checkUserLogin = async () => {
+  const session = await getServerSession(authOptions);
+
+  if(!session?.user?.id) {
+    return {'LoginErr': 1}
+  } else {
+    return {'LoginErr': 0}
+  }
+}

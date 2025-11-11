@@ -136,8 +136,7 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
   return (
     <>
       <BannerSection mode={mode} banners={banners?? []} />
-      
-      {isLoaded && (
+
         <TabContext value={val} className="my-5">
           <TabList variant='fullWidth' onChange={handleChange} aria-label='full width tabs example' className="destinations_tab total_travel_tab">
             <Tab value='stays' label='Stays' />
@@ -187,12 +186,12 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
                   </div>
               </div>
           </div> */}
-          <TabPanel value={val} className='pbs-0'>
-              {tabContentList({ pgData: pgData, setOpenAccess: setOpenAccess, accessToken: accessToken })[val]}
-          </TabPanel>
+          {isLoaded && (
+            <TabPanel value={val} className='pbs-0'>
+                {tabContentList({ pgData: pgData, setOpenAccess: setOpenAccess, accessToken: accessToken })[val]}
+            </TabPanel>
+          )}
         </TabContext>
-      )}
-
 
       <Dialog
         open={openAccess}

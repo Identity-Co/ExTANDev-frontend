@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-import { createAccessUserToken } from '@/app/server/total-travel';
+import { createAccessUserToken, checkUserLogin } from '@/app/server/total-travel';
 
 // Third-party Imports
 import classnames from 'classnames'
@@ -13,7 +13,7 @@ import styles from './styles.module.css'
 // Config Imports
 import themeConfig from '@configs/themeConfig'
 
-const TotalTravelSection1 = ({ data, isMore, setIsMore, setOpenAccess, accessToken }: { data?: []; isMore?: string; setIsMore: string; setOpenAccess: string; accessToken?: string }) => {
+const TotalTravelSection1 = ({ data, isMore, setIsMore, setOpenAccess, accessToken }: { data?: []; isMore?: string; setIsMore: string; setOpenAccess: string; accessToken?: string; }) => {
 
     const [loginErr, setLoginErr] = useState(0)
 
@@ -127,8 +127,11 @@ const TotalTravelSection1 = ({ data, isMore, setIsMore, setOpenAccess, accessTok
 
         }
       } else {
-        setLoginErr(1)
-        setIsMore(1)
+        const res = await checkUserLogin();
+        if (res && res.LoginErr) {
+          setLoginErr(1)
+          setIsMore(1)
+        }
       }
 
     };

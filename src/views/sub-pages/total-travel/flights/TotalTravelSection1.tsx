@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-import { createAccessUserToken } from '@/app/server/total-travel';
+import { createAccessUserToken, checkUserLogin } from '@/app/server/total-travel';
 
 // Third-party Imports
 import classnames from 'classnames'
@@ -108,7 +108,10 @@ const TotalTravelSection1 = ({ data, setOpenAccess, accessToken }: { data?: []; 
         
 
       } else {
-        setLoginErr(1)
+        const res = await checkUserLogin();
+        if (res && res.LoginErr) {
+          setLoginErr(1)
+        }
       }
 
     };
