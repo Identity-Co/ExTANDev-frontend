@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 import dynamic from 'next/dynamic'
 
@@ -32,7 +32,12 @@ import FormSection from '../signin/FormSection'
 
 import { useSettings } from '@core/hooks/useSettings'
 
+import { createAccessUserToken } from '@/app/server/total-travel';
+
 import styles from './styles.module.css'
+
+// Config Imports
+import themeConfig from '@configs/themeConfig'
 
 const StaysTab = dynamic(() => import('@views/sub-pages/total-travel/stays'))
 const FlightsTab = dynamic(() => import('@views/sub-pages/total-travel/flights'))
@@ -58,7 +63,9 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
   
   //const [isFirstTime, setIsFirstTime] = useState(true)
   const [openAccess, setOpenAccess] = useState(false)
+  const [accessToken, setAccessToken] = useState('')
 
+  const isLoadRef = useRef(false)
 
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setVal(newValue)
@@ -80,6 +87,69 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
     setOpenAccess(false)
   };
 
+
+  const fetchTokenData = async () => {
+    const res = await createAccessUserToken();
+    console.log('createAccessUserToken: ', res)
+
+    if (res && res.session_token) {
+      setAccessToken(res.session_token)
+
+      // Function to dynamically load the travel client script
+      const script = document.createElement('script')
+      script.src = themeConfig.travel_client_script_url
+      script.async = true
+
+      script.onload = () => {
+        console.log('Travel Client script loaded from index...')
+
+        // Wait a bit for the library to attach itself to window
+        /* const checkClient = setInterval(() => {
+          if (window.travelClient) {
+            clearInterval(checkClient)
+
+            try {
+              window.travelClient.start({
+                session_token: res.session_token,
+                container: '.packages_search_selector',
+                navigate_to: {
+                  view: 'parks_search',
+                  category: "tours"
+                },
+              })
+
+              window.travelClient.on('error', function (err) {
+                //console.error('Travel Client error:', err)
+              })
+            } catch (err) {
+              //console.error('Error initializing travelClient:', err)
+            }
+          }
+        }, 500) */
+      }
+
+      script.onerror = () => {
+        console.error('Failed to load Travel Client script.')
+      }
+
+      document.body.appendChild(script)
+
+      // Cleanup on unmount
+      return () => {
+        if (script.parentNode) script.parentNode.removeChild(script)
+      }
+    }
+
+  };
+
+  useEffect(() => {
+      if (isLoadRef.current) return;
+      isLoadRef.current = true
+
+      fetchTokenData();
+
+  }, [])
+
   return (
     <>
       <BannerSection mode={mode} banners={banners?? []} />
@@ -90,7 +160,7 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
           <Tab value='flights' label='flights' />
           <Tab value='cars' label='Cars' />
           <Tab value='packages' label='Packages' />
-          <Tab value='thingstodo' label='Things To Do' />
+          <Tab value='thingstodo' label='Things to do' />
           {/* <Tab value='cruises' label='Cruises' /> */}
         </TabList>
         {/* <div className={classnames(styles.search_box, styles.search_box_total)}>
@@ -134,7 +204,7 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
             </div>
         </div> */}
         <TabPanel value={val} className='pbs-0'>
-            {tabContentList({ pgData: pgData, setOpenAccess: setOpenAccess })[val]}
+            {tabContentList({ pgData: pgData, setOpenAccess: setOpenAccess, accessToken: accessToken })[val]}
         </TabPanel>
       </TabContext>
 

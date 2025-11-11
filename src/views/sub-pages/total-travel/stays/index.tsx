@@ -12,7 +12,7 @@ import TotalTravelSection2 from './TotalTravelSection2'
 
 import { useSettings } from '@core/hooks/useSettings'
 
-const LandingPageWrapper = ({ mode, banners, pgData, setOpenAccess }: { mode: Mode; banners?: []; pgData?: []; setOpenAccess?:string }) => {
+const LandingPageWrapper = ({ mode, banners, pgData, setOpenAccess, accessToken }: { mode: Mode; banners?: []; pgData?: []; setOpenAccess?:string; accessToken?: string; }) => {
   // Hooks
   const { updatePageSettings } = useSettings()
 
@@ -28,7 +28,7 @@ const LandingPageWrapper = ({ mode, banners, pgData, setOpenAccess }: { mode: Mo
 
   return (
     <>
-      <TotalTravelSection1 data={pgData} isMore={isMore} setIsMore={setIsMore} setOpenAccess={setOpenAccess} />
+      <TotalTravelSection1 data={pgData} isMore={isMore} setIsMore={setIsMore} setOpenAccess={setOpenAccess} accessToken={accessToken} />
       <TotalTravelSection2 data={pgData} isMore={isMore} setIsMore={setIsMore} />
     </>
   )

@@ -13,13 +13,13 @@ import styles from './styles.module.css'
 // Config Imports
 import themeConfig from '@configs/themeConfig'
 
-const TotalTravelSection1 = ({ data, isMore, setIsMore, setOpenAccess }: { data?: []; isMore?: string; setIsMore: string; setOpenAccess: string; }) => {
+const TotalTravelSection1 = ({ data, isMore, setIsMore, setOpenAccess, accessToken }: { data?: []; isMore?: string; setIsMore: string; setOpenAccess: string; accessToken?: string }) => {
 
     const [loginErr, setLoginErr] = useState(0)
 
     const isLoadRef = useRef(false)
 
-    const fetchCarsData = async () => {
+    /* const fetchCarsData = async () => {
       const res = await createAccessUserToken();
 
       if (res && res.session_token) {
@@ -81,6 +81,53 @@ const TotalTravelSection1 = ({ data, isMore, setIsMore, setOpenAccess }: { data?
         }
       } else if (res && res.LoginErr) {
         setLoginErr(res.LoginErr)
+        setIsMore(1)
+      }
+
+    }; */
+
+    const fetchCarsData = async () => {
+      console.log('accessToken: ', accessToken)
+
+      if (accessToken) {
+        if(isMore == 1) {
+          console.log('Travel Client script loaded with main token.')
+
+          // Wait a bit for the library to attach itself to window
+          const checkClient = setInterval(() => {
+            if (window.travelClient) {
+              clearInterval(checkClient)
+
+              try {
+                window.travelClient.start({
+                  session_token: accessToken,
+                  container: '.hotel_search_selector',
+                  navigate_to: {
+                    view: 'hotels',
+                    destination: 'Portland%2C%20OR%2C%20US',
+                    lat: 45.5231,
+                    lon: -122.6765,
+                    check_in: "2025-10-20",
+                    check_out: "2024-10-25",
+                    rooms: 1,
+                    adults: 2,
+                    children: 1,
+                    child_ages: "7",
+                  },
+                })
+
+                window.travelClient.on('error', function (err) {
+                  //console.error('Travel Client error:', err)
+                })
+              } catch (err) {
+                //console.error('Error initializing travelClient:', err)
+              }
+            }
+          }, 500)
+
+        }
+      } else {
+        setLoginErr(1)
         setIsMore(1)
       }
 

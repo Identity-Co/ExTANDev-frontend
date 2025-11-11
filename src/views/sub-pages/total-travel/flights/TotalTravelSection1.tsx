@@ -13,13 +13,13 @@ import styles from './styles.module.css'
 // Config Imports
 import themeConfig from '@configs/themeConfig'
 
-const TotalTravelSection1 = ({ data, setOpenAccess }: { data?: []; setOpenAccess: string; }) => {
+const TotalTravelSection1 = ({ data, setOpenAccess, accessToken }: { data?: []; setOpenAccess: string; accessToken?: string; }) => {
 
     const [loginErr, setLoginErr] = useState(0)
 
     const isLoadRef = useRef(false)
 
-    const fetchCarsData = async () => {
+    /* const fetchCarsData = async () => {
       const res = await createAccessUserToken();
       console.log(res)
 
@@ -71,6 +71,44 @@ const TotalTravelSection1 = ({ data, setOpenAccess }: { data?: []; setOpenAccess
         }
       } else if (res && res.LoginErr) {
         setLoginErr(res.LoginErr)
+      }
+
+    }; */
+
+    const fetchCarsData = async () => {
+      console.log('accessToken: ', accessToken)
+
+      if (accessToken) {
+
+          console.log('Travel Client script loaded with main token.')
+
+          // Wait a bit for the library to attach itself to window
+          const checkClient = setInterval(() => {
+            if (window.travelClient) {
+              clearInterval(checkClient)
+
+              try {
+                window.travelClient.start({
+                  session_token: accessToken,
+                  container: '.flights_search_selector',
+                  navigate_to: {
+                    view: 'home',
+                    start_tab: "flights"
+                  },
+                })
+
+                window.travelClient.on('error', function (err) {
+                  //console.error('Travel Client error:', err)
+                })
+              } catch (err) {
+                //console.error('Error initializing travelClient:', err)
+              }
+            }
+          }, 500)
+        
+
+      } else {
+        setLoginErr(1)
       }
 
     };
