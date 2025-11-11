@@ -44,9 +44,8 @@ const TotalTravelSection1 = ({ data, setOpenAccess }: { data?: []; setOpenAccess
                   session_token: res.session_token,
                   container: '.packages_search_selector',
                   navigate_to: {
-                    start_tab: "parks",
-                    view: 'tour',
-                    category: "tour"
+                    view: 'parks_search',
+                    category: "tours"
                   },
                 })
 
