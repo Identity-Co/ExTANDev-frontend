@@ -199,14 +199,6 @@ const TotalTravelSection1 = ({ data, isMore, setIsMore, setOpenAccess, accessTok
 
         <div className='hotel_search_selector' style={{ display: isMore === 0 ? 'none' : 'block' }}></div>
 
-        {loginErr == 1 && (
-          <div className='login-err-msg'>
-            <div className="container">
-              Please <a href="#" onClick={(e) => { e.preventDefault(); setOpenAccess(true); }}>Login</a> or <a href="#" onClick={(e) => { e.preventDefault(); setOpenAccess(true); }}>Signup</a> to access Stays data.
-            </div>
-          </div>
-        )}
-
     </section>
   )
 }

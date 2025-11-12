@@ -103,6 +103,30 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
 
       script.onload = () => {
         console.log('Travel Client script loaded from index...')
+
+        const checkClient = setInterval(() => {
+          if (window.travelClient) {
+            clearInterval(checkClient)
+
+            try {
+              window.travelClient.start({
+                session_token: res.session_token,
+                container: '.hotel_search_selector',
+                navigate_to: {
+                    view: 'home',
+                  start_tab: "hotels"
+                },
+              })
+
+              window.travelClient.on('error', function (err) {
+                //console.error('Travel Client error:', err)
+              })
+            } catch (err) {
+              //console.error('Error initializing travelClient:', err)
+            }
+          }
+        }, 500)
+
         setIsLoaded(true)
       }
 
@@ -137,90 +161,24 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
     <>
       <BannerSection mode={mode} banners={banners?? []} />
 
-        <TabContext value={val} className="my-5">
-          <TabList variant='fullWidth' onChange={handleChange} aria-label='full width tabs example' className="destinations_tab total_travel_tab">
-            <Tab value='stays' label='Stays' />
-            <Tab value='flights' label='flights' />
-            <Tab value='cars' label='Cars' />
-            <Tab value='packages' label='Packages' />
-            <Tab value='thingstodo' label='Things to do' />
-            {/* <Tab value='cruises' label='Cruises' /> */}
-          </TabList>
-          {/* <div className={classnames(styles.search_box, styles.search_box_total)}>
-              <div className={classnames(styles.container, 'container')}>
-                  <div className={classnames(styles.search_box_inner)}>
-                      <div className={classnames(styles.search_row)}>
-                          <form>
-                              <div className={classnames(styles.search_select, styles.ss1)}>
-                                  <label>Destinations</label>
-                                  <select name="cars" id="cars">
-                                    <option value="">Destinations 1</option>
-                                    <option value="">Destinations 2</option>
-                                    <option value="">Destinations 3</option>
-                                    <option value="">Destinations 4</option>
-                                  </select>
-                              </div>
-                              <div className={classnames(styles.search_select, styles.ss2)}>
-                                  <label>Dates</label>
-                                  <select name="cars" id="cars">
-                                    <option value="">Dates 1</option>
-                                    <option value="">Dates 2</option>
-                                    <option value="">Dates 3</option>
-                                    <option value="">Dates 4</option>
-                                  </select>
-                              </div>
-                              <div className={classnames(styles.search_select, styles.ss3)}>
-                                  <label>Travelers</label>
-                                  <select name="cars" id="cars">
-                                    <option value="">Travelers 1</option>
-                                    <option value="">Travelers 2</option>
-                                    <option value="">Travelers 3</option>
-                                    <option value="">Travelers 4</option>
-                                  </select>
-                              </div>
-                              <div className={classnames(styles.search_btn)}>
-                                  <input type="submit" name="" value="Search" />
-                              </div>
-                          </form>
-                      </div>
-                  </div>
-              </div>
-          </div> */}
-          {isLoaded && (
-            <TabPanel value={val} className='pbs-0'>
-                {tabContentList({ pgData: pgData, setOpenAccess: setOpenAccess, accessToken: accessToken })[val]}
-            </TabPanel>
-          )}
-        </TabContext>
+      <TabContext value={val} className="my-5">
+        {isLoaded && (
 
-      <Dialog
-        open={openAccess}
-        disableEscapeKeyDown
-        aria-labelledby='alert-dialog-title'
-        aria-describedby='alert-dialog-description'
-        onClose={(event, reason) => {
-          if (reason !== 'backdropClick') {
-            handleAccessClose()
-          }
-        }}
-        closeAfterTransition={false}
-        PaperProps={{
-          sx: {
-            width: '750px',
-            maxWidth: '95%',
-          },
-        }}
-      >
-        <DialogTitle id='alert-dialog-title' className='text-center'>Login/Signup</DialogTitle>
-        <DialogContent>
-            <FormSection />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleAccessClose} variant='outlined' color='secondary'>
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+            <TabPanel value={val} className='pbs-0'>
+              {accessToken ?
+                <>
+                  <div className='hotel_search_selector'></div>
+                </>
+              :
+                <>
+                  {tabContentList({ pgData: pgData, setOpenAccess: setOpenAccess, accessToken: accessToken })[val]}
+                </>
+              }
+            </TabPanel>
+
+        )}
+      </TabContext>
+
     </>
   )
 }
