@@ -161,23 +161,25 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
     <>
       <BannerSection mode={mode} banners={banners?? []} />
 
-      <TabContext value={val} className="my-5">
-        {isLoaded && (
+      <div style={{ minHeight: '600px' }}>
+        <TabContext value={val} className="my-5">
+          {isLoaded && (
 
-            <TabPanel value={val} className='pbs-0'>
-              {accessToken ?
-                <>
-                  <div className='hotel_search_selector' style={{ minHeight: '400px' }}></div>
-                </>
-              :
-                <>
-                  {tabContentList({ pgData: pgData, setOpenAccess: setOpenAccess, accessToken: accessToken })[val]}
-                </>
-              }
-            </TabPanel>
+              <TabPanel value={val} className='pbs-0'>
+                {accessToken ?
+                  <>
+                    <div className='hotel_search_selector'></div>
+                  </>
+                :
+                  <>
+                    {tabContentList({ pgData: pgData, setOpenAccess: setOpenAccess, accessToken: accessToken })[val]}
+                  </>
+                }
+              </TabPanel>
 
-        )}
-      </TabContext>
+          )}
+        </TabContext>
+      </div>
 
     </>
   )
