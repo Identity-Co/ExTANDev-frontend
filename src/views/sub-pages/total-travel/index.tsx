@@ -113,7 +113,7 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
                 session_token: res.session_token,
                 container: '.hotel_search_selector',
                 navigate_to: {
-                    view: 'home',
+                  view: 'home',
                   start_tab: "hotels"
                 },
               })
@@ -167,7 +167,7 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
             <TabPanel value={val} className='pbs-0'>
               {accessToken ?
                 <>
-                  <div className='hotel_search_selector'></div>
+                  <div className='hotel_search_selector' style={{ minHeight: '400px' }}></div>
                 </>
               :
                 <>
