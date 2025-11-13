@@ -159,7 +159,9 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
 
   return (
     <>
-      <BannerSection mode={mode} banners={banners?? []} />
+      {isLoaded && (
+        <BannerSection mode={mode} banners={banners?? []} accessToken={accessToken} />
+      )}
 
       <div style={{ minHeight: '600px' }}>
         <TabContext value={val} className="my-5">
@@ -180,6 +182,35 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
           )}
         </TabContext>
       </div>
+
+      <Dialog
+        open={openAccess}
+        disableEscapeKeyDown
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
+        onClose={(event, reason) => {
+          if (reason !== 'backdropClick') {
+            handleAccessClose()
+          }
+        }}
+        closeAfterTransition={false}
+        PaperProps={{
+          sx: {
+            width: '750px',
+            maxWidth: '95%',
+          },
+        }}
+      >
+        <DialogTitle id='alert-dialog-title' className='text-center'>Login/Signup</DialogTitle>
+        <DialogContent>
+            <FormSection />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleAccessClose} variant='outlined' color='secondary'>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
 
     </>
   )

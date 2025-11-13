@@ -18,7 +18,7 @@ const BannerSection = ({ mode, banners, accessToken }: { mode: Mode; banners?: [
                         <div
                           className={classnames(
                             accessToken
-                              ? styles.travel_banner_bg_image_hero_loggedin
+                              ? styles.travel_banner_bg_image_hero
                               : styles.travel_banner_bg_image_hero
                           )}
                         >

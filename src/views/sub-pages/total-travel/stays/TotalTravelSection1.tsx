@@ -42,6 +42,14 @@ const TotalTravelSection1 = ({ data, isMore, setIsMore, setOpenAccess, accessTok
             </div>
         </div>
 
+        {!accessToken && (
+          <div className='login-err-msg'>
+            <div className="container">
+              Please <a href="#" onClick={(e) => { e.preventDefault(); setOpenAccess(true); }}>Login</a> or <a href="#" onClick={(e) => { e.preventDefault(); setOpenAccess(true); }}>Signup</a> to access Stays data.
+            </div>
+          </div>
+        )}
+
     </section>
   )
 }
