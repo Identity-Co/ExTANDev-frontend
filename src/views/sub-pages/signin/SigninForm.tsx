@@ -130,19 +130,19 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
         }
     }
 
-    useEffect(() => {
-      if(user) console.log(user, user.email, user.name, user.accessToken)
-    }, [user])
+    // useEffect(() => {
+    //   if(user) console.log(user, user.email, user.name, user.accessToken)
+    // }, [user])
 
     // Google Login
-    useEffect(() => {
+    /*useEffect(() => {
       // 1. Create script element
       const script = document.createElement("script");
       script.src = "https://accounts.google.com/gsi/client";
       script.async = true;
       script.defer = true;
       script.onload = () => {
-        /* global google */
+        /* global google * /
         google.accounts.id.initialize({
           client_id: "",
           callback: handleGoogleResponse,
@@ -187,7 +187,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
         console.log(response)
         /*const res = await axios.post("http://localhost:5001/v1/api/auth/google-login", {
           token: response.credential,
-        });*/
+        });* /
         const _res = await fetch(`https://adventureapi.deepripple.com/v1/api/auth/google-login`, {
           method: 'POST',
           headers: {
@@ -310,7 +310,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
       } catch (err) {
         console.error(err);
       }
-    }
+    }*/
   
     return (
         <>
