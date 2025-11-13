@@ -144,7 +144,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
       script.onload = () => {
         /* global google */
         google.accounts.id.initialize({
-          client_id: "899760202984-plt5aioi3p8ctsr3tvroku9v9hm4ad25.apps.googleusercontent.com",
+          client_id: "",
           callback: handleGoogleResponse,
         });
         google.accounts.id.renderButton(
@@ -158,7 +158,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
       // Load Facebook SDK script
       window.fbAsyncInit = function () {
         FB.init({
-          appId: '1380308580372397',
+          appId: '',
           cookie: true,
           xfbml: true,
           version: 'v21.0', // latest version as of 2025
@@ -260,7 +260,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
 
     const responseFacebook = async (profile) => {
       try {
-        const _res = await fetch(`https://adventureapi.deepripple.com/v1/api/auth/fb-login`, {
+        const _res = await fetch(`https://adventureapi.deepripple.com/v1/api/auth/facebook-login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -423,7 +423,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
                 </div>
             </form>
 
-            <div style={{ marginTop: "20px" }}>
+            {/*<div style={{ marginTop: "20px" }}>
               <div id="googleSignIn"></div>
             </div>
 
@@ -441,7 +441,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
                   cursor: "pointer"
                 }}
               >Sign in with Facebook</button>
-            </div>
+            </div>*/}
 
             <div className={classnames(styles.input_full_box , 'input_full_box')}>
               {errorMessage && (
