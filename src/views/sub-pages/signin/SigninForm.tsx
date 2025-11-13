@@ -266,7 +266,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
             'Content-Type': 'application/json',
             //'Authorization': `Bearer ${session?.user?.userToken}`
           },
-          body: JSON.stringify({'accessToken': profile.authResponse.accessToken})
+          body: JSON.stringify({'email': profile.email, 'fbId': profile.id, 'name': profile.name})
         })
 
         const data = await _res.json();
