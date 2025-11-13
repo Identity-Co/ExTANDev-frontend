@@ -1,0 +1,179 @@
+a.fl_bx_lnk_glb:hover ~ .network_travel_img_text .btn a{background-color: #ffffff; color: #F85241;}
+a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
+
+/*banner-start*/
+
+.home_banner{position: relative;}
+
+.banner_bg_image{position: relative;}
+.banner_bg_image .banner_bg_image_hero{padding-bottom: 28.750vw; position: relative;}
+.banner_bg_image .banner_bg_image_hero img{position: absolute; width: 100%; height: 100%; object-fit: cover; top: 0; left: 0;}
+.banner_bg_image:before{position: absolute; content: ""; background: linear-gradient(180deg,rgba(0, 0, 0, 1) 0%, rgba(128, 128, 128, 0) 100%); mix-blend-mode: multiply; opacity: 0.4; top: 0; left: 0; width: 100%; height: 65%; z-index: 1;}
+.banner_bg_image:after{position: absolute; content: ""; background: linear-gradient(360deg,rgba(0, 0, 0, 1) 0%, rgba(128, 128, 128, 0) 100%); mix-blend-mode: multiply; opacity: 0.67; bottom: 0; left: 0; width: 100%; height: 35%; z-index: 1;}
+.banner_bg_image_text h1{color: #ffffff; letter-spacing: -0.020em;}
+.banner_bg_image_text{position: absolute; z-index: 2; bottom: 5.729vw; left: 0; right: 0; text-align: center;}
+
+.home_banner .hero_slide_container{max-width: 80%; margin: 0 auto; width: 100%; padding: 0 3.705vw; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; z-index: 1; row-gap: 2.134vw;}
+.home_banner .hero_slide_text{max-width: 30.469vw;}
+.home_banner .hero_slide_text h1,
+.home_banner .hero_slide_text h2{color: #ffffff; font-size: 8.490vw; line-height: 7.187vw; padding-bottom: 1.667vw; letter-spacing: -0.020em;}
+
+.search_box{position: absolute; bottom: -5vw; width: 100%; left: 0; right: 0; margin: auto; z-index: 1;}
+.search_box .container{max-width: 80%;}
+.search_box_inner{background: #ffffff; border-radius:0.26vw; padding: 1.563vw 3.646vw; box-shadow: 0 1.098vw 1.464vw rgb(0, 0, 0, 0.10); max-width: 49.844vw; margin: 0 auto;}
+.search_row form{display: flex; gap:0.26vw; align-items: flex-end;}
+.search_row form .search_select{width: 100%;}
+.search_row form .search_select label{font-size: 0.677vw; font-weight: 600; color: #020202; margin-bottom: 0.521vw; display: block; line-height: 1;}
+.search_row form .search_select select{border: solid 0.0365vw #707070; outline: none; border-radius: 0.156vw; padding: 0.732vw 2.343vw; width: 100%;}
+
+.search_row form .search_select.ss1 select{background: url(/images/front-pages/images/map.svg) center left 0.732vw no-repeat, url(/images/front-pages/images/down-arrow.svg) center right 0.732vw no-repeat; font-size: 0.833vw; background-size: 1.464vw; min-height: 2.855vw;}
+.search_row form .search_select.ss2 select{background: url(/images/front-pages/images/building.svg) center left 0.732vw no-repeat, url(/images/front-pages/images/down-arrow.svg) center right 0.732vw no-repeat; font-size: 0.833vw; background-size: 1.464vw; min-height: 2.855vw;}
+.search_row form .search_select.ss3 select{background: url(/images/front-pages/images/user.svg) center left 0.732vw no-repeat, url(/images/front-pages/images/down-arrow.svg) center right 0.732vw no-repeat; font-size: 0.833vw; background-size: 1.464vw; min-height: 2.855vw;}
+.search_row form .search_btn input[type="submit"]{font-size: 0.833vw; font-weight: 800; color: #ffffff; background-color: #EA5647; border-radius:0.22vw; text-transform: uppercase; padding: 0.841vw 2.928vw; display: inline-block; line-height: 1; font-family: "Raleway", sans-serif; outline: none; border: none; cursor: pointer; transition: 0.3s ease-in-out; min-height: 2.855vw; display: flex; align-items: center; justify-content: center;}
+.search_row form .search_btn input[type="submit"]:hover{background-color: #000000;}
+.home_section2 .home_slider2{position:relative;}
+
+
+.travel_banner_bg_image{position: relative;}
+.travel_banner_bg_image:before{position: absolute; content: ""; background: linear-gradient(90deg,rgba(4, 110, 119, 1) 0%, rgba(128, 128, 128, 0) 100%); opacity: 0.53; mix-blend-mode: multiply; width: 100%; height: 100%; top: 0; left: 0; z-index: 1;}
+.travel_banner_bg_image .travel_banner_bg_image_hero{padding-bottom: 100vh; position: relative;}
+.travel_banner_bg_image .travel_banner_bg_image_hero img{position: absolute; width: 100%; height: 100%; object-fit: cover; top: 0; left: 0;}
+.travel_banner_bg_image_text{position: absolute;z-index: 2;top: 50%; transform: translateY(-50%); left: 0;text-align: center; width: 100%;}
+.travel_banner.home_banner .hero_slide_text{text-align: left;}
+.travel_banner.home_banner .hero_slide_text h1{padding-bottom: 0;}
+.travel_filter{padding-bottom: 1.667vw;}
+.travel_filter ul{display: flex; gap:1.667vw; flex-wrap: wrap; justify-content: center; list-style: none;}
+.travel_filter ul li a{font-size: 0.833vw; font-weight: 600; color: #1F1F1F; text-transform: uppercase; position: relative;}
+.travel_filter ul li a:before{position: absolute; content: ""; width: 0%; height: 0.208vw; background-color: #F85241; left: 0; bottom: -0.521vw; transition: 0.3s ease-in-out;}
+.travel_filter ul li.active a:before,
+.travel_filter ul li a:hover:before{width: 100%;}
+.search_box_3 .search_box{bottom: -5.692vw;}
+.search_box_3 .search_box .container{max-width: 90%;}
+.search_box_3 .search_box_inner{padding: 1.667vw;}
+
+
+@media only screen and (max-width: 1024px){
+  .travel_filter ul li a{font-size: 1.118vw;}
+  
+}
+
+@media only screen and (max-width: 768px){
+  .travel_filter{padding-bottom: 4.667vw;}
+  .search_box_3 .search_box_inner{padding: 2.378vw;}
+  .travel_filter ul li a{font-size: 2.114vw;}
+  .travel_filter ul{gap: 2.378vw;}
+  .search_box_3 .search_box{bottom: -14.229vw;}
+  
+}
+
+
+@media only screen and (max-width: 1024px){
+  .container, .home_banner .hero_slide_container{ padding: 0 4.223vw; }
+  .banner_bg_image .banner_bg_image_hero{padding-bottom: 38.352vw;}
+  .banner_bg_image_text{bottom: 7.642vw;}
+  .home_banner .hero_slide_container{max-width: 90%;}
+  .search_box .container{max-width: 90%;}
+  .search_box_inner{padding: 3.343vw 4.685vw; max-width: 95%;}
+.search_row form .search_select label{font-size: 1.698vw;}
+.search_row form .search_select.ss1 select,
+.search_row form .search_select.ss2 select,
+.search_row form .search_select.ss3 select{font-size: 1.698vw; background-size: 1.964vw; min-height: 4.855vw; padding: 0.732vw 3.343vw;}
+.search_row form .search_btn input[type="submit"]{min-height: 4.855vw; font-size: 1.825vw;}
+  .home_banner.destination_overview_banner .hero_slide_text{max-width: 31.905vw;}  
+}
+
+@media only screen and (max-width: 768px){
+  .container, .home_banner .hero_slide_container{ padding:0 2.223vw; }
+  .search_box{bottom: -18vw;}
+  .banner_bg_image .banner_bg_image_hero{padding-bottom: 51.136vw;;}
+  .banner_bg_image_text{top: 50%; transform: translateY(-50%); bottom: auto;}
+  .home_banner .hero_slide_text{ max-width: 100%; }
+  .home_banner .hero_slide_text h1, .home_banner .hero_slide_text h2{font-size: 8.194vw; line-height: 1;}
+  .search_row form{flex-direction: column; gap: 1.866vw;}
+.search_box .container{max-width: 90%;}
+.search_box_inner{padding: 3.343vw 4.685vw;}
+.search_row form > div{width: 100%;}
+.search_row form .search_select label{font-size: 2.698vw;}
+.search_row form .search_select.ss1 select,
+.search_row form .search_select.ss2 select,
+.search_row form .search_select.ss3 select{font-size: 2.698vw; background-size: 2.964vw; min-height: 6.855vw; padding: 0.732vw 4.343vw;}
+.search_row form .search_btn input[type="submit"]{min-height: 6.855vw; font-size: 3.425vw; width: 100%;}
+  .home_banner.destination_overview_banner .hero_slide_text{max-width: 100%;}
+}
+
+
+/*banner-end*/
+
+/*destination-resorts-sec1-start*/
+
+section.home_section1.our_desti_sec1{ background: url(/images/front-pages/images/tan-background-copy.jpg) center no-repeat; background-size: cover; box-shadow: none; padding-bottom: 13.021vw; }
+.home_section1{padding-top: 10.521vw; background: url(/images/front-pages/images/line-bg.jpg) center no-repeat; background-size: cover; box-shadow: 0 0.781vw 1.042vw rgb(0, 0, 0, 0.32);}
+.home_section1 .container{max-width: 62.500vw;}
+
+.our_desti_sec1 .head_text_center{max-width: 43.125vw;}
+.our_desti_sec1 .head_text_center h2{color: #1F1F1F; letter-spacing: 0; line-height: 1; padding-bottom: 1.146vw;}
+.our_desti_sec1 .head_text_center p{max-width: 38.073vw; margin: 0 auto; padding-bottom: 1.146vw;}
+.our_desti_sec1 .adventure_right_text .advanture_text1{justify-content: center;}
+
+.adventure_right_text .advanture_text1,
+.adventure_right_text .advanture_text2{display: flex; align-items: center; column-gap: 2.371vw;}
+.adventure_right_text .advanture_text1 h3{font-size: 1.771vw; color: #F85241; letter-spacing: 0.138em;}
+.adventure_right_text .advanture_text1 a{font-size: 0.729vw; font-weight: 600; color: #ffffff; background-color: #F85241; padding: 0.521vw 0.938vw; line-height: 1; display: flex; align-items: center; gap:0.677vw; text-transform: none; letter-spacing: -0.010em;}
+.adventure_right_text .advanture_text1 a svg{width: 0.938vw; height: 0.938vw;}
+.adventure_right_text .advanture_text1 a:hover{background-color: #000000;}
+.adventure_right_text .advanture_text2{padding: 0.781vw 0 0.851vw;}
+.adventure_right_text .advanture_text2 h2{font-size: 4.167vw; color:#1F1F1F; line-height: 3.646vw;}
+.adventure_right_text .advanture_text2 img{margin-right: 2.917vw; width: 4.427vw; height: 5.312vw;}
+.adventure_right_text p span{font-weight: 800;}
+
+.our_desti_sec1 .adventure_right_text .advanture_text1{justify-content: center;}
+.our_desti_sec1 .head_text_center{max-width: 43.125vw;}
+.our_desti_sec1 .head_text_center h2{color: #1F1F1F; letter-spacing: 0; line-height: 1; padding-bottom: 1.146vw;}
+.our_desti_sec1 .head_text_center p{max-width: 38.073vw; margin: 0 auto; padding-bottom: 1.146vw;}
+
+@media only screen and (max-width: 1024px){
+  .home_section1{padding-top: 17.521vw;}
+  .home_section1 .container{max-width: 100%;}
+  .our_desti_sec1 .head_text_center{max-width: 100%;}
+  .our_desti_sec1 .head_text_center p{max-width: 100%;}
+}
+
+@media only screen and (max-width: 768px){
+  .home_section1{padding-top: 56.788vw;}
+  .home_section1 .container{max-width: 100%;}
+}
+
+/*destination-resorts-sec1-end*/
+
+
+/*travel_sec2*/
+
+.travel_sec2{margin-top: -8.905vw;}
+.smart_travel_main{display: flex; flex-direction: column; grid-row-gap: 4.427vw;}
+.smart_travel_row{display: flex; flex-wrap: wrap; gap:3.333vw; align-items: center;}
+.smart_travel_row .smart_travel_small{width: calc(45% - 1.667vw);}
+.smart_travel_row .smart_travel_big{width: calc(55% - 1.667vw);}
+.smart_travel_row .smart_travel_small h4{font-size: 1.458vw; font-family: "Raleway", sans-serif; font-weight: 800; font-style: italic; padding-bottom: 1.042vw; text-transform: none;}
+.smart_travel_small .smart_travel_text{padding-right: 3.842vw;}
+
+
+@media only screen and (max-width: 1024px){
+  .smart_travel_small .smart_travel_text{padding-right: 0;}
+  .smart_travel_row .smart_travel_small h4{font-size: 1.782vw}
+}
+
+@media only screen and (max-width: 768px){
+  .smart_travel_row .smart_travel_small,
+  .smart_travel_row .smart_travel_big{width: 100%;}
+  .smart_travel_row .smart_travel_small h4{font-size: 2.755vw}
+  .smart_travel_row.rivers_row .smart_travel_big{order: 0 !important;}
+  .smart_travel_row.rivers_row .smart_travel_small{order: 1 !important;}
+}
+
+@media only screen and (max-width: 575px){
+  .smart_travel_row .smart_travel_small h4{font-size: 3.955vw}
+}
+
+/*travel_sec2*/
+
+
