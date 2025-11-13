@@ -131,7 +131,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
     }
 
     useEffect(() => {
-      if(user) console.log(user.email, user.name)
+      if(user) console.log(user, user.email, user.name, user.accessToken)
     }, [user])
 
     // Google Login
@@ -245,7 +245,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
         (response: any) => {
           if (response.authResponse) {
             console.log('Facebook login success:', response)
-            window.FB.api('/me', { fields: 'name,email,picture' }, (profile: any) => {
+            window.FB.api('/me', { fields: 'id,name,email,picture' }, (profile: any) => {
               setUser(profile)
 
               responseFacebook(profile);              
