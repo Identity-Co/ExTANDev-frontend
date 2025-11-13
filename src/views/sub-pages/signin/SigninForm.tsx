@@ -131,6 +131,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
     }
 
     useEffect(() => {
+      console.log(user.email, user.name)
     }, [user])
 
     // Google Login
@@ -177,8 +178,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
       return () => {
         document.body.removeChild(script);
       };
-      console.log(user.name, user.email);
-    }, [user]);
+    }, []);
 
     const handleGoogleResponse = async (response) => {
       setErrorMessage('')
