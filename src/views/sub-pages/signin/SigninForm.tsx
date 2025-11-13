@@ -240,7 +240,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
       }
     };
 
-    const handleFacebookLogin = () => {
+    const handleFacebookLogin = async () => {
       window.FB.login(
         (response: any) => {
           if (response.authResponse) {
@@ -248,58 +248,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
             window.FB.api('/me', { fields: 'name,email,picture' }, (profile: any) => {
               setUser(profile)
 
-
-              try {
-                const _res = await fetch(`https://adventureapi.deepripple.com/v1/api/auth/fb-login`, {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                    //'Authorization': `Bearer ${session?.user?.userToken}`
-                  },
-                  body: JSON.stringify({'accessToken': profile.authResponse.accessToken})
-                })
-
-                const data = await _res.json();
-                console.log("Facebook login success:", data);
-
-                if (data?.data) {
-                  const res = await signIn('credentials', {
-                      email: data?.data.email,
-                      password: data?.data.email+'_'+data?.data.googleId,
-                      redirect: false
-                  })
-
-                  console.log('res: ', res)
-
-                  if (res && res.ok && res.error === null) {
-                      // setLoading(true)
-
-                      let redirectURL = '';
-
-                      // Vars
-                      if(isTotalTravel == 1) {
-                        //redirectURL = '/total-travel/';
-                        window.location.reload();
-                        return;
-                      } else {
-                        redirectURL = searchParams.get('redirectTo') ?? '/my-account/'
-                      }
-
-                      router.replace(redirectURL)
-                  } else {
-                      if (res?.error) {
-                          setIsSubmitting(false)
-                          const error = res?.error
-
-                          setErrorState({"message": Array(error)})
-                      }
-                  }
-                } else {
-                  setErrorMessage(data?.message)
-                }
-              } catch (err) {
-                console.error(err);
-              }
+              responseFacebook(profile);              
             })
           } else {
             console.log('User cancelled login or did not fully authorize.')
@@ -309,8 +258,58 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
       )
     }
 
-    const responseFacebook = async (response) => {
-      console.log(response)
+    const responseFacebook = async (profile) => {
+      try {
+        const _res = await fetch(`https://adventureapi.deepripple.com/v1/api/auth/fb-login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            //'Authorization': `Bearer ${session?.user?.userToken}`
+          },
+          body: JSON.stringify({'accessToken': profile.authResponse.accessToken})
+        })
+
+        const data = await _res.json();
+        console.log("Facebook login success:", data);
+
+        if (data?.data) {
+          const res = await signIn('credentials', {
+              email: data?.data.email,
+              password: data?.data.email+'_'+data?.data.fbId,
+              redirect: false
+          })
+
+          console.log('res: ', res)
+
+          if (res && res.ok && res.error === null) {
+              // setLoading(true)
+
+              let redirectURL = '';
+
+              // Vars
+              if(isTotalTravel == 1) {
+                //redirectURL = '/total-travel/';
+                window.location.reload();
+                return;
+              } else {
+                redirectURL = searchParams.get('redirectTo') ?? '/my-account/'
+              }
+
+              router.replace(redirectURL)
+          } else {
+              if (res?.error) {
+                  setIsSubmitting(false)
+                  const error = res?.error
+
+                  setErrorState({"message": Array(error)})
+              }
+          }
+        } else {
+          setErrorMessage(data?.message)
+        }
+      } catch (err) {
+        console.error(err);
+      }
     }
   
     return (
