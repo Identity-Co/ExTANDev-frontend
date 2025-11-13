@@ -150,6 +150,26 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
 
       document.body.appendChild(script);
 
+      // Load Facebook SDK script
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: '1380308580372397',
+          cookie: true,
+          xfbml: true,
+          version: 'v21.0', // latest version as of 2025
+        })
+      }
+
+      ;(function (d, s, id) {
+        let js: any,
+          fjs = d.getElementsByTagName(s)[0]
+        if (d.getElementById(id)) return
+        js = d.createElement(s)
+        js.id = id
+        js.src = 'https://connect.facebook.net/en_US/sdk.js'
+        fjs.parentNode.insertBefore(js, fjs)
+      })(document, 'script', 'facebook-jssdk')
+
       return () => {
         document.body.removeChild(script);
       };
@@ -214,6 +234,22 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
         console.error(err);
       }
     };
+
+    const handleFacebookLogin = () => {
+      window.FB.login(
+        (response: any) => {
+          if (response.authResponse) {
+            console.log('Facebook login success:', response)
+            window.FB.api('/me', { fields: 'name,email,picture' }, (profile: any) => {
+              setUser(profile)
+            })
+          } else {
+            console.log('User cancelled login or did not fully authorize.')
+          }
+        },
+        { scope: 'email,public_profile' }
+      )
+    }
 
     const responseFacebook = async (response) => {
       console.log(response)
@@ -336,7 +372,9 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
 
 
             <div style={{ marginTop: "20px" }}>
-              <button onClick={() => signIn("facebook", { callbackUrl: "http://adventure.deepripple.com/my-account" })} style={{
+              <button 
+                onClick={handleFacebookLogin} 
+                style={{
                   backgroundColor: "#1877F2",
                   color: "white",
                   padding: "10px 16px",
