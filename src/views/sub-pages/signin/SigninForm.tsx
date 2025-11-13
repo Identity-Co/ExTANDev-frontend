@@ -69,6 +69,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
     const [forgotMessage, setForgotMessage] = useState(null)
     const [recoveryEmail, setRecoveryEmail] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
+    const [user, setUser] = useState<any>(null)
 
     // Hooks
     const router = useRouter()
@@ -129,6 +130,9 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
         }
     }
 
+    useEffect(() => {
+    }, [user])
+
     // Google Login
     useEffect(() => {
       // 1. Create script element
@@ -173,7 +177,8 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
       return () => {
         document.body.removeChild(script);
       };
-    }, []);
+      console.log(user.name, user.email);
+    }, [user]);
 
     const handleGoogleResponse = async (response) => {
       setErrorMessage('')
