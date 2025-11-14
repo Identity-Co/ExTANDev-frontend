@@ -135,16 +135,16 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
     // }, [user])
 
     // Google Login
-    /*useEffect(() => {
+    useEffect(() => {
       // 1. Create script element
       const script = document.createElement("script");
       script.src = "https://accounts.google.com/gsi/client";
       script.async = true;
       script.defer = true;
       script.onload = () => {
-        /* global google * /
+        /* global google */
         google.accounts.id.initialize({
-          client_id: "",
+          client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
           callback: handleGoogleResponse,
         });
         google.accounts.id.renderButton(
@@ -158,7 +158,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
       // Load Facebook SDK script
       window.fbAsyncInit = function () {
         FB.init({
-          appId: '',
+          appId: process.env.NEXT_PUBLIC_FACEBOOK_APP_ID,
           cookie: true,
           xfbml: true,
           version: 'v21.0', // latest version as of 2025
@@ -184,10 +184,6 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
       setErrorMessage('')
 
       try {
-        console.log(response)
-        /*const res = await axios.post("http://localhost:5001/v1/api/auth/google-login", {
-          token: response.credential,
-        });* /
         const _res = await fetch(`https://adventureapi.deepripple.com/v1/api/auth/google-login`, {
           method: 'POST',
           headers: {
@@ -198,7 +194,6 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
         })
 
         const data = await _res.json();
-        console.log("Google login success:", data);
 
         if (data?.data) {
           const res = await signIn('credentials', {
@@ -206,8 +201,6 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
               password: data?.data.email+'_'+data?.data.googleId,
               redirect: false
           })
-
-          console.log('res: ', res)
 
           if (res && res.ok && res.error === null) {
               // setLoading(true)
@@ -270,7 +263,6 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
         })
 
         const data = await _res.json();
-        console.log("Facebook login success:", data);
 
         if (data?.data) {
           const res = await signIn('credentials', {
@@ -279,11 +271,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
               redirect: false
           })
 
-          console.log('res: ', res)
-
           if (res && res.ok && res.error === null) {
-              // setLoading(true)
-
               let redirectURL = '';
 
               // Vars
@@ -310,7 +298,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
       } catch (err) {
         console.error(err);
       }
-    }*/
+    }
   
     return (
         <>
@@ -423,13 +411,13 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
                 </div>
             </form>
 
-            {/*<div style={{ marginTop: "20px" }}>
+            <div style={{ marginTop: "20px" }}>
               <div id="googleSignIn"></div>
             </div>
 
 
             <div style={{ marginTop: "20px" }}>
-              <button 
+              <Button 
                 onClick={handleFacebookLogin} 
                 style={{
                   backgroundColor: "#1877F2",
@@ -440,8 +428,9 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
                   width: "100%",
                   cursor: "pointer"
                 }}
-              >Sign in with Facebook</button>
-            </div>*/}
+                startIcon={<i className='ri-facebook-circle-fill' />}
+              >Sign in with Facebook</Button>
+            </div>
 
             <div className={classnames(styles.input_full_box , 'input_full_box')}>
               {errorMessage && (
