@@ -613,3 +613,15 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
 
 body .orange_social_lssc span{font-weight: 700; color: #F85241;}
 .welcome_user{font-weight: 600; color: #ff5e4e;}
+
+
+
+
+
+.btn_group{display: flex; flex-wrap: wrap; gap:1vw; margin-top: 1.5vw;}
+.btn_group .btn:first-child button{background-color: #e6e6e6; color: #000;}
+.btn_group .btn:first-child button:hover{background-color: #000000; color: #ffffff;}
+.preferences_check input{padding: 0; margin-bottom: 0; -webkit-appearance: auto; cursor: pointer; left: 0; right: 0; height: 1.042vw; z-index: 1; opacity: 0; bottom: 0; position: absolute;}
+.preferences_check label {position: relative;cursor: pointer; font-size: 0.729vw; font-family: "Raleway", sans-serif; font-weight: 400; color: #868686; display: flex; align-items: center; line-height: 1.4; margin-top: 0.852vw;}
+.preferences_check label:before { content:''; -webkit-appearance: none; background-color: transparent; border: 0.104vw solid #868686; width: 0.833vw; height: 0.833vw; display: inline-block; position: relative; vertical-align: middle; cursor: pointer; margin-right: 0.417vw; top: -0.104vw;}
+.preferences_check input:checked + label:after { content: ''; display: block; position: absolute; top: 0.028vw; left: 0.327vw; width: 0.277vw; height: 0.587vw; border: solid #EA5647; border-width: 0 0.104vw 0.104vw 0; transform: rotate(45deg);}

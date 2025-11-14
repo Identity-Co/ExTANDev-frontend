@@ -13,6 +13,10 @@ import useLayoutInit from '@core/hooks/useLayoutInit'
 // Util Imports
 import { blankLayoutClasses } from './utils/layoutClasses'
 
+import { useAnalytics } from "@core/hooks/useAnalytics";
+
+import ConsentManager from "@components/ConsentManager";
+
 type Props = ChildrenType & {
   systemMode: SystemMode
 }
@@ -26,10 +30,16 @@ const BlankLayout = (props: Props) => {
 
   useLayoutInit(systemMode)
 
+  useAnalytics();
+
   return (
-    <div className={classnames(blankLayoutClasses.root, 'is-full bs-full')} data-skin={settings.skin}>
-      {children}
-    </div>
+    <>
+      <ConsentManager />
+      
+      <div className={classnames(blankLayoutClasses.root, 'is-full bs-full')} data-skin={settings.skin}>
+        {children}
+      </div>
+    </>
   )
 }
 
