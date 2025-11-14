@@ -8,7 +8,6 @@ import type { CategoryTypes } from '@/types/apps/customCategoryTypes'
 import ListTable from './ListTable'
 
 const CategoryList = ({ categories }: { categories?: CategoryTypes[] }) => {
-	console.log('categories : ', categories)
   return (
     <Grid container spacing={6}>
       <Grid size={{ xs: 12 }}>
