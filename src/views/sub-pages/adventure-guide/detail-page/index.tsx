@@ -41,7 +41,7 @@ const AdventureGuideDetailPage = ({ mode, pgData }: { mode: Mode; pgData?: []; }
           return <AdventureGuideDetail2 key={index + 1} data={section} />;
         }
         
-        return <AdventureGuideDetail3 key={index + 1} />;
+        return <AdventureGuideDetail3 key={index + 1} data={section} />;
       })}
       <AdventureGuideDetail5 data={pgData} />
     </>

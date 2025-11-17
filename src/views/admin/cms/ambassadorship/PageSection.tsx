@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
 
@@ -34,7 +34,7 @@ import type { InferInput } from 'valibot'
 
 import { useNavigationStore } from '@/libs/navigation-store'
 
-import { updatePageInfo } from '@/app/server/pages'
+import { updatePageInfo, updateSectionImage } from '@/app/server/pages'
 
 type ErrorType = {
   message: string[]
@@ -43,20 +43,14 @@ type ErrorType = {
 type FormData = InferInput<typeof schema>
 
 const schema = object({
-  banner_image: custom<File>((value) => {
-    if (!value) return "This field is required";
-   
+  banner_image: optional(custom<File | null>((value) => {
+    if (!value) return true; 
+    
     const allowed = ["image/png", "image/jpeg", "image/gif"];
-    
-    if (!allowed.includes(value.type)) return "Only PNG/JPG/GIF allowed";
-    
     const maxMB = 5;
-    
-    if (value.size > maxMB * 1024 * 1024)
-      return `Max file size is ${maxMB} MB`;
-    
-    return true; // valid
-  }),
+
+    return allowed.includes(value.type) && value.size <= maxMB * 1024 * 1024;
+  }, "Only PNG/JPG/GIF allowed and max file size is 5 MB")),
 
   video_title: pipe(string(), nonEmpty('This field is required')),
   youtube_video_url: pipe(string(), nonEmpty('This field is required')),
@@ -114,14 +108,29 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
     }
   })
 
+  useEffect(() => {
+    if (pgData?.banner_image) {
+      setValue(
+        "banner_preview",
+        `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${pgData.banner_image}`,
+        { shouldDirty: false }
+      );
+      setValue("banner_image", null, { shouldDirty: false });
+    }
+  }, [pgData, setValue]);
+
   const onUpdate: SubmitHandler<FormData> = async (data: FormData) => {
-    // setIsSubmitting(true)
+    setIsSubmitting(true)
 
     const sections = [];
-    const fd = new FormData(); 
+    const fd = new FormData();
+
+    if (data.banner_image) {
+      fd.append('banner_image_file', data.banner_image)
+    }
 
     const fdata = {
-      'banner_image': data.banner_image,
+      'banner_image': 'test',
       'video_title': data.video_title,
       'youtube_video_url': data.youtube_video_url,
       'about_title': data.about_title,
@@ -139,11 +148,15 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
       'robots': data.robots,
     }
 
-    const log = await updatePageInfo('Ambassadorship', { 'name': 'Ambassadorship', ...fdata });
+    if (pgData?.banner_image) {
+      fd.append("banner_image", pgData.banner_image);
+    }
 
-    console.log(log);
+    const log = await updatePageInfo('Ambassadorship', { 'name': 'Ambassadorship', ...fdata });
  
     if (log && log._id) {
+      const _log = await updateSectionImage('Ambassadorship', fd);
+
       toast.success('Page updated successfully.')
       setIsSubmitting(false)
     } else {

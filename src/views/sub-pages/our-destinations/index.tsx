@@ -19,7 +19,9 @@ import { useSettings } from '@core/hooks/useSettings'
 
 import * as Common from '@/app/server/common'
 
-const DestinationDetailPage = ({ mode, banners, pgData, featuredDestinations }: { mode: Mode; banners?: []; pgData?: []; destinations?: []; }) => {
+const DestinationDetailPage = ({ mode, banners, pgData, featuredDestinations, featuredResorts }: { mode: Mode; banners?: []; pgData?: []; destinations?: []; featuredResorts?: []; }) => {
+  const adventure_Posts = pgData?.adventure_posts;
+
   // Hooks
   const { updatePageSettings } = useSettings()
 
@@ -47,10 +49,11 @@ const DestinationDetailPage = ({ mode, banners, pgData, featuredDestinations }: 
 
   const instagramSliderSectionProps = {
     class: 'pb_150 pt_50',
+    lists: adventure_Posts?? []
   }
 
   const featuredResortsSectionProps = {
-    resorts : pgData?.feature_resorts??[],
+    resorts : featuredResorts??[],
     heading_class: 'fs_35',
     class: ''
   }
@@ -76,7 +79,7 @@ const DestinationDetailPage = ({ mode, banners, pgData, featuredDestinations }: 
       <OurDestinationsSection4 data={pgData} sectionProps={featuredResortsSectionProps} />
       <OurDestinationsSection5 sectionProps={instagramFeedSectionProps} />
       {isUserLoggedIn &&(
-        <OurDestinationsSection6 data={userData?.user?.id} />
+        <OurDestinationsSection6 data={userData?.user?.id} collection_id={pgData?._id} collection_name="Destination Page" />
       )}
       <OurDestinationsSection7 data={pgData} />
     </>

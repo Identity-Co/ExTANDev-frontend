@@ -1,18 +1,18 @@
 .home_section5{ overflow: hidden; }
 .adventure_post{position: relative;}
-.network_travel_bottom{padding-top: 2.343vw;}
+.network_travel_bottom{padding-top: 3.021vw;}
 .network_travel_profile{display: flex; align-items: center; gap:0.878vw;}
-.network_travel_profile img{width: 4.392vw; height: 4.392vw; border-radius: 7.321vw;}
-.network_travel_profile_info h4{font-size: 1.903vw; font-family: "Bebas Neue", sans-serif; letter-spacing: -0.015em; line-height: 1;}
-.network_travel_profile_info span{font-size: 1.025vw; color: #1F1F1F; font-weight: 500; font-style: italic; line-height: 1;}
-.network_travel_follow a{font-size: 1.025vw; letter-spacing: -0.015em; font-weight: 700; color: #EA5647; text-transform: uppercase;font-family: "Montserrat", sans-serif;}
+.network_travel_profile img{width: 3.125vw; height: 3.125vw; border-radius: 100%;}
+.network_travel_profile_info h4{font-size: 1.354vw; font-family: "Bebas Neue", sans-serif; letter-spacing: -0.015em; line-height: 1;}
+.network_travel_profile_info span{font-size: 0.729vw; color: #1F1F1F; font-weight: 500; font-style: italic; line-height: 1;}
+.network_travel_follow a{font-size: 0.729vw; letter-spacing: -0.015em; font-weight: 700; color: #EA5647; text-transform: uppercase;font-family: "Montserrat", sans-serif;}
 .network_travel_follow a:hover{text-decoration: underline;}
 .network_travel_follow{display: flex; align-items: center; column-gap: 0.878vw;}
-.network_travel_follow span{font-size: 1.025vw; letter-spacing: -0.015em; font-weight: 700; color: #1F1F1F; text-transform: uppercase;font-family: "Montserrat", sans-serif;}
-.network_travel_text p{padding: 0.878vw 0; font-size: 1.171vw; line-height: 1.611vw;}
-.network_travel_likes{display: flex; flex-wrap: wrap; gap:1.171vw;}
-.network_travel_likes span{font-size: 1.025vw; font-weight: 500; color: #1F1F1F; font-family: "Montserrat", sans-serif;}
-.network_travel_likes ul{list-style: none; display: flex; gap:1.171vw; margin:0;}
+.network_travel_follow span{font-size: 0.729vw; letter-spacing: -0.015em; font-weight: 700; color: #1F1F1F; text-transform: uppercase;font-family: "Montserrat", sans-serif;}
+.network_travel_text p{padding: 0.878vw 0; font-size: 0.833vw; line-height: 1.146vw;}
+.network_travel_likes{display: flex; flex-wrap: wrap; gap:0.833vw;}
+.network_travel_likes span{font-size: 0.729vw; font-weight: 500; color: #1F1F1F; font-family: "Montserrat", sans-serif;}
+.network_travel_likes ul{list-style: none; display: flex; gap:0.833vw;}
 .network_travel_likes ul li a svg:hover path{fill: #EA5647;}
 .network_travel_likes ul li a svg{width: 1.098vw; height: 1.025vw;}
 
@@ -20,17 +20,17 @@
 .network_travel_profile .adv_post_top_right .adv_trailblazer{width: 100%;}
 .network_travel_profile .adv_post_top_right .adv_trailblazer span{font-size: 0.878vw; font-weight: 700; text-transform: uppercase;}
 .adventure_post .slick-dotted.slick-slider{margin-bottom: 0;}
-.adventure_post_slide .slick-list{padding: 0 24.89vw !important;}
+.adventure_post_slide .slick-list{padding: 0;}
 .adventure_post_slide .slick-list,
 .adventure_post_slide .slick-list .slick-track{display: flex;}
-.adventure_post_slide .slick-list .slick-slide{padding: 1.464vw 1.464vw 2.196vw; float: none;}
+.adventure_post_slide .slick-list .slick-slide{padding: 1.042vw 1.042vw 2.196vw; float: none;}
 .adventure_post_slide .slick-list .slick-slide > div{height: 100%;}
 .adventure_post_slide .slick_dots{display: flex; justify-content: center; bottom: -3vw; gap:0.5vw; }
 .adventure_post_slide .slick_dots li{width: auto; height: auto; margin: 0; padding: 0;}
-.adventure_post_slide .slick_dots li button{width: 1.245vw; height: 1.245vw; border-radius: 5.208vw; background-color: #ffffff; border: solid 0.073vw #131313; padding: 0;}
+.adventure_post_slide .slick_dots li button{width: 1.245vw; height: 1.245vw; border-radius: 5.208vw; background-color: #ffffff; border: solid 0.052vw #131313; padding: 0;}
 .adventure_post_slide .slick_dots li.slick-active button{border-color: #EA5647; background-color: #EA5647;}
 .adventure_post_slide .slick_dots li button:before{display: none;}
-.adventure_post_box{background-color: #ffffff; padding: 2.196vw; border: solid 0.073vw #CECECE; box-shadow: 0 1.098vw 1.464vw rgb(0, 0, 0, 0.10); height: 100%;}
+.adventure_post_box{background-color: #ffffff; padding: 2.196vw; border: solid 0.052vw #CECECE; box-shadow: 0 0.781vw 1.042vw rgb(0, 0, 0, 0.10); height: 100%;}
 .adventure_post_box .network_travel_bottom{padding: 0 0 1.757vw;}
 
 .adventure_post_slide .adv_post_img_slide .slick-list{padding: 0 !important; margin: 0 -0.366vw;}
@@ -48,43 +48,42 @@
 
 @media only screen and (max-width: 1024px){
   .network_travel_profile .adv_post_top_right .adv_trailblazer span{font-size: 1.678vw;}
-  .network_travel_profile .adv_post_top_right{line-height: 1.1;}
-  .adventure_post_slide .slick_dots li button{width: 2.245vw; height: 2.245vw;}
-  .adventure_post_slide .slick_dots{gap: 1.5vw; bottom: -6vw;}
+.network_travel_profile .adv_post_top_right{line-height: 1.1;}
+.adventure_post_slide .slick-dots li button{width: 2.245vw; height: 2.245vw;}
+.adventure_post_slide .slick-dots{gap: 1.5vw; bottom: -6vw;}
   .head_text_center{padding-bottom: 4.757vw;}
-  .network_travel_follow span{font-size: 3.025vw;}
-  .network_travel_profile{gap: 2.878vw;}
-  .network_travel_bottom{padding-top: 4.343vw;}
-  .head_text_center{max-width: 100%;}
-  .network_travel_box .network_travel_top .network_travel_img{padding-bottom: 110%;}
-  .network_travel_top .network_travel_img_text h3{font-size: 4.294vw;}
-  .network_travel_top .network_travel_img_text .btn a{font-size: 1.825vw; padding: 1.532vw 2.025vw;}
-  .network_travel_profile img{width: 5.859vw; height: 5.859vw; border-radius: 100%;}
-  .network_travel_profile_info h4{font-size: 2.903vw;}
-  .network_travel_profile_info span,
-  .network_travel_follow a{font-size: 1.825vw;}
-  .network_travel_text p{font-size: 1.871vw; line-height: 1.2; padding: 1.878vw 0;}
-  .network_travel_likes span{font-size: 1.825vw;}
-  .network_travel_likes ul li a svg{width: 2.098vw; height: 1.525vw;}
+.network_travel_follow span{font-size: 3.025vw;}
+.network_travel_profile{gap: 2.878vw;}
+.network_travel_bottom{padding-top: 4.343vw; max-width: 100%;}
+.head_text_center{max-width: 100%;}
+.network_travel_box .network_travel_top .network_travel_img{padding-bottom: 110%;}
+.network_travel_top .network_travel_img_text h3{font-size: 4.94vw;}
+.network_travel_top .network_travel_img_text .btn a{font-size: 1.825vw; padding: 1.532vw 2.025vw;}
+.network_travel_profile img{width: 5.859vw; height: 5.859vw; border-radius: 100%;}
+.network_travel_profile_info h4{font-size: 2.903vw;}
+.network_travel_profile_info span,
+.network_travel_follow a{font-size: 1.825vw;}
+.network_travel_text p{font-size: 1.871vw; line-height: 1.2; padding: 1.878vw 0;}
+.network_travel_likes span{font-size: 1.825vw;}
+.network_travel_likes ul li a svg{width: 2.098vw; height: 1.525vw;}
   
 }
 
 @media only screen and (max-width: 768px){
   .network_travel_profile .adv_post_top_right .adv_trailblazer span{font-size: 2.678vw;}
-  .adventure_post_slide .slick-list{padding: 0 16.89vw !important;}
-  .adv_post_img_slide .slick_prev,
-  .adv_post_img_slide .slick_next{width: 2.098vw; height: 2.611vw;}
-  .adventure_post_slide .slick_dots li button{width: 3.245vw; height: 3.245vw;}
-  .adventure_post_slide .slick_dots{gap: 2.5vw;}
-  .network_travel_box .network_travel_top .network_travel_img{padding-bottom: 100%;}
-  .network_travel_top .network_travel_img_text h3{font-size: 6.294vw;}
-  .network_travel_top .network_travel_img_text .btn a{font-size: 3.225vw; padding: 2.232vw 5.025vw;}
-  .network_travel_profile img{width: 7.859vw; height: 7.859vw; border-radius: 100%;}
-  .network_travel_profile_info h4{font-size: 3.903vw;}
-  .network_travel_profile_info span,
-  .network_travel_follow a{font-size: 2.825vw;}
-  .network_travel_text p{font-size: 2.871vw; line-height: 1.2;}
-  .network_travel_likes span{font-size: 2.825vw;}
-  .network_travel_likes ul li a svg{width: 3.098vw; height: 2.525vw;}
+.adv_post_img_slide .slick-prev,
+.adv_post_img_slide .slick-next{width: 2.098vw; height: 2.611vw;}
+.adventure_post_slide .slick-dots li button{width: 3.245vw; height: 3.245vw;}
+.adventure_post_slide .slick-dots{gap: 2.5vw;}
+  .network_travel_box .network_travel_top .network_travel_img{padding-bottom: 110%;}
+.network_travel_top .network_travel_img_text h3{font-size: 6.294vw;}
+.network_travel_top .network_travel_img_text .btn a{font-size: 3.225vw; padding: 2.232vw 5.025vw;}
+.network_travel_profile img{width: 7.859vw; height: 7.859vw; border-radius: 100%;}
+.network_travel_profile_info h4{font-size: 3.903vw;}
+.network_travel_profile_info span,
+.network_travel_follow a{font-size: 2.825vw;}
+.network_travel_text p{font-size: 2.871vw; line-height: 1.2;}
+.network_travel_likes span{font-size: 2.825vw;}
+.network_travel_likes ul li a svg{width: 3.098vw; height: 2.525vw;}
   
 }

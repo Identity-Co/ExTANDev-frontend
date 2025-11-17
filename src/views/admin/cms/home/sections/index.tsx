@@ -6,8 +6,6 @@ import LargeImageWithText from './LargeImageWithText'
 import SubscribeShare from './SubscribeShare'
 
 const EditSectionWrapper = ({ section, data }: { section?: string; data?: [] }) => {
-
-	console.log(section)
 	
   	return (
 	    <>

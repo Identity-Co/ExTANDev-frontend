@@ -74,6 +74,7 @@ type OverviewProps = {
 	destinations: []
 	setFormId: () => void
 	getFormId: () => void
+  adventurePosts: []
 }
 
 type FormData = InferInput<typeof schema>
@@ -140,6 +141,9 @@ const schema = object({
 	  	content: pipe(string(), nonEmpty('This field is required'))
 	  })
   ),
+  adventure_posts: array(
+    optional(string()),
+  ),
   feature_resorts_title: pipe(string(), nonEmpty('This field is required')),
   feature_resorts: array(
     optional(string()),
@@ -171,7 +175,7 @@ const schema = object({
   rating: optional(string()),
 })
 
-const Overview = ({ pgData, destinations, setFormId, getFormId }: OverviewProps) => {
+const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }: OverviewProps) => {
 	const router = useRouter()
 
 	let form_id = getFormId();
@@ -188,6 +192,9 @@ const Overview = ({ pgData, destinations, setFormId, getFormId }: OverviewProps)
 
 	const [resorts, setResorts] = useState(pgData?.resorts?.resorts??[])
 	const [resortOptions, setresortOptions] = useState<string[]>([])
+
+  const [adventurePostslist, setadventurePostslist] = useState(adventurePosts??[])
+  const [adventurePostslistOptions, setadventurePostslistOptions] = useState<string[]>([])
 
 	const [uploadedImages, setUploadedImages] = useState<string[]>(pgData?.overview?.slider_images??[])
 
@@ -206,6 +213,15 @@ const Overview = ({ pgData, destinations, setFormId, getFormId }: OverviewProps)
 
     setresortOptions(obj);
   }, [resorts]);
+
+  useEffect(() => {
+    const obj = adventurePosts.map(item => ({
+      label: item._id,
+      value: item.name
+    }));
+
+    setadventurePostslistOptions(obj);
+  }, [adventurePosts]);
 
 	// Editor Toolbar
 	const modules = {
@@ -255,6 +271,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId }: OverviewProps)
         label: fact.label ?? '',
         content: fact.content ?? null,
       })) ?? [{label: '', content: ''}],
+      adventure_posts: pgData?.overview?.adventure_posts??[],
 		  feature_resorts_title: pgData?.overview?.feature_resorts?.title??'',
 		  feature_resorts: pgData?.overview?.feature_resorts?.resorts??[],
 		  faqs: pgData?.overview?.faq?.map(faq => ({
@@ -433,6 +450,10 @@ const Overview = ({ pgData, destinations, setFormId, getFormId }: OverviewProps)
 		  fData.append(`faq[${i}][question]`, section.question)
 		  fData.append(`faq[${i}][answer]`, section.answer)
 		});
+
+    data.adventure_posts.forEach((resortId, i) => {
+      fData.append(`overview[adventure_posts][${i}]`, resortId);
+    })
 
 		fData.append('overview[feature_resorts_title]', data.feature_resorts_title);
 		data.feature_resorts.forEach((resortId, i) => {
@@ -1158,15 +1179,38 @@ const Overview = ({ pgData, destinations, setFormId, getFormId }: OverviewProps)
 			</Grid>
 			<Divider />
 
-			{/* Stories Section */}
+			{/* Adventure Posts Section */}
 			<Grid container spacing={5} className="my-5">  
-			<Grid size={{ md: 12, xs: 12, lg: 12 }}>
-			  <h2>Stories</h2>
-			</Grid>
+  			<Grid size={{ md: 12, xs: 12, lg: 12 }}>
+  			  <h2>Adventure Posts</h2>
+  			</Grid>
 
-			<Grid size={{ md: 12, xs: 12, lg: 12 }}>
-			  <br />
-			</Grid>
+  			<Grid size={{ md: 12, xs: 12, lg: 12 }}>
+          <input type="hidden" {...register("adventure_posts")} />
+            <Autocomplete
+              multiple
+              options={adventurePostslistOptions}
+              getOptionLabel={(option) => option.value} 
+              value={adventurePostslistOptions.filter(opt =>
+                (watch("adventure_posts") || []).includes(opt.label)
+              )}
+              renderOption={(props, option) => (
+                <li {...props} key={option.label}> 
+                  {option.value}
+                </li>
+              )}
+              renderInput={(params) => (
+                <TextField {...params} label="Search Adventure Post" variant="outlined" />
+              )}
+              onChange={(event, newValue) => {
+                setValue(
+                  "adventure_posts",
+                  newValue.map((item) => item.label), // array of values
+                  { shouldValidate: true }
+                );
+              }}
+            />
+        </Grid>
 			</Grid>
 			<Divider />
 

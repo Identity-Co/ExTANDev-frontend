@@ -3,6 +3,7 @@ import Destinations from '@views/admin/destinations/add'
 import config from '@/configs/themeConfig'
 
 import { getDestinations } from '@/app/server/destinations'
+import { getAllTours } from '@/app/server/tours'
 
 export const metadata = {
   title: `Destination Management - ${config.appName}`,
@@ -23,7 +24,9 @@ export const metadata = {
 const ManageDestinations = async () => {
   const destinations = await getDestinations();
 
-  return <Destinations pgData={[]} destinations={destinations}/>
+  const adventurePosts = await getAllTours('id,name');
+
+  return <Destinations pgData={[]} destinations={destinations} adventurePosts={adventurePosts??[]}/>
 }
 
 export default ManageDestinations

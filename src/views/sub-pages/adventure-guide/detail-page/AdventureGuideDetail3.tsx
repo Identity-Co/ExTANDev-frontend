@@ -1,82 +1,65 @@
+'use client'
+
+// React Imports
+import { useEffect, useState } from 'react'
+
+import { getResortByIds } from '@/app/server/destinations'
+
 // Third-party Imports
 import classnames from 'classnames'
 
 // Styles Imports
 import styles from './styles.module.css'
 
-const BlogDetailSection3 = () => {
-  
+const BlogDetailSection3 = ({ data }: { data?: []; }) => {
+
+    const [resortsLists, setResortsLists] = useState<any[]>([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const fetchResorts = async () => {
+          try {
+            setLoading(true)
+            const resorts = await getResortByIds(data?.fields[0]?.resorts_list)
+            setResortsLists(resorts || [])
+          } catch (error) {
+            console.error('Error fetching resorts:', error)
+            setResortsLists([])
+          } finally {
+            setLoading(false)
+          }
+        }
+
+        fetchResorts()
+     }, [data])
+
   return (
     <section className={classnames(styles.destination_resort_sec2, styles.moab_sec3, 'py_50')}>
         <div className="container">
             <div className="head_text_center">
-                <h2 className="fs_55">Moab Utah resorts</h2>
+                {data?.fields[0]?.resort_title && <h2 className="fs_55">{data?.fields[0]?.resort_title}</h2> }
             </div>
             <div className={classnames(styles.feature_resort_row)}>
-                <div className={classnames(styles.network_travel_box)}>
-                    <div className={classnames(styles.network_travel_top)}>
-                        <a className={classnames(styles.fl_bx_lnk_glb, 'fl_bx_lnk_glb')} href="#"></a>
-                        <div className={classnames(styles.network_travel_img)}>
-                            <img src="/images/sub-pages/moabr1.jpg" />
-                        </div>
-                        <div className={classnames(styles.network_travel_img_text)}>
-                            <span>Moab, Utah</span>
-                            <h4>Red cliffs lodge</h4>
-                            <p>An Idyllic Desert Retreat set in the middle of the Moab Valley</p>
-                            <div className={classnames(styles.btn, 'btn')}>
-                                <a href="#">BOOK NOW</a>
+                {resortsLists?.map((item, index) => (
+                    <div key={index} className={classnames(styles.network_travel_box)}>
+                        <div className={classnames(styles.network_travel_top)}>
+                            <a className={classnames(styles.fl_bx_lnk_glb, 'fl_bx_lnk_glb')} href="#"></a>
+                            <div className={classnames(styles.network_travel_img)}>
+                                <img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${item?.image}`} />
+                            </div>
+                            <div className={classnames(styles.network_travel_img_text)}>
+                                {item?.location && <span>{item?.location}</span>}
+                                {item?.title && <h4>{item?.title}</h4>}
+                                <span dangerouslySetInnerHTML={{
+                                    __html: (item?.content || ''),
+                                }}></span>
+                                <div className={classnames(styles.btn, 'btn')}>
+                                    <a href="#">BOOK NOW</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className={classnames(styles.network_travel_box)}>
-                    <div className={classnames(styles.network_travel_top)}>
-                        <a className={classnames(styles.fl_bx_lnk_glb, 'fl_bx_lnk_glb')} href="#"></a>
-                        <div className={classnames(styles.network_travel_img)}>
-                            <img src="/images/sub-pages/moabr2.jpg" />
-                        </div>
-                        <div className={classnames(styles.network_travel_img_text)}>
-                            <span>Moab, Utah</span>
-                            <h4>Sorrel River Ranch</h4>
-                            <p>An Idyllic Desert Retreat set in the middle of the Moab Valley</p>
-                            <div className={classnames(styles.btn, 'btn')}>
-                                <a href="#">BOOK NOW</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className={classnames(styles.network_travel_box)}>
-                    <div className={classnames(styles.network_travel_top)}>
-                        <a className={classnames(styles.fl_bx_lnk_glb, 'fl_bx_lnk_glb')} href="#"></a>
-                        <div className={classnames(styles.network_travel_img)}>
-                            <img src="/images/sub-pages/moabr3.jpg" />
-                        </div>
-                        <div className={classnames(styles.network_travel_img_text)}>
-                            <span>Moab, Utah</span>
-                            <h4>Moab springs lodge</h4>
-                            <p>An Idyllic Desert Retreat set in the middle of the Moab Valley</p>
-                            <div className={classnames(styles.btn, 'btn')}>
-                                <a href="#">BOOK NOW</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className={classnames(styles.network_travel_box)}>
-                    <div className={classnames(styles.network_travel_top)}>
-                        <a className={classnames(styles.fl_bx_lnk_glb, 'fl_bx_lnk_glb')} href="#"></a>
-                        <div className={classnames(styles.network_travel_img)}>
-                            <img src="/images/sub-pages/moabr4.jpg" />
-                        </div>
-                        <div className={classnames(styles.network_travel_img_text)}>
-                            <span>Moab, Utah</span>
-                            <h4>Sage creek</h4>
-                            <p>An Idyllic Desert Retreat set in the middle of the Moab Valley</p>
-                            <div className={classnames(styles.btn, 'btn')}>
-                                <a href="#">BOOK NOW</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                ))}
             </div>
             <div className={classnames(styles.moab_resort_row)}>
                 <div className="grid2 gap_64">

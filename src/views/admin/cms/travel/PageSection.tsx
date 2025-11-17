@@ -92,7 +92,6 @@ const schema = object({
 })
 
 const PageSection = ({ pgData }: { pgData?: [] }) => {  
-  console.log(pgData)
   const router = useRouter()
 
   const setLoading = useNavigationStore((s) => s.setLoading)

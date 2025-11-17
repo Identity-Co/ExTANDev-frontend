@@ -3,6 +3,8 @@ import Destinations from '@views/admin/destinations/edit'
 import config from '@/configs/themeConfig'
 
 import { getDestination, getDestinations } from '@/app/server/destinations'
+import { getAllTours } from '@/app/server/tours'
+import { getReviewsByCollectionId } from '@/app/server/reviews'
 
 export const metadata = {
   title: `Destination Management - ${config.appName}`,
@@ -29,7 +31,15 @@ const ManageDestinations = async (props: { params: Promise<{ id: string }> }) =>
 
   const destinations = await getDestinations();
 
-  return <Destinations pgData={destination} id={id} destinations={destinations} />
+  const adventurePosts = await getAllTours('id,name');
+
+  const requestData: any = {
+    'fields': '',
+    'collection_id': id,
+  };
+  const reviews = await getReviewsByCollectionId(requestData);
+
+  return <Destinations pgData={destination} id={id} destinations={destinations} adventurePosts={adventurePosts??[]} reviews={reviews?? []} />
 }
 
 export default ManageDestinations

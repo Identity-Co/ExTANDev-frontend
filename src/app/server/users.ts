@@ -60,8 +60,10 @@ export const getSingleUser = async (user_id: any) => {
       console.log(rejected);
   })
 
+
   if (res && res.ok) {
     const log = await res.json()
+    console.log(log);
 
     return log.data
   } else {
@@ -87,7 +89,32 @@ export const saveUser = async (data: any) => {
     return {}
   } else {
     const json = await response.json();
-    
+
+
+    /* try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_WP_API_URL}/wp-json/shop-api/v1/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const res_data = await res.json();
+      if (!res.ok) {
+        throw new Error(res_data.message || 'Failed to create WordPress user');
+      } else {
+        if(res_data.user_id) {
+          const wp_uid = res_data.user_id;
+        }
+      }
+
+      //return res_data;
+    } catch (error) {
+      console.error('WordPress API error:', error);
+
+      //return { status: 'error', message: error.message };
+    } */
+
+
     return json.data
   }
 }
@@ -105,6 +132,26 @@ export const changePassword = async (data: any) => {
   });
 
   console.log(response)
+
+  // Send new password to WP API
+  /* try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_WP_API_URL}/wp-json/shop-api/v1/update-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const res_data = await res.json();
+      if (!res.ok) {
+        throw new Error(res_data.message || 'Failed to update WordPress user password');
+      } else {
+        if(res_data.user_id) {
+          const wp_uid = res_data.user_id;
+        }
+      }
+    } catch (error) {
+      console.error('WordPress API error:', error);
+    } */
 
   return await response.json()
 }
@@ -125,7 +172,23 @@ export const updateUser = async (id: any, data: any) => {
     return {}
   } else {
     const json = await response.json();
-    
+
+    // Send updated profile to WP API
+    /* try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_WP_API_URL}/wp-json/shop-api/v1/update-profile`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const res_data = await res.json();
+        if (!res.ok) {
+          throw new Error(res_data.message || 'Failed to update WordPress user profile');
+        }
+      } catch (error) {
+        console.error('WordPress API error:', error);
+      } */
+
     return json.data
   }
 }
@@ -174,8 +237,26 @@ export const deleteUserData = async (id: string) => {
 
 // General Users Signup
 export const signUp = async (data: any) => {
-  console.log('POST: ', `${process.env.NEXT_PUBLIC_API_URL}/users/signup`)
-  console.log('Post data: ', data)
+  const session = await getServerSession(authOptions)
+
+  //console.log('POST: ', `${process.env.NEXT_PUBLIC_API_URL}/users/signup`)
+  //console.log('Post data: ', data)
+
+  /* const res = await fetch(`${process.env.NEXT_PUBLIC_WP_API_URL}/wp-json/shop-api/v1/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  const res_data = await res.json();
+  if (!res.ok) {
+    throw new Error(res_data.message || 'Failed to create WordPress user');
+  } else {
+    if(res_data.user_id) {
+      const wp_uid = res_data.user_id;
+      console.log('wp_uid: ', wp_uid)
+    }
+  }
+  return */
 
   const RECAPTCHA_SECRET = "6Ldfpq4rAAAAABR0J6Lga-3zpQ8GH0Zxums5xCFh";
 
@@ -184,7 +265,7 @@ export const signUp = async (data: any) => {
       `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET}&response=${data.captcha}`,
       { method: "POST" }
     );
-    
+
     const c_data = await response.json();
 
     if(c_data.success) {
@@ -198,20 +279,96 @@ export const signUp = async (data: any) => {
         body: JSON.stringify(data)
       });
 
+      const json = await u_response.json();
+      
+      //console.warn('json.data :: ', json.data)
+
       if (!u_response.ok) {
-        return {}
+        return {'status': false, 'message': json.message || json.errors.message || 'Something went wrong'}
       } else {
-        const json = await u_response.json();
-        
-        console.log('json.data :: ', json.data)
+        //const json = await u_response.json();
+        //console.log('json.data :: ', json.data)
+
+        /* const wp_response = await fetch(`${process.env.NEXT_PUBLIC_WP_API_URL}/users/signup`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        }); */
+
+        /*try {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_WP_API_URL}/wp-json/shop-api/v1/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+
+          const res_data = await res.json();
+          if (!res.ok) {
+            throw new Error(res_data.message || 'Failed to create WordPress user');
+          } else {
+            if(res_data.user_id) {
+              const wp_uid = res_data.user_id;
+              const upd_data = { wp_user_id: wp_uid }
+
+              const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/update/${json.data._id}`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${session?.user?.userToken}`
+                },
+                body: JSON.stringify(upd_data)
+              });
+            }
+          }
+
+          //return res_data;
+        } catch (error) {
+          console.error('WordPress API error:', error);
+          
+          //return { status: 'error', message: error.message };
+        }*/
 
         return json.data
       }
 
     } else {
       console.error('Failed: Captcha verification failed');
-      return {'status': false, 'message': 'Invalid Captcha'}
+      return {'status': false, 'message': error.message || 'Something went wrong'}
     }
+  } catch (error) {
+    console.error('error: ', error);
+  }
+
+  return {}
+}
+
+// Submit Ambassador Application
+export const signUpAmbassador = async (data: any) => {
+  console.log('POST: ', `${process.env.NEXT_PUBLIC_API_URL}/users/signup`)
+  console.log('Post data: ', data)
+
+  try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      console.log('response :: ', response)
+
+      const json = await response.json();
+      
+      if (!response.ok) {
+        return json
+      } else {
+        
+        return json.data
+      }
+
   } catch (error) {
     console.error('error: ', error);
   }

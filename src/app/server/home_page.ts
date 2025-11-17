@@ -23,7 +23,7 @@ export const getPageData = async () => {
   }
 }
 
-export const getSection = async (secKey) => {
+export const getSection = async (secKey: string) => {
   const session = await getServerSession(authOptions);
   
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/${secKey}`, {
@@ -42,7 +42,7 @@ export const getSection = async (secKey) => {
   }
 }
 
-export const updateSection = async (data) => {
+export const updateSection = async (data: any) => {
   const session = await getServerSession(authOptions);
   
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home/update`, {

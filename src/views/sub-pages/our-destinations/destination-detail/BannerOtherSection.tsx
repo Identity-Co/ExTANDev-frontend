@@ -7,8 +7,8 @@ import type { Mode } from '@core/types'
 // Styles Imports
 import styles from './styles.module.css'
 
-const BannerOtherSection = ({ bannerData, tabID }: { bannerData?: [], tabID?: '' }) => {
-    const bannerTitle = (tabID == 'resorts') ? 'Resorts' : (tabID == 'adventures') ? 'Adventure' : (tabID == 'stories') ? 'Story' : '';
+const BannerOtherSection = ({ bannerData, tabID, bannerTitle }: { bannerData?: [], tabID?: ''; bannerTitle?: '' }) => {
+    const _bannerTitle = ( bannerTitle ? bannerTitle : (tabID == 'resorts') ? 'Resorts' : (tabID == 'adventures') ? 'Adventure' : (tabID == 'stories') ? 'Story' : '');
 
   return (
     <div className={classnames(styles.home_banner)}>
@@ -20,7 +20,7 @@ const BannerOtherSection = ({ bannerData, tabID }: { bannerData?: [], tabID?: ''
             </div>
             <div className="container">
                 <div className={classnames(styles.banner_bg_image_text)}>
-                    <h1 className="fs_90">{bannerTitle}</h1>
+                    <h1 className="fs_90">{_bannerTitle}</h1>
                 </div>
             </div>
         </div>

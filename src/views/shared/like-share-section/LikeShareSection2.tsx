@@ -47,7 +47,6 @@ const SocialSection = ({ collectionName, collectionID }: SocialSectionProps) => 
       if(userIsLoggedIn){
         const savedStatus = await getSavedSatus(formData);
         setIsSaved(savedStatus?.hasSaved || false);
-        console.log(savedStatus)
       }
     } catch (error) {
       console.error('Error fetching initial data:', error);

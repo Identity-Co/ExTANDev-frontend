@@ -71,22 +71,26 @@ type contactEnquiriesTypesWithAction = contactEnquiriesTypes & {
   last_name?: string
   email_address?: string
   _id?: string
+  full_name?: string
 }
 
-// Styled Components
 const Icon = styled('i')({})
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
-  // Rank the item
-  const itemRank = rankItem(row.getValue(columnId), value)
+  if (!value) return true;
 
-  // Store the itemRank info
+  const rowValues = Object.values(row.original).filter(val => 
+    typeof val === 'string' || typeof val === 'number'
+  ).map(val => String(val).toLowerCase());
+
+  const rowText = rowValues.join(' ');
+
+  const itemRank = rankItem(rowText, value.toLowerCase());
   addMeta({
     itemRank
-  })
+  });
 
-  // Return if the item should be filtered in/out
-  return itemRank.passed
+  return itemRank.passed;
 }
 
 const DebouncedInput = ({
@@ -112,7 +116,7 @@ const DebouncedInput = ({
     }, debounce)
 
     return () => clearTimeout(timeout)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [value])
 
   return <TextField {...props} value={value} onChange={e => setValue(e.target.value)} size='small' />
@@ -128,7 +132,6 @@ const ContactEnquiriesListTable = ({ tableData }: { tableData?: contactEnquiries
   const [addUserOpen, setAddUserOpen] = useState(false)
   const [rowSelection, setRowSelection] = useState({})
   const [data, setData] = useState<contactEnquiriesTypes[]>(tableData ?? [])
-  const [filteredData, setFilteredData] = useState(data)
   const [globalFilter, setGlobalFilter] = useState('')
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
@@ -138,34 +141,42 @@ const ContactEnquiriesListTable = ({ tableData }: { tableData?: contactEnquiries
 
   const [openDelete, setOpenDelete] = useState(false)
 
-
   // Hooks
   const { lang: locale } = useParams()
 
+  const preparedData = useMemo(() => {
+    return data.map(item => ({
+      ...item,
+      full_name: `${item.first_name || ''} ${item.last_name || ''}`.trim()
+    }))
+  }, [data])
+
   const fetchData = async () => {
     try {
-    // Fetch updated data
-    const refresh = await ContactEntries.getAllEntries();
-    
-    // Ensure the returned data is of the correct type
-    if (Array.isArray(refresh)) {
-      setData(refresh); // Update state with new data
-    } else {
-      toast.error('Failed to fetch updated data');
+      const refresh = await ContactEntries.getAllEntries();
+
+      if (Array.isArray(refresh)) {
+        setData(refresh);
+      } else {
+        toast.error('Failed to fetch updated data');
+      }
+    } catch (error) {
+      toast.error('Error fetching updated data');
+      console.error('Fetch error:', error);
     }
-  } catch (error) {
-    toast.error('Error fetching updated data');
-    console.error('Fetch error:', error);
-  }
   };
 
   const columns = useMemo<ColumnDef<contactEnquiriesTypesWithAction, any>[]>(
     () => [
-      columnHelper.accessor('name', {
+      columnHelper.accessor('full_name', {
         header: 'Name',
-        cell: ({ row }) => <Typography>{row.original?.first_name} {row.original?.last_name}</Typography>
+        cell: ({ row }) => (
+          <Typography>
+            {row.original.first_name} {row.original.last_name}
+          </Typography>
+        )
       }),
-      columnHelper.accessor('email', {
+      columnHelper.accessor('email_address', {
         header: 'Email',
         cell: ({ row }) => <Typography>{row.original?.email_address}</Typography>
       }),
@@ -177,7 +188,6 @@ const ContactEnquiriesListTable = ({ tableData }: { tableData?: contactEnquiries
         header: 'Action',
         cell: ({ row }) => (
           <div className='flex items-center'>
-
             <IconButton sx={{color: 'info.main'}} href={'/admin/contact-enquiries/view/'+row.original._id} className='flex'>
               <i className='ri-eye-line' />
             </IconButton>
@@ -191,7 +201,7 @@ const ContactEnquiriesListTable = ({ tableData }: { tableData?: contactEnquiries
       })
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data, filteredData]
+    []
   )
 
   // Vars
@@ -203,11 +213,6 @@ const ContactEnquiriesListTable = ({ tableData }: { tableData?: contactEnquiries
       color: 'info.main',
     }
   }
-
-  useEffect(() => {
-    setFilteredData(data);
-  }, [data]);
-
 
   const handleDeleteList = async (id?: string) => {
     setId(id ?? '')
@@ -234,10 +239,10 @@ const ContactEnquiriesListTable = ({ tableData }: { tableData?: contactEnquiries
   }
 
   const table = useReactTable({
-    data: filteredData as contactEnquiriesTypes[],
+    data: preparedData as contactEnquiriesTypesWithAction[],
     columns,
     filterFns: {
-      fuzzy: fuzzyFilter
+      fuzzy: fuzzyFilter,
     },
     state: {
       columnFilters,
@@ -249,8 +254,7 @@ const ContactEnquiriesListTable = ({ tableData }: { tableData?: contactEnquiries
         pageSize: 10
       }
     },
-    enableRowSelection: true, //enable row selection for all rows
-    // enableRowSelection: row => row.original.age > 18, // or enable row selection conditionally per row
+    enableRowSelection: true,
     globalFilterFn: fuzzyFilter,
     onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
@@ -268,10 +272,8 @@ const ContactEnquiriesListTable = ({ tableData }: { tableData?: contactEnquiries
     <>
       <Card>
         <CardHeader title='Contact Enquiries' />
-        {/*<TableFilters setData={setFilteredData} tableData={data} roles={roles} />*/}
         <Divider />
         <div className='flex justify-between p-5 gap-4 flex-col items-start sm:flex-row sm:items-center'>
-          
           <div></div>
           <div className='flex items-center gap-x-4 gap-4 flex-col max-sm:is-full sm:flex-row'>
             <DebouncedInput
@@ -315,7 +317,7 @@ const ContactEnquiriesListTable = ({ tableData }: { tableData?: contactEnquiries
               <tbody>
                 <tr>
                   <td colSpan={table.getVisibleFlatColumns().length} className='text-center'>
-                    No data available
+                    {globalFilter ? 'No matching records found' : 'No data available'}
                   </td>
                 </tr>
               </tbody>

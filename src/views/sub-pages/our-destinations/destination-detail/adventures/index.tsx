@@ -13,9 +13,27 @@ import AdventuresSection3 from '@/views/shared/instagram-feed-slider-section/Ins
 import AdventuresSection4 from '@/views/shared/destination-featured-resorts-section/OurDestinationsFeaturedResorts'
 import AdventuresSection5 from '@/views/shared/cta-section/CTASection'
 
+import AdventuresDetailSection1 from './sub-pages/AdventuresDetailSection1'
+import AdventuresDetailSection2 from './sub-pages/AdventuresDetailSection2'
+import AdventuresDetailSection3 from './sub-pages/AdventuresDetailSection3'
+import AdventuresDetailSection4 from '@/views/shared/instagram-feed-section/InstagramFeed'
+
 import { useSettings } from '@core/hooks/useSettings'
 
-const LandingPageWrapper = ({ pgData, destinations}: AdventureProps) => {
+import { getEntry } from '@/app/server/reviews'
+
+type AdventureProps = {
+  pgData: []
+  destinations: []
+  isOverviewDetailPage: boolean
+  setIsOverviewDetailPage: React.Dispatch<React.SetStateAction<boolean>>;
+  isOverviewDetailPageID: string
+  setIsOverviewDetailPageID: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const LandingPageWrapper = ({ pgData, destinations, isOverviewDetailPage, setIsOverviewDetailPage, isOverviewDetailPageID, setIsOverviewDetailPageID}: AdventureProps) => {
+  const adventurePosts = pgData?.adventures?.adventure_posts;
+
   // Hooks
   const { updatePageSettings } = useSettings()
 
@@ -36,6 +54,7 @@ const LandingPageWrapper = ({ pgData, destinations}: AdventureProps) => {
 
   const instagramSliderSectionProps = {
     class: 'py_150',
+    lists: adventurePosts?? []
   }
 
   const featuredResortsSectionProps = {
@@ -46,15 +65,27 @@ const LandingPageWrapper = ({ pgData, destinations}: AdventureProps) => {
     sectionHeading: pgData?.adventures?.feature_resorts?.title ?? ''
   }
 
-  return (
-    <>
-      <AdventuresSection1 data={pgData?.adventures ?? []} />
-      <AdventuresSection2 />
-      <AdventuresSection3 sectionProps={instagramSliderSectionProps} />
-      <AdventuresSection4 sectionProps={featuredResortsSectionProps} />
-      <AdventuresSection5 data={pgData ?? []} />
-    </>
-  )
+  if(isOverviewDetailPage && isOverviewDetailPageID){
+    const detailPageData = pgData?.adventures?.adventure_lists?.find(item => item._id === isOverviewDetailPageID);
+    return (
+      <>
+        <AdventuresDetailSection1 data={detailPageData ?? []} />
+        <AdventuresDetailSection2 data={detailPageData ?? []} />
+        <AdventuresDetailSection3 map_image={detailPageData?.map_image ?? ''} />
+        <AdventuresDetailSection4 sectionProps={featuredResortsSectionProps} />
+      </>
+    );
+  }else{
+    return (
+      <>
+        <AdventuresSection1 data={pgData?.adventures ?? []} />
+        <AdventuresSection2 data={pgData?.adventures ?? []} isOverviewDetailPage={isOverviewDetailPage} setIsOverviewDetailPage={setIsOverviewDetailPage} isOverviewDetailPageID={isOverviewDetailPageID} setIsOverviewDetailPageID={setIsOverviewDetailPageID} />
+        <AdventuresSection3 sectionProps={instagramSliderSectionProps} />
+        <AdventuresSection4 sectionProps={featuredResortsSectionProps} />
+        <AdventuresSection5 data={pgData ?? []} />
+      </>
+    )
+  }
 }
 
 export default LandingPageWrapper

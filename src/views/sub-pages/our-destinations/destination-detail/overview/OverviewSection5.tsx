@@ -15,7 +15,7 @@ const OverviewSection5 = ({ data }: { data?: []; }) => {
                 <h2>Dominican Republic</h2>
                 <h4 className="fs_55">Dr quick facts</h4>
             </div>
-            <div className={classnames(styles.grid2, styles.dr_list, 'grid2')}>
+            <div className={classnames(styles.dr_list)}>
                 <div className={classnames(styles.grid_box)}>
                     <ul>
                         {data.map((section: any, index: number) => {

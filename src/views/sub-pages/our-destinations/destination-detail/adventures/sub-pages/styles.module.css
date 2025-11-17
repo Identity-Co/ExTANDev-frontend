@@ -60,8 +60,7 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
 /*banner-end*/
 
 /*adventures-detail-sec1-start*/
-
-section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 6.252vw;}
+section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 12.869vw;}
 section.home_section1.our_desti_sec1{ background: url(/images/front-pages/images/tan-background-copy.jpg) center no-repeat; background-size: cover; box-shadow: none; padding-bottom: 13.021vw; }
 .destination_overview_tab{max-width: 36.459vw; margin: 0 auto; padding-bottom: 4.427vw;}
 ul.destination_tab{list-style: none; display: flex; flex-wrap: wrap; column-gap: 3.229vw; grid-row-gap: 1.250vw; justify-content: center; border-bottom: solid 0.026vw #707070;}
@@ -97,7 +96,7 @@ ul.destination_tab li.active a{text-decoration: none;}
 }
 
 @media only screen and (max-width: 768px){
-  section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 18.347vw;}
+  section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 22.616vw;}
   .destination_overview_tab{max-width: 90%;}
   ul.destination_tab li a{font-size: 2.114vw;}
   .destination_overview_tab{padding-bottom: 6.562vw;}
@@ -123,6 +122,8 @@ section.home_section1.our_desti_sec1.destination_overview_sec1.adv_details_sec1 
 .spots_row .spots_big{width: calc(65% - 1.250vw);}
 .spots_row .spots_big h3{padding-bottom: 0.521vw;}
 .spots_row .spots_big h3 span{color: #F85241;}
+.spots_main .spots_row.rivers_row .spots_small{ order: 1; }
+.spots_main .spots_row.rivers_row .spots_big{ order: 0; }
 
 
 @media only screen and (max-width: 1024px){
@@ -139,8 +140,8 @@ section.home_section1.our_desti_sec1.destination_overview_sec1.adv_details_sec1 
   .spots_row{gap:3.212vw;}
   .spots_row .spots_small{width: 100%;}
   .spots_row .spots_big{width: 100%;}
-  .spots_row.rivers_row .spots_big{order: 1;}
-  .spots_row.rivers_row .spots_small{order: 0;}
+  .spots_main .spots_row.rivers_row .spots_small{ order: unset; }
+  .spots_main .spots_row.rivers_row .spots_big{ order: unset; }
 }
 
 

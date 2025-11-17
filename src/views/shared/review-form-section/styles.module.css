@@ -41,3 +41,8 @@
 	.review_frm_sec .review_card .success_message{gap: 1.912vw;}
 
 }
+
+@media only screen and (max-width: 768px){
+	.review_frm_sec .review_card .frm_btn_wrap button{font-size: 3.437vw; padding: 2.375vw 3.508vw;}
+
+}

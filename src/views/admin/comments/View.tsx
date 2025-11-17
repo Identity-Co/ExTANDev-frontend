@@ -118,7 +118,6 @@ const ViewComment = ({ data }: { data?: any }) => {
   const handleDelete = async () => {
     try {
       const deleteResponse = await deleteComment(id);
-      console.log(deleteResponse)
       if (deleteResponse.success) {
         toast.success('Comment deleted successfully');
         router.push('/admin/comments')
@@ -171,7 +170,6 @@ const ViewComment = ({ data }: { data?: any }) => {
       };
 
       const reviewData = await updateReportStatus(formData);
-      console.log(reviewData)
       if (reviewData._id) {
         const updatedComment = { ...comment }
         if (updatedComment.reports) {

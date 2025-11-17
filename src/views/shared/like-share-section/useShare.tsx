@@ -89,7 +89,6 @@ export const useShare = ({
   }, [collectionID, fetchCollectionData]);
 
   const saveSharePointHistory = useCallback(async (data) => {
-    console.log('Share data: ', data);
 
     if(isUserLoggedIn) {
       let s_points = 0;
@@ -105,8 +104,6 @@ export const useShare = ({
           "reference_id" : collectionID,
           "points_earned" : s_points
         }
-
-        console.log('_data: ', _data)
 
         const is_exists = await Royalty.checkPointHistoryExist(_data);
         if(is_exists.success && is_exists.exists == 0) {

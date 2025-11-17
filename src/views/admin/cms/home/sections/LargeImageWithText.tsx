@@ -154,7 +154,6 @@ const LargeImageWithText = ({ section }: { section?: [] }) => {
     
     if (imageInput) { 
       fData.append('file', imageInput);
-      console.log("fData")
     }
 
     const _data = {

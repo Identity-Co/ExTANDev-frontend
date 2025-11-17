@@ -16,6 +16,8 @@ import ResortsSection5 from '@/views/shared/cta-section/CTASection'
 import { useSettings } from '@core/hooks/useSettings'
 
 const LandingPageWrapper = ({ pgData, destinations}: ResortsProps) => {
+  const adventurePosts = pgData?.resorts?.adventure_posts;
+
   // Hooks
   const { updatePageSettings } = useSettings()
 
@@ -29,6 +31,7 @@ const LandingPageWrapper = ({ pgData, destinations}: ResortsProps) => {
 
   const instagramSliderSectionProps = {
     class: 'py_150',
+    lists: adventurePosts?? []
   }
 
   const featuredResortsSectionProps = {

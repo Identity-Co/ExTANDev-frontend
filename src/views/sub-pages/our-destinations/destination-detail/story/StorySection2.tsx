@@ -15,6 +15,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import LikesShare from '@/views/shared/like-share-section/LikeShareSection'
+import FollowUnfollow from '@/views/shared/follow-unfollow-button/FollowUnfollowButton'
 
 const StorySection2 = ({ data }: { data?: []; }) => { 
     const [expanded, setExpanded] = useState<string | false>(false)
@@ -203,7 +204,7 @@ const StorySection2 = ({ data }: { data?: []; }) => {
                                                                     {recordData?.name && <h4>{recordData?.name}</h4>}
                                                                     <div className={classnames(styles.network_travel_follow)}>
                                                                         <span>•</span>
-                                                                        <a href="#" tabIndex="-1">FOLLOW</a>
+                                                                        <FollowUnfollow type="story" followID={recordData?._id} />
                                                                     </div>
                                                                 </div>
                                                                 {recordData?.username && <span>{recordData?.username}</span>}
@@ -278,7 +279,7 @@ const StorySection2 = ({ data }: { data?: []; }) => {
                                                                         {recordData?.name && <h4>{recordData?.name}</h4>}
                                                                         <div className={classnames(styles.network_travel_follow)}>
                                                                             <span>•</span>
-                                                                            <a href="#" tabIndex="-1">FOLLOW</a>
+                                                                            <FollowUnfollow type="story" followID={recordData?._id} />
                                                                         </div>
                                                                     </div>
                                                                     {recordData?.username && <span>{recordData?.username}</span>}

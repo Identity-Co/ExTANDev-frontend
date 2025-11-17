@@ -340,8 +340,6 @@ const ReviewsListTable = ({ tableData }: { tableData?: [] }) => {
 
   // Debug: Log filtered results
   useEffect(() => {
-    console.log('Filtered rows:', table.getFilteredRowModel().rows.length);
-    console.log('Global filter:', globalFilter);
   }, [globalFilter, table.getFilteredRowModel().rows.length]);
 
   return (

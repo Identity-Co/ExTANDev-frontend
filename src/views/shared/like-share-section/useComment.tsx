@@ -209,13 +209,10 @@ export const useComment = ({
   const commentRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const commentsListRef = useRef<HTMLDivElement>(null);
 
-  // This useEffect will run whenever userData changes
   useEffect(() => {
-    // If userData changes and we have comments loaded, we might want to refresh
-    // the comments to update upvote/helpful status for the new user
-    if (showCommentPopup && comments.length > 0) {
+    //if (showCommentPopup && comments.length > 0) {
       fetchComments();
-    }
+    //}
   }, [userData]);
 
   const editorModules = {
@@ -354,7 +351,6 @@ export const useComment = ({
       };
       
       const commentLists_tmp = await getComments(formData);
-      console.log(commentLists_tmp, formData)
 
       if(commentLists_tmp){
         const commentLists = commentLists_tmp?.map(item => {

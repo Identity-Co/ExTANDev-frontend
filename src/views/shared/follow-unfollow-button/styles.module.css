@@ -1,0 +1,12 @@
+.ppLoginCheckSocial.popupOverlay{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center}
+.ppLoginCheckSocial .popupContainer{background:#fff;padding:1.667vw;border-radius:0.521vw;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.2);max-width:320px;width:90%}
+.ppLoginCheckSocial p{padding-top:0.684vw}
+.ppLoginCheckSocial .popupButtons{display:flex;justify-content:center;gap:0.625vw}
+.ppLoginCheckSocial .popupButtons button{cursor:pointer}
+.ppLoginCheckSocial .popupButtons button:last-child{background-color:#e7e7e7;color:#000}
+.ppLoginCheckSocial .popupButtons button:hover:last-child{background-color:#000000;color:#ffffff}
+
+@media only screen and (max-width:575px){
+  .ppLoginCheckSocial .popupContainer{padding:4.667vw}
+  .ppLoginCheckSocial .popupButtons{gap:1.625vw}
+}

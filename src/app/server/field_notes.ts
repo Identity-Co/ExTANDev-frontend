@@ -28,7 +28,7 @@ export const getFieldNotes = async () => {
   }
 }
 
-export const getPageFieldNote = async (ids) => {
+export const getPageFieldNote = async (ids: (string | number)[]) => {
   const session = await getServerSession(authOptions);
 
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/field_note/list`, {

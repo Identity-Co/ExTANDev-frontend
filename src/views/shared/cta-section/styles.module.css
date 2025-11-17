@@ -2,30 +2,30 @@
 .cta_section:before{position: absolute; content: ""; background: url(/images/front-pages/tan-background.png) center no-repeat; background-size: 100% 100%; top: 0; left: 0; width: 100%; height: 100%; mix-blend-mode: multiply;}
 .cta_section .cta_row{position: relative; display: grid; grid-template-columns: repeat(2, 1fr); gap:2.343vw;}
 .cta_section .cta_row .cta_box{text-align: center; padding: 2.928vw 2.928vw 5.857vw; position: relative;}
-.cta_section .cta_row .cta_box:first-child{border-right: solid 0.073vw #1F1F1F;}
-.cta_section .cta_row .cta_box:first-child p{max-width: 19.4vw; margin: 0 auto;}
+.cta_section .cta_row .cta_box:first-child{border-right: solid 0.0365vw #1F1F1F;}
+.cta_section .cta_row .cta_box:first-child p{max-width: 14.4vw; margin: 0 auto;}
 .cta_section .cta_row .cta_box h2{letter-spacing: 0; font-size: 3.66vw;}
-.cta_section .cta_row .cta_box p{font-size: 1.245vw; line-height: 1.611vw; color: #ffffff; max-width: 27.892vw; margin: 0 auto;}
+.cta_section .cta_row .cta_box p{font-size: 0.885vw; line-height: 1.146vw; color: #ffffff; max-width: 19.844vw; margin: 0 auto;}
 .cta_section .cta_row .cta_box .btn{position: absolute; bottom: 1.928vw; left: 0; right: 0;}
-.cta_section .cta_row .cta_box .btn a{min-width: 11.567vw; text-align: center;  padding: 0.878vw 0.732vw; background-color: #1F1F1F; color: #ffffff; font-size: 1.318vw; font-weight: 800; border-radius: 0;}
+.cta_section .cta_row .cta_box .btn a{min-width: 6.25vw; text-align: center;  padding: 0.878vw 0.732vw; background-color: #1F1F1F; color: #ffffff; font-size: 0.833vw; font-weight: 800; border-radius: 0;}
 .cta_section .cta_row .cta_box .btn a:hover{background-color: #ffffff; color: #EA5647;}
 
 @media only screen and (max-width: 1024px){
   .cta_section .cta_row .cta_box p{font-size: 1.864vw; line-height: 1.2;}
-  .cta_section .cta_row .cta_box:first-child p{max-width: 70%;}
-  .cta_section .cta_row .cta_box p{max-width: 70%;}
-  .cta_section .cta_row .cta_box .btn a{min-width: 15.567vw; font-size: 1.825vw; padding: 1.478vw 1.732vw;}
+.cta_section .cta_row .cta_box:first-child p{max-width: 70%;}
+.cta_section .cta_row .cta_box p{max-width: 70%;}
+.cta_section .cta_row .cta_box .btn a{min-width: 15.567vw; font-size: 1.825vw; padding: 1.478vw 1.732vw;}
   
 }
 
 @media only screen and (max-width: 768px){
   .cta_section .cta_row{grid-template-columns:repeat(1, 1fr); gap:0;}
-  .cta_section .cta_row .cta_box:first-child{border-right: 0; border-bottom: solid 0.073vw #1F1F1F;}
-  .cta_section .cta_row .cta_box p{font-size: 2.994vw; line-height: 1.2;}
-  .cta_section .cta_row .cta_box:first-child p{max-width: 100%;}
-  .cta_section .cta_row .cta_box p{max-width: 100%;}
-  .cta_section .cta_row .cta_box .btn a{min-width: 24.567vw; font-size: 2.825vw; padding: 1.478vw 3.732vw;}
-  .cta_section .cta_row .cta_box{padding: 5.857vw;}
-  .cta_section .cta_row .cta_box .btn{position: relative; bottom: auto;}
+.cta_section .cta_row .cta_box:first-child{border-right: 0; border-bottom: solid 0.0365vw #1F1F1F;}
+.cta_section .cta_row .cta_box p{font-size: 3.579vw; line-height: 1.4;}
+.cta_section .cta_row .cta_box:first-child p{max-width: 100%;}
+.cta_section .cta_row .cta_box p{max-width: 100%;}
+.cta_section .cta_row .cta_box .btn a{min-width: 24.567vw; font-size: 3.437vw; padding: 2.375vw 3.508vw;}
+.cta_section .cta_row .cta_box{padding: 5.857vw;}
+.cta_section .cta_row .cta_box .btn{position: relative; bottom: auto;}
   
 }

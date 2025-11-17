@@ -61,6 +61,7 @@ type ResortProps = {
 	destinations: []
 	setFormId: () => void
 	getFormId: () => void
+	adventurePosts: []
 }
 
 type FormData = InferInput<typeof schema>
@@ -123,7 +124,7 @@ const schema = object({
   )
 })
 
-const Resorts = ({ pgData, destinations, setFormId, getFormId }: ResortProps) => {
+const Resorts = ({ pgData, destinations, setFormId, getFormId, adventurePosts }: ResortProps) => {
 	const router = useRouter()
 
   const setLoading = useNavigationStore((s) => s.setLoading)
@@ -133,6 +134,9 @@ const Resorts = ({ pgData, destinations, setFormId, getFormId }: ResortProps) =>
 	const [editor, setEditor] = useState<Editor | null>(null)
 	const [message, setMessage] = useState(null);
 	const [fileInput, setFileInput] = useState('');
+
+	const [adventurePostslist, setadventurePostslist] = useState(adventurePosts??[])
+  const [adventurePostslistOptions, setadventurePostslistOptions] = useState<string[]>([])
 
 	const [destOptions, setdestOptions] = useState<string[]>([])
 
@@ -146,6 +150,15 @@ const Resorts = ({ pgData, destinations, setFormId, getFormId }: ResortProps) =>
 
     setdestOptions(obj);
   }, [destinations]);
+
+  useEffect(() => {
+    const obj = adventurePosts.map(item => ({
+      label: item._id,
+      value: item.name
+    }));
+
+    setadventurePostslistOptions(obj);
+  }, [adventurePosts]);
 
 	// States
   const [files, setFiles] = useState<File[]>([])
@@ -237,6 +250,10 @@ const Resorts = ({ pgData, destinations, setFormId, getFormId }: ResortProps) =>
 		    fData.append(`resorts_sections[${i}][image]`, section.image)
 		  }
 		});
+
+		data.adventure_posts.forEach((resortId, i) => {
+      fData.append(`resorts[adventure_posts][${i}]`, resortId);
+    })
 
 		setIsSubmitting(true)
 
@@ -625,16 +642,38 @@ const Resorts = ({ pgData, destinations, setFormId, getFormId }: ResortProps) =>
 			</Grid>
 			<Divider />
 
-			{/* Stories Section */}
 			<Grid container spacing={5} className="my-5">  
-			<Grid size={{ md: 12, xs: 12, lg: 12 }}>
-			  <h2>Stories</h2>
-			</Grid>
+  			<Grid size={{ md: 12, xs: 12, lg: 12 }}>
+  			  <h2>Adventure Posts</h2>
+  			</Grid>
 
-			<Grid size={{ md: 12, xs: 12, lg: 12 }}>
-			  <br />
-			</Grid>
-			</Grid>
+  			<Grid size={{ md: 12, xs: 12, lg: 12 }}>
+          <input type="hidden" {...register("adventure_posts")} />
+            <Autocomplete
+              multiple
+              options={adventurePostslistOptions}
+              getOptionLabel={(option) => option.value} 
+              value={adventurePostslistOptions.filter(opt =>
+                (watch("adventure_posts") || []).includes(opt.label)
+              )}
+              renderOption={(props, option) => (
+                <li {...props} key={option.label}> 
+                  {option.value}
+                </li>
+              )}
+              renderInput={(params) => (
+                <TextField {...params} label="Search Adventure Post" variant="outlined" />
+              )}
+              onChange={(event, newValue) => {
+                setValue(
+                  "adventure_posts",
+                  newValue.map((item) => item.label), // array of values
+                  { shouldValidate: true }
+                );
+              }}
+            />
+        </Grid>
+      </Grid>
 			<Divider />
 
 			{/* Feature Destinations */}

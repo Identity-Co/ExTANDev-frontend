@@ -51,7 +51,7 @@ const UserListApp = async () => {
   // Vars
   const data = await User.getUserData()
 
-  return <UserList userData={data} roles={roles} />
+  return <UserList userData={data??[]} roles={roles} />
 }
 
 export default UserListApp

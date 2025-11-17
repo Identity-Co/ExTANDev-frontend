@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 // Type Imports
 import type { Mode } from '@core/types'
@@ -17,9 +17,29 @@ import OverviewSection7 from '@/views/shared/destination-featured-resorts-sectio
 import OverviewSection8 from './OverviewSection8'
 import OverviewSection9 from '@/views/shared/instagram-feed-section/InstagramFeed'
 import OverviewSection10 from '@/views/shared/cta-section/CTASection'
+import OverviewSection11 from '@/views/shared/review-form-section/ReviewFormSection'
 import { useSettings } from '@core/hooks/useSettings'
 
+import * as Common from '@/app/server/common'
+
 const LandingPageWrapper = ({ pgData, destinations}: OverviewProps) => {
+
+  const adventurePosts = pgData?.overview?.adventure_posts;
+
+  const [isUserLoggedIn, setisUserLoggedIn] = useState(null)
+  const [userData, setuserData] = useState(null)
+
+  useEffect(() => {
+    const getSessData = async () => {
+      const sess = await Common.getUserSess();
+      if(sess && sess?.user?.role == 'user'){
+        setuserData(sess)
+        setisUserLoggedIn(true);
+      }
+    };
+    getSessData();
+  }, []);
+
   // Hooks
   const { updatePageSettings } = useSettings()
 
@@ -40,6 +60,7 @@ const LandingPageWrapper = ({ pgData, destinations}: OverviewProps) => {
 
   const instagramSliderSectionProps = {
     class: 'pb_150',
+    lists: adventurePosts?? []
   }
 
   const featuredResortsSectionProps = {
@@ -71,6 +92,9 @@ const LandingPageWrapper = ({ pgData, destinations}: OverviewProps) => {
       <OverviewSection7 sectionProps={featuredResortsSectionProps} />
       <OverviewSection8 data={pgData?.overview?.faq ?? []} />
       <OverviewSection9 sectionProps={instagramFeedSectionProps} />
+      {isUserLoggedIn &&(
+        <OverviewSection11 data={userData?.user?.id} collection_id={pgData?._id} collection_name="Destination" />
+      )}
       <OverviewSection10 data={pgData ?? []} />
     </>
   )

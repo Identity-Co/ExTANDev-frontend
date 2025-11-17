@@ -110,8 +110,6 @@ export const getComments = async (data: any) => {
     body: JSON.stringify(data)
   });
 
-  console.log(response);
-
   if (!response.ok) {
     return {}
   } else {

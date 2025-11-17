@@ -87,12 +87,6 @@ type adventureguideTypesWithAction = adventureguideTypes & {
   _id?: string
 }
 
-type adventureguideTypesWithAction = adventureguideTypes & {
-  action?: string
-  title?: string
-  _id?: string
-}
-
 // Styled Components
 const Icon = styled('i')({})
 
@@ -165,7 +159,7 @@ const AdventureGuideListTable = ({ tableData }: { tableData?: adventureguideType
   const fetchData = async () => {
     try {
     // Fetch updated data
-    const refresh = await AdventureGuide.getAdventureGuides();
+    const refresh = await AdventureGuide.getAdventureGuides('title,created_at');
     
     // Ensure the returned data is of the correct type
     if (Array.isArray(refresh)) {

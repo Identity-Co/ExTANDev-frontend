@@ -385,8 +385,6 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
       fd.append('content_sections', JSON.stringify(cleanedSections))
 
       const log = await AdventureGuide.createAdventureGuide(fd);
-
-      console.log(log)
    
       if (log && log._id) {
 

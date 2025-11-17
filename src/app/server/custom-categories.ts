@@ -18,11 +18,16 @@ export const getAllCategories = async () => {
       'Authorization': 'Bearer ' + session?.user?.userToken
     }
   })
+
+  console.log('response: ', response)
   
   if (!response.ok) {
     return {}
   } else {
     const json = await response.json();
+
+    console.log('Category json: ', json)
+    console.log('Category json.data: ', json.data)
     
     return json.data
   }

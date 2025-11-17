@@ -4,6 +4,7 @@ import LandingPageWrapper from '@views/sub-pages/adventure-guide/detail-page'
 // Server Action Imports
 import { getServerMode } from '@core/utils/serverHelpers'
 import { getAdventureGuideBySlug } from '@/app/server/adventure_guide'
+import { getResortByIds } from '@/app/server/destinations'
 
 import { notFound } from 'next/navigation'
 

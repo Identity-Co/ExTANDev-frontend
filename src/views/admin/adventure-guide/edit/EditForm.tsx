@@ -186,7 +186,7 @@ const TooltipIfEnabled = ({ title, disabled, children }) =>
     </Tooltip>
   );
 
-const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide?: [] }) => {  
+const PageSection = ({ setId, adventureguide, allResortsList }: { setId?: string; adventureguide?: []; allResortsList?: []; }) => {  
   const router = useRouter()
 
   const setLoading = useNavigationStore((s) => s.setLoading)
@@ -198,15 +198,19 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
   const [editor, setEditor] = useState<Editor | null>(null)
   const [message, setMessage] = useState(null);
 
+  const [resortsOptions, setResortsOptions] = useState<string[]>([])
+
+
   //const [imgSrc, setImgSrc] = useState<string>(adventureguide?.image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${adventureguide?.image}` : '/images/avatars/1.png')
 
-  const resortsLists = { r1: 'Resort 1', r2: 'Resort 2', r3: 'Resort 3', r4: 'Resort 4', r5: 'Resort 5', r6: 'Resort 6'};
-  const [resortsOptions, setResortsOptions] = useState(() => {
-    return Object.entries(resortsLists).map(([key, value]) => ({
-      label: key,
-      value: value
+  useEffect(() => {
+    const obj = allResortsList.map(item => ({
+      label: item.resort_id,
+      value: `${item.resort_title} (${item.destination_title})`
     }));
-  });
+
+    setResortsOptions(obj);
+  }, [allResortsList]);
 
   const reviewsLists = { r1: 'Review 1', r2: 'Review 2', r3: 'Review 3' };
   const [reviewsOptions, setreviewsOptions] = useState(() => {
@@ -525,9 +529,7 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
 
         toast.success('Adventure Guide updated successfully.')
         setIsSubmitting(false)
-      } else {
-        console.log(log)
-        
+      } else {        
         setIsSubmitting(false)
       }
     }catch(err: any){

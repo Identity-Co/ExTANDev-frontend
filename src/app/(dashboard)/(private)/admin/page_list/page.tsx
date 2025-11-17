@@ -46,8 +46,7 @@ const PageListApp = async () => {
 
   // Vars
   const data = await getAllPages()
-
-  console.log(data);
+  console.log(data)
 
   return <PageList pages={data} />
 }

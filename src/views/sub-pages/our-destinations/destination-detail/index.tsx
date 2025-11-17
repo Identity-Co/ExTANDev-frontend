@@ -29,27 +29,40 @@ const tabContentList = (props): { [key: string]: ReactElement } => ({
 const PageSection = ({ pgData, id, resortDestinations }: { pgData?: []; id?: String; resortDestinations?: []; }) => {
 
   const [val, setVal] = useState<string>('overview')
+  const [isOverviewDetailPage, setIsOverviewDetailPage] = useState(false);
+  const [isOverviewDetailPageID, setIsOverviewDetailPageID] = useState<string>('');
 
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setVal(newValue)
   }
 
+  const adventureDetailPageData =
+  val !== 'overview' && isOverviewDetailPageID && isOverviewDetailPage
+    ? pgData?.adventures?.adventure_lists?.find(
+        item => item._id === isOverviewDetailPageID
+      )
+    : null;
+
   return (
     <>
       {val === 'overview' ? (
         <BannerOverviewSection bannerData={pgData?.overview?.banners ?? []} />
+      ) : isOverviewDetailPageID && isOverviewDetailPage ? (
+        <BannerOtherSection
+          bannerData={adventureDetailPageData?.banner_image} tabID={val} bannerTitle={adventureDetailPageData?.title} />
       ) : (
-        <BannerOtherSection bannerData={pgData?.[val]?.banner_image} tabID={val} />
+        <BannerOtherSection
+          bannerData={pgData?.[val]?.banner_image} tabID={val} />
       )}
       <TabContext value={val} className="my-5">
         <TabList variant='fullWidth' onChange={handleChange} aria-label='full width tabs example' className="destinations_tab">
           <Tab value='overview' label='Overview' />
           <Tab value='resorts' label='Resorts' />
-          <Tab value='adventures' label='Adventures' />
+          <Tab value='adventures' label='Adventures' onClick={(e) => { setIsOverviewDetailPageID(''); setIsOverviewDetailPage(false); }} />
           <Tab value='stories' label='Stories' />
         </TabList>
         <TabPanel value={val} className='pbs-0'>
-            {tabContentList({ pgData: pgData, destinations: resortDestinations })[val]}
+            {tabContentList({ pgData: pgData, destinations: resortDestinations, isOverviewDetailPage: isOverviewDetailPage, setIsOverviewDetailPage: setIsOverviewDetailPage, isOverviewDetailPageID: isOverviewDetailPageID, setIsOverviewDetailPageID: setIsOverviewDetailPageID })[val]}
         </TabPanel>
       </TabContext>
     </>

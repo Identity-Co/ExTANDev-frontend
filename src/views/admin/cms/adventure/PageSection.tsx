@@ -54,7 +54,7 @@ const schema = object({
   about_button_text: optional(string()),
   about_button_link: pipe(string()),
   feature_adventure_title: pipe(string(), nonEmpty('This field is required')),
-  feature_adventures: array(
+  adventure_posts: array(
     optional(string()),
   ),
   subscribe_title: pipe(string(), nonEmpty('This field is required')),
@@ -78,7 +78,7 @@ const schema = object({
   rating: optional(string()),
 })
 
-const PageSection = ({ pgData, destinations }: { pgData?: []; destinations?: []; }) => {  
+const PageSection = ({ pgData, adventurePosts }: { pgData?: []; adventurePosts?: []; }) => {  
   const router = useRouter()
 
   const setLoading = useNavigationStore((s) => s.setLoading)
@@ -88,19 +88,18 @@ const PageSection = ({ pgData, destinations }: { pgData?: []; destinations?: [];
   const [editor, setEditor] = useState<Editor | null>(null)
   const [message, setMessage] = useState(null);
 
-  const [destOptions, setdestOptions] = useState<string[]>([])
-  const [resortOptions, setresortOptions] = useState<string[]>([])
-
-  const fData = new FormData();
+  const [advPostsOptions, setadvPostsOptions] = useState<string[]>([])
 
   useEffect(() => {
-    const obj = destinations.map(item => ({
+    const obj = adventurePosts?.map(item => ({
       label: item._id,
-      value: item.title
+      value: item.name
     }));
 
-    setdestOptions(obj);
-  }, [destinations]);
+    setadvPostsOptions(obj);
+  }, [adventurePosts]);
+
+  const fData = new FormData();
 
   const {
     control,
@@ -116,7 +115,7 @@ const PageSection = ({ pgData, destinations }: { pgData?: []; destinations?: [];
       about_button_text: pgData?.about_button_text??'',
       about_button_link: pgData?.about_button_link??'',
       feature_adventure_title: pgData?.feature_adventure_title??'',
-      feature_adventures: pgData?.feature_adventures??[],
+      adventure_posts: pgData?.adventure_posts??[],
       subscribe_title: pgData?.subscribe_title??'',
       subscribe_sub_title: pgData?.subscribe_sub_title??'',
       subscribe_button_text: pgData?.subscribe_button_text??'',
@@ -317,32 +316,6 @@ const PageSection = ({ pgData, destinations }: { pgData?: []; destinations?: [];
                     )}
                   />
                 </Grid>
-                <Grid size={{ md: 12, xs: 12, lg: 12 }}>
-                  <input type="hidden" {...register("feature_adventures")} />
-                  <Autocomplete
-                    multiple
-                    options={destOptions}
-                    getOptionLabel={(option) => option.value} 
-                    value={destOptions.filter(opt =>
-                      (watch("feature_adventures") || []).includes(opt.label)
-                    )}
-                    renderOption={(props, option) => (
-                      <li {...props} key={option.label}> 
-                        {option.value}
-                      </li>
-                    )}
-                    renderInput={(params) => (
-                      <TextField {...params} label="Search Adventure" variant="outlined" />
-                    )}
-                    onChange={(event, newValue) => {
-                      setValue(
-                        "feature_adventures",
-                        newValue.map((item) => item.label), // array of values
-                        { shouldValidate: true }
-                      );
-                    }}
-                  />
-                </Grid>
               </Grid>
               <Divider />
 
@@ -353,7 +326,30 @@ const PageSection = ({ pgData, destinations }: { pgData?: []; destinations?: [];
                 </Grid>
 
                 <Grid size={{ md: 12, xs: 12, lg: 12 }}>
-                  <br />
+                  <input type="hidden" {...register("adventure_posts")} />
+                  <Autocomplete
+                    multiple
+                    options={advPostsOptions}
+                    getOptionLabel={(option) => option.value} 
+                    value={advPostsOptions.filter(opt =>
+                      (watch("adventure_posts") || []).includes(opt.label)
+                    )}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.label}> 
+                        {option.value}
+                      </li>
+                    )}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Search Adventue Posts" variant="outlined" />
+                    )}
+                    onChange={(event, newValue) => {
+                      setValue(
+                        "adventure_posts",
+                        newValue.map((item) => item.label), // array of values
+                        { shouldValidate: true }
+                      );
+                    }}
+                  />
                 </Grid>
               </Grid>
               <Divider />

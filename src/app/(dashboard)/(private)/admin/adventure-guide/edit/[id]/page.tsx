@@ -15,6 +15,7 @@ import Button from '@mui/material/Button'
 import EditForm from '@views/admin/adventure-guide/edit/EditForm'
 
 import * as AdventureGuide from '@/app/server/adventure_guide'
+import { getDestinationsResorts } from '@/app/server/destinations'
 import * as Common from '@/app/server/common'
 
 import config from '@/configs/themeConfig'
@@ -41,6 +42,8 @@ const EditAdventureGuide = async (props: { params: Promise<{ id: string }> }) =>
     redirect('/admin/adventure-guide/')
   }
 
+  const allResortsList = await getDestinationsResorts();
+
   return (
     <Grid container spacing={6}>
       <Grid size={{ xs: 12 }}>
@@ -59,7 +62,7 @@ const EditAdventureGuide = async (props: { params: Promise<{ id: string }> }) =>
       </Grid>
 
       <Grid size={{ xs: 12, md: 12, lg:12 }}>
-        <EditForm setId={params.id} adventureguide={adventureGuide} />
+        <EditForm setId={params.id} adventureguide={adventureGuide} allResortsList={allResortsList??[]} />
       </Grid>
     </Grid>
   )

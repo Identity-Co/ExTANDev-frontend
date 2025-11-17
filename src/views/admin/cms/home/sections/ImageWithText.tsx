@@ -160,7 +160,6 @@ const ImageWithText = ({ section }: { section?: [] }) => {
     
     if (imageInput) { 
       fData.append('file', imageInput);
-      console.log("fData")
     }
 
     const _data = {
@@ -171,8 +170,7 @@ const ImageWithText = ({ section }: { section?: [] }) => {
       "button_link" : data.button_link,
       "location" : data.location,
     }
-
-    console.log(_data, fData)
+    
     const log = await updateSection(section?.section_key, _data);
 
     if (log && log._id) {

@@ -94,7 +94,6 @@ export const saveDestination = async (data: any) => {
 }
 
 export const updateDestination = async (id: any, data: any) => {
-  console.log('updateDestination')
   const session = await getServerSession(authOptions)
   
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/destination/update/${id}`, {
@@ -176,5 +175,46 @@ export const getDestinationBySlug = async (slug: any) => {
     return log.data
   } else {
     return {}
+  }
+}
+
+export const getDestinationsResorts = async () => {
+  const session = await getServerSession(authOptions);
+  
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/destination/resorts/list/all`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + session?.user?.userToken
+    }
+  })
+  
+  if (!response.ok) {
+    return {}
+  } else {
+    const json = await response.json();
+    
+    return json.data
+  }
+}
+
+export const getResortByIds = async (resort_ids: string[]) => {
+  const session = await getServerSession(authOptions);
+
+  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/destination/resort/get-by-ids`);
+  url.searchParams.append("resort_ids", resort_ids.join(","));
+
+  const response = await fetch(url.toString(), {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + session?.user?.userToken
+    }
+  })
+
+  if (!response.ok) {
+    return []
+  } else {
+    const json = await response.json();
+
+    return Array.isArray(json.data) ? json.data : [];
   }
 }

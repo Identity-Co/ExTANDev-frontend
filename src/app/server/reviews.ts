@@ -163,3 +163,24 @@ export const getReviews = async (
     return { data: [], pagination: {} };
   }
 };
+
+export const getReviewsByCollectionId = async (data: any) => {
+  const session = await getServerSession(authOptions);
+  
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reviews/review/collection/id`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + session?.user?.userToken
+    },
+    body: JSON.stringify(data)
+  })
+  
+  if (!response.ok) {
+    return {}
+  } else {
+    const json = await response.json();
+    
+    return json.data
+  }
+}

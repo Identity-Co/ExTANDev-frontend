@@ -1,5 +1,5 @@
-.network_travel_text p{padding:0.878vw 0;font-size:0.833vw;line-height:1.146vw}
-.network_travel_likes{display:flex;flex-wrap:wrap;gap:0.833vw}
+.network_travel_text p{padding:0.878vw 0;font-size:0.833vw;line-height:1.146vw;}
+.network_travel_likes{display:flex;flex-wrap:wrap;gap:0.833vw; align-items: center;}
 .network_travel_likes span{font-size:0.729vw;font-weight:500;color:#1F1F1F;font-family:"Montserrat",sans-serif}
 .network_travel_likes ul{list-style:none;display:flex;gap:0.833vw}
 .network_travel_likes ul li a svg:hover path{fill:#EA5647}
@@ -7,6 +7,8 @@
 
 
 @media only screen and (max-width:1024px){
+  .network_travel_likes,
+  .network_travel_likes ul{gap: 1.833vw;}
   .network_travel_likes span{font-size:1.825vw}
   .network_travel_likes ul li a svg{width:2.098vw;height:1.525vw}
 }

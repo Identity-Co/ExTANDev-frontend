@@ -82,6 +82,9 @@ const schema = object({
   share_sub_title: pipe(string()),
   share_button_text: optional(string()),
   share_button_link: pipe(string()),
+  adventure_posts: array(
+    optional(string()),
+  ),
   field_note_title: pipe(string(), nonEmpty('This field is required')),
   field_notes: array(
     optional(string()),
@@ -280,6 +283,7 @@ const PageSection = ({ pgData, fnotes, destinations, adventurePosts }: { pgData?
       share_sub_title: pgData?.share_sub_title??'',
       share_button_text: pgData?.share_button_text??'',
       share_button_link: pgData?.share_button_link??'',
+      adventure_posts: pgData?.adventure_posts??[],
       field_note_title: pgData?.field_note_title??'',
       field_notes: pgData?.field_notes??[],
       page_url: pgData?.page_url??'',
@@ -297,7 +301,6 @@ const PageSection = ({ pgData, fnotes, destinations, adventurePosts }: { pgData?
   })
 
   const onUpdate: SubmitHandler<FormData> = async (data: FormData) => {
-    console.log(data);
     
     if (!aboutimageInput && (pgData?.about_image == '' || pgData?.about_image === undefined)) {
       setMessage((prev) => ({
@@ -895,7 +898,30 @@ const PageSection = ({ pgData, fnotes, destinations, adventurePosts }: { pgData?
                 </Grid>
 
                 <Grid size={{ md: 12, xs: 12, lg: 12 }}>
-                  <br />
+                  <input type="hidden" {...register("adventure_posts")} />
+                  <Autocomplete
+                    multiple
+                    options={advPostsOptions}
+                    getOptionLabel={(option) => option.value} 
+                    value={advPostsOptions.filter(opt =>
+                      (watch("adventure_posts") || []).includes(opt.label)
+                    )}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.label}> 
+                        {option.value}
+                      </li>
+                    )}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Search Adventue Posts" variant="outlined" />
+                    )}
+                    onChange={(event, newValue) => {
+                      setValue(
+                        "adventure_posts",
+                        newValue.map((item) => item.label), // array of values
+                        { shouldValidate: true }
+                      );
+                    }}
+                  />
                 </Grid>
               </Grid>
               <Divider />

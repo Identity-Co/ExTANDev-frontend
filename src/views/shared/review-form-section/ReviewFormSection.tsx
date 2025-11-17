@@ -23,7 +23,7 @@ const schema = object({
   review_text: pipe(string(), minLength(1, 'Comment required')),
 });
 
-const ReviewForm = ({ data }: { data?: []; }) => {
+const ReviewForm = ({ data, collection_id, collection_name }: { data?: []; collection_id?: 0; collection_name?: '' }) => {
   const [submitted, setSubmitted] = useState(false)
   const [ratingError, setRatingError] = useState(false);
   const [formError, setFormError] = useState<string | null>(null)
@@ -58,6 +58,8 @@ const ReviewForm = ({ data }: { data?: []; }) => {
       const formData = {
         'rating': data.rating,
         'review_text': data.review_text,
+        'collection_id': collection_id,
+        'collection_name': collection_name,
         'user_id': userID,
         'review_url': currentUrl,
         'status': 0,
