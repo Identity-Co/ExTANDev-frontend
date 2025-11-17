@@ -109,7 +109,8 @@ const InnerSlider = (images: string[]) => {
           <div key={idx} className={classnames(styles.adv_post_img_box)}>
             <div className={classnames(styles.post_api_img)}>
               <img
-                src={getCompressedUrl(img.url)}
+                //src={getCompressedUrl(img.url)}
+                src={img.url}
                 alt={`Slide ${idx + 1}`}
                 width="350"
                 height="350"
@@ -124,6 +125,8 @@ const InnerSlider = (images: string[]) => {
 
 const InstagramFeedSlider = ({ sectionProps }: sectionProp) => {
   const [toursData, settoursData] = useState<any>(null);
+
+  const listsString = JSON.stringify(sectionProps?.lists ?? []);
 
   const fetchInitialData = useCallback(async () => {
 
@@ -151,7 +154,7 @@ const InstagramFeedSlider = ({ sectionProps }: sectionProp) => {
     } finally {
       //
     }
-  }, [sectionProps?.lists??[]]);
+  }, [listsString]);
 
   useEffect(() => {
     fetchInitialData();
