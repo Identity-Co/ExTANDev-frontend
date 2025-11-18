@@ -6,6 +6,8 @@ import styles from './styles.module.css';
 import { Avatar } from '@mui/material';
 import { addComment, getComments, upvoteComment, markHelpfulComment, reportComment } from '@/app/server/comments';
 
+import EmojiPickerButton from '@/components/EmojiPickerButton'
+
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 
 // SVG Icon Components (keep all your existing icons)
@@ -991,7 +993,7 @@ export const useComment = ({
       })}>
         {isCommentExpanded ? (
           <div className={styles.expandedContent}>
-            <div className={styles.editorWrapper}>
+            <div className={styles.editorWrapper} style={{ position: "relative"}}>
               <ReactQuill
                 ref={commentEditorRef}
                 value={newComment}
@@ -1001,6 +1003,8 @@ export const useComment = ({
                 formats={editorFormats}
                 className={styles.reactQuillEditor}
               />
+
+              <EmojiPickerButton quillRef={commentEditorRef} />
             </div>
             
             {/* Image upload for comment */}
@@ -1068,6 +1072,9 @@ export const useComment = ({
                 ref={(el) => {
                   if (el) {
                     replyEditorRefs.current[commentIdTmp] = el;
+                  } else {
+                    // optional: cleanup when unmounting
+                    delete replyEditorRefs.current[commentIdTmp];
                   }
                 }}
                 value={replyContent}
@@ -1077,6 +1084,11 @@ export const useComment = ({
                 formats={editorFormats}
                 className={styles.reactQuillEditor}
                 bounds={`.${styles.editorWrapper}`}
+              />
+
+              {/* Pass a ref-like object. This is created inline but that's OK. */}
+              <EmojiPickerButton
+                quillRef={{ current: replyEditorRefs.current[commentIdTmp] }}
               />
             </div>
             

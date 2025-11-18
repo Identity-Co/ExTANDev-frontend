@@ -13,10 +13,13 @@ import HomeSection5 from '@/views/shared/instagram-feed-slider-section/Instagram
 import HomeSection6 from './HomeSection6'
 import HomeSection7 from '@/views/shared/cta-section/CTASection'
 
-const LandingPageWrapper = ({ mode, banners, pgData, fieldNotes, destinations, adventurePosts }: { mode: Mode; banners?: []; pgData?: []; fieldNotes?: []; destinations?: []; adventurePosts?: []; }) => {
+const LandingPageWrapper = ({ mode, banners, pgData, fieldNotes, destinations, adventurePosts }: { mode: Mode; banners?: []; pgData?: []; fieldNotes?: []; destinations?: []; }) => {
+
+  const adventure_Posts = pgData?.adventure_posts;
 
   const instagramSliderSectionProps = {
     class: 'py_150',
+    lists: adventure_Posts?? []
   }
   
   return (
