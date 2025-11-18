@@ -31,13 +31,13 @@ function truncateHTMLWords(html: string, limit = 50) {
 }
 
 const getCompressedUrl = (src, width = 800, quality = 80) => {
-  return `${process.env.NEXT_PUBLIC_UPLOAD_URL}/image_compress/compress?url=${encodeURIComponent(src)}&width=${width}&quality=${quality}&format=webp`;
+  return `https://adventureapi.deepripple.com/v1/api/image_compress/compress?url=${encodeURIComponent(src)}&width=${width}&quality=${quality}&format=webp`;
 };
 
 const compressBatch = async (urls, options = {}) => {
   //setLoading(true);
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_UPLOAD_URL}/image_compress/compress/batch`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/image_compress/compress/batch`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ urls, options })
@@ -101,6 +101,8 @@ const InnerSlider = (images: string[]) => {
   };
 
   return (
+    <>
+    {process.env.NEXT_PUBLIC_API_URL}
     <Slider {...Isettings} className='mbe-6'>
       {images?.images
         ?.filter(item => item.type === "IMAGE")
@@ -119,6 +121,7 @@ const InnerSlider = (images: string[]) => {
           </div>
         ))}
     </Slider>
+    </>
   );
 };
 
