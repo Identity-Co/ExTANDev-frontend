@@ -215,6 +215,8 @@ const InstagramFeedSlider = ({ sectionProps }: sectionProp) => {
 
   const listItems = [];
 
+  console.log(toursData);
+
   toursData?.map((fData, index) => {
     listItems.push(
       <div key={'slide-' + index} className={classnames(styles.adventure_post_box)}>
