@@ -1,5 +1,5 @@
 /* header */
-header.header{position: fixed; top: 0; left: 0; width: 100%; z-index: 9999; padding: 2vw 0; transition: 0.3s ease-in-out;}
+header.header{position: fixed; top: 0; left: 0; width: 100%; z-index: 900; padding: 2vw 0; transition: 0.3s ease-in-out;}
 header.header.sticky{background-color: #014040;}
 header.header .headMain{display: flex; align-items: center; justify-content: space-between;}
 header.header .headerLogo a{display: block;}
