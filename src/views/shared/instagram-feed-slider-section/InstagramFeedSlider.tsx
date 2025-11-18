@@ -109,7 +109,6 @@ const InnerSlider = (images: string[]) => {
           <div key={idx} className={classnames(styles.adv_post_img_box)}>
             <div className={classnames(styles.post_api_img)}>
               <img
-                //src={getCompressedUrl(img.url)}
                 src={img.url}
                 alt={`Slide ${idx + 1}`}
                 width="350"
