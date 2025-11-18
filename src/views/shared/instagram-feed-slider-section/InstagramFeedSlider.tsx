@@ -102,7 +102,6 @@ const InnerSlider = (images: string[]) => {
 
   return (
     <>
-    {process.env.NEXT_PUBLIC_API_URL}
     <Slider {...Isettings} className='mbe-6'>
       {images?.images
         ?.filter(item => item.type === "IMAGE")
