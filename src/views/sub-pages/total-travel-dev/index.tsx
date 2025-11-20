@@ -44,6 +44,7 @@ const FlightsTab = dynamic(() => import('@views/sub-pages/total-travel-dev/fligh
 const CarsTab = dynamic(() => import('@views/sub-pages/total-travel-dev/cars'))
 const PackagesTab = dynamic(() => import('@views/sub-pages/total-travel-dev/packages'))
 const ThingsToDoTab = dynamic(() => import('@views/sub-pages/total-travel-dev/things-to-do'))
+const MyTripsTab = dynamic(() => import('@views/sub-pages/total-travel-dev/my-trips'))
 
 //const CruisesTab = dynamic(() => import('@views/sub-pages/total-travel/cruises'))
 
@@ -52,7 +53,8 @@ const tabContentList = (props): { [key: string]: ReactElement } => ({
   flights: <FlightsTab {...props}/>,
   cars: <CarsTab {...props}/>,
   packages: <PackagesTab {...props}/>,
-  thingstodo: <ThingsToDoTab {...props}/>
+  thingstodo: <ThingsToDoTab {...props}/>,
+  mytrips: <MyTripsTab {...props}/>
 })
 
   //cruises: <CruisesTab {...props}/>
@@ -144,6 +146,7 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
             <Tab value='cars' label='Cars' />
             <Tab value='packages' label='Packages' />
             <Tab value='thingstodo' label='Things to do' />
+            <Tab value='mytrips' label='My Trips' />
             {/* <Tab value='cruises' label='Cruises' /> */}
           </TabList>
           {/* <div className={classnames(styles.search_box, styles.search_box_total)}>
