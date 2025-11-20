@@ -31,8 +31,8 @@ function truncateHTMLWords(html: string, limit = 50) {
 }
 
 const getCompressedUrl = (src, width = 800, quality = 80) => {
-  console.log(`${process.env.NEXT_PUBLIC_API_URL}`);
-  
+  console.log(process.env.NEXT_PUBLIC_API_URL);
+
   return `https://adventureapi.deepripple.com/v1/api/image_compress/compress?url=${encodeURIComponent(src)}&width=${width}&quality=${quality}&format=webp`;
 };
 
