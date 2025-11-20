@@ -28,6 +28,8 @@ const BannerSection = ({ mode, banners, filter_locations }: { mode: Mode; banner
     });
   }, []);
 
+    console.log(process.env.NEXT_PUBLIC_UPLOAD_URL)
+
   const settings = {
     dots: false,
     arrows: true,

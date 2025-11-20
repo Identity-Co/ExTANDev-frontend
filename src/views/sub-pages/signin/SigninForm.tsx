@@ -184,7 +184,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
       setErrorMessage('')
 
       try {
-        const _res = await fetch(`https://adventureapi.deepripple.com/v1/api/auth/google-login`, {
+        const _res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/google-login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -253,7 +253,7 @@ const SigninForm = ({ toggleForm }: SignInProps) => {
 
     const responseFacebook = async (profile) => {
       try {
-        const _res = await fetch(`https://adventureapi.deepripple.com/v1/api/auth/facebook-login`, {
+        const _res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/facebook-login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
