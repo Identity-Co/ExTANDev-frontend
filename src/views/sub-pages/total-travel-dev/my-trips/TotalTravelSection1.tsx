@@ -33,8 +33,7 @@ const TotalTravelSection1 = ({ data, setOpenAccess, accessToken }: { data?: []; 
                   session_token: accessToken,
                   container: '.activities_search_selector',
                   navigate_to: {
-                    view: 'home',
-                    start_tab: "my-trips"
+                    view: 'my-trips'
                   },
                 })
 
