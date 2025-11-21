@@ -204,8 +204,8 @@ const BannerOverviewSection = ({ bannerData }: { bannerData?: []; }) => {
                                           <div
                                             key={index}
                                             onClick={() => {
-                                              setSelectedSF(ss.item);
-                                              setSuitableFor(ss.item)
+                                              setSelectedSeason(ss.item);
+                                              setSeason(ss.item)
                                               setOpenSea(false);
                                             }}
                                             style={{ cursor: "pointer" }}
