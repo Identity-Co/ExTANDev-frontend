@@ -5,6 +5,7 @@ import LandingPageWrapper from '@views/sub-pages/adventure-guide/detail-page'
 import { getServerMode } from '@core/utils/serverHelpers'
 import { getAdventureGuideBySlug } from '@/app/server/adventure_guide'
 import { getResortByIds } from '@/app/server/destinations'
+import { getDestinationList } from '@/app/server/destinations'
 
 import { notFound } from 'next/navigation'
 
@@ -30,7 +31,12 @@ const LandingPage = async ({ params }: PageProps) => {
     notFound()
   }
 
-  return <LandingPageWrapper mode={mode} pgData={pgData} />
+  const locDestinations = await getDestinationList()
+
+  const locations = [...new Set(locDestinations.map(item => item.destination_location))];
+
+  return <LandingPageWrapper mode={mode} pgData={pgData} locations={locations??[]}
+            locDestinations={locDestinations??[]} />
 }
 
 export default LandingPage

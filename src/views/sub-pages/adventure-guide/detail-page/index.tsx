@@ -15,7 +15,7 @@ import AdventureGuideDetail5 from './AdventureGuideDetail5'
 
 import { useSettings } from '@core/hooks/useSettings'
 
-const AdventureGuideDetailPage = ({ mode, pgData }: { mode: Mode; pgData?: []; }) => {
+const AdventureGuideDetailPage = ({ mode, pgData, locations, locDestinations }: { mode: Mode; pgData?: []; locations?: []; locDestinations?: []; }) => {
   // Hooks
   const { updatePageSettings } = useSettings()
 
@@ -29,7 +29,7 @@ const AdventureGuideDetailPage = ({ mode, pgData }: { mode: Mode; pgData?: []; }
 
   return (
     <>
-      <BannerSection mode={mode} data={pgData} />
+      <BannerSection mode={mode} data={pgData} locations={locations} locDestinations={locDestinations} />
       <AdventureGuideDetail1 data={pgData} />
 
       {pgData?.content_sections?.slice(1).map((section: any, index: number) => {
