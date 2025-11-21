@@ -224,6 +224,7 @@ const ViewComment = ({ data }: { data?: any }) => {
     'adventure_post': { label: "Adventure Post", color: "primary", icon: "ri-map-pin-line" },
     'destination_story': { label: "Destination Story", color: "secondary", icon: "ri-bookmark-line" },
     'reviews': { label: "Reviews", color: "info", icon: "ri-star-line" },
+    'adventure_guide': { label: "Adventure Guide", color: "warning", icon: "ri-news-line" },
   };
 
   const statusCounts = getStatusCounts()
@@ -672,8 +673,10 @@ const ViewComment = ({ data }: { data?: any }) => {
               {(storyPost?.image || comment.post_image) && (
                 <img
                   src={
-                    comment.collection_name === 'destination_story'
+                    comment.collection_name === "destination_story"
                       ? (storyPost?.image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${storyPost.image}` : '')
+                      : comment.collection_name === "adventure_guide"
+                      ? (comment.post_image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${comment.post_image}` : '')
                       : comment.post_image
                   }
                   alt={comment.post_title}
@@ -706,8 +709,23 @@ const ViewComment = ({ data }: { data?: any }) => {
                 variant="outlined"
                 fullWidth
                 onClick={() => {
-                  const urlPrefix = ((comment.collection_name  == 'destination_story') ? 'our-destinations' : ((comment.collection_name  == 'adventure_post') ? 'our-adventure' : '') )
-                  const urlSlug = ((comment.collection_name  == 'destination_story') ? storyPost.post_url : ((comment.collection_name  == 'adventure_post') ? comment.post_url : '') )
+                 const urlPrefix =
+                  comment.collection_name === "destination_story"
+                    ? "our-destinations"
+                    : comment.collection_name === "adventure_post"
+                    ? "our-adventure"
+                    : comment.collection_name === "adventure_guide"
+                    ? "adventure-guide"
+                    : "";
+
+                  const urlSlug =
+                    comment.collection_name === "destination_story"
+                      ? storyPost.post_url
+                      : comment.collection_name === "adventure_post"
+                      ? comment.post_url
+                      : comment.collection_name === "adventure_guide"
+                      ? comment.post_url
+                      : "";
 
                   const fullUrl = `/${urlPrefix ? `${urlPrefix}/` : ''}${urlSlug}`;
 

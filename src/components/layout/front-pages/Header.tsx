@@ -24,7 +24,7 @@ import styles from './styles.module.css'
 
 const stickPage = ['privacy-policy','terms-of-use']
 
-const Header = ({ mode }: { mode: Mode }) => {
+const Header = ({ mode, siteSettings }: { mode: Mode; siteSettings?: []; }) => {
   const [session, setSession] = useState(null)
 
   // const firstSegment = window.location.pathname.split("/").filter(Boolean)[0];
@@ -91,7 +91,9 @@ const Header = ({ mode }: { mode: Mode }) => {
           <div className={classnames(styles.headMain)}>
               <div className={classnames(styles.headerLogo)}>
                   <Link href={"/"}>
-                      <img src="/images/front-pages/head-logo.svg" />
+                    {(siteSettings && siteSettings?.header_logo) && (
+                      <img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${siteSettings?.header_logo}`} />
+                    )}
                   </Link>
               </div>
               <div className={classnames(styles.navMenu, {[styles.open]: isActive,})}>

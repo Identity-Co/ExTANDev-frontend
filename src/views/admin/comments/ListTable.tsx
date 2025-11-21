@@ -110,6 +110,7 @@ const statusConfig = {
   'adventure_post': { label: "Adventure Post", color: "primary", icon: "ri-map-pin-line" },
   'destination_story': { label: "Destination Story", color: "secondary", icon: "ri-bookmark-line" },
   'reviews': { label: "Reviews", color: "info", icon: "ri-star-line" },
+  'adventure_guide': { label: "Adventure Guide", color: "warning", icon: "ri-news-line" },
 };
 
 // Post type filter options
@@ -295,6 +296,8 @@ const CommentCard = ({ comment, onDelete }: { comment: any; onDelete: (id: strin
                           ? `/our-adventure/${comment.post_url}`
                           : comment.collection_name === "destination_story"
                           ? `/our-destinations/${comment.post_url}`
+                          : comment.collection_name === "adventure_guide"
+                          ? `/adventure-guide/${comment.post_url}`
                           : "#"
                       }
                       target="_blank"

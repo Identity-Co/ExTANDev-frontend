@@ -31,13 +31,14 @@ export const getAdventureGuides = async (fields: string = '') => {
 }
 
 export const getAllAdventureGuides = async () => {
-  // const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
 
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/adventure_guide/public/page`, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      //'Authorization': 'Bearer ' + session?.user?.userToken
-    }
+    },
+    body: JSON.stringify({'userId': session?.user?.id})
   })
   
   if (!response.ok) {
@@ -56,9 +57,8 @@ export const getPageAdventureGuide = async (ids: (string | number)[]) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      //'Authorization': `Bearer ${session?.user?.userToken}`
     },
-    body: JSON.stringify({'ids': ids})
+    body: JSON.stringify({'ids': ids, 'userId': session?.user?.id})
   })
   
   if (!response.ok) {
@@ -92,15 +92,15 @@ export const getAdventureGuide = async (banner_id: any) => {
   }
 }
 
-export const getAdventureGuideBySlug = async (banner_id: any) => {
+export const getAdventureGuideBySlug = async (slug: any) => {
   const session = await getServerSession(authOptions);
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/adventure_guide/slug/${banner_id}`, {
-    method: 'GET',
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/adventure_guide/slug`, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + session?.user?.userToken
-    }
+    },
+    body: JSON.stringify({'slug': slug, 'userId': session?.user?.id})
   }).catch(rejected => {
       console.log(rejected);
   })

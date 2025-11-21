@@ -16,6 +16,10 @@ import Divider from '@mui/material/Divider'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
 import CircularProgress from '@mui/material/CircularProgress';
 import Autocomplete from "@mui/material/Autocomplete";
 import Tooltip from '@mui/material/Tooltip';
@@ -89,6 +93,8 @@ type FormData = {
   classification?: string;
   rating?: string;
   post_date?: string;
+  post_visiblility?: string;
+  social_engagement?: string;
 
   banner_preview?: string | null;
   author_image_preview?: string | null;
@@ -176,6 +182,8 @@ const schema = object({
   classification: optional(string()),
   rating: optional(string()),
   post_date: optional(string()),
+  post_visiblility: optional(string()),
+  social_engagement: optional(string()),
 });
 
 const TooltipIfEnabled = ({ title, disabled, children }) =>
@@ -280,6 +288,8 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
       classification: adventureguide?.classification??'',
       rating: adventureguide?.rating??'',
       post_date: formatDate(new Date(adventureguide?.post_date)),
+      post_visiblility: adventureguide?.post_visiblility??'',
+      social_engagement: adventureguide?.social_engagement??'',
       banner_preview: null,
       author_image_preview: null,
       feature_image_preview: null,
@@ -423,6 +433,8 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
       if (data.classification) fd.append('classification', data.classification)
       if (data.rating) fd.append('rating', data.rating)
       if (data.post_date) fd.append('post_date', data.post_date)
+      if (data.post_visiblility) fd.append('post_visiblility', data.post_visiblility)
+      if (data.social_engagement) fd.append('social_engagement', data.social_engagement)
 
       // === Append images (single) ===
       if (data.feature_image instanceof File) {
@@ -1441,6 +1453,60 @@ const PageSection = ({ setId, adventureguide }: { setId?: string; adventureguide
                                   helperText: errors?.meta_keywords?.message || errorState?.message[0]
                                 })}
                               />
+                            )}
+                          />
+                        </Grid>
+                        <Grid size={{ md: 12, xs: 12, sm: 12, lg: 12 }}>
+                          <Controller
+                            name="post_visiblility"
+                            control={control}
+                            render={({ field }) => (
+                              <FormControl fullWidth variant="outlined" error={!!errors.post_visiblility}>
+                                <InputLabel shrink htmlFor="post_visiblility">
+                                  Visibility
+                                </InputLabel>
+                                <Select
+                                  {...field}
+                                  label="Visibility"
+                                  id="post_visiblility"
+                                  value={field.value || "public"}
+                                >
+                                  <MenuItem value="public">Public</MenuItem>
+                                  <MenuItem value="friends">Friends Only</MenuItem>
+                                </Select>
+                                {errors.post_visiblility && (
+                                  <Typography color="error.main">
+                                    {errors.post_visiblility?.message}
+                                  </Typography>
+                                )}
+                              </FormControl>
+                            )}
+                          />
+                        </Grid>
+                        <Grid size={{ md: 12, xs: 12, sm: 12, lg: 12 }}>
+                          <Controller
+                            name="social_engagement"
+                            control={control}
+                            render={({ field }) => (
+                              <FormControl fullWidth variant="outlined" error={!!errors.social_engagement}>
+                                <InputLabel shrink htmlFor="social_engagement">
+                                  Social Engagement
+                                </InputLabel>
+                                <Select
+                                  {...field}
+                                  label="Social Engagement"
+                                  id="social_engagement"
+                                  value={field.value || "yes"}
+                                >
+                                  <MenuItem value="yes">Yes</MenuItem>
+                                  <MenuItem value="no">No</MenuItem>
+                                </Select>
+                                {errors.social_engagement && (
+                                  <Typography color="error.main">
+                                    {errors.social_engagement?.message}
+                                  </Typography>
+                                )}
+                              </FormControl>
                             )}
                           />
                         </Grid>

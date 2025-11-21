@@ -13,16 +13,17 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
 .banner_bg_image_text h1{color: #ffffff; letter-spacing: -0.020em; max-width: 41.728vw;}
 .banner_bg_image_text{position: absolute; z-index: 2; bottom: 8.053vw; left: 0; right: 0; text-align: center;}
 
+
 .search_box{position: absolute; bottom: -5vw; width: 100%; left: 0; right: 0; margin: auto; z-index: 1;}
 .search_box .container{max-width: 80%;}
-.search_box_inner{background: #ffffff; border-radius: 0.366vw; padding: 2.343vw 4.685vw; box-shadow: 0 1.098vw 1.464vw rgb(0, 0, 0, 0.10); }
-.search_row form{display: flex; gap:0.366vw; align-items: flex-end;}
+.search_box_inner{background: #ffffff; border-radius:0.26vw; padding: 1.563vw 3.646vw; box-shadow: 0 1.098vw 1.464vw rgb(0, 0, 0, 0.10); max-width: 49.844vw; margin: 0 auto;}
+.search_row form{display: flex; gap:0.26vw; align-items: flex-end;}
 .search_row form .search_select{width: 100%;}
-.search_row form .search_select label{font-size: 1.025vw; font-weight: 600; color: #020202; margin-bottom: 0.512vw; display: block;}
-.search_row form .search_select select{border: solid 0.073vw #707070; outline: none; border-radius: 0.22vw; padding: 0.732vw 2.343vw; width: 100%;}
-.search_row form .search_select.ss1 select{background: url(/images/front-pages/images/map.svg) center left 0.732vw no-repeat, url(/images/front-pages/images/down-arrow.svg) center right 0.732vw no-repeat; font-size: 1.171vw; background-size: 1.464vw; min-height: 2.855vw;}
-.search_row form .search_select.ss2 select{background: url(/images/front-pages/images/building.svg) center left 0.732vw no-repeat, url(/images/front-pages/images/down-arrow.svg) center right 0.732vw no-repeat; font-size: 1.171vw; background-size: 1.464vw; min-height: 2.855vw;}
-.search_row form .search_btn input[type="submit"]{font-size: 1.171vw; font-weight: 800; color: #ffffff; background-color: #EA5647; border-radius:0.22vw; text-transform: uppercase; padding: 0.841vw 2.928vw; display: inline-block; line-height: 1; font-family: "Raleway", sans-serif; outline: none; border: none; cursor: pointer; transition: 0.3s ease-in-out; min-height: 2.855vw; display: flex; align-items: center; justify-content: center;}
+.search_row form .search_select label{font-size: 0.677vw; font-weight: 600; color: #020202; margin-bottom: 0.521vw; display: block; line-height: 1;}
+.search_row form .search_select select{border: solid 0.0365vw #707070; outline: none; border-radius: 0.156vw; padding: 0.732vw 2.343vw; width: 100%;}
+.search_row form .search_select.ss1 select{background: url(/images/front-pages/images/map.svg) center left 0.732vw no-repeat, url(/images/front-pages/images/down-arrow.svg) center right 0.732vw no-repeat; font-size: 0.833vw; background-size: 1.464vw; min-height: 2.855vw;}
+.search_row form .search_select.ss2 select{background: url(/images/front-pages/images/building.svg) center left 0.732vw no-repeat, url(/images/front-pages/images/down-arrow.svg) center right 0.732vw no-repeat; font-size: 0.833vw; background-size: 1.464vw; min-height: 2.855vw;}
+.search_row form .search_btn input[type="submit"]{font-size: 0.833vw; font-weight: 800; color: #ffffff; background-color: #EA5647; border-radius:0.22vw; text-transform: uppercase; padding: 0.841vw 2.928vw; display: inline-block; line-height: 1; font-family: "Raleway", sans-serif; outline: none; border: none; cursor: pointer; transition: 0.3s ease-in-out; min-height: 2.855vw; display: flex; align-items: center; justify-content: center;}
 .search_row form .search_btn input[type="submit"]:hover{background-color: #000000;}
 
 .home_section2 .home_slider2{position:relative;}
@@ -31,39 +32,37 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
   .banner_bg_image .banner_bg_image_hero{padding-bottom: 53.906vw;}
   .banner_bg_image_text{bottom: 10.742vw;}
   .search_box .container{max-width: 90%;}
-  .search_box_inner{padding: 3.343vw 4.685vw;}
-  .search_row form .search_select label{font-size: 1.698vw;}
-  .search_row form .search_select.ss1 select,
-  .search_row form .search_select.ss2 select,
-  .search_row form .search_btn input[type="submit"]{min-height: 4.855vw; font-size: 1.825vw;}
+.search_box_inner{padding: 3.343vw 4.685vw; max-width: 95%;}
+.search_row form .search_select label{font-size: 1.698vw;}
+.search_row form .search_select.ss1 select,
+.search_row form .search_select.ss2 select,
+.search_row form .search_select.ss3 select{font-size: 1.698vw; background-size: 1.964vw; min-height: 4.855vw; padding: 0.732vw 3.343vw;}
+.search_row form .search_btn input[type="submit"]{min-height: 4.855vw; font-size: 1.825vw;}
   .home_banner.destination_overview_banner .hero_slide_text{max-width: 44.845vw;}  
-  .search_row form .search_select.ss1 select,
-  .search_row form .search_select.ss2 select{ font-size: 1.698vw; background-size: 1.964vw; min-height: 4.855vw; padding: 0.732vw 3.343vw; }
   .banner_bg_image_text h1{ max-width: unset; }
 
 }
 
 @media only screen and (max-width: 768px){
   .search_box{bottom: -18vw;}
-  .banner_bg_image .banner_bg_image_hero{padding-bottom: 71.875vw;;}
+  .banner_bg_image .banner_bg_image_hero{padding-bottom: 81.875vw;;}
   .banner_bg_image_text{top: 50%; transform: translateY(-50%); bottom: auto;}
   .search_row form{flex-direction: column; gap: 1.866vw;}
-  .search_box .container{max-width: 90%;}
-  .search_box_inner{padding: 3.343vw 4.685vw;}
-  .search_row form > div{width: 100%;}
-  .search_row form .search_select label{font-size: 2.698vw;}
-  .search_row form .search_select.ss1 select,
-  .search_row form .search_select.ss2 select,
-  .search_row form .search_btn input[type="submit"]{min-height: 6.855vw; font-size: 3.425vw; width: 100%;}
+.search_box .container{max-width: 90%;}
+.search_box_inner{padding: 3.343vw 4.685vw;}
+.search_row form > div{width: 100%;}
+.search_row form .search_select label{font-size: 2.698vw;}
+.search_row form .search_select.ss1 select,
+.search_row form .search_select.ss2 select,
+.search_row form .search_select.ss3 select{font-size: 2.698vw; background-size: 2.964vw; min-height: 6.855vw; padding: 0.732vw 4.343vw;}
+.search_row form .search_btn input[type="submit"]{min-height: 6.855vw; font-size: 3.425vw; width: 100%;}
   .home_banner.destination_overview_banner .hero_slide_text{max-width: 100%;}
 
-  .search_row form .search_select.ss1 select,
-  .search_row form .search_select.ss2 select{font-size: 2.698vw; background-size: 2.964vw; min-height: 6.855vw; padding: 0.732vw 4.343vw; }
 }
 
-.banner_bg_image_text.banner_text_left{width: 100%; max-width: 80%; margin: 0 auto; padding: 0 5.208vw; text-align: left;}
-.banner_bg_image_text.banner_text_left h1{font-size: 5.857vw; line-height: 1;}
-.banner_bg_image_text.banner_text_left p{color: #ffffff; font-size: 1.318vw;}
+.banner_bg_image_text.banner_text_left{width: 100%; max-width: 80%; margin: 0 auto; padding: 0 3.705vw; text-align: left;}
+.banner_bg_image_text.banner_text_left h1{font-size: 4.167vw; line-height: 1;}
+.banner_bg_image_text.banner_text_left p{color: #ffffff; font-size: 0.938vw;}
 
 .surfing_row .surfing_text h3:not(first-of-tpe){padding-top: 1.659vw;}
 .moab_banner_icon{position: absolute; top: 11.347vw; right: 3.66vw; z-index: 2;}
@@ -72,11 +71,14 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
   .banner_bg_image_text.banner_text_left{max-width: 90%; padding: 0 1.757vw;}
   .banner_bg_image_text.banner_text_left p{font-size: 1.918vw;}
   .surfing_row .surfing_text h3:not(first-of-tpe){padding-top: 5.659vw;}
+  .banner_bg_image_text.banner_text_left h1{font-size: 6.167vw; line-height: 1.1;}
+  .moab_banner_icon{max-height: 10vw; top: 15.347vw;}
   
 }
 
 @media only screen and (max-width: 768px){
-  .banner_bg_image_text.banner_text_left p{font-size: 3.518vw;}  
+  .banner_bg_image_text.banner_text_left p{font-size: 3.518vw;} 
+  .banner_bg_image_text.banner_text_left h1{font-size: 8.167vw;} 
 }
 
 
@@ -117,14 +119,17 @@ ul.destination_tab li.active a{text-decoration: none;}
 
 
 .network_travel_profile .adv_post_top_right{display: flex; flex-wrap: wrap; align-items: center; column-gap:0.878vw; line-height: 1;}
+.home_section1 .network_travel_profile .adv_post_top_right{ display: block; }
 .network_travel_profile .adv_post_top_right .adv_trailblazer{width: 100%;}
 .network_travel_profile .adv_post_top_right .adv_trailblazer span{font-size: 0.878vw; font-weight: 700; text-transform: uppercase;}
 
-.travel_stories_faq .network_travel_profile_info_inner{display: flex; column-gap: 0.878vw; align-items: flex-end;}
-.travel_stories_faq .network_travel_follow a{font-size: 1.171vw;}
+.travel_stories_faq .network_travel_profile_info_inner{display: flex; column-gap: 0.878vw; align-items: flex-end; flex-wrap: wrap;}
+.travel_stories_faq .network_travel_profile_info_inner .social_engagement{ margin-left: auto; }
+.travel_stories_faq .network_travel_follow a{font-size: 0.938vw;}
 .travel_stories_faq .network_travel_profile_info span{font-style: normal; font-size: 1.098vw;}
 
 .network_travel_profile{display: flex; align-items: center; gap:0.878vw;}
+.home_section1 .network_travel_profile{ display: block; }
 .network_travel_profile img{width: 4.392vw; height: 4.392vw; border-radius: 100%;}
 .network_travel_profile_info h4{font-size: 1.903vw; font-family: "Bebas Neue", sans-serif; letter-spacing: -0.015em; line-height: 1;}
 .network_travel_profile_info span{font-size: 1.025vw; color: #1F1F1F; font-weight: 500; font-style: italic; line-height: 1;}
@@ -134,7 +139,7 @@ ul.destination_tab li.active a{text-decoration: none;}
 .network_travel_follow span{font-size: 1.025vw; letter-spacing: -0.015em; font-weight: 700; color: #1F1F1F; text-transform: uppercase;font-family: "Montserrat", sans-serif;}
 
 .moab_sec1 .travel_stories_faq .network_travel_profile_info_inner{align-items: center;}
-.moab_sec1 .network_travel_follow li{font-weight: 700; font-size: 1.318vw;}
+.moab_sec1 .network_travel_follow li{font-weight: 700; font-size: 0.938vw;}
 .moab_sec1 .network_travel_follow li a{text-transform: none; font-style: italic;}
 
 @media only screen and (max-width: 1024px){
@@ -150,7 +155,7 @@ ul.destination_tab li.active a{text-decoration: none;}
   .network_travel_profile .adv_post_top_right .adv_trailblazer span{font-size: 1.678vw;}
   .network_travel_profile .adv_post_top_right{line-height: 1.1;}
 
-  .travel_stories_faq .network_travel_follow a{font-size: 1.871vw;}
+  .travel_stories_faq .network_travel_follow a{font-size: 1.331vw;}
   .travel_stories_faq .network_travel_profile_info span{font-size: 1.798vw;}
 
   .network_travel_follow span{font-size: 3.025vw;}
@@ -163,7 +168,7 @@ ul.destination_tab li.active a{text-decoration: none;}
   .network_travel_likes span{font-size: 1.825vw;}
   .network_travel_likes ul li a svg{width: 2.098vw; height: 1.525vw;}
 
-  .moab_sec1 .network_travel_follow li{font-size: 1.871vw;}
+  .moab_sec1 .network_travel_follow li{font-size: 1.331vw;}
 }
 
 @media only screen and (max-width: 768px){
@@ -176,7 +181,7 @@ ul.destination_tab li.active a{text-decoration: none;}
   .adventure_right_text .advanture_text1 a{font-size: 3.825vw; padding: 1.532vw 3.025vw;}
   .adventure_right_text .advanture_text1 a svg{width: 3.318vw; height: 3.318vw;}
 
-  .travel_stories_faq .network_travel_follow a{font-size: 2.871vw;}
+  .travel_stories_faq .network_travel_follow a{font-size: 2.043vw;}
   .travel_stories_faq .network_travel_profile_info span{font-size: 2.798vw;}
 
   .network_travel_profile .adv_post_top_right .adv_trailblazer span{font-size: 2.678vw;}
@@ -187,57 +192,64 @@ ul.destination_tab li.active a{text-decoration: none;}
   .network_travel_likes span{font-size: 2.825vw;}
   .network_travel_likes ul li a svg{width: 3.098vw; height: 2.525vw;}
 
-  .moab_sec1 .network_travel_follow li{font-size: 2.871vw;}
+  .moab_sec1 .network_travel_follow li{font-size: 2.043vw;}
+
+  .travel_stories_faq .network_travel_profile_info_inner .social_engagement{ margin-left: 0; width: 100%; margin-top: 2vw; }
+}
+
+
+@media only screen and (max-width: 575px){
+  .moab_sec1 .network_travel_follow li{font-size: 2.843vw;}
+  .travel_stories_faq .network_travel_follow a{font-size: 2.843vw;}
+
 }
 
 /*blog-detail-sec1-end*/
 
 /*blog-detail-sec2-end*/
 
-.stories_details_sec2 .container_smll{max-width: 80%; margin: 0 auto; padding: 0 5.857vw;}
-.stories_details_sec2 .stories_details_text{padding: 2.514vw 0;}
+.stories_details_sec2 .container_smll{max-width: 80%; margin: 0 auto; padding: 0 4.167vw;}
+.stories_details_sec2 .stories_details_text{padding: 2.500vw 0;}
 .stories_details_sec2 .container_smll:last-of-type .stories_details_text{padding-bottom: 0;}
-.stories_details_sec2 .stories_details_image_row{display: flex; flex-wrap: wrap; gap:1.464vw;}
-.stories_details_sec2 .stories_details_image_row .stories_details_image_left{width: calc(70% - 0.732vw); position: relative;}
-.stories_details_sec2 .stories_details_image_row .stories_details_image_right{width: calc(30% - 0.732vw);}
-.stories_details_sec2 .stories_details_image_row .stories_details_image_big{position: relative; padding-bottom: 33.675vw;}
+.stories_details_sec2 .stories_details_image_row{display: flex; flex-wrap: wrap; gap:1.042vw;}
+.stories_details_sec2 .stories_details_image_row .stories_details_image_left{width: calc(70% - 0.521vw); position: relative;}
+.stories_details_sec2 .stories_details_image_row .stories_details_image_right{width: calc(30% - 0.521vw);}
+.stories_details_sec2 .stories_details_image_row .stories_details_image_big{position: relative; padding-bottom: 23.958vw;}
 .stories_details_sec2 .stories_details_image_row .stories_details_image_big img{position: absolute; width: 100%; height: 100%; top: 0; left: 0; object-fit: cover; object-position: top;}
-.stories_details_sec2 .stories_details_image_row .stories_details_image_left .stories_details_image_cnt{position: absolute; bottom: 1.245vw; left: 10vw; right: 11vw; padding-left: 2vw; border-left: solid 0.732vw #F85241;}
-.stories_details_sec2 .stories_details_image_row .stories_details_image_left .stories_details_image_cnt h3{font-size: 2.928vw; color: #ffffff; letter-spacing: 0.010em;}
+.stories_details_sec2 .stories_details_image_row .stories_details_image_left .stories_details_image_cnt{position: absolute; bottom: 0.886vw; left: 7.115vw; right: 7.826vw; padding-left: 1.423vw; border-left: solid 0.521vw #F85241;}
+.stories_details_sec2 .stories_details_image_row .stories_details_image_left .stories_details_image_cnt h3{font-size: 2.083vw; color: #ffffff; letter-spacing: 0.010em;}
 
 
 @media only screen and (max-width: 1024px){
-  .stories_details_sec2 .container_smll{max-width: 100%; padding: 0 1.757vw;}
-  .stories_details_sec2 .stories_details_image_row .stories_details_image_left .stories_details_image_cnt{left: 3vw;}
-  .stories_details_sec2 .stories_details_image_row .stories_details_image_big{padding-bottom: 37.675vw;}
+  .stories_details_sec2 .container_smll{max-width: 100%;}
+.stories_details_sec2 .stories_details_image_row .stories_details_image_left .stories_details_image_cnt{left: 2.134vw;}
+.stories_details_sec2 .stories_details_image_row .stories_details_image_big{padding-bottom: 26.804vw;}
 
-  .moab_sec2 .stories_details_image span.img_alt{max-width: 100%; font-size: 1.698vw;}
+  
   
 }
 
 @media only screen and (max-width: 768px){
-  .stories_details_sec2 .container_smll{padding: 0 3.125vw;}
-  .stories_details_sec2 .stories_details_text{padding: 4.514vw 0;}
-  .stories_details_sec2 .stories_details_image_row{gap: 3.464vw;}
-  .stories_details_sec2 .stories_details_image_row .stories_details_image_left,
-  .stories_details_sec2 .stories_details_image_row .stories_details_image_right{width: 100%;}
-  .stories_details_sec2 .stories_details_image_row .stories_details_image_big{padding-bottom: 65%;}
-  .stories_details_sec2 .stories_details_image_row .stories_details_image_left .stories_details_image_cnt h3{font-size: 4.928vw;}
+.stories_details_sec2 .stories_details_text{padding: 3.212vw 0;}
+.stories_details_sec2 .stories_details_image_row{gap: 2.464vw;}
+.stories_details_sec2 .stories_details_image_row .stories_details_image_left,
+.stories_details_sec2 .stories_details_image_row .stories_details_image_right{width: 100%;}
+.stories_details_sec2 .stories_details_image_row .stories_details_image_big{padding-bottom: 65%;}
+.stories_details_sec2 .stories_details_image_row .stories_details_image_left .stories_details_image_cnt h3{font-size: 3.506vw;}
 
-  .moab_sec2 .stories_details_image span.img_alt{max-width: 100%; font-size: 1.698vw;}
   
 }
 
-.moab_sec2 .stories_details_image span.img_alt{max-width: 77%; margin: 0 auto; display: block; padding-top: 1.464vw; font-size: 1.098vw; font-style: italic;}
-.moab_sec2 .stories_details_text .py_24{padding: 1.757vw 0;}
-.moab_sec2 .stories_details_text .pb_24{padding: 0 0 1.757vw 0;}
+.moab_sec2 .stories_details_image span.img_alt{max-width: 77%; margin: 0 auto; display: block; padding-top: 1.042vw; font-size: 0.781vw; font-style: italic;}
+.moab_sec2  .stories_details_text .py_24{padding: 1.250vw 0;}
+.moab_sec2  .stories_details_text .pb_24{padding: 0 0 1.250vw 0;}
 
 @media only screen and (max-width: 1024px){
-  .moab_sec2 .stories_details_image span.img_alt{max-width: 100%; font-size: 1.698vw;}  
+  .moab_sec2 .stories_details_image span.img_alt{max-width: 100%; font-size: 1.208vw;}  
 }
 
 @media only screen and (max-width: 768px){
-  .moab_sec2 .stories_details_image span.img_alt{font-size: 2.698vw;}
+  .moab_sec2 .stories_details_image span.img_alt{font-size: 2.520vw;}
 }
 
 
@@ -246,15 +258,15 @@ ul.destination_tab li.active a{text-decoration: none;}
 /*blog-detail-sec3-start*/
 
 .destination_resort_sec2 .feature_resort_row{grid-template-columns: repeat(4, 1fr);}
-.destination_resort_sec2 .network_travel_box .network_travel_top .network_travel_img{padding-bottom: 27.526vw;}
+.destination_resort_sec2 .network_travel_box .network_travel_top .network_travel_img{padding-bottom: 19.584vw;}
 
-.feature_resort_row{display: grid; grid-template-columns: repeat(3, 1fr); gap:2.489vw;}
+.feature_resort_row{display: grid; grid-template-columns: repeat(3, 1fr); gap:1.771vw;}
 .feature_resort_row .network_travel_top .network_travel_img_text{text-align: left;}
 .feature_resort_row .network_travel_box .network_travel_top:before{opacity: 0.83; background: linear-gradient(360deg,rgba(0, 0, 0, 1) 0%, rgba(25, 26, 26, 0) 100%); height: 70%;}
-.feature_resort_row .network_travel_img_text span{font-size: 0.805vw; color: #ffffff; display: block; padding-bottom: 0.732vw; line-height: 1.025vw;}
-.feature_resort_row .network_travel_img_text h4{font-size: 1.464vw; color: #ffffff;}
-.feature_resort_row .network_travel_img_text p{font-size: 0.805vw; color: #ffffff; line-height: 1.025vw; padding-top: 1.042vw;}
-.feature_resort_row .network_travel_top .network_travel_img_text .btn a{font-family: "Bebas Neue", sans-serif; font-size: 1.098vw; font-weight: 400;}
+.feature_resort_row .network_travel_img_text span{font-size: 0.573vw; color: #ffffff; display: block; padding-bottom: 0.521vw; line-height: 0.729vw;}
+.feature_resort_row .network_travel_img_text h4{font-size: 1.042vw; color: #ffffff;}
+.feature_resort_row .network_travel_img_text p{font-size: 0.573vw; color: #ffffff; line-height: 0.729vw; padding-top: 0.741vw;}
+.feature_resort_row .network_travel_top .network_travel_img_text .btn a{font-family: "Bebas Neue", sans-serif; font-size: 0.781vw; font-weight: 400;}
 
 .network_travel_box .network_travel_top .network_travel_img{padding-bottom: 38.36vw; position: relative; overflow: hidden;}
 .network_travel_box .network_travel_top .network_travel_img img{position: absolute; width: 100%; height: 100%; object-fit: cover; top: 0; left: 0; box-shadow: 0 1.098vw 1.464vw rgb(0, 0, 0, 0.16); transition: 0.3s ease-in-out;}
@@ -268,19 +280,19 @@ ul.destination_tab li.active a{text-decoration: none;}
 a.fl_bx_lnk_glb:hover ~ .network_travel_img_text .btn a{background-color: #ffffff; color: #F85241;}
 a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
 
-.network_travel_bottom{padding-top: 2.343vw;}
+.network_travel_bottom{padding-top: 3.021vw;}
 .network_travel_profile{display: flex; align-items: center; gap:0.878vw;}
-.network_travel_profile img{width: 4.392vw; height: 4.392vw; border-radius: 100%;}
-.network_travel_profile_info h4{font-size: 1.903vw; font-family: "Bebas Neue", sans-serif; letter-spacing: -0.015em; line-height: 1;}
-.network_travel_profile_info span{font-size: 1.025vw; color: #1F1F1F; font-weight: 500; font-style: italic; line-height: 1;}
-.network_travel_follow a{font-size: 1.025vw; letter-spacing: -0.015em; font-weight: 700; color: #EA5647; text-transform: uppercase;font-family: "Montserrat", sans-serif;}
+.network_travel_profile img{width: 3.125vw; height: 3.125vw; border-radius: 100%;}
+.network_travel_profile_info h4{font-size: 1.354vw; font-family: "Bebas Neue", sans-serif; letter-spacing: -0.015em; line-height: 1;}
+.network_travel_profile_info span{font-size: 0.729vw; color: #1F1F1F; font-weight: 500; font-style: italic; line-height: 1;}
+.network_travel_follow a{font-size: 0.729vw; letter-spacing: -0.015em; font-weight: 700; color: #EA5647; text-transform: uppercase;font-family: "Montserrat", sans-serif;}
 .network_travel_follow a:hover{text-decoration: underline;}
 .network_travel_follow{display: flex; align-items: center; column-gap: 0.878vw;}
-.network_travel_follow span{font-size: 1.025vw; letter-spacing: -0.015em; font-weight: 700; color: #1F1F1F; text-transform: uppercase;font-family: "Montserrat", sans-serif;}
-.network_travel_text p{padding: 0.878vw 0; font-size: 1.171vw; line-height: 1.611vw;}
-.network_travel_likes{display: flex; flex-wrap: wrap; gap:1.171vw;}
-.network_travel_likes span{font-size: 1.025vw; font-weight: 500; color: #1F1F1F; font-family: "Montserrat", sans-serif;}
-.network_travel_likes ul{list-style: none; display: flex; gap:1.171vw;}
+.network_travel_follow span{font-size: 0.729vw; letter-spacing: -0.015em; font-weight: 700; color: #1F1F1F; text-transform: uppercase;font-family: "Montserrat", sans-serif;}
+.network_travel_text p{padding: 0.878vw 0; font-size: 0.833vw; line-height: 1.146vw;}
+.network_travel_likes{display: flex; flex-wrap: wrap; gap:0.833vw;}
+.network_travel_likes span{font-size: 0.729vw; font-weight: 500; color: #1F1F1F; font-family: "Montserrat", sans-serif;}
+.network_travel_likes ul{list-style: none; display: flex; gap:0.833vw;}
 .network_travel_likes ul li a svg:hover path{fill: #EA5647;}
 .network_travel_likes ul li a svg{width: 1.098vw; height: 1.025vw;}
 
@@ -288,19 +300,19 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
 .network_travel_profile .adv_post_top_right .adv_trailblazer{width: 100%;}
 .network_travel_profile .adv_post_top_right .adv_trailblazer span{font-size: 0.878vw; font-weight: 700; text-transform: uppercase;}
 
-.biking_right .network_travel_profile img{width: 6.589vw; height: 6.589vw;}
-.biking_right .network_travel_profile_info_inner{display: flex;column-gap: 0.878vw;align-items: flex-end;}
-.biking_right .network_travel_profile{gap:1.464vw; padding-bottom: 1.171vw;}
+.biking_right .network_travel_profile img{width: 4.688vw; height: 4.688vw;}
+.biking_right .network_travel_profile_info_inner{display: flex;column-gap: 0.625vw;align-items: flex-end;}
+.biking_right .network_travel_profile{gap:1.042vw; padding-bottom: 0.833vw;}
 
 
 @media only screen and (max-width: 1024px){
   .destination_resort_sec2 .feature_resort_row{grid-template-columns: repeat(2, 1fr);}
   .destination_resort_sec2 .network_travel_box .network_travel_top .network_travel_img{padding-bottom: 100%;}
 
-  .feature_resort_row .network_travel_img_text span{font-size: 1.505vw; line-height: 1.3;}
-  .feature_resort_row .network_travel_img_text h4{font-size: 2.464vw;}
-  .feature_resort_row .network_travel_img_text p{font-size: 1.505vw; line-height: 1.3;}
-  .feature_resort_row .network_travel_top .network_travel_img_text .btn a{font-size: 2.098vw;}
+  .feature_resort_row .network_travel_img_text span{font-size: 1.071vw; line-height: 1.3;}
+.feature_resort_row .network_travel_img_text h4{font-size: 1.753vw;}
+.feature_resort_row .network_travel_img_text p{font-size: 1.071vw; line-height: 1.3;}
+.feature_resort_row .network_travel_top .network_travel_img_text .btn a{font-size: 1.493vw;}
 
   .network_travel_follow span{font-size: 3.025vw;}
   .network_travel_profile{gap: 2.878vw;}
@@ -325,12 +337,12 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
 
 @media only screen and (max-width: 768px){
   .destination_resort_sec2 .feature_resort_row{grid-template-columns: repeat(1, 1fr);}
-
-  .feature_resort_row .network_travel_img_text span{font-size: 2.505vw; line-height: 1.3;}
-  .feature_resort_row .network_travel_img_text h4{font-size: 4.464vw;}
-  .feature_resort_row .network_travel_img_text p{font-size: 2.705vw; line-height: 1.3;}
-  .feature_resort_row .network_travel_top .network_travel_img_text .btn a{font-size: 3.98vw;}
-  .feature_resort_row{grid-template-columns: repeat(1, 1fr); grid-row-gap: 8.333vw;}
+  .network_travel_top .network_travel_img_text{width: 90%; bottom: 5.025vw;}
+  .feature_resort_row .network_travel_img_text span{font-size: 1.782vw; line-height: 1.3;}
+.feature_resort_row .network_travel_img_text h4{font-size: 3.176vw;}
+.feature_resort_row .network_travel_img_text p{font-size: 1.924vw; line-height: 1.3;}
+.feature_resort_row .network_travel_top .network_travel_img_text .btn a{font-size: 2.832vw;}
+.feature_resort_row{grid-template-columns: repeat(1, 1fr); grid-row-gap: 5.929vw;}
 
   .network_travel_top .network_travel_img_text h3{font-size: 6.294vw;}
   .network_travel_top .network_travel_img_text .btn a{font-size: 3.225vw; padding: 2.232vw 5.025vw;}
@@ -349,6 +361,13 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
   
 }
 
+@media only screen and (max-width: 575px){
+  .feature_resort_row .network_travel_img_text span{font-size: 2.782vw; line-height: 1.3;}
+  .feature_resort_row .network_travel_img_text h4{font-size: 5.176vw;}
+  .feature_resort_row .network_travel_img_text p{font-size: 3.579vw; line-height: 1.3; padding-bottom: 2.521vw;}
+  .feature_resort_row .network_travel_top .network_travel_img_text .btn a{font-size: 3.437vw; padding: 2.375vw 3.508vw;}
+}
+
 
 .moab_sec3{background-color: #EBEBEB;}
 .moab_sec3 .feature_resort_row .network_travel_box .network_travel_top:before{opacity: 0.73;}
@@ -358,24 +377,24 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
 
 /*blog-detail-sec4-start*/
 
-.home_testimonial{max-width: 58.565vw; margin: 0 auto; padding-top: 10.47vw;}
+.home_testimonial{max-width: 39.271vw; margin: 0 auto; padding-top: 0vw;}
 .testimonial_box{text-align: center;}
-.testimonial_box p{line-height: 4.026vw; color: #1F1F1F; text-transform: uppercase; font-family: "Bebas Neue", sans-serif; font-weight: 400;}
-.testimonial_box h4{font-size: 2.343vw; color: #1F1F1F; text-transform: uppercase; padding-top: 1.171vw;}
+.testimonial_box p{line-height: 2.865vw; color: #1F1F1F; text-transform: uppercase; font-family: "Bebas Neue", sans-serif; font-weight: 400; padding: 0;}
+.testimonial_box h4{font-size: 1.667vw; color: #1F1F1F; text-transform: uppercase; padding-top: 1.171vw;}
 .home_testimonial .qt_img{padding-bottom: 2vw; padding-left: 2vw;}
 .home_testimonial .qt_img img{width: 3.88vw; height: 2.855vw;}
 
-.testimonial_box .testi_auth{display: flex; align-items: center; gap:1.903vw; justify-content: center; padding-top: 1.464vw;}
-.testimonial_box .testi_auth .testi_auth_image{max-width: 9.81vw; width: 9.81vw; padding-bottom: 9.81vw; position: relative;}
+.testimonial_box .testi_auth{display: flex; align-items: center; gap:1.354vw; justify-content: center; padding-top: 1.042vw;}
+.testimonial_box .testi_auth .testi_auth_image{max-width: 6.979vw; width: 6.979vw; padding-bottom: 6.979vw; position: relative;}
 .testimonial_box .testi_auth .testi_auth_image img{display: block; width: 100%; height: 100%; object-fit: cover;top: 0; left: 0; position: absolute;}
 
 @media only screen and (max-width: 1024px){
   .home_testimonial .qt_img img{width: 5.176vw; height: 3.809vw;}
   .home_testimonial{max-width: 76.565vw;}
   .testimonial_box p{line-height: 1;}
-  .testimonial_box h4{font-size: 3.343vw;}
+.testimonial_box h4{font-size: 3.343vw;}
   
-  .testimonial_box .testi_auth .testi_auth_image{max-width: 12.81vw; width: 12.81vw; padding-bottom: 12.81vw;}
+  .testimonial_box .testi_auth .testi_auth_image{max-width: 9.114vw; width: 9.114vw; padding-bottom: 9.114vw;}
 }
 
 @media only screen and (max-width: 768px){
@@ -384,7 +403,8 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
   .testimonial_box p{line-height: 1;}
   .testimonial_box h4{font-size: 4.643vw;}
 
-  .testimonial_box .testi_auth .testi_auth_image{max-width: 15.81vw; width: 15.81vw; padding-bottom: 15.81vw;}
+  .testimonial_box .testi_auth .testi_auth_image{max-width: 11.248vw; width: 11.248vw; padding-bottom: 11.248vw;}
+  .moab_resort_row{padding-top: 8.33vw;}
 }
 
 /*blog-detail-sec4-end*/

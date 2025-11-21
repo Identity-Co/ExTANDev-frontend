@@ -4,6 +4,8 @@ import classnames from 'classnames'
 // Styles Imports
 import styles from './styles.module.css'
 
+import LikesShare from '@/views/shared/like-share-section/LikeShareSection'
+
 const BlogDetailSection1 = ({ data }: { data?: []; }) => {
 
     const formattedPostDate = data?.post_date
@@ -63,6 +65,24 @@ const BlogDetailSection1 = ({ data }: { data?: []; }) => {
                                           </g>
                                         </svg> Share</a>
                                     </div>
+                                    {(data && data?.posted_user && data?.posted_user !== '') ? (
+                                        data?.social_engagement === 'yes' ? (
+                                            <div className={classnames(styles.social_engagement)}>
+                                                <LikesShare
+                                                    collectionName="adventure_guide"
+                                                    collectionID={data?._id}
+                                                />
+                                            </div>
+                                        ) : null
+                                    ) : (
+                                        <div className={classnames(styles.social_engagement)}>
+                                            <LikesShare
+                                                collectionName="adventure_guide"
+                                                collectionID={data?._id}
+                                            />
+                                        </div>
+                                    )}
+
                                 </div>
                             </div>
                         </div>

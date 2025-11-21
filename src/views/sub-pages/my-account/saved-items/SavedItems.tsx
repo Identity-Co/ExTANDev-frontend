@@ -43,6 +43,7 @@ const SavedItems = ({ data }: { data?: [] }) => {
       reviews: 'Review',
       adventure_post: 'Adventure',
       destination_story: 'Destination Story',
+      adventure_guide: 'Adventure Guide',
     };
     return labels[postType] || postType;
   };
@@ -124,10 +125,14 @@ const SavedItems = ({ data }: { data?: [] }) => {
             <Link href={`/our-adventure/${post.slug}`}>
               <img src={post.image} alt={post.name || post.title} />
             </Link>
+          ) : postType === "adventure_guide" ? (
+            <Link href={`/adventure-guide/${post.slug}`}>
+              <img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${post.feature_image}`} alt={post.title} />
+            </Link>
           ) : postType === "reviews" ? (
             post?.user_id?.profile_picture ? (
               <img
-                src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${post?.user_id?.profile_picture}`}
+                c
                 alt={post?.user_id?.first_name}
               />
             ) : (
@@ -156,6 +161,12 @@ const SavedItems = ({ data }: { data?: [] }) => {
                 <h3 className={classnames(styles.post_list_title)}>
                   <Link href={`/our-adventure/${post.slug}`}>
                     {post.name || post.title}
+                  </Link>
+                </h3>
+              ) : postType === "adventure_guide" ? (
+                <h3 className={classnames(styles.post_list_title)}>
+                  <Link href={`/adventure-guide/${post.slug}`}>
+                    {post.title}
                   </Link>
                 </h3>
               ) : postType === "reviews" ? (

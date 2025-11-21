@@ -76,6 +76,7 @@ const schema = object({
 })
 
 const SignupForm = () => {
+    const [refId, setRefId] = useState("");
     const [intentID, setIntentID] = useState("");
     const [clientSecret, setClientSecret] = useState("");
     const [currentStep, setCurrentStep] = useState(1);
@@ -104,6 +105,35 @@ const SignupForm = () => {
 
     const handleClickShowPassword = () => setIsPasswordShown(show => !show)
     const handleClickShowPasswordRe = () => setIsPasswordShownRe(show => !show)
+
+    const ref_id = searchParams.get('ref_id')
+
+    useEffect(() => {
+      if(ref_id && ref_id!='' && refId == '') {
+        setRefId(ref_id);
+
+        /*const getParams = async () => {
+          try {
+            const royalty = await Royalty.getAllParameters();
+
+            const royaltyData = royalty.reduce((acc, item) => {
+              acc[item.parameter_key] = {
+                id: item._id,
+                name: item.parameter_name,
+                value: item.parameter_value,
+              };
+              return acc;
+            }, {});
+
+            console.log('royaltyData:', royaltyData);
+          } catch (error) {
+            console.error('Error fetching royalty parameters:', error);
+          }
+        };
+
+        getParams();*/
+      }
+    }, []);
 
     const {
         control,
@@ -201,6 +231,10 @@ const SignupForm = () => {
         captcha: captchaValue,
         subscription_level: selectedLevel,
         role: 'user'
+      }
+
+      if(refId){
+        fData.referance_id = refId
       }
 
       console.log('fData :: ', fData)
