@@ -7,7 +7,7 @@ import { getPageBanner } from '@/app/server/banners'
 import { getPageDestination, getResortByIds, getDestinationList, filterDestination } from '@/app/server/destinations'
 import { getPageData } from '@/app/server/pages'
 
-import { useSearchParams } from 'next/navigation'
+// import { useSearchParams } from 'next/navigation'
 
 const LandingPage = async ({searchParams}) => {
   const location = searchParams.location;
