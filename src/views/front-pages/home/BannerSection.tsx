@@ -85,7 +85,7 @@ const BannerSection = ({ mode, banners, locations, locDestinations }: { mode: Mo
   console.log(openLoc);
 
   return (
-    <div className={classnames(styles.home_banner, 'top-banner')}>
+    <div className={classnames(styles.home_banner, 'home_banner top-banner')}>
       <div className={classnames(styles.home_banner_slide)}>
           <Slider {...settings} className={classnames(styles.home_hero_slider, 'home_hero_slider')}>
             {banners?.map((item, index) => {
