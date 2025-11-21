@@ -34,8 +34,8 @@ const BannerSection = ({ mode, banners, locations, locDestinations }: { mode: Mo
     const _location = searchParams.get("location");
     const _resort = searchParams.get("resort");
 
-    if(_location !== undefined) setLocation(_location); setSelectedLoc(_location);
-    if(_resort !== undefined) setResort(_resort); setSelectedRes(_resort);
+    if(_location !== undefined && _location) setLocation(_location); setSelectedLoc(_location);
+    if(_resort !== undefined && _resort) setResort(_resort); setSelectedRes(_resort);
     console.log(_location, _resort)
   }, []);
 	
