@@ -253,13 +253,13 @@ const VerticalMenu = ({  scrollMenu }: Props) => {
         </MenuItem>
 
         <MenuItem
-          href='/admin/settings/'
-          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/settings/')}
+          href='/admin/general-settings/'
+          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/general-settings/')}
           exactMatch={false}
-          activeUrl='/admin/settings'
+          activeUrl='/admin/general-settings'
           icon={<i className='ri-settings-5-line' />}
         >
-          System Settings
+          General Site Settings
         </MenuItem>
 
         {/*<SubMenu
