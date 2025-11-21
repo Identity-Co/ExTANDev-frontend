@@ -26,9 +26,10 @@ const tabContentList = (props): { [key: string]: ReactElement } => ({
   stories: <StoryTab {...props}/>
 })
 
-const PageSection = ({ pgData, id, resortDestinations }: { pgData?: []; id?: String; resortDestinations?: []; }) => {
+const PageSection = ({ pgData, id, resortDestinations, adventures, suitable_for, season }: { pgData?: []; id?: String; resortDestinations?: []; adventures?: []; suitable_for?: '', season?: '' }) => {
 
-  const [val, setVal] = useState<string>('overview')
+  console.log(suitable_for, season);
+  const [val, setVal] = useState<string>((((suitable_for !== undefined && suitable_for) || (season !== undefined && season)) ? 'adventures' : 'overview'))
   const [isOverviewDetailPage, setIsOverviewDetailPage] = useState(false);
   const [isOverviewDetailPageID, setIsOverviewDetailPageID] = useState<string>('');
 
@@ -62,7 +63,7 @@ const PageSection = ({ pgData, id, resortDestinations }: { pgData?: []; id?: Str
           <Tab value='stories' label='Stories' />
         </TabList>
         <TabPanel value={val} className='pbs-0'>
-            {tabContentList({ pgData: pgData, destinations: resortDestinations, isOverviewDetailPage: isOverviewDetailPage, setIsOverviewDetailPage: setIsOverviewDetailPage, isOverviewDetailPageID: isOverviewDetailPageID, setIsOverviewDetailPageID: setIsOverviewDetailPageID })[val]}
+            {tabContentList({ pgData: pgData, destinations: resortDestinations, isOverviewDetailPage: isOverviewDetailPage, setIsOverviewDetailPage: setIsOverviewDetailPage, isOverviewDetailPageID: isOverviewDetailPageID, setIsOverviewDetailPageID: setIsOverviewDetailPageID, adventures:adventures })[val]}
         </TabPanel>
       </TabContext>
     </>

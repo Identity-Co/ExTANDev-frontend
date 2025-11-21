@@ -625,3 +625,18 @@ body .orange_social_lssc span{font-weight: 700; color: #F85241;}
 .preferences_check label {position: relative;cursor: pointer; font-size: 0.729vw; font-family: "Raleway", sans-serif; font-weight: 400; color: #868686; display: flex; align-items: center; line-height: 1.4; margin-top: 0.852vw;}
 .preferences_check label:before { content:''; -webkit-appearance: none; background-color: transparent; border: 0.104vw solid #868686; width: 0.833vw; height: 0.833vw; display: inline-block; position: relative; vertical-align: middle; cursor: pointer; margin-right: 0.417vw; top: -0.104vw;}
 .preferences_check input:checked + label:after { content: ''; display: block; position: absolute; top: 0.028vw; left: 0.327vw; width: 0.277vw; height: 0.587vw; border: solid #EA5647; border-width: 0 0.104vw 0.104vw 0; transform: rotate(45deg);}
+
+
+
+/* Custom Select */
+.search_row form .search_select label{font-size: 1.25vw; font-weight: 600; color: #1f1f1f; margin-bottom: 0.521vw; display: block; line-height: 1; font-family: "Roboto Condensed", sans-serif;}
+
+.custom-select{position: relative; cursor: pointer;}
+.select-selected{border: solid 0.0365vw #c7c7c7; outline: none; border-radius: 0.313vw; padding: 0.662vw; width: 100%; font-family: "Roboto Condensed", sans-serif; font-weight: 600; font-size: 1.042vw; color: #1F1F1F; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(180deg, rgba(237, 235, 235, 1) 0%, rgba(255, 255, 255, 1) 30%, rgba(205, 202, 202, 1) 100%);}
+.select-selected div{display: flex; align-items: center; gap:0.833vw;}
+.select-items { position: absolute; top: 100%; left: 0; right: 0; background: linear-gradient(180deg, rgb(248 248 248) 50%, rgb(214 214 214) 100%); border: solid 0.0365vw #c7c7c7; border-radius: 0.313vw; box-shadow: 0 0.598vw 1.064vw rgb(0 0 0 / 10%); z-index: 99; display: none; flex-direction: column; max-height: 150px; overflow-y: auto;}
+.select-items div {padding: 0.662vw;display: flex;align-items: center;gap: 0.833vw; font-family: "Roboto Condensed", sans-serif; font-weight: 600; font-size: 1.042vw; color: #1F1F1F; transition: 0.4s ease-in-out;}
+.select-items div:hover {background: #e6e6e6;}
+.custom-select.active .select-items {display: flex;}
+.select-items div span,
+.select-selected div span.select-icn{width: 20px; display: flex; align-items: center; justify-content: center;}

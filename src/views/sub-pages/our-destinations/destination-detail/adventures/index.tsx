@@ -29,9 +29,10 @@ type AdventureProps = {
   setIsOverviewDetailPage: React.Dispatch<React.SetStateAction<boolean>>;
   isOverviewDetailPageID: string
   setIsOverviewDetailPageID: React.Dispatch<React.SetStateAction<string>>;
+  adventures: []
 }
 
-const LandingPageWrapper = ({ pgData, destinations, isOverviewDetailPage, setIsOverviewDetailPage, isOverviewDetailPageID, setIsOverviewDetailPageID}: AdventureProps) => {
+const LandingPageWrapper = ({ pgData, destinations, isOverviewDetailPage, setIsOverviewDetailPage, isOverviewDetailPageID, setIsOverviewDetailPageID, adventures}: AdventureProps) => {
   const adventurePosts = pgData?.adventures?.adventure_posts;
 
   // Hooks
@@ -70,7 +71,7 @@ const LandingPageWrapper = ({ pgData, destinations, isOverviewDetailPage, setIsO
     return (
       <>
         <AdventuresDetailSection1 data={detailPageData ?? []} />
-        <AdventuresDetailSection2 data={detailPageData ?? []} />
+        <AdventuresDetailSection2 data={adventures ?? []} />
         <AdventuresDetailSection3 map_image={detailPageData?.map_image ?? ''} />
         <AdventuresDetailSection4 sectionProps={featuredResortsSectionProps} />
       </>
@@ -79,7 +80,7 @@ const LandingPageWrapper = ({ pgData, destinations, isOverviewDetailPage, setIsO
     return (
       <>
         <AdventuresSection1 data={pgData?.adventures ?? []} />
-        <AdventuresSection2 data={pgData?.adventures ?? []} isOverviewDetailPage={isOverviewDetailPage} setIsOverviewDetailPage={setIsOverviewDetailPage} isOverviewDetailPageID={isOverviewDetailPageID} setIsOverviewDetailPageID={setIsOverviewDetailPageID} />
+        <AdventuresSection2 data={adventures ?? []} isOverviewDetailPage={isOverviewDetailPage} setIsOverviewDetailPage={setIsOverviewDetailPage} isOverviewDetailPageID={isOverviewDetailPageID} setIsOverviewDetailPageID={setIsOverviewDetailPageID} />
         <AdventuresSection3 sectionProps={instagramSliderSectionProps} />
         <AdventuresSection4 sectionProps={featuredResortsSectionProps} />
         <AdventuresSection5 data={pgData ?? []} />

@@ -218,3 +218,56 @@ export const getResortByIds = async (resort_ids: string[]) => {
     return Array.isArray(json.data) ? json.data : [];
   }
 }
+
+export const getDestinationList = async () => {
+  console.log('getDestinationList') ;
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/destination/list/location`, {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+  
+  if (!response.ok) {
+    return {}
+  } else {
+    const json = await response.json();
+    
+    return json.data
+  }
+}
+
+export const filterDestination = async (location?: string, resort?: string) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/destination/filter`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({'location': location, 'resort': resort})
+  })
+  
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const json = await response.json();
+  
+  return json.data;
+}
+
+export const filterDestinationAdventure = async(destID: string, suitable_for?: string, season?: string) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/destination/adventure/${destID}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({'suitable_for': suitable_for, 'season': season})
+  })
+  
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const json = await response.json();
+  
+  return json.data;
+}

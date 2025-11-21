@@ -1,5 +1,5 @@
 // React Imports
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 // Third-party Imports
 import Slider from 'react-slick';
@@ -13,10 +13,33 @@ import styles from './styles.module.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const BannerSection = ({ mode, banners }: { mode: Mode; banners?: [] }) => {
+const BannerSection = ({ mode, banners, locations, locDestinations }: { mode: Mode; banners?: []; locations?: []; locDestinations?: [] }) => {
 	const slideref = useRef();
+
+  const [location, setLocation] = useState(null);
+  const [resort, setResort] = useState(null);
+  const [resorts, setResorts] = useState([]);
+
+  const [openLoc, setOpenLoc] = useState(false);
+  const [selectedLoc, setSelectedLoc] = useState("Select Destination");
+
+  const [openRes, setOpenRes] = useState(false);
+  const [selectedRes, setSelectedRes] = useState("Select Resort");
+
+  useEffect(() => {
+    // Get query string from current URL
+    const searchParams = new URLSearchParams(window.location.search);
+
+    // Get specific parameters
+    const _location = searchParams.get("location");
+    const _resort = searchParams.get("resort");
+
+    if(_location !== undefined) setLocation(_location); setSelectedLoc(_location);
+    if(_resort !== undefined) setResort(_resort); setSelectedRes(_resort);
+    console.log(_location, _resort)
+  }, []);
 	
-  	useEffect(() => {
+  useEffect(() => {
     const slides = document.querySelectorAll('.hero_slide_box');
     
     slides.forEach((slide) => {
@@ -26,7 +49,27 @@ const BannerSection = ({ mode, banners }: { mode: Mode; banners?: [] }) => {
         slide.style.backgroundImage = 'url("'+slideref.current.getAttribute('databackground')+'")';
       }
     });
+
+    setResortItems()
   }, []);
+
+  useEffect(() => {
+    setResortItems()
+  }, [location]);
+
+  function setResortItems() {
+    const _resorts = locDestinations.filter(item => item.destination_location==location)
+    
+    const resortsArr = _resorts.map(item => item.resorts?.resorts);
+
+    const _resortsItems = resortsArr
+      .filter(Array.isArray)
+      .flatMap(subArray => subArray.map(item => item.title));
+
+    const resortsItems = _resortsItems.sort((a, b) => a.localeCompare(b));
+
+    setResorts([...new Set(resortsItems)])
+  }
 
   const settings = {
     dots: false,
@@ -86,23 +129,103 @@ const BannerSection = ({ mode, banners }: { mode: Mode; banners?: [] }) => {
               <div className={classnames(styles.search_box_inner)}>
                   <div className={classnames(styles.search_row)}>
                       <form>
+                          <input type="hidden" name="location" value={location??''} />
+                          <input type="hidden" name="resort" value={resort??''} />
+
                           <div className={classnames(styles.search_select, styles.ss1)}>
                               <label>Destinations</label>
-                              <select name="cars" id="cars">
-                                <option value="">Destinations 1</option>
-                                <option value="">Destinations 2</option>
-                                <option value="">Destinations 3</option>
-                                <option value="">Destinations 4</option>
-                              </select>
+                              <div className={`custom-select ${openLoc ? 'active' : ''}`}>
+                                <div 
+                                  className="select-selected"
+                                  onClick={() => {setOpenLoc(!openLoc); setOpenRes(false)}}
+                                  style={{ cursor: "pointer" }}
+                                >
+                                  <div>
+                                    <span className="select-icn">
+                                      <img src="/images/svg/map-pin.svg" alt=""  />
+                                    </span>
+                                    <span>{selectedLoc}</span>
+                                  </div>
+
+                                  <img
+                                    src="/images/svg/down-arrow.svg"
+                                    alt=""
+                                    style={{
+                                      transform: openLoc ? "rotate(180deg)" : "rotate(0deg)",
+                                      transition: "0.2s",
+                                    }}
+                                  />
+                                </div>
+
+                                {openLoc && (
+                                  <div className="select-items">
+                                    {locations.map((loc, index) => (
+                                      <div
+                                        key={index}
+                                        onClick={() => {
+                                          setSelectedLoc(loc);
+                                          setLocation(loc)
+                                          setOpenLoc(false);
+                                        }}
+                                        style={{ cursor: "pointer" }}
+                                      >
+                                        <span>
+                                          <img src="/images/svg/map-pin.svg" alt="" />
+                                        </span>
+                                        {loc}
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
                           </div>
                           <div className={classnames(styles.search_select, styles.ss2)}>
                               <label>Resort/Hotel</label>
-                              <select name="cars" id="cars">
-                                <option value="">Resort 1</option>
-                                <option value="">Resort 2</option>
-                                <option value="">Resort 3</option>
-                                <option value="">Resort 4</option>
-                              </select>
+
+                              <div className={`custom-select ${openRes ? 'active' : ''}`}>
+                                <div 
+                                  className="select-selected"
+                                  onClick={() => {setOpenRes(!openRes); setOpenLoc(false)}}
+                                  style={{ cursor: "pointer" }}
+                                >
+                                  <div>
+                                    <span className="select-icn">
+                                      <img src="/images/svg/hotel.svg" alt=""  />
+                                    </span>
+                                    <span>{selectedRes}</span>
+                                  </div>
+
+                                  <img
+                                    src="/images/svg/down-arrow.svg"
+                                    alt=""
+                                    style={{
+                                      transform: openRes ? "rotate(180deg)" : "rotate(0deg)",
+                                      transition: "0.2s",
+                                    }}
+                                  />
+                                </div>
+
+                                {openRes && (
+                                  <div className="select-items">
+                                    {resorts.map((res, index) => (
+                                      <div
+                                        key={index}
+                                        onClick={() => {
+                                          setSelectedRes(res);
+                                          setResort(res)
+                                          setOpenRes(false);
+                                        }}
+                                        style={{ cursor: "pointer" }}
+                                      >
+                                        <span>
+                                          <img src="/images/svg/hotel.svg" alt="" />
+                                        </span>
+                                        {res}
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
                           </div>
                           <div className={classnames(styles.search_btn)}>
                               <input type="submit" name="" value="Search" />

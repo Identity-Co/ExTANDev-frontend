@@ -19,7 +19,7 @@ import { useSettings } from '@core/hooks/useSettings'
 
 import * as Common from '@/app/server/common'
 
-const DestinationDetailPage = ({ mode, banners, pgData, featuredDestinations, featuredResorts }: { mode: Mode; banners?: []; pgData?: []; destinations?: []; featuredResorts?: []; }) => {
+const DestinationDetailPage = ({ mode, banners, pgData, featuredDestinations, featuredResorts, locations, locDestinations }: { mode: Mode; banners?: []; pgData?: []; destinations?: []; featuredResorts?: []; locations?: []; locDestinations?: [] }) => {
   const adventure_Posts = pgData?.adventure_posts;
 
   // Hooks
@@ -72,7 +72,7 @@ const DestinationDetailPage = ({ mode, banners, pgData, featuredDestinations, fe
 
   return (
     <>
-      {banners.length ? <BannerSection mode={mode} banners={banners} /> : null}
+      {banners.length ? <BannerSection mode={mode} banners={banners} locations={locations} locDestinations={locDestinations} /> : null}
       <OurDestinationsSection1 data={pgData} />
       <OurDestinationsSection2 data={pgData} sectionProps={featuredDestinationsSectionProps} />
       <OurDestinationsSection3 data={pgData} sectionProps={instagramSliderSectionProps} />

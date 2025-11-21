@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Oswald:wght@400;700&family=Bebas+Neue&display=swap');
 a.fl_bx_lnk_glb:hover ~ .network_travel_img_text .btn a{background-color: #ffffff; color: #F85241;}
 a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
 
@@ -25,14 +26,15 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
 
 .search_box{position: absolute; bottom: -5vw; width: 100%; left: 0; right: 0; margin: auto; z-index: 1;}
 .search_box .container{max-width: 80%;}
-.search_box_inner{background: #ffffff; border-radius:0.26vw; padding: 1.563vw 3.646vw; box-shadow: 0 1.098vw 1.464vw rgb(0, 0, 0, 0.10); max-width: 49.844vw; margin: 0 auto;}
-.search_row form{display: flex; gap:0.26vw; align-items: flex-end;}
+.search_box_inner{background: linear-gradient(180deg,rgba(237, 235, 235, 1) 0%, rgba(255, 255, 255, 1) 30%, rgba(205, 202, 202, 1) 100%); border-radius:0.417vw; padding: 1.563vw 3.646vw; box-shadow: 0 0.598vw 1.064vw rgb(0 0 0 / 20%); max-width: 95%; margin: 0 auto;}
+.search_row form{display: flex; gap:0.833vw; align-items: flex-end;}
 .search_row form .search_select{width: 100%;}
-.search_row form .search_select label{font-size: 0.677vw; font-weight: 600; color: #020202; margin-bottom: 0.521vw; display: block; line-height: 1;}
-.search_row form .search_select select{border: solid 0.0365vw #707070; outline: none; border-radius: 0.156vw; padding: 0.732vw 2.343vw; width: 100%;}
-.search_row form .search_select.ss1 select{background: url(/images/front-pages/images/map.svg) center left 0.732vw no-repeat, url(/images/front-pages/images/down-arrow.svg) center right 0.732vw no-repeat; font-size: 0.833vw; background-size: 1.464vw; min-height: 2.855vw;}
-.search_row form .search_select.ss2 select{background: url(/images/front-pages/images/building.svg) center left 0.732vw no-repeat, url(/images/front-pages/images/down-arrow.svg) center right 0.732vw no-repeat; font-size: 0.833vw; background-size: 1.464vw; min-height: 2.855vw;}
-.search_row form .search_btn input[type="submit"]{font-size: 0.833vw; font-weight: 800; color: #ffffff; background-color: #EA5647; border-radius:0.22vw; text-transform: uppercase; padding: 0.841vw 2.928vw; display: inline-block; line-height: 1; font-family: "Raleway", sans-serif; outline: none; border: none; cursor: pointer; transition: 0.3s ease-in-out; min-height: 2.855vw; display: flex; align-items: center; justify-content: center;}
+.search_row form .search_select label{font-size: 1.25vw; font-weight: 600; color: #1f1f1f; margin-bottom: 0.521vw; display: block; line-height: 1; font-family: "Roboto Condensed", sans-serif;}
+.search_row form .search_select select{border: solid 0.0365vw #c7c7c7; outline: none; border-radius: 0.313vw; padding: 0.732vw 2.343vw; width: 100%; font-family: "Roboto Condensed", sans-serif; font-weight: 600; font-size: 1.042vw; color: #1F1F1F;}
+.search_row form .search_select.ss1 select{background: url(/images/svg/map.svg) center left 0.732vw no-repeat, url(/images/svg/down-arrow.svg) center right 0.732vw no-repeat; background-size: 1.464vw; min-height: 2.855vw;}
+.search_row form .search_select.ss2 select{background: url(/images/svg/building.svg) center left 0.732vw no-repeat, url(/images/svg/down-arrow.svg) center right 0.732vw no-repeat; background-size: 1.464vw; min-height: 2.855vw;}
+.search_row form .search_select.ss3 select{background: url(/images/svg/user.svg) center left 0.732vw no-repeat, url(/images/svg/down-arrow.svg) center right 0.732vw no-repeat; background-size: 1.464vw; min-height: 2.855vw;}
+.search_row form .search_btn input[type="submit"]{font-size: 1.25vw; color: #ffffff; background-color: #EA5647; border-radius:0.22vw; text-transform: uppercase; padding: 0.841vw 2.928vw; display: inline-block; line-height: 1; font-family: "Bebas Neue", sans-serif; outline: none; border: none; cursor: pointer; transition: 0.3s ease-in-out; min-height: 2.855vw; display: flex; align-items: center; justify-content: center; letter-spacing: 0.05em;}
 .search_row form .search_btn input[type="submit"]:hover{background-color: #000000;}
 
 

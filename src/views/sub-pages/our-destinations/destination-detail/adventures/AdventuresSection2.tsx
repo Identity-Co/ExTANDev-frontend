@@ -17,7 +17,7 @@ const AdventuresSection2 = ({ data, isOverviewDetailPage, setIsOverviewDetailPag
     <section className={classnames(styles.our_desti_sec2)}>
         <div className="container">
             <div className={classnames(styles.feature_desti_row)}>
-                {data?.adventure_lists?.map((item, index) => (
+                {data?.map((item, index) => (
                     <div key={index} className={classnames(styles.network_travel_box)}>
                         <div className={classnames(styles.network_travel_top)}>
                             <a onClick={(e) => {
@@ -44,6 +44,10 @@ const AdventuresSection2 = ({ data, isOverviewDetailPage, setIsOverviewDetailPag
                     </div>
                 ))}
             </div>
+
+            {!data.length && (
+                <h2 align="center"> No Data Found. </h2>
+            )}
         </div>
     </section>
   )
