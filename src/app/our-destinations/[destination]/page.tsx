@@ -40,6 +40,7 @@ const DetailPage = async ({ searchParams, params }: PageProps) => {
   if (suitable_for != "" || season != "") {
     const advRes = await filterDestinationAdventure(pgData._id, suitable_for, season);
 
+    console.log(advRes);
     if (advRes.length) {
       adventures = advRes[0]?.adventures?.adventure_lists??[];
     } else {
@@ -48,7 +49,7 @@ const DetailPage = async ({ searchParams, params }: PageProps) => {
   } else {
     adventures = pgData?.adventures?.adventure_lists??[];
   }
-    console.log(adventures);
+    // console.log(adventures);
 
   const resortDestinations = await getPageDestination(pgData?.resorts?.feature_destinations??[]);
 
