@@ -103,7 +103,7 @@ const BannerSection = ({ mode, banners, filter_categories }: { mode: Mode; banne
     }
   }
 
-  const icons = ["bicycling-svgrepo-com.svg", "cruising.svg", "culture-immersion.svg", "walking-svgrepo-com.svg", "rail.svg", "skiing.svg", "surf.svg"]
+  const icons = ["walking-svgrepo-com.svg", "bicycling-svgrepo-com.svg", "cruising.svg", "culture-immersion.svg", "walking-svgrepo-com.svg", "rail.svg", "skiing.svg", "surf.svg"]
 
   return (
     <div className={classnames(styles.home_banner, styles.destination_overview_banner, styles.adventure_banner, 'home_banner top-banner destination_overview_banner')}>
