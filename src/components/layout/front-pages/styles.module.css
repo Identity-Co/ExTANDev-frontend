@@ -5,16 +5,16 @@ header.header .headMain{display: flex; align-items: center; justify-content: spa
 header.header .headerLogo a{display: block;}
 header.header .headerLogo a img{max-width: 10.37vw;}
 header.header .navMenu ul{list-style: none; display: flex; align-items: center; column-gap: 2.604vw;}
-header.header .navMenu ul li a{text-transform: uppercase; font-size: 0.833vw; font-weight: 400; letter-spacing: 0.005em; line-height: 1; color: #ffffff; font-family: "Bebas Neue", sans-serif; position: relative;}
+header.header .navMenu ul li a{text-transform: uppercase; font-size: max(0.875rem, 1.2vw); font-weight: 400; letter-spacing: 0.005em; line-height: 1; color: #ffffff; font-family: "Bebas Neue", sans-serif; position: relative;}
 header.header .navMenu ul li a:before{position: absolute; content: ""; width: 0%; height: 0.312vw; background-color: #F85241; left: 0; bottom: -0.521vw; transition: 0.3s ease-in-out;}
 header.header .navMenu ul li.active a:before,
 header.header .navMenu ul li a:hover:before{width: 100%;}
 header.header .navMenu ul li.hide_desktop{display: none;}
 header.header .head_right .head_buttons{display: flex; flex-wrap: wrap; gap:1.146vw; align-items: center;}
-header.header .head_right .head_buttons a{font-size: 0.833vw; font-weight: 400; color: #ffffff; background-color: rgb(31, 31, 31, 0.8); border: solid 0.052vw rgb(240, 237, 237, 0.54); border-radius: 0.104vw; text-transform: uppercase; padding: 0.734vw 0.586vw 0.539vw; display: inline-block; line-height: 1; font-family: "Bebas Neue", sans-serif; letter-spacing: 0.005em;}
+header.header .head_right .head_buttons a{font-size: max(0.875rem, 1.2vw); font-weight: 400; color: #ffffff; background-color: rgb(31, 31, 31, 0.8); border: solid 0.052vw rgb(240, 237, 237, 0.54); border-radius: 0.104vw; text-transform: uppercase; padding: 0.734vw 0.586vw 0.539vw; display: inline-block; line-height: 1; font-family: "Bebas Neue", sans-serif; letter-spacing: 0.005em;}
 header.header .head_right .head_buttons a:hover{background-color: #ffffff; color: #000000;}
 header.header .head_right .head_buttons .head_btn2 a span{color: #F85241;}
-header.header .head_right .head_buttons .head_btn3 a{font-size: 0.625vw; font-weight: 500; color: #1F1F1F; background-color: #FDFCFC; border: solid 0.0365vw #ffffff; border-radius: 0.104vw; padding: 0.526vw; line-height: 1; display: flex; align-items: center; gap:0.293vw; text-transform: none; font-family: "Raleway", sans-serif; font-style: italic; letter-spacing:-0.025em; }
+header.header .head_right .head_buttons .head_btn3 a{font-size: max(0.875rem, 1.2vw); font-weight: 500; color: #1F1F1F; background-color: #FDFCFC; border: solid 0.0365vw #ffffff; border-radius: 0.104vw; padding: 0.526vw; line-height: 1; display: flex; align-items: center; gap:0.293vw; text-transform: none; font-family: "Raleway", sans-serif; font-style: italic; letter-spacing:-0.025em; }
 header.header .head_right .head_buttons .head_btn3 a:hover{background-color: #ffffff;}
 header.header .head_right .head_buttons .head_btn3 a svg{width: 1.318vw; height: 1.318vw;}
 header.header .navMenu ul{ padding-inline-start: 0; }
@@ -31,12 +31,12 @@ header.header .navMenu ul{ padding-inline-start: 0; }
 .hamburger.is_active .line:nth-child(3){-webkit-transform: translateY(-1.344vw) rotate(90deg);-ms-transform: translateY(-1.344vw) rotate(90deg);-o-transform: translateY(-1.344vw) rotate(90deg);transform: translateY(-1.344vw) rotate(90deg);}
 
 
-@media only screen and (max-width: 1366px){
+/*@media only screen and (max-width: 1366px){
   header.header .navMenu ul li a{font-size: 1.279vw;}
   header.header .head_right .head_buttons a,
   header.header .head_right .head_buttons .head_btn3 a{font-size: 1.279vw;}
 
-}
+}*/
 
 
 @media only screen and (max-width: 1024px){

@@ -66,6 +66,7 @@ table{width: 100%; border-collapse: collapse;}
 a.fl_bx_lnk_glb{position: absolute; left: 0; top: 0; right: 0; bottom: 0; z-index: 9;}
 
 .full-img img{display:block;}
+header .container{max-width: 100%; padding: 0 5.208vw;}
 
 
 /*banner-start*/
@@ -254,7 +255,8 @@ p{padding-bottom: 2.876vw;}
 .fs_60{font-size: 4.168vw !important; line-height: 1;}
 .fs_70{font-size: 4.864vw !important;}
 .fs_90{font-size: 6.253vw !important;}
-.container, .home_banner .hero_slide_container {padding: 0 4.223vw;}
+.container, .home_banner .hero_slide_container,
+header .container{padding: 0 4.223vw;}
 body .slick-dots{display: flex !important; justify-content: center; bottom: -4.269vw; gap:1.067vw; }
 body .slick-dots li{width: auto; height: auto; margin: 0; padding: 0;}
 body .slick-dots li button{width: 2.245vw; height: 2.245vw; border-radius: 3.705vw; background-color: #ffffff; border: solid 0.052vw #131313; padding: 0;}
@@ -509,10 +511,11 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
 .submit_btn:hover{background: rgb(31, 31, 31, 0.8);}*/
 
 
-.sidebar-box{max-width: 18.625vw; background-color: #f6f6f6; padding: 2vw;}
+.sidebar-box{max-width: 18.625vw; background-color: #014040; padding: 2vw; border-radius: 1.042vw;}
 .sidebar-box ul{list-style: none; padding: 0; margin: 0;}
 .sidebar-box ul li{padding: 0.521vw 0; border-bottom: solid 0.052vw #CECECE;}
 .sidebar-box ul li a:hover{color: #EA5647;}
+
 
 
 .level_main{display: flex; flex-wrap: wrap; gap: 1.423vw; justify-content: space-between; padding-top: 1.423vw;}
