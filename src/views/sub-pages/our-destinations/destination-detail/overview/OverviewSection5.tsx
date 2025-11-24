@@ -19,7 +19,7 @@ const OverviewSection5 = ({ data, destinationName }: { data?: []; destinationNam
         <div className="container">
             <div className={classnames(styles.dr_quick)}>
                 <h2>{destinationName}</h2>
-                <h4 className="fs_55">{data?.quick_facts_title} facts</h4>
+                <h4 className="fs_55">{data?.quick_facts_title}</h4>
             </div>
             <div className={classnames(styles.dr_list)}>
                 <div className={classnames(styles.grid_box)}>
