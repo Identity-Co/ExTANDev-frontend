@@ -15,6 +15,7 @@ interface PageProps {
 }
 
 const DetailPage = async ({ searchParams, params }: PageProps) => {
+  let hasParam: boolean = false;
 
   const mode = await getServerMode()
 
@@ -40,20 +41,19 @@ const DetailPage = async ({ searchParams, params }: PageProps) => {
   if (suitable_for != "" || season != "") {
     const advRes = await filterDestinationAdventure(pgData._id, suitable_for, season);
 
-    console.log(advRes);
     if (advRes.length) {
       adventures = advRes[0]?.adventures?.adventure_lists??[];
     } else {
       adventures = [];
     }
+    hasParam = true;
   } else {
     adventures = pgData?.adventures?.adventure_lists??[];
   }
-    // console.log(adventures);
 
   const resortDestinations = await getPageDestination(pgData?.resorts?.feature_destinations??[]);
 
-  return <DestinationDetail mode={mode} pgData={pgData} resortDestinations={resortDestinations} adventures={adventures} suitable_for={suitable_for} season={season} />
+  return <DestinationDetail mode={mode} pgData={pgData} resortDestinations={resortDestinations} adventures={adventures} suitable_for={suitable_for} season={season} hasParam={hasParam} />
 }
 
 export default DetailPage

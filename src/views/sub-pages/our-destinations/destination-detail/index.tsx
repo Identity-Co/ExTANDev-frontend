@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import dynamic from 'next/dynamic'
 
@@ -26,9 +26,8 @@ const tabContentList = (props): { [key: string]: ReactElement } => ({
   stories: <StoryTab {...props}/>
 })
 
-const PageSection = ({ pgData, id, resortDestinations, adventures, suitable_for, season }: { pgData?: []; id?: String; resortDestinations?: []; adventures?: []; suitable_for?: '', season?: '' }) => {
+const PageSection = ({ pgData, id, resortDestinations, adventures, suitable_for, seasonm, hasParam }: { pgData?: []; id?: String; resortDestinations?: []; adventures?: []; suitable_for?: '', season?: ''; hasParam?: false }) => {
 
-  console.log(suitable_for, season);
   const [val, setVal] = useState<string>((((suitable_for !== undefined && suitable_for) || (season !== undefined && season)) ? 'adventures' : 'overview'))
   const [isOverviewDetailPage, setIsOverviewDetailPage] = useState(false);
   const [isOverviewDetailPageID, setIsOverviewDetailPageID] = useState<string>('');
@@ -44,6 +43,28 @@ const PageSection = ({ pgData, id, resortDestinations, adventures, suitable_for,
       )
     : null;
 
+  const scrollref = useRef(null);
+
+  useEffect(() => {
+    if (hasParam) {
+      const el = scrollref.current;
+      if (!el) return;
+
+      const vw = window.innerWidth / 100;
+
+      const desktopOffsetVW = 8;
+      const desktopOffset = desktopOffsetVW * vw;
+
+      const mobileOffsetVW = 14;
+      const mobileOffset = mobileOffsetVW * vw;
+
+      const offset = window.innerWidth < 768 ? mobileOffset : desktopOffset;
+
+      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+  }, [hasParam]);
+
   return (
     <>
       {val === 'overview' ? (
@@ -53,7 +74,7 @@ const PageSection = ({ pgData, id, resortDestinations, adventures, suitable_for,
           bannerData={adventureDetailPageData?.banner_image} tabID={val} bannerTitle={adventureDetailPageData?.title} />
       ) : (
         <BannerOtherSection
-          bannerData={pgData?.[val]?.banner_image} tabID={val} />
+          bannerData={pgData?.[val]?.banner_image} tabID={val} scrollRef={scrollref} />
       )}
       <TabContext value={val} className="my-5">
         <TabList variant='fullWidth' onChange={handleChange} aria-label='full width tabs example' className="destinations_tab">

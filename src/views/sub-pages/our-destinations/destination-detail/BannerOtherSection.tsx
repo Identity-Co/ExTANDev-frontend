@@ -9,7 +9,7 @@ import type { Mode } from '@core/types'
 // Styles Imports
 import styles from './styles.module.css'
 
-const BannerOtherSection = ({ bannerData, tabID, bannerTitle }: { bannerData?: [], tabID?: ''; bannerTitle?: '' }) => {
+const BannerOtherSection = ({ bannerData, tabID, bannerTitle, scrollRef }: { bannerData?: [], tabID?: ''; bannerTitle?: ''; scrollRef?: [] }) => {
     const _bannerTitle = ( bannerTitle ? bannerTitle : (tabID == 'resorts') ? 'Resorts' : (tabID == 'adventures') ? 'Adventure' : (tabID == 'stories') ? 'Story' : '');
 
     const [suitable_for, setSuitableFor] = useState(null);
@@ -68,7 +68,7 @@ const BannerOtherSection = ({ bannerData, tabID, bannerTitle }: { bannerData?: [
                 </div>
             </div>
         </div>
-        <div className={classnames(styles.search_box)}>
+        <div className={classnames(styles.search_box)} ref={scrollRef}>
             <div className={classnames(styles.container, 'container')}>
                 <div className={classnames(styles.search_box_inner)}>
                     <div className={classnames(styles.search_row)}>

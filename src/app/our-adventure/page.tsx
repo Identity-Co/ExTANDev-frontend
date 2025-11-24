@@ -18,6 +18,7 @@ interface PageProps {
 
 const LandingPage = async ({ searchParams }: PageProps) => {
   const params = await searchParams
+  let hasParam: boolean = false;
 
   //let cat_pattern = '';
   const category = params.category || ''
@@ -37,12 +38,17 @@ const LandingPage = async ({ searchParams }: PageProps) => {
   const totalTours = await getFilteredCount(category, destination);
   const toursData = await getFilteredTours(category, destination, page);
 
+  if((category == "" || hasParam == "")) {
+    hasParam = true;
+  }
+
   return <LandingPageWrapper mode={mode} 
       banners={banners}
       pgData={pgData}
       filter_categories={filter_categories}
       toursData={toursData}
       totalTours={totalTours}
+      hasParam={hasParam}
     />
 }
 

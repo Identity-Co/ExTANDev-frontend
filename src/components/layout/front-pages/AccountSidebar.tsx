@@ -14,9 +14,13 @@ import classnames from 'classnames'
 // Styles Imports
 import styles from './styles.module.css'
 
-const AccountSidebar = () => {
-    const [session, setSession] = useState(null)
+type EditProps = {
+  pathName: string
+}
 
+const AccountSidebar = ({ pathName, }: EditProps) => {
+    const [session, setSession] = useState(null)
+    
     useEffect(() => {
       const getSessData = async () => {
         const sess = await Common.getUserSess();
@@ -37,34 +41,70 @@ const AccountSidebar = () => {
       <div className={classnames(styles.grid_box), "sidebar-box"}>
         {session && (
           <>
-            <p className="welcome_user">Welcome {session?.user?.name}!</p>
             <ul>
-              <li>
-                <Link href="/edit-profile/">Edit Profile</Link>
+              {session?.user?.role != 'property_owner' && (
+                <li className={pathName === "/my-account/" ? "active" : ""}>
+                  <Link href="/my-account/">
+                    <img src="/images/front-pages/dashboard.svg" alt="Dashboard" />
+                    Dashboard
+                  </Link>
+                </li>
+              )}
+              
+              <li className={pathName === "/edit-profile/" ? "active" : ""}>
+                <Link href="/edit-profile/">
+                <img src="/images/front-pages/edit-profile.svg" alt="edit-profile" />
+                  Edit Profile
+                </Link>
               </li>
               {session?.user?.role == 'user' && (
                 <>
-                  <li>
-                    <Link href="/my-account/liked-items/">Liked Items</Link>
+                  <li className={pathName === "/my-account/liked-items/" ? "active" : ""}>
+                    <Link href="/my-account/liked-items/">
+                      <img src="/images/front-pages/like.svg" alt="like" />
+                      Liked Items
+                    </Link>
                   </li>
-                  <li>
-                    <Link href="/my-account/saved-items/">Saved Items</Link>
+                  <li className={pathName === "/my-account/saved-items/" ? "active" : ""} >
+                    <Link href="/my-account/saved-items/">
+                      <img src="/images/front-pages/saved.svg" alt="saved" />
+                      Saved Items
+                    </Link>
                   </li>
                 </>
               )}
               {session?.user?.role == 'ambassador' && (
-                <li>
+                <li className={pathName === "/my-account/adventure-guides/" ? "active" : ""} >
                   <Link href="/my-account/adventure-guides/">Adventure Guide</Link>
                 </li>
               )}
-              <li>
-                <Link href="/my-account/points-history/">Points History</Link>
+
+              {session?.user?.role == 'property_owner' && (
+                <li className={pathName.includes('/my-account/properties/') ? "active" : ""} >
+                  <Link href="/my-account/properties/">Manage Properties</Link>
+                </li>
+              )}
+
+              {session?.user?.role != 'property_owner' && (
+                <li className={pathName === "/my-account/points-history/" ? "active" : ""} >
+                  <Link href="/my-account/points-history/">
+                    <img src="/images/front-pages/point.svg" alt="point" />
+                    Points History
+                  </Link>
+                </li>
+              )}
+              
+              <li className={pathName === "/change-password/" ? "active" : ""} >
+                <Link href="/change-password/">
+                  <img src="/images/front-pages/password.svg" alt="password" />
+                  Change Password
+                </Link>
               </li>
               <li>
-                <Link href="/change-password/">Change Password</Link>
-              </li>
-              <li>
-                <Link href="#" onClick={handleUserLogout}>Logout</Link>
+                <Link href="#" onClick={handleUserLogout}>
+                <img src="/images/front-pages/logout.svg" alt="logout" />
+                  Logout
+                </Link>
               </li>
             </ul>
           </>

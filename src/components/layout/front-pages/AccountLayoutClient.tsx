@@ -87,7 +87,7 @@ export default function AccountLayoutClient({ children, systemMode }: AccountLay
                     </>
                   )}
                   <div className="grid2 gap_24">
-                    {(previousSection != 'adventure-guides') && (previous2Section != 'adventure-guides' && previousSection != 'edit') && <AccountSidebar currentSection={currentSection} />}
+                    {(previousSection != 'adventure-guides') && (previous2Section != 'adventure-guides' && previousSection != 'edit') && <AccountSidebar pathName={pathname} currentSection={currentSection} />}
                     <div className={classnames('grid_box')}>
                       {children}
                     </div>

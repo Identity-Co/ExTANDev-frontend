@@ -11,9 +11,9 @@ import type { Mode } from '@core/types'
 import Image from "next/image";
 
 // Styles Imports
-import styles from './styles.module.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import styles from './styles.module.css'
 
 const BannerSection = ({ mode, banners, locations, locDestinations }: { mode: Mode; banners?: []; locations?: []; locDestinations?: []; }) => {
   const slideref = useRef();
@@ -38,7 +38,6 @@ const BannerSection = ({ mode, banners, locations, locDestinations }: { mode: Mo
 
     if(_location !== undefined) setLocation(_location);
     if(_resort !== undefined) setResort(_resort);
-    console.log(_location, _resort)
   }, []);
   
   useEffect(() => {
@@ -47,8 +46,8 @@ const BannerSection = ({ mode, banners, locations, locDestinations }: { mode: Mo
     slides.forEach((slide) => {
       const backgroundImage = slide.style.backgroundImage;
       
-      if (!backgroundImage) {
-        slide.style.backgroundImage = 'url("'+slideref.current.getAttribute('databackground')+'")';
+      if (!backgroundImage || backgroundImage != slide.getAttribute('databackground')) {
+        slide.style.backgroundImage = 'url("'+slide.getAttribute('databackground')+'")';
       }
     });
   }, []);
@@ -81,8 +80,6 @@ const BannerSection = ({ mode, banners, locations, locDestinations }: { mode: Mo
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-
-  console.log(openLoc);
 
   return (
     <div className={classnames(styles.home_banner, 'home_banner top-banner')}>

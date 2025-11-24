@@ -12,8 +12,7 @@ import { getPageData } from '@/app/server/pages'
 const LandingPage = async ({searchParams}) => {
   const location = searchParams.location;
   const resort = searchParams.resort;
-
-  console.log(location, resort);
+  let hasParam: boolean = false;
 
   // Vars
   const mode = await getServerMode()
@@ -25,11 +24,10 @@ const LandingPage = async ({searchParams}) => {
   var featuredDestinations = [];
 
   if((location == "" && resort == "") || (location === undefined && resort === undefined)) {
-    console.log('sfdsdjkf')
     featuredDestinations = await getPageDestination(pgData?.feature_destinations??[]);
   } else {
-    console.log('sfdsdjkf - 2')
     featuredDestinations = await filterDestination(location, resort);
+    hasParam = true;
   }
 
   const resortsLists = await getResortByIds(pgData?.feature_resorts??[])
@@ -37,7 +35,6 @@ const LandingPage = async ({searchParams}) => {
   const locDestinations = await getDestinationList()
 
   const locations = [...new Set(locDestinations.map(item => item.destination_location))];
-  console.log(featuredDestinations)
 
   return <LandingPageWrapper mode={mode}
       banners={banners}
@@ -46,6 +43,7 @@ const LandingPage = async ({searchParams}) => {
       featuredResorts={resortsLists?? []}
       locations={locations??[]}
       locDestinations={featuredDestinations}
+      hasParam={hasParam}
    />
 }
 

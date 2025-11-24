@@ -13,8 +13,8 @@ import styles from './styles.module.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const BannerSection = ({ mode, banners, locations, locDestinations }: { mode: Mode; banners?: []; locations?: []; locDestinations?: [] }) => {
-	const slideref = useRef();
+const BannerSection = ({ mode, banners, locations, locDestinations, scrollRef }: { mode: Mode; banners?: []; locations?: []; locDestinations?: []; scrollRef?: [] }) => {
+  const slideref = useRef();
 
   const [location, setLocation] = useState(null);
   const [resort, setResort] = useState(null);
@@ -38,15 +38,15 @@ const BannerSection = ({ mode, banners, locations, locDestinations }: { mode: Mo
     if(_resort !== undefined && _resort) setResort(_resort); setSelectedRes(_resort);
     console.log(_location, _resort)
   }, []);
-	
+  
   useEffect(() => {
     const slides = document.querySelectorAll('.hero_slide_box');
     
     slides.forEach((slide) => {
       const backgroundImage = slide.style.backgroundImage;
       
-      if (!backgroundImage) {
-        slide.style.backgroundImage = 'url("'+slideref.current.getAttribute('databackground')+'")';
+      if (!backgroundImage || backgroundImage != slide.getAttribute('databackground')) {
+        slide.style.backgroundImage = 'url("'+slide.getAttribute('databackground')+'")';
       }
     });
 
@@ -124,7 +124,7 @@ const BannerSection = ({ mode, banners, locations, locDestinations }: { mode: Mo
             })}
           </Slider>
       </div>
-      <div className={classnames(styles.search_box)}>
+      <div className={classnames(styles.search_box)} ref={scrollRef}>
           <div className={classnames(styles.container, 'container')}>
               <div className={classnames(styles.search_box_inner)}>
                   <div className={classnames(styles.search_row)}>

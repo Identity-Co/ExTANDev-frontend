@@ -6,19 +6,25 @@ import classnames from 'classnames'
 // Styles Imports
 import styles from './styles.module.css'
 
-const OverviewSection5 = ({ data }: { data?: []; }) => {
+const OverviewSection5 = ({ data, destinationName }: { data?: []; destinationName?: ''; }) => {
+    const imageUrl = `${process.env.NEXT_PUBLIC_UPLOAD_URL}/\\${data.quick_facts_background}`;
   
   return (
-    <section className={classnames(styles.destination_overview_sec5, 'pt_50', 'pb_150')}>
+    <section 
+        className={classnames(styles.destination_overview_sec5, 'pt_50', 'pb_150')}
+        style={{
+            backgroundImage: `url("${imageUrl}")`,
+        }}
+    >
         <div className="container">
             <div className={classnames(styles.dr_quick)}>
-                <h2>Dominican Republic</h2>
-                <h4 className="fs_55">Dr quick facts</h4>
+                <h2>{destinationName}</h2>
+                <h4 className="fs_55">{data?.quick_facts_title} facts</h4>
             </div>
             <div className={classnames(styles.dr_list)}>
                 <div className={classnames(styles.grid_box)}>
                     <ul>
-                        {data.map((section: any, index: number) => {
+                        {data?.facts?.map((section: any, index: number) => {
                             return <li key={index}><span className="extra_bold"><em>{section?.label}:</em></span> {section?.content}</li>
                         })}
                     </ul>

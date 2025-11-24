@@ -86,7 +86,7 @@ const LandingPageWrapper = ({ pgData, destinations}: OverviewProps) => {
 
       })}
       <OverviewSection4 data={pgData?.overview?.slider_images ?? []} />
-      <OverviewSection5 data={pgData?.overview?.facts ?? []} />
+      <OverviewSection5 data={pgData?.overview ?? [] } destinationName={pgData?.title} />
       <OverviewSection6 sectionProps={instagramSliderSectionProps} />
 
       <OverviewSection7 sectionProps={featuredResortsSectionProps} />

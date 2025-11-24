@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 // Type Imports
 import type { Mode } from '@core/types'
@@ -19,8 +19,30 @@ import { useSettings } from '@core/hooks/useSettings'
 
 import * as Common from '@/app/server/common'
 
-const DestinationDetailPage = ({ mode, banners, pgData, featuredDestinations, featuredResorts, locations, locDestinations }: { mode: Mode; banners?: []; pgData?: []; destinations?: []; featuredResorts?: []; locations?: []; locDestinations?: [] }) => {
+const DestinationDetailPage = ({ mode, banners, pgData, featuredDestinations, featuredResorts, locations, locDestinations, hasParam }: { mode: Mode; banners?: []; pgData?: []; destinations?: []; featuredResorts?: []; locations?: []; locDestinations?: []; hasParam?: false }) => {
   const adventure_Posts = pgData?.adventure_posts;
+
+  const scrollref = useRef(null);
+
+  useEffect(() => {
+    if (hasParam) {
+      const el = scrollref.current;
+      if (!el) return;
+
+      const vw = window.innerWidth / 100;
+
+      const desktopOffsetVW = 8;
+      const desktopOffset = desktopOffsetVW * vw;
+
+      const mobileOffsetVW = 14;
+      const mobileOffset = mobileOffsetVW * vw;
+
+      const offset = window.innerWidth < 768 ? mobileOffset : desktopOffset;
+
+      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+  }, [hasParam]);
 
   // Hooks
   const { updatePageSettings } = useSettings()
@@ -72,7 +94,7 @@ const DestinationDetailPage = ({ mode, banners, pgData, featuredDestinations, fe
 
   return (
     <>
-      {banners.length ? <BannerSection mode={mode} banners={banners} locations={locations} locDestinations={locDestinations} /> : null}
+      {banners.length ? <BannerSection mode={mode} banners={banners} locations={locations} locDestinations={locDestinations} scrollRef={scrollref}  /> : null}
       <OurDestinationsSection1 data={pgData} />
       <OurDestinationsSection2 data={pgData} sectionProps={featuredDestinationsSectionProps} />
       <OurDestinationsSection3 data={pgData} sectionProps={instagramSliderSectionProps} />

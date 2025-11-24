@@ -50,8 +50,8 @@ const BannerOverviewSection = ({ bannerData }: { bannerData?: []; }) => {
     slides.forEach((slide) => {
       const backgroundImage = slide.style.backgroundImage;
       
-      if (!backgroundImage) {
-        slide.style.backgroundImage = 'url("'+slideref.current.getAttribute('databackground')+'")';
+      if (!backgroundImage || backgroundImage != slide.getAttribute('databackground')) {
+        slide.style.backgroundImage = 'url("'+slide.getAttribute('databackground')+'")';
       }
     });
   }, []);

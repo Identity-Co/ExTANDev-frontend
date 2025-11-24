@@ -136,6 +136,22 @@ const schema = object({
       _preview: optional(string()),
     })
   ),
+  quick_facts_title: pipe(string(), nonEmpty('This field is required')),
+  quick_facts_background: pipe(custom<File | null>((value) => {
+    if (!value) return true; 
+    
+    const allowed = ["image/png", "image/jpeg", "image/gif", "image/svg+xml"];
+
+    if (!allowed.includes(value.type)) return "Only PNG/JPG/GIF/SVG allowed";
+
+    const maxMB = 1;
+
+    if (value.size > maxMB * 1024 * 1024)
+
+      return `Max file size is ${maxMB} MB`;
+
+    return true;
+  })),
   quick_facts: array(
     object({
       label: pipe(string(), nonEmpty('This field is required')),
@@ -269,6 +285,9 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
         direction: section.direction ?? '',
         _preview: section._preview ?? '',
       })) ?? [{content: '', image: null, direction: '', _preview : ''}],
+      quick_facts_background: pgData?.overview?.quick_facts_background??'',
+      quick_facts_background_preview: (pgData?.overview?.quick_facts_background) ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${pgData?.overview?.quick_facts_background}` : '',
+      quick_facts_title: pgData?.overview?.quick_facts_title??'',
       quick_facts: pgData?.overview?.facts?.map(fact => ({
         label: fact.label ?? '',
         content: fact.content ?? null,
@@ -444,6 +463,14 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
       }
     });
 
+    if (data.quick_facts_background instanceof File) {
+      fData.append('quick_facts_background_file', data.quick_facts_background);
+    }else{
+      fData.append('overview[quick_facts_background]', pgData?.overview?.quick_facts_background);
+    }
+    
+    fData.append('overview[quick_facts_title]', data.quick_facts_title);
+
     data.quick_facts.forEach((section, i) => {
       fData.append(`facts[${i}][label]`, section.label)
       fData.append(`facts[${i}][content]`, section.content)
@@ -568,7 +595,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
       <Grid container spacing={5} className="my-5"> 
         <Grid size={{ md: 12, xs: 12, lg: 12 }}>
           <div className='flex max-sm:flex-col items-center gap-6'>
-            <img height={100} width={100} className='rounded' src={imgSrc} alt='Profile' />
+            <img height={100} width={100} className='rounded' src={imgSrc} alt='Feature Image' />
             <div className='flex flex-grow flex-col gap-4'>
               <div className='flex flex-col sm:flex-row gap-4'>
                 <Button component='label' size='small' variant='contained' htmlFor='dest-image'>
@@ -1126,9 +1153,83 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
       <Divider />
 
       {/* Quick Facts */}
-      <Grid container spacing={5} className="my-5">  
+      <Grid container spacing={5} className="my-5">
         <Grid size={{ md: 12, xs: 12, lg: 12 }}>
           <h2>Quick Facts</h2>
+        </Grid>
+
+        <Grid size={{ md: 6, xs: 12, lg: 6 }}>
+          <div className='flex max-sm:flex-col items-center gap-6'>
+            {watch('quick_facts_background_preview') ? (
+              <img height={100} width={100} className='rounded' src={watch('quick_facts_background_preview') as string} alt='Section Image' />
+              ) : null}
+
+            <div className='flex flex-grow flex-col gap-4'>
+              <div className='flex flex-col sm:flex-row gap-4'>
+                <Button component='label' size='small' variant='contained' htmlFor='quick_facts_background'>
+                  Upload Background Image
+                  <input
+                    hidden
+                    type='file'
+                    accept='image/png, image/jpeg'
+                    onChange={(e) => {
+                      const file = e.target.files?.[0] ?? null;
+                      const maxSize = 5 * (1024 * 1024); // 800 KB
+
+                      if (file && file.size > maxSize) {
+                        toast.error("File is too large. Maximum allowed size is 5MB.")
+
+                        return;
+                      }
+
+                      const url = file ? URL.createObjectURL(file) : null;
+                      const prev = (watch('quick_facts_background_preview') as string | null) || null;
+                      
+                      if (prev) URL.revokeObjectURL(prev);
+                      setValue('quick_facts_background_preview', url, { shouldDirty: true });
+                      setValue('quick_facts_background', file, { shouldDirty: true });
+                    }}
+                    id='quick_facts_background'
+                  />
+                </Button>
+                <Button size='small' variant='outlined' color='error' onClick={(e) => {
+                  setValue('quick_facts_background', null, { shouldDirty: true });
+                  setValue('quick_facts_background_preview', null, { shouldDirty: true });
+                }}>
+                  Reset
+                </Button>
+              </div>
+              <Typography>Allowed JPG, GIF or PNG. Max size of 800K</Typography>
+              {errors.quick_facts_background && (<Typography color='error.main'>{String(errors.quick_facts_background.message)}</Typography>)}
+            </div>
+          </div>
+        </Grid>
+
+        <Grid size={{ md: 6, xs: 12, lg: 6 }}>
+          <Controller
+            name='quick_facts_title'
+            control={control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                fullWidth
+                type='text'
+                label='Quick Facts Title'
+                variant='outlined'
+                placeholder='Enter Quick Facts Title'
+                className='mbe-1'
+                onChange={e => {
+                  field.onChange(e.target.value)
+                  errorState !== null && setErrorState(null)
+                }}
+                {...((errors.quick_facts_title || errorState !== null) && {
+                  error: true,
+                  helperText: errors?.quick_facts_title?.message || errorState?.message[0]
+                })}
+              />
+            )}
+          />
         </Grid>
 
         <Grid size={{ md: 12, xs: 12, lg: 12 }}>

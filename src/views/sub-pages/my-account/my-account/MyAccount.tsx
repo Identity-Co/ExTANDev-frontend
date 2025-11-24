@@ -28,18 +28,28 @@ const MyAccount = ({ session, history }: { session: any; history: any }) => {
         // toastService.error((err as Error).message)
       }
     }
-
-    console.log('User Session: ', session)
   
     return (
       <div className={classnames(styles.grid_box)}>
-        <p>Your referral link: {process.env.NEXT_PUBLIC_APP_URL}/signin/?ref_id={session?.user.id}</p>
-        <p>Total Points Earned: <strong>{history.total_earned}</strong>,
-          Points Redeemed: <strong>{history.total_redeemed}</strong>,
-          Current Balance: <strong>{history.current_balance}</strong>
-        </p>
-        <br /><br />
-        Content here...
+        <div className="welcome_user">Welcome {session?.user?.name}!</div>
+        <div className="glass">
+          <span className="referral_title">Your referral link:</span>
+          <span className="referral_link">{process.env.NEXT_PUBLIC_APP_URL}/signin/?ref_id={session?.user.id}</span>
+        </div>
+        <div className="points_row gap_32">
+          <div className="point_card">
+            <h3 className="fs_35">Your referral link</h3>
+            <p>{history.total_earned}</p>
+          </div>
+          <div className="point_card">
+            <h3 className="fs_35">Points Redeemed</h3>
+            <p>{history.total_redeemed}</p>
+          </div>
+          <div className="point_card">
+            <h3 className="fs_35">Current Balance</h3>
+            <p>{history.current_balance}</p>
+          </div>
+        </div>
       </div>
     )
 }

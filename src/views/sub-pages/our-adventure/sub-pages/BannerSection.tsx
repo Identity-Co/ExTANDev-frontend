@@ -34,7 +34,7 @@ const BannerSection = ({ mode, filter_categories }: { mode: Mode; filter_categor
       const backgroundImage = slide.style.backgroundImage;
 
       if (!backgroundImage) {
-        slide.style.backgroundImage = 'url("'+slideref.current.getAttribute('databackground')+'")';
+        slide.style.backgroundImage = 'url("'+slide.getAttribute('databackground')+'")';
       }
     });
   }, []);
@@ -72,7 +72,7 @@ const BannerSection = ({ mode, filter_categories }: { mode: Mode; filter_categor
     }
   }
 
-  const icons = ["walking-svgrepo-com.svg", "bicycling-svgrepo-com.svg", "cruising.svg", "culture-immersion.svg", "walking-svgrepo-com.svg", "rail.svg", "skiing.svg", "surf.svg"]
+  const icons = ["bicycling-svgrepo-com.svg", "cruising.svg", "culture-immersion.svg", "walking-svgrepo-com.svg", "rail.svg", "skiing.svg", "surf.svg"]
 
   return (
     <div className={classnames(styles.home_banner, styles.destination_overview_banner, 'home_banner top-banner destination_overview_banner')}>

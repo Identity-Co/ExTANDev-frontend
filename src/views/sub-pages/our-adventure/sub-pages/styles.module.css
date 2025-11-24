@@ -1,14 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Oswald:wght@400;700&family=Bebas+Neue&display=swap');
 /*banner-start*/
-
 .home_banner{position: relative;}
-.home_banner .hero_slide_box{min-height: 100vh; display: flex !important; align-items: center; background-size: cover !important; background-repeat: no-repeat !important; background-position: center !important; position: relative;}
+.home_banner .hero_slide_box{min-height: 28.750vw/*100vh*/; display: flex !important; align-items: flex-end/*center*/; background-size: cover !important; background-repeat: no-repeat !important; background-position: center !important; position: relative; padding-bottom:5.729vw;}
 .home_banner .hero_slide_box:before{position: absolute; content: ""; background: linear-gradient(90deg,rgba(0, 0, 0, 1) 0%, rgba(128, 128, 128, 0) 100%); opacity: 0.53; mix-blend-mode: multiply; width: 100%; height: 100%; top: 0; left: 0;}
-.home_banner .hero_slide_container{max-width: 80%; margin: 0 auto; width: 100%; padding: 0 5.208vw; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; z-index: 1; row-gap: 3vw;}
-.home_banner .hero_slide_text{max-width: 30.438vw;}
-.home_banner .hero_slide_text p{color: #ffffff; font-size: 0.938vw; font-weight: 700; font-style: italic; padding-left: 0; padding-right: 5vw; line-height: 1.25vw;}
+.home_banner .hero_slide_container{max-width: 80%; margin: 0 auto; width: 100%; padding: 0 3.705vw; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; z-index: 1; row-gap: 2.134vw;}
+.home_banner .hero_slide_text{max-width: 30.469vw;}
+.home_banner .hero_slide_text p{color: #ffffff; font-size: 0.938vw; font-weight: 700; font-style: italic; padding-left: 0.711vw; padding-right: 3.557vw;}
 .home_banner .hero_slide_text h1,
-.home_banner .hero_slide_text h2{color: #ffffff; font-size: 8.49vw; line-height: 7.187vw; padding-bottom: 2.343vw; letter-spacing: -0.020em;}
+.home_banner .hero_slide_text h2{color: #ffffff; font-size: 4.688vw/*8.490vw*/; line-height: 1/*7.187vw*/; padding-bottom: 1.667vw;}
 .home_banner .slick_next, .home_banner .slick_prev{width: auto; height: auto; font-size: 0; line-height: 0;  position: absolute; top: 50%; display: block; padding: 0; -webkit-transform: translate(0, -50%); -ms-transform: translate(0,-50%); transform: translate(0, -50%); cursor: pointer; color: transparent; border: none; outline: 0; background: 0 0;}
 .home_banner .slick_next:before, .home_banner .slick_prev:before{display: none;}
 .home_banner .slick_prev{left: 1.667vw; z-index: 1; background: url(/images/front-pages/images/left-white-arrow.svg) center no-repeat; background-size: contain; width: 1.614vw; height: 2.344vw; opacity: 0.7; transition: 0.3s ease-in-out;}
@@ -46,7 +45,9 @@
 
 @media only screen and (max-width: 1024px){
 .home_banner .hero_slide_container{max-width: 90%; padding: 0 4.223vw;}
+.home_banner .hero_slide_box{min-height: 48.352vw; padding-bottom:11vw;}
 .home_banner .hero_slide_text{max-width: 41.845vw;}
+.home_banner .hero_slide_text h1, .home_banner .hero_slide_text h2{font-size:6.253vw;}
 .home_banner .hero_slide_text p{font-size: 1.818vw; padding-left: 1.2vw; line-height: 1.2;}
 .location_name span{font-size: 1.918vw;}
 .location_name img{width: 2.55vw; height: 2.55vw;}
@@ -61,14 +62,15 @@
 }
 
 @media only screen and (max-width: 768px){
-.search_box{bottom: -18vw;}
-.home_banner .hero_slide_box{min-height: 80vh;}
+.search_box{bottom: -12.806vw/*-18vw*/;}
+.home_banner .hero_slide_container{padding: 0 2.223vw;}
+.home_banner .hero_slide_box{min-height: 71.136vw; padding-bottom:24vw;}
 .home_banner .hero_slide_text{max-width: 100%;}
-.home_banner .hero_slide_text p{font-size: 3.968vw; padding-left: 0; line-height: 1.3;}
-.home_banner .hero_slide_text h1, .home_banner .hero_slide_text h2{font-size: 11.517vw; line-height: 1;}
-.location_name span{font-size: 4.518vw;}
-.location_name img{width: 3.55vw; height: 3.55vw;}
-.search_row form{flex-direction: column; gap: 1.866vw;}
+.home_banner .hero_slide_text p{font-size: 2.823vw; padding-left: 0; line-height: 1.3;}
+.home_banner .hero_slide_text h1, .home_banner .hero_slide_text h2{font-size: 8.338vw/*8.194vw*/; line-height: 1;}
+.location_name span{font-size: 3.214vw;}
+.location_name img{width: 2.526vw; height: 2.526vw;}
+.search_row form{flex-direction: column; gap: 1.328vw;}
 .search_box .container{max-width: 90%;}
 .search_box_inner{padding: 3.343vw 4.685vw;}
 .search_row form > div{width: 100%;}
@@ -77,10 +79,13 @@
 .search_row form .search_select.ss2 select,
 .search_row form .search_select.ss3 select{font-size: 2.698vw; background-size: 2.964vw; min-height: 6.855vw; padding: 0.732vw 4.343vw;}
 .search_row form .search_btn input[type="submit"]{min-height: 6.855vw; font-size: 3.425vw; width: 100%;}
-.home_banner .hero_slide_container{padding: 0 2.223vw;}
 .home_banner.destination_overview_banner .hero_slide_text{max-width: 100%;}
-
 .home_banner.destination_overview_banner.adventure_banner .hero_slide_text{max-width: 100%;}
+}
+
+@media only screen and (max-width: 575px){
+  .home_banner .hero_slide_text h1, .home_banner .hero_slide_text h2{font-size:9.338vw;}
+  .home_banner .hero_slide_box{padding-bottom:28vw;}
 }
 
 /*banner-end*/

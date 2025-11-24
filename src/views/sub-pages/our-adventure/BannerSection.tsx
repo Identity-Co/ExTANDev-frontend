@@ -16,7 +16,7 @@ import styles from './styles.module.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const BannerSection = ({ mode, banners, filter_categories }: { mode: Mode; banners?: []; filter_categories: []; }) => {
+const BannerSection = ({ mode, banners, filter_categories, scrollRef }: { mode: Mode; banners?: []; filter_categories: []; scrollRef?: []; }) => {
   const slideref = useRef();
   const [destinations, setDestinations] = useState<string[]>([])
   const [selectedCategory, setSelectedCategory] = useState('')
@@ -36,8 +36,8 @@ const BannerSection = ({ mode, banners, filter_categories }: { mode: Mode; banne
     slides.forEach((slide) => {
       const backgroundImage = slide.style.backgroundImage;
 
-      if (!backgroundImage) {
-        slide.style.backgroundImage = 'url("'+slideref.current.getAttribute('databackground')+'")';
+      if (!backgroundImage || backgroundImage != slide.getAttribute('databackground')) {
+        slide.style.backgroundImage = 'url("'+slide.getAttribute('databackground')+'")';
       }
     });
 
@@ -103,7 +103,7 @@ const BannerSection = ({ mode, banners, filter_categories }: { mode: Mode; banne
     }
   }
 
-  const icons = ["walking-svgrepo-com.svg", "bicycling-svgrepo-com.svg", "cruising.svg", "culture-immersion.svg", "walking-svgrepo-com.svg", "rail.svg", "skiing.svg", "surf.svg"]
+  const icons = ["bicycling-svgrepo-com.svg", "cruising.svg", "culture-immersion.svg", "walking-svgrepo-com.svg", "rail.svg", "skiing.svg", "surf.svg"]
 
   return (
     <div className={classnames(styles.home_banner, styles.destination_overview_banner, styles.adventure_banner, 'home_banner top-banner destination_overview_banner')}>
@@ -141,7 +141,7 @@ const BannerSection = ({ mode, banners, filter_categories }: { mode: Mode; banne
               })}
             </Slider>
         </div>
-        <div className={classnames(styles.search_box)}>
+        <div className={classnames(styles.search_box)} ref={scrollRef}>
             <div className={classnames(styles.container, 'container')}>
                 <div className={classnames(styles.search_box_inner)}>
                     <div className={classnames(styles.search_row)}>

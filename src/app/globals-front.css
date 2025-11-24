@@ -6,7 +6,6 @@ body {
 font-family: 'Raleway', sans-serif !important;
 }
 
-
 *,::after,::before {box-sizing: border-box; padding: 0; margin: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
 a, button{transition: 0.3s ease-in-out; outline: none; text-decoration: none;}
 button{ font-family: "Raleway", sans-serif; }
@@ -64,6 +63,7 @@ body ul:not([class]){ padding-inline-start: unset; margin-block: unset; }
 .mbe-6{margin-bottom:0 !important;}
 table{width: 100%; border-collapse: collapse;}
 a.fl_bx_lnk_glb{position: absolute; left: 0; top: 0; right: 0; bottom: 0; z-index: 9;}
+span.mentionedUser{ color: #EA5647; font-weight: 600; background-color: #ffe3e0; padding: 0.104vw 0.208vw; border-radius: 0.208vw; }
 
 .full-img img{display:block;}
 header .container{max-width: 100%; padding: 0 5.208vw;}
@@ -511,12 +511,21 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
 .submit_btn:hover{background: rgb(31, 31, 31, 0.8);}*/
 
 
-.sidebar-box{max-width: 18.625vw; background-color: #014040; padding: 2vw; border-radius: 1.042vw;}
-.sidebar-box ul{list-style: none; padding: 0; margin: 0;}
-.sidebar-box ul li{padding: 0.521vw 0; border-bottom: solid 0.052vw #CECECE;}
-.sidebar-box ul li a:hover{color: #EA5647;}
+.sidebar-box{max-width: 100%; background-color: #014040; padding: 2vw; border-radius: 0 1.042vw 1.042vw 0;}
+.sidebar-box ul{list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.833vw;}
+.sidebar-box ul li a{padding: 0.825vw 1.542vw; display: flex; align-items: center; gap: 0.833vw; border-radius: 2.25vw; background: rgba(255, 255, 255, 0.1); color: #ffffff; font-size: 1.042vw; font-weight: 500;}
+.sidebar-box ul li a:hover,
+.sidebar-box ul li.active a{background: #ff5e4e; color: #ffffff;}
 
+.welcome_user{font-weight: 600; color: #014040; font-size: 1.354vw; padding-bottom: 1.25vw;}
+.glass{background: #ffffff; border-left: solid 0.26vw #ff5e4e; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08); border-radius: 0.625vw; padding: 1.042vw; margin-bottom: 1.563vw;}
+.glass span.referral_title{display: block; font-size: 1.042vw; padding-bottom: 0.416vw; font-weight: 600; color: #014040;}
+.glass span.referral_link{display: block; font-size: 1.042vw; font-weight: 400; color: #014040;}
 
+.points_row{display: grid; grid-template-columns: repeat(3, 1fr);}
+.point_card{background: #ffffff; border-top: solid 0.26vw #ff5e4e; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08); border-radius: 0.625vw; padding: 1.682vw 1.042vw; text-align: center;}
+.point_card h3{color: #014040; padding-bottom: 1.159vw;}
+.point_card p{color: #ff5e4e; font-size: 1.357vw;}
 
 .level_main{display: flex; flex-wrap: wrap; gap: 1.423vw; justify-content: space-between; padding-top: 1.423vw;}
 .level_main .levelOuter p{padding-bottom: 0.606vw;}
@@ -525,12 +534,46 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
 .level_main .levelOuter button{background-color: #F85241; font-size: 0.729vw; font-family: "Raleway", sans-serif; color: #ffffff; text-align: center; display: inline-block; line-height: 1; text-transform: uppercase; border-radius: 2.604vw; font-weight: 600; padding: 0.781vw 1.892vw; border: none; outline: none; cursor: pointer; transition: 0.3s ease-in-out; letter-spacing: 0.10em; position: absolute; bottom: 0; left: 0;}
 .level_main .levelOuter button:hover{background: rgb(31, 31, 31, 0.8);}
 
+@media only screen and (max-width: 1024px){
+.sidebar-box ul li a,
+.glass span.referral_title,
+.glass span.referral_link{font-size:1.4vw;}
+.welcome_user{font-size:2.07vw;}
+.point_card p{font-size: 1.5vw;}
+
+}
+
 @media only screen and (max-width: 768px){
 .sidebar-box{max-width: 100%; padding: 3.884vw;}
 .sidebar-box ul li{padding: 1.232vw 0;}
 .level_main .levelOuter button{font-size: 2.366vw; padding: 1.848vw 4.027vw; border-radius: 5.450vw;}
 .level_main .levelOuter{padding-bottom: 7.115vw;}
 .level_main .levelOuter p{padding-bottom: 1.318vw;}
+
+.sidebar-box ul li a,
+.glass span.referral_title,
+.glass span.referral_link{font-size:2.779vw;}
+
+
+.welcome_user{font-size:3.488vw;}
+.point_card p{font-size: 2.779vw;}
+
+.glass{margin-bottom:3.965vw;}
+
+}
+
+@media only screen and (max-width: 575px){
+.sidebar-box ul li a{font-size:3.579vw; padding:1.5vw 3vw; gap:2vw;}
+.glass span.referral_title,
+.glass span.referral_link{font-size:3.579vw;}
+.points_row{grid-template-columns:repeat(1, 1fr);}
+
+.signup_box h4{font-size:5vw;}
+.welcome_user{font-size:5vw;}
+.point_card p{font-size: 3.579vw;}
+
+.glass,
+.point_card{padding:3vw;}
 
 }
 
@@ -615,7 +658,7 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
 
 
 body .orange_social_lssc span{font-weight: 700; color: #F85241;}
-.welcome_user{font-weight: 600; color: #ff5e4e;}
+
 
 
 
