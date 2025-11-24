@@ -61,10 +61,10 @@ export const saveCategory = async (data: any) => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/custom-categories`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/json',
       Authorization: `Bearer ${session?.user?.userToken}`
     },
-    body: JSON.stringify(data)
+    body: data
   });
 
   if (!response.ok) {
@@ -84,10 +84,10 @@ export const updateCategory = async (id: any, data: any) => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/custom-categories/update/${id}`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/json',
       Authorization: `Bearer ${session?.user?.userToken}`
     },
-    body: JSON.stringify(data)
+    body: data
   });
 
   if (!response.ok) {
