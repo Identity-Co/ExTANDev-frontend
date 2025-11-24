@@ -26,7 +26,7 @@ const tabContentList = (props): { [key: string]: ReactElement } => ({
   stories: <StoryTab {...props}/>
 })
 
-const PageSection = ({ pgData, id, resortDestinations, adventures, suitable_for, seasonm, hasParam }: { pgData?: []; id?: String; resortDestinations?: []; adventures?: []; suitable_for?: '', season?: ''; hasParam?: false }) => {
+const PageSection = ({ pgData, id, resortDestinations, adventures, suitable_for, season, hasParam }: { pgData?: []; id?: String; resortDestinations?: []; adventures?: []; suitable_for?: '', season?: ''; hasParam?: false }) => {
 
   const [val, setVal] = useState<string>((((suitable_for !== undefined && suitable_for) || (season !== undefined && season)) ? 'adventures' : 'overview'))
   const [isOverviewDetailPage, setIsOverviewDetailPage] = useState(false);
