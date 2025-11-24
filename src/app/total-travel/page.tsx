@@ -17,7 +17,6 @@ const LandingPage = async () => {
   return <LandingPageWrapper mode={mode} 
     banners={banners}
     pgData={pgData}
-    destinations={[]}
   />
 }
 

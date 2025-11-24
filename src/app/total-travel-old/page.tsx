@@ -1,5 +1,5 @@
 // Component Imports
-import LandingPageWrapper from '@views/sub-pages/total-travel-dev'
+import LandingPageWrapper from '@views/sub-pages/total-travel-old'
 
 // Server Action Imports
 import { getServerMode } from '@core/utils/serverHelpers'

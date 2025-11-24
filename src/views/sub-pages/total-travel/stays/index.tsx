@@ -16,7 +16,7 @@ const LandingPageWrapper = ({ mode, banners, pgData, setOpenAccess, accessToken 
   // Hooks
   const { updatePageSettings } = useSettings()
 
-  const [isMore, setIsMore] = useState(1)
+  const [isMore, setIsMore] = useState(0)
 
   // For Page specific settings
   useEffect(() => {
