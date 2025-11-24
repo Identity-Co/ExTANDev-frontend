@@ -24,6 +24,9 @@ const CompanyApp = async () => {
   const session = await Common.getUserSess()
   const userRole = session?.user?.role;
 
+  roles.sort((a, b) => a.name.localeCompare(b.name));
+  console.log(roles);
+
   return (
     <Grid container spacing={6}>
       <Grid size={{ xs: 12 }}>

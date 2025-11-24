@@ -64,6 +64,7 @@ const BannerSection = ({ mode, filter_categories }: { mode: Mode; filter_categor
     if (category) {
       try {
         const data = await getDestinationsByCustomCategory(category)
+        data.sort();
         setDestinations(data || [])
       } catch (err) {
         console.error('Failed to fetch destinations:', err)
@@ -162,7 +163,7 @@ const BannerSection = ({ mode, filter_categories }: { mode: Mode; filter_categor
                                           style={{ cursor: "pointer" }}
                                         >
                                           <span>
-                                            { icons[index] ? (<img src={`/images/svg/${icons[index]}`} alt="" />) : (<img src="/images/svg/walking-svgrepo-com.svg" alt="" />) }
+                                            { loc.image ? (<img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${loc.image}`} alt="" />) : (<img src="/images/svg/walking-svgrepo-com.svg" alt="" />) }
                                           </span>
                                           {loc.category_name}
                                         </div>

@@ -231,11 +231,11 @@ const AddForm = () => {
                   render={({ field }) => (
                     <Select label='Select Page' {...field} error={Boolean(errors.page)}>
                       <MenuItem value=''> - Page - </MenuItem>
-                      <MenuItem value='Homepage'>Homepage</MenuItem>
-                      <MenuItem value='OurDestinations'>Our Destinations</MenuItem>
-                      <MenuItem value='OurAdventures'>Our Adventures</MenuItem>
-                      <MenuItem value='TotalTravel'>Total Travel</MenuItem>
                       <MenuItem value='FieldNotes'>Field Notes</MenuItem>
+                      <MenuItem value='Homepage'>Homepage</MenuItem>
+                      <MenuItem value='OurAdventures'>Our Adventures</MenuItem>
+                      <MenuItem value='OurDestinations'>Our Destinations</MenuItem>
+                      <MenuItem value='TotalTravel'>Total Travel</MenuItem>
                     </Select>
                   )}
                 />

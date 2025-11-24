@@ -186,7 +186,7 @@ const TooltipIfEnabled = ({ title, disabled, children }) =>
     </Tooltip>
   );
 
-const PageSection = ({ setId, adventureguide, allResortsList }: { setId?: string; adventureguide?: []; allResortsList?: []; }) => {  
+const PageSection = ({ setId, adventureguide, allResortsList }: { setId?: string; adventureguide?: []; allResortsList?: []; userData?: []; }) => {  
   const router = useRouter()
 
   const setLoading = useNavigationStore((s) => s.setLoading)
@@ -887,7 +887,7 @@ const PageSection = ({ setId, adventureguide, allResortsList }: { setId?: string
                                           (watch(`content_sections.${sectionIndex}.fields.${fieldIndex}.resorts_list`) || []).includes(opt.label)
                                         )}
                                         renderOption={(props, option) => (
-                                          <li {...props} key={option.label}> 
+                                          <li {...props} key={`${option.label}+${sectionIndex}+${fieldIndex}`}> 
                                             {option.value}
                                           </li>
                                         )}
@@ -913,7 +913,7 @@ const PageSection = ({ setId, adventureguide, allResortsList }: { setId?: string
                                           (watch(`content_sections.${sectionIndex}.fields.${fieldIndex}.reviews_list`) || []).includes(opt.label)
                                         )}
                                         renderOption={(props, option) => (
-                                          <li {...props} key={option.label}> 
+                                          <li {...props} key={`${option.label}+${sectionIndex}+${fieldIndex}`}> 
                                             {option.value}
                                           </li>
                                         )}

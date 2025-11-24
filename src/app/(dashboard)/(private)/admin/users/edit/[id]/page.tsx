@@ -42,6 +42,8 @@ const EditUserApp = async (props: { params: Promise<{ id: string }> }) => {
     redirect('/admin/users/')
   }
 
+  roles.sort((a, b) => a.name.localeCompare(b.name));
+
   return (
     <Grid container spacing={6}>
       <Grid size={{ xs: 12 }}>

@@ -148,6 +148,8 @@ const Resorts = ({ pgData, destinations, setFormId, getFormId, adventurePosts }:
       value: item.title
     }));
 
+    obj.sort((a, b) => a.value.localeCompare(b.value));
+
     setdestOptions(obj);
   }, [destinations]);
 
@@ -156,6 +158,8 @@ const Resorts = ({ pgData, destinations, setFormId, getFormId, adventurePosts }:
       label: item._id,
       value: item.name
     }));
+
+    obj.sort((a, b) => a.value.localeCompare(b.value));
 
     setadventurePostslistOptions(obj);
   }, [adventurePosts]);

@@ -14,7 +14,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const BannerSection = ({ mode, banners, locations, locDestinations, scrollRef }: { mode: Mode; banners?: []; locations?: []; locDestinations?: []; scrollRef?: [] }) => {
-  const slideref = useRef();
+	const slideref = useRef();
 
   const [location, setLocation] = useState(null);
   const [resort, setResort] = useState(null);
@@ -34,11 +34,18 @@ const BannerSection = ({ mode, banners, locations, locDestinations, scrollRef }:
     const _location = searchParams.get("location");
     const _resort = searchParams.get("resort");
 
-    if(_location !== undefined && _location) setLocation(_location); setSelectedLoc(_location);
-    if(_resort !== undefined && _resort) setResort(_resort); setSelectedRes(_resort);
+    if(_location !== undefined && _location) {
+      setLocation(_location); 
+      setSelectedLoc(_location);
+    }
+
+    if(_resort !== undefined && _resort) {
+      setResort(_resort); 
+      setSelectedRes(_resort);
+    }
     console.log(_location, _resort)
   }, []);
-  
+	
   useEffect(() => {
     const slides = document.querySelectorAll('.hero_slide_box');
     

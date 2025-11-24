@@ -56,6 +56,45 @@ const EditForm = ({ setId, category }: EditProps) => {
   const [message, setMessage] = useState('');
   const [isSubmitting , setIsSubmitting ] = useState(false)
 
+  const [fileInput, setFileInput] = useState('')
+  const [imgSrc, setImgSrc] = useState<string>(process.env.NEXT_PUBLIC_UPLOAD_URL+"/"+category.image??'/images/avatars/1.png')
+  const [imageInput, setImageInput] = useState<File | null>(null)
+
+  const handleFileInputChange = (file: ChangeEvent) => {
+    const { files } = file.target as HTMLInputElement
+
+    const file2 = files?.[0];
+
+    if (!file2) return;
+
+    const maxSize = 800 * 1024; // 800 KB
+
+    if (file2.size > maxSize) {
+      toast.error("File is too large. Maximum allowed size is 800KB.")
+
+      return;
+    }
+
+    const reader = new FileReader()
+
+    setImageInput(file2); 
+    setMessage('');
+
+    if (files && files.length !== 0) {
+      reader.onload = () => setImgSrc(reader.result as string)
+      reader.readAsDataURL(files[0])
+
+      if (reader.result !== null) {
+        setFileInput(reader.result as string)
+      }
+    }
+  }
+
+  const handleFileInputReset = () => {
+    setFileInput('')
+    setImgSrc('/images/avatars/1.png')
+  }
+
   const { data: session } = useSession()
   const fData = new FormData();
 
@@ -73,14 +112,24 @@ const EditForm = ({ setId, category }: EditProps) => {
   })
 
   const onUpdate: SubmitHandler<FormData> = async (data: FormData) => {
-    setIsSubmitting(true)
+    if (!imageInput) {
+      setMessage('This field is required.');
 
-    const _data = {
-      "category_name" : data.category_name,
-      "search_pattern" : data.search_pattern
+      return;
     }
 
-    const log = await Category.updateCategory(setId, _data);
+    setIsSubmitting(true)
+
+    /*const _data = {
+      "category_name" : data.category_name,
+      "search_pattern" : data.search_pattern
+    }*/
+
+    fData.append("category_name", data.category_name);
+    fData.append("search_pattern", data.search_pattern);
+    if (imageInput) fData.append('file', imageInput);
+
+    const log = await Category.updateCategory(setId, fData);
 
     if (log && log._id) {
       toast.success('Custom Category updated successfully.')
@@ -96,6 +145,32 @@ const EditForm = ({ setId, category }: EditProps) => {
 
   return (
     <Card>
+      <CardContent className='mbe-5'>
+        <div className='flex max-sm:flex-col items-center gap-6'>
+          <img height={100} width={100} className='rounded' src={imgSrc} alt='Profile' />
+          <div className='flex flex-grow flex-col gap-4'>
+            <div className='flex flex-col sm:flex-row gap-4'>
+              <Button component='label' size='small' variant='contained' htmlFor='account-settings-upload-image'>
+                Upload New Photo
+                <input
+                  hidden
+                  type='file'
+                  value={fileInput}
+                  accept='image/svg'
+                  onChange={handleFileInputChange}
+                  id='account-settings-upload-image'
+                />
+              </Button>
+              <Button size='small' variant='outlined' color='error' onClick={handleFileInputReset}>
+                Reset
+              </Button>
+            </div>
+            <Typography>Allowed Only SVG. Max size of 800K</Typography>
+            <Typography color='error.main'>{message}</Typography>
+          </div>
+        </div>
+      </CardContent>
+
       <CardContent>
         <form
           noValidate

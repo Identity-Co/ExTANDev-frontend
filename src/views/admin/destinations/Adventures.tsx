@@ -110,7 +110,7 @@ const adventureListItemSchema = object({
   content_title: pipe(string(), nonEmpty('This field is required')),
   content_list: array(contentListItemSchema),
   map_image: pipe(custom<File | null>((value) => {
-    if (!value) return true;
+  	if (!value) return true;
     const allowed = ["image/png", "image/jpeg", "image/gif"];
 
     if (!allowed.includes(value.type)) return "Only PNG/JPG/GIF allowed";
@@ -188,6 +188,8 @@ const Adventures = ({ pgData, setFormId, getFormId, adventurePosts, reviews }: R
       value: item.title
     }));
 
+    obj.sort((a, b) => a.value.localeCompare(b.value));
+
     setresortOptions(obj);
   }, [resorts]);
 
@@ -196,6 +198,8 @@ const Adventures = ({ pgData, setFormId, getFormId, adventurePosts, reviews }: R
       label: item._id,
       value: item.name
     }));
+
+    obj.sort((a, b) => a.value.localeCompare(b.value));
 
     setadventurePostslistOptions(obj);
   }, [adventurePosts]);
@@ -244,15 +248,15 @@ const Adventures = ({ pgData, setFormId, getFormId, adventurePosts, reviews }: R
       feature_resorts_title: pgData?.adventures?.feature_resorts?.title??'',
       feature_resorts: pgData?.adventures?.feature_resorts?.resorts??[],
       adventure_lists: pgData?.adventures?.adventure_lists?.map(adventure => ({
-        ...adventure,
-        feature_image_preview: adventure.feature_image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${adventure.feature_image}` : '',
+	      ...adventure,
+	      feature_image_preview: adventure.feature_image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${adventure.feature_image}` : '',
         banner_image_preview: adventure.banner_image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${adventure.banner_image}` : '',
-        map_image_preview: adventure.map_image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${adventure.map_image}` : '',
-        content_list: adventure.content_list?.map(contentItem => ({
-          ...contentItem,
-          image_preview: contentItem.image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${contentItem.image}` : ''
-        })) || []
-      })) || []
+	      map_image_preview: adventure.map_image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${adventure.map_image}` : '',
+	      content_list: adventure.content_list?.map(contentItem => ({
+	        ...contentItem,
+	        image_preview: contentItem.image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${contentItem.image}` : ''
+	      })) || []
+	    })) || []
     }
   })
 
@@ -922,49 +926,49 @@ const Adventures = ({ pgData, setFormId, getFormId, adventurePosts, reviews }: R
 
                     {/* Content List Image */}
                     <Grid size={{ md: 6, xs: 12, lg: 6 }}>
-                      <div className='flex max-sm:flex-col items-center gap-6'>
-                        {watch(`adventure_lists.${adventureIndex}.content_list.${contentIndex}.image_preview`) ? (
+			                <div className='flex max-sm:flex-col items-center gap-6'>
+			                  {watch(`adventure_lists.${adventureIndex}.content_list.${contentIndex}.image_preview`) ? (
                           <img height={60} width={60} className='rounded' src={watch(`adventure_lists.${adventureIndex}.content_list.${contentIndex}.image_preview`) as string} alt='Content Image' />
                         ) : null}
 
-                        <div className='flex flex-grow flex-col gap-4'>
-                          <div className='flex flex-col sm:flex-row gap-4'>
-                            <Button component='label' size='small' variant='contained'>
-                              Upload Feature Image
-                              <input
-                                hidden
-                                type='file'
-                                accept='image/png, image/jpeg, image/gif'
-                                onChange={(e) => {
-                                  const file = e.target.files?.[0] ?? null;
-                                  const maxSize = 5 * (1024 * 1024);
+			                  <div className='flex flex-grow flex-col gap-4'>
+			                    <div className='flex flex-col sm:flex-row gap-4'>
+			                      <Button component='label' size='small' variant='contained'>
+			                        Upload Feature Image
+			                        <input
+			                          hidden
+			                          type='file'
+			                          accept='image/png, image/jpeg, image/gif'
+			                          onChange={(e) => {
+	                                const file = e.target.files?.[0] ?? null;
+	                                const maxSize = 5 * (1024 * 1024);
 
-                                  if (file && file.size > maxSize) {
-                                    toast.error("File is too large. Maximum allowed size is 5MB.")
-                                    return;
-                                  }
+	                                if (file && file.size > maxSize) {
+	                                  toast.error("File is too large. Maximum allowed size is 5MB.")
+	                                  return;
+	                                }
 
-                                  handleImageChange(adventureIndex, contentIndex, 'image', file);
-                                }}
-                              />
-                            </Button>
-                            {watch(`adventure_lists.${adventureIndex}.content_list.${contentIndex}.image`) && (
-                              <Button size='small' variant='outlined' color='error' onClick={() => {
-                                handleImageChange(adventureIndex, contentIndex, 'image', null);
-                              }}>
-                                Reset
-                              </Button>
-                            )}
-                          </div>
-                          <Typography>Allowed JPG, GIF or PNG. Max size of 5MB</Typography>
-                          {errors.adventure_lists?.[adventureIndex]?.content_list?.[contentIndex]?.image && (
-                            <Typography color='error.main'>
-                              {String(errors.adventure_lists[adventureIndex]?.content_list?.[contentIndex]?.image?.message)}
-                            </Typography>
-                          )}
-                        </div>
-                      </div>
-                    </Grid>
+	                                handleImageChange(adventureIndex, contentIndex, 'image', file);
+	                              }}
+			                        />
+			                      </Button>
+			                      {watch(`adventure_lists.${adventureIndex}.content_list.${contentIndex}.image`) && (
+	                            <Button size='small' variant='outlined' color='error' onClick={() => {
+	                              handleImageChange(adventureIndex, contentIndex, 'image', null);
+	                            }}>
+	                              Reset
+	                            </Button>
+	                          )}
+			                    </div>
+			                    <Typography>Allowed JPG, GIF or PNG. Max size of 5MB</Typography>
+			                    {errors.adventure_lists?.[adventureIndex]?.content_list?.[contentIndex]?.image && (
+			                      <Typography color='error.main'>
+			                        {String(errors.adventure_lists[adventureIndex]?.content_list?.[contentIndex]?.image?.message)}
+			                      </Typography>
+			                    )}
+			                  </div>
+			                </div>
+			              </Grid>
 
                     {/* Content List Heading & Content */}
                     <Grid size={{ md: 6, xs: 12, lg: 6 }}>
@@ -1066,7 +1070,7 @@ const Adventures = ({ pgData, setFormId, getFormId, adventurePosts, reviews }: R
           </Grid>
         ))}
 
-        <Grid size={{ md: 12, xs: 12, lg: 12 }}>
+				<Grid size={{ md: 12, xs: 12, lg: 12 }}>
           <div className="flex justify-between items-center">
             <Button
               variant="contained"

@@ -46,6 +46,9 @@ const BannerSection = ({ mode, banners, filter_categories, scrollRef }: { mode: 
       if (matchedCategory) {
         const cat_id = matchedCategory._id
         const data = await getDestinationsByCustomCategory(cat_id)
+
+        data.sort();
+        
         setDestinations(data || [])
       }
     }
@@ -95,6 +98,10 @@ const BannerSection = ({ mode, banners, filter_categories, scrollRef }: { mode: 
     if (category) {
       try {
         const data = await getDestinationsByCustomCategory(category)
+
+        data.sort();
+
+        console.log(data)
         setDestinations(data || [])
       } catch (err) {
         console.error('Failed to fetch destinations:', err)
@@ -198,7 +205,7 @@ const BannerSection = ({ mode, banners, filter_categories, scrollRef }: { mode: 
                                         >
                                           
                                           <span>
-                                            { icons[index] ? (<img src={`/images/svg/${icons[index]}`} alt="" />) : (<img src="/images/svg/walking-svgrepo-com.svg" alt="" />) }
+                                            { loc.image ? (<img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${loc.image}`} alt="" />) : (<img src="/images/svg/walking-svgrepo-com.svg" alt="" />) }
                                           </span>
                                           {loc.category_name}
                                         </div>
