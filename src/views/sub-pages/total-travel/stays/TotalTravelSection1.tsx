@@ -197,7 +197,9 @@ const TotalTravelSection1 = ({ data, isMore, setIsMore, setOpenAccess, accessTok
             </div>
         </div>
 
-        <div class="hotel_iframe_wrapper" sx={{ height: '700px', position: 'relative', overflowY: 'auto'}}><div className='hotel_search_selector' style={{ display: isMore === 0 ? 'none' : 'block' }}></div></div>
+        <div class="hotel_iframe_wrapper" sx={{ height: '700px', position: 'relative', overflowY: 'auto'}}>
+          <div className='hotel_search_selector' style={{ display: isMore === 0 ? 'none' : 'block' }}></div>
+        </div>
 
         {loginErr == 1 && (
           <div className='login-err-msg'>
