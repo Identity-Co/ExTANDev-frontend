@@ -145,7 +145,17 @@ const TotalTravelSection1 = ({ data, isMore, setIsMore, setOpenAccess, accessTok
     }, [])
 
     useEffect(() => {
+        let lastScroll = window.scrollY;
+
+        const interval = setInterval(() => {
+          if (window.scrollY < lastScroll - 50) {
+            window.scrollTo({ top: lastScroll });
+          }
+        }, 50);
+
         fetchCarsData();
+
+        return () => clearInterval(interval);
     }, [isMore])
 
     // Extract <strong> or <b> text only
