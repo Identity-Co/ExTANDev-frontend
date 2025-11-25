@@ -314,7 +314,7 @@ export const getToursByIds = async (tours_ids: string[]) => {
 }
 
 
-/* export const getToursByUser = async (user_id?: string) => {
+export const getToursByUser = async (user_id?: string) => {
   const session = await getServerSession(authOptions);
 
   const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/tours/get-user-tours/${user_id}`);
@@ -352,7 +352,7 @@ export const getAllTourActivities = async () => {
     
     return json.data
   }
-} */
+}
 
 
 export const getAllToursForSEO = async (category: string, destination: string, page: number) => {
