@@ -145,17 +145,7 @@ const TotalTravelSection1 = ({ data, isMore, setIsMore, setOpenAccess, accessTok
     }, [])
 
     useEffect(() => {
-        let lastScroll = window.scrollY;
-
-        const interval = setInterval(() => {
-          if (window.scrollY < lastScroll - 50) {
-            window.scrollTo({ top: lastScroll });
-          }
-        }, 50);
-
         fetchCarsData();
-
-        return () => clearInterval(interval);
     }, [isMore])
 
     // Extract <strong> or <b> text only
@@ -207,7 +197,7 @@ const TotalTravelSection1 = ({ data, isMore, setIsMore, setOpenAccess, accessTok
             </div>
         </div>
 
-        <div className='hotel_search_selector' style={{ display: isMore === 0 ? 'none' : 'block' }}></div>
+        <div class="hotel_iframe_wrapper" sx={{ height: '700px', position: 'relative', overflowY: 'auto'}}><div className='hotel_search_selector' style={{ display: isMore === 0 ? 'none' : 'block' }}></div></div>
 
         {loginErr == 1 && (
           <div className='login-err-msg'>
