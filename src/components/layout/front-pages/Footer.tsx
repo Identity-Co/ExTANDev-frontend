@@ -35,8 +35,7 @@ const Footer = ({siteSettings}: { siteSettings?: []; }) => {
                         <li><Link href={"/privacy-policy"}>Privacy Policy</Link></li>
                         <li><Link href={"/terms-of-use"}>Terms of Use</Link></li>
                         <li><Link href={"/become-a-partner"}>Become a Partner</Link></li>
-                        {/* <li><Link href={"/real-estate-opportunities"}>Real Estate Opportunities</Link></li> */}
-                        <li><Link href={"/all-adventures"}>All Adventures</Link></li>
+                        <li><Link href={"/real-estate-opportunities"}>Real Estate Opportunities</Link></li>
                     </ul>
                     <ul className={classnames(styles.foot_social)}>
                         <li><Link href={(siteSettings?.instagram_url) ? siteSettings?.instagram_url : '#' } target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="17.1" height="17.1" viewBox="0 0 17.1 17.1">
