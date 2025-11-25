@@ -34,6 +34,10 @@ export const metadata = {
   description: ''
 }
 
+export const viewport = {
+  scrollRestoration: "manual",
+};
+
 const RootLayout = async (props: ChildrenType ) => {
   
 
