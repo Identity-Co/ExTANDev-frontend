@@ -163,7 +163,7 @@ const TotalTravelSection1 = ({ data, isMore, setIsMore, setOpenAccess, accessTok
         <div className="container">
             <div className={classnames(styles.head_text_center, 'head_text_center')}>
                 <div className={classnames(styles.adventure_right_text)}>
-                    {data.about_title ? (<h2 className="fs_55">{data.about_title}</h2>) : null}
+                    {data.about_title ? (<h2 className="fs_55">{data.about_title} 54545454</h2>) : null}
 
                     {/* isMore==1 && (
                       data?.about_content && (
