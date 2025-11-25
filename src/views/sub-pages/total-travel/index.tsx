@@ -39,6 +39,8 @@ import styles from './styles.module.css'
 // Config Imports
 import themeConfig from '@configs/themeConfig'
 
+const DefaultTab = dynamic(() => import('@views/sub-pages/total-travel/stays'))
+
 const StaysTab = dynamic(() => import('@views/sub-pages/total-travel/stays'))
 const FlightsTab = dynamic(() => import('@views/sub-pages/total-travel/flights'))
 const CarsTab = dynamic(() => import('@views/sub-pages/total-travel/cars'))
@@ -48,14 +50,31 @@ const MyTripsTab = dynamic(() => import('@views/sub-pages/total-travel/my-trips'
 
 //const CruisesTab = dynamic(() => import('@views/sub-pages/total-travel/cruises'))
 
-const tabContentList = (props): { [key: string]: ReactElement } => ({
-  stays: <StaysTab {...props}/>,
-  flights: <FlightsTab {...props}/>,
-  cars: <CarsTab {...props}/>,
-  packages: <PackagesTab {...props}/>,
-  thingstodo: <ThingsToDoTab {...props}/>,
-  mytrips: <MyTripsTab {...props}/>
-})
+//const tabContentList = (props): { [key: string]: ReactElement } => ({
+
+const tabContentList = (props, accessToken) => {
+  const common = <DefaultTab {...props} />
+
+  if (!props?.accessToken) {
+    return {
+      stays: common,
+      flights: common,
+      cars: common,
+      packages: common,
+      thingstodo: common,
+      mytrips: common
+    }
+  }
+
+  return {
+    stays: <StaysTab {...props}/>,
+    flights: <FlightsTab {...props}/>,
+    cars: <CarsTab {...props}/>,
+    packages: <PackagesTab {...props}/>,
+    thingstodo: <ThingsToDoTab {...props}/>,
+    mytrips: <MyTripsTab {...props}/>
+  }
+}
 
   //cruises: <CruisesTab {...props}/>
 
@@ -144,51 +163,12 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
             <Tab value='stays' label='Stays' />
             <Tab value='flights' label='flights' />
             <Tab value='cars' label='Cars' />
-            <Tab value='packages' label='Packages' />
-            <Tab value='thingstodo' label='Things to do' />
+            <Tab value='packages' label='Parks & Tickets' />
             <Tab value='mytrips' label='My Trips' />
-            {/* <Tab value='cruises' label='Cruises' /> */}
+            {/* <Tab value='thingstodo' label='Things to do' />
+            <Tab value='cruises' label='Cruises' /> */}
           </TabList>
-          {/* <div className={classnames(styles.search_box, styles.search_box_total)}>
-              <div className={classnames(styles.container, 'container')}>
-                  <div className={classnames(styles.search_box_inner)}>
-                      <div className={classnames(styles.search_row)}>
-                          <form>
-                              <div className={classnames(styles.search_select, styles.ss1)}>
-                                  <label>Destinations</label>
-                                  <select name="cars" id="cars">
-                                    <option value="">Destinations 1</option>
-                                    <option value="">Destinations 2</option>
-                                    <option value="">Destinations 3</option>
-                                    <option value="">Destinations 4</option>
-                                  </select>
-                              </div>
-                              <div className={classnames(styles.search_select, styles.ss2)}>
-                                  <label>Dates</label>
-                                  <select name="cars" id="cars">
-                                    <option value="">Dates 1</option>
-                                    <option value="">Dates 2</option>
-                                    <option value="">Dates 3</option>
-                                    <option value="">Dates 4</option>
-                                  </select>
-                              </div>
-                              <div className={classnames(styles.search_select, styles.ss3)}>
-                                  <label>Travelers</label>
-                                  <select name="cars" id="cars">
-                                    <option value="">Travelers 1</option>
-                                    <option value="">Travelers 2</option>
-                                    <option value="">Travelers 3</option>
-                                    <option value="">Travelers 4</option>
-                                  </select>
-                              </div>
-                              <div className={classnames(styles.search_btn)}>
-                                  <input type="submit" name="" value="Search" />
-                              </div>
-                          </form>
-                      </div>
-                  </div>
-              </div>
-          </div> */}
+          
           {isLoaded && (
             <TabPanel value={val} className='pbs-0'>
                 {tabContentList({ pgData: pgData, setOpenAccess: setOpenAccess, accessToken: accessToken })[val]}

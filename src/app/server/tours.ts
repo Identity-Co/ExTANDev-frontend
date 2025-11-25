@@ -312,3 +312,71 @@ export const getToursByIds = async (tours_ids: string[]) => {
     return Array.isArray(json.data) ? json.data : [];
   }
 }
+
+
+export const getToursByUser = async (user_id?: string) => {
+  const session = await getServerSession(authOptions);
+
+  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/tours/get-user-tours/${user_id}`);
+
+  const response = await fetch(url.toString(), {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + session?.user?.userToken
+    }
+  })
+
+  if (!response.ok) {
+    return []
+  } else {
+    const json = await response.json();
+
+    return Array.isArray(json.data) ? json.data : [];
+  }
+}
+
+export const getAllTourActivities = async () => {
+  const session = await getServerSession(authOptions);
+  
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tours/get-tour-activities`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + session?.user?.userToken
+    }
+  })
+  
+  if (!response.ok) {
+    return []
+  } else {
+    const json = await response.json();
+    
+    return json.data
+  }
+}
+
+
+export const getAllToursForSEO = async (category: string, destination: string, page: number) => {
+  const session = await getServerSession(authOptions);
+  if(!page) { page = 1; }
+
+  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/tours/filter-tours`);
+  url.searchParams.append("category", category);
+  url.searchParams.append("destination", destination);
+  url.searchParams.append("page", 1);
+  url.searchParams.append("limit", 100000);
+
+  const response = await fetch(url.toString(), {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + session?.user?.userToken
+    }
+  })
+
+  if (!response.ok) {
+    return {}
+  } else {
+    const json = await response.json();
+
+    return json.data
+  }
+}

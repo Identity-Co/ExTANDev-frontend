@@ -11,7 +11,7 @@
 .banner_bg_image_text{position: absolute; z-index: 2; bottom: 5.729vw; left: 0; right: 0; text-align: center;}
 
 .home_banner .hero_slide_container{max-width: 80%; margin: 0 auto; width: 100%; padding: 0 5.208vw; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; z-index: 1; row-gap: 3vw;}
-.home_banner .hero_slide_text{max-width: 30.438vw; padding-top: 2vw;}
+.home_banner .hero_slide_text{max-width: 30.438vw; padding-top: 4vw;}
 .home_banner .hero_slide_text p{color: #ffffff; font-size: 0.938vw; font-weight: 700; font-style: italic; padding-left: 1vw; padding-right: 5vw; line-height: 1.25vw;}
 .home_banner .hero_slide_text h1,
 .home_banner .hero_slide_text h2{color: #ffffff; font-size: 3.49vw; line-height: 4.187vw; padding-bottom: 2.343vw; letter-spacing: -0.020em;}
@@ -36,8 +36,10 @@
 .travel_banner_new{position: relative;}
 .travel_banner_bg_image{position: relative;}
 .travel_banner_bg_image:before{position: absolute; content: ""; background: linear-gradient(90deg,rgba(4, 110, 119, 1) 100%, rgba(128, 128, 128, 0) 100%); opacity: 0.53; mix-blend-mode: multiply; width: 100%; height: 100%; top: 0; left: 0; z-index: 1;}
+.travel_banner_bg_image .travel_banner_bg_image_hero_loggedin{padding-bottom: 35vh; position: relative;}
 .travel_banner_bg_image .travel_banner_bg_image_hero{padding-bottom: 100vh; position: relative;}
-.travel_banner_bg_image .travel_banner_bg_image_hero img{position: absolute; width: 100%; height: 100%; object-fit: cover; top: 0; left: 0; object-position: 100% 20%;}
+.travel_banner_bg_image .travel_banner_bg_image_hero img,
+.travel_banner_bg_image .travel_banner_bg_image_hero_loggedin img{position: absolute; width: 100%; height: 100%; object-fit: cover; top: 0; left: 0; object-position: 100% 20%;}
 .travel_banner_bg_image_text{position: absolute;z-index: 2;top: 50%; transform: translateY(-50%); left: 0;text-align: center; width: 100%;}
 .travel_banner.home_banner .hero_slide_text{text-align: left;}
 .travel_banner.home_banner .hero_slide_text h1{padding-bottom: 0;}
