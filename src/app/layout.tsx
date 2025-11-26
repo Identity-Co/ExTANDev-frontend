@@ -48,7 +48,7 @@ const RootLayout = async (props: ChildrenType ) => {
 
   return (
     
-      <html id='__next' lang='en' dir={direction} >
+      <html id='__next' lang='en' dir={direction} suppressHydrationWarning>
         <body className='flex is-full min-bs-full flex-auto flex-col' suppressHydrationWarning>
           <AppRouterCacheProvider>
             <InitColorSchemeScript attribute='data' defaultMode={systemMode} />
