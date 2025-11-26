@@ -9,6 +9,8 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 import PageLoader from '@/app/providers/PageLoader'
 import NavigationEvents from '@/app/providers/NavigationEvents'
 
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+
 // Type Imports
 import type { ChildrenType } from '@core/types'
 
@@ -47,11 +49,13 @@ const RootLayout = async (props: ChildrenType ) => {
   return (
     
       <html id='__next' lang='en' dir={direction} suppressHydrationWarning>
-        <body className='flex is-full min-bs-full flex-auto flex-col'>
-          <InitColorSchemeScript attribute='data' defaultMode={systemMode} />
-          <NavigationEvents />
-          <PageLoader />
-          {children}
+        <body className='flex is-full min-bs-full flex-auto flex-col' suppressHydrationWarning>
+          <AppRouterCacheProvider>
+            <InitColorSchemeScript attribute='data' defaultMode={systemMode} />
+            <NavigationEvents />
+            <PageLoader />
+            {children}
+          </AppRouterCacheProvider>
         </body>
       </html>
     
