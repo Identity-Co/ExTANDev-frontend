@@ -28,7 +28,7 @@ const BannerSection = ({ mode, banners, accessToken }: { mode: Mode; banners?: [
                     <div className={classnames(styles.travel_banner_bg_image_text)}>
                         <div className={classnames(styles.hero_slide_container)}>
                             <div className={classnames(styles.hero_slide_text)}>
-                                {mainBanner.title ? (<h1>{mainBanner.title} 45454545</h1>) : null}
+                                {mainBanner.title ? (<h1>{mainBanner.title} 0000000</h1>) : null}
                             </div>
                         </div>
                     </div>
