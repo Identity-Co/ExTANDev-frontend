@@ -686,3 +686,18 @@ body .orange_social_lssc span{font-weight: 700; color: #F85241;}
 .custom-select.active .select-items {display: flex;}
 .select-items div span,
 .select-selected div span.select-icn{width: 20px; display: flex; align-items: center; justify-content: center;}
+
+
+@media only screen and (max-width: 1024px){
+	.select-selected,
+	.select-items div{font-size: 1.825vw;}
+	.select-selected{padding: 1vw 0.662vw;}
+
+}
+
+@media only screen and (max-width: 768px){
+	.select-selected,
+	.select-items div{font-size: 3.425vw;}
+	.select-selected{padding: 1vw 0.662vw;}
+
+}
