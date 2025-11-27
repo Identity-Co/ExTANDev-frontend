@@ -5,6 +5,7 @@ import DestinationDetail from '@views/sub-pages/our-destinations/destination-det
 import { getServerMode } from '@core/utils/serverHelpers'
 import { getDestinationBySlug } from '@/app/server/destinations'
 import { getPageDestination, filterDestinationAdventure } from '@/app/server/destinations'
+import { getCustomCategoryByDestination } from '@/app/server/tours'; //getCustomCategories, getCustomCategoryByDestination
 
 import { notFound } from 'next/navigation'
 
@@ -53,7 +54,10 @@ const DetailPage = async ({ searchParams, params }: PageProps) => {
 
   const resortDestinations = await getPageDestination(pgData?.resorts?.feature_destinations??[]);
 
-  return <DestinationDetail mode={mode} pgData={pgData} resortDestinations={resortDestinations} adventures={adventures} suitable_for={suitable_for} season={season} hasParam={hasParam} />
+  //const filter_categories = await getCustomCategories();
+  const filter_categories = await getCustomCategoryByDestination(pgData.destination_location??'');
+
+  return <DestinationDetail mode={mode} pgData={pgData} resortDestinations={resortDestinations} adventures={adventures} suitable_for={suitable_for} season={season} hasParam={hasParam} filter_categories={filter_categories} />
 }
 
 export default DetailPage

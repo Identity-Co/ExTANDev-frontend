@@ -27,17 +27,28 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
 .search_row form .search_btn input[type="submit"]:hover{background-color: #000000;}
 
 
+.activity_form{padding-top: 3.579vw;}
+.activity_form form{max-width: 30.893vw; margin: 0 auto; display: flex; align-items: flex-end; gap: 0.586vw;}
+.activity_form form .search_select{width: 100%;}
+.activity_form form .search_select label{font-size: 1.25vw; font-weight: 600; color: #1f1f1f; margin-bottom: 0.521vw; display: block; line-height: 1; font-family: "Roboto Condensed", sans-serif; text-align: left;}
+.activity_form form .search_btn input[type="button"]{font-size: 1.25vw; color: #ffffff; background-color: #EA5647; border-radius:0.22vw; text-transform: uppercase; padding: 0.841vw 2.928vw; display: inline-block; line-height: 1; font-family: "Bebas Neue", sans-serif; outline: none; border: none; cursor: pointer; transition: 0.3s ease-in-out; min-height: 2.855vw; display: flex; align-items: center; justify-content: center; letter-spacing: 0.05em;}
+.activity_form form .search_btn input[type="button"]:hover{background-color: #000000;}
+
+
 @media only screen and (max-width: 1024px){
   .banner_bg_image .banner_bg_image_hero{padding-bottom: 38.352vw;}
   .banner_bg_image_text{bottom: 7.642vw;}
   .search_box .container{max-width: 90%;}
   .search_box_inner{padding: 2.378vw 3.333vw;}
-  .search_row form .search_select label{font-size: 1.208vw;}
+  .search_row form .search_select label,
+  .activity_form form .search_select label{font-size: 1.698vw;}
   .search_row form .search_select.ss1 select,
   .search_row form .search_select.ss2 select,
   .search_row form .search_select.ss3 select{font-size: 1.208vw; background-size: 1.397vw; min-height: 3.454vw; padding: 0.521vw 2.378vw;}
-  .search_row form .search_btn input[type="submit"]{min-height: 3.454vw; font-size: 1.298vw;}
-  .home_banner.destination_overview_banner .hero_slide_text{max-width: 31.905vw;}  
+  .search_row form .search_btn input[type="submit"],
+  .activity_form form .search_btn input[type="button"]{min-height: 3.454vw; font-size: 1.825vw;}
+  .home_banner.destination_overview_banner .hero_slide_text{max-width: 31.905vw;}
+  .activity_form form{max-width: 50%;}  
 }
 
 @media only screen and (max-width: 768px){
@@ -48,12 +59,15 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
   .search_box .container{max-width: 90%;}
   .search_box_inner{padding: 2.378vw 3.333vw;}
   .search_row form > div{width: 100%;}
-  .search_row form .search_select label{font-size: 1.920vw;}
+  .search_row form .search_select label,
+  .activity_form form .search_select label{font-size: 2.698vw;}
   .search_row form .search_select.ss1 select,
   .search_row form .search_select.ss2 select,
   .search_row form .search_select.ss3 select{font-size: 1.920vw; background-size: 2.109vw; min-height: 4.877vw; padding: 0.521vw 3.090vw;}
   .search_row form .search_btn input[type="submit"]{min-height: 4.877vw; font-size: 2.437vw; width: 100%;}
+  .activity_form form .search_btn input[type="button"]{min-height: 7.477vw; font-size: 3.425vw; padding: 0.841vw 4.928vw;}
   .home_banner.destination_overview_banner .hero_slide_text{max-width: 100%;}
+  .activity_form form{max-width: 100%;}
 }
 
 /*banner-end*/
@@ -158,3 +172,96 @@ ul.destination_tab li.active a{text-decoration: none;}
 }
 
 /*adventures-sec2-end*/
+
+
+
+
+/*Adventure Tab Listing - Start */
+
+.feature_desti_row.feature_adven_row{column-gap: 1.562vw;}
+.feature_adven_row .feature_adven_box{padding-bottom: 3.125vw; position: relative;}
+.feature_adven_box .feature_adven_top{position: relative;}
+.feature_adven_box .feature_adven_top .feature_adven_img{padding-bottom: 15.104vw; position: relative;}
+.feature_adven_box .feature_adven_top .feature_adven_img img{position: absolute; width: 100%; height: 100%; object-fit: cover; top: 0; left: 0;}
+.feature_adven_box .feature_adven_top .feature_adven_img_text{position: absolute; top: 1.250vw; left: 1.250vw;}
+.feature_adven_box .feature_adven_img_text .adven_star{background: rgb(255, 255, 255, 0.84); border-radius: 1.250vw; padding: 0.354vw 0.781vw; display: flex; align-items: center; column-gap: 0.781vw; line-height: 1;}
+.feature_adven_box .feature_adven_img_text .adven_star svg{width: 4.479vw; height: 0.729vw;}
+.feature_adven_box .feature_adven_img_text .adven_star span{font-size: 0.729vw;}
+.feature_adven_box .feature_adven_bot{padding-top: 1.562vw;}
+.feature_adven_box .feature_adven_bot h3{font-size: 1.667vw; min-height: 4.010vw;}
+.feature_adven_box .feature_adven_bot span.days_price{font-size: 0.729vw; line-height: 1.3; letter-spacing: -0.010em; padding: 0.521vw 0 1.250vw; display: block;}
+.feature_adven_box .feature_adven_bot span.days_price span.taxes{font-size: 0.625vw;}
+.feature_adven_box .feature_adven_bot p{font-size: 0.833vw; line-height: 1.4; letter-spacing: -0.005em;}
+.feature_adven_box .feature_adven_bot .btn{position: absolute; bottom: 0; left: 0;}
+.feature_adven_box .feature_adven_bot .btn a{font-size: 0.781vw; color: #1F1F1F; font-weight: 800; border: solid 0.026vw #1F1F1F; background-color: transparent; padding: 0.521vw 1.094vw; text-decoration: none; border-radius: 0.052vw;}
+.feature_adven_box .feature_adven_bot .btn a:hover{background-color: #1F1F1F; color: #ffffff;}
+
+.our_desti_sec2{margin-top: -7.813vw;}
+.feature_desti_row{display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 1.042vw; grid-row-gap: 1.042vw;}
+.feature_desti_row .network_travel_img_text p{font-size: 0.729vw; color: #ffffff; line-height: 0.729vw;}
+.feature_desti_row .network_travel_top .network_travel_img_text .btn a{font-family: "Bebas Neue", sans-serif; font-size: 0.938vw; font-weight: 400;}
+.feature_desti_row .network_travel_box .network_travel_top:before{opacity: 0.72; background: linear-gradient(360deg,rgba(0, 0, 0, 1) 0%, rgba(25, 26, 26, 0) 100%); height: 50%;}
+
+.pagination{padding-top: 2.083vw; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap:0.521vw;}
+.pagination button {width: 1.562vw; height: 1.562vw; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 0.833vw; font-weight: 400; background-color: #ffffff; border: solid 0.052vw #131313; color: #131313; transition: 0.3s ease-in-out; font-family: "Bebas Neue", sans-serif; cursor: pointer;}
+.pagination button:hover,
+.pagination button.active{background-color: #EA5647; color: #ffffff; border-color: #EA5647;}
+
+
+@media only screen and (max-width: 1024px){
+  .feature_adven_box .feature_adven_top .feature_adven_img{padding-bottom: 65%;}
+  .feature_adven_box .feature_adven_img_text .adven_star svg{width: 5.191vw; height: 1.085vw;}
+  .feature_adven_box .feature_adven_img_text .adven_star span{font-size: 1.085vw;}
+  .feature_adven_box .feature_adven_bot h3{font-size: 2.378vw; min-height: 5.628vw;}
+  .feature_adven_box .feature_adven_bot span.days_price{font-size: 1.298vw;}
+  .feature_adven_box .feature_adven_bot span.days_price span.taxes{font-size: 1.123vw;}
+  .feature_adven_box .feature_adven_bot p{font-size: 1.402vw;}
+  .feature_adven_box .feature_adven_bot .btn a{font-size: 1.298vw; padding: 1.090vw 1.441vw;}
+  .feature_adven_row .feature_adven_box{padding-bottom: 3.836vw;}
+
+  .feature_desti_row{column-gap: 1.251vw; grid-row-gap: 1.251vw; grid-template-columns: repeat(2, 1fr);}
+  .feature_desti_row .network_travel_img_text p{font-size: 1.441vw; line-height: 1.3;}
+  .feature_desti_row .network_travel_top .network_travel_img_text .btn a{font-size: 1.649vw;}
+
+  .pagination{padding-top: 3.742vw;}
+  .pagination button{width: 2.846vw; height: 2.846vw; gap:1.138vw; font-size: 1.494vw;}
+  
+}
+
+@media only screen and (max-width: 768px){
+  .feature_adven_box .feature_adven_img_text .adven_star{border-radius: 2.673vw; padding: 1.066vw 1.848vw;}
+  .feature_adven_box .feature_adven_img_text .adven_star svg{width: 13.017vw; height: 1.796vw;}
+  .feature_adven_box .feature_adven_img_text .adven_star span{font-size: 2.010vw;}
+  .feature_adven_box .feature_adven_bot h3{font-size: 3.801vw; min-height: 0.711vw;}
+  .feature_adven_box .feature_adven_bot span.days_price{font-size: 2.124vw;}
+  .feature_adven_box .feature_adven_bot span.days_price span.taxes{font-size: 2.119vw;}
+  .feature_adven_box .feature_adven_bot p{font-size: 2.398vw;}
+  .feature_adven_box .feature_adven_bot .btn a{font-size: 2.294vw; padding: 1.588vw 3.575vw;}
+  .feature_adven_row .feature_adven_box{padding: 0;}
+  .feature_adven_box .feature_adven_bot .btn{position: relative;}
+  .feature_adven_box .feature_adven_bot{padding-top: 2.525vw;}
+
+  .feature_desti_row{grid-row-gap: 5.929vw; grid-template-columns: repeat(1, 1fr);}
+  .feature_desti_row .network_travel_img_text p{font-size: 2.366vw;}
+  .feature_desti_row .network_travel_top .network_travel_img_text .btn a{font-size: 2.289vw;}
+  .network_travel_top .network_travel_img_text{bottom: 4.374vw;}
+  .network_travel_top .network_travel_img_text{width: 90%;}
+
+  .pagination{padding-top: 4.809vw;}
+  .pagination button{width: 4.269vw; height: 4.269vw; gap:1.138vw; font-size: 2.206vw;}
+  
+}
+
+
+@media only screen and (max-width: 575px){
+  .feature_adven_box .feature_adven_bot h3{font-size: 4.801vw; min-height: 0.711vw;}
+  .feature_adven_box .feature_adven_bot span.days_price{font-size: 2.824vw; padding: 1.521vw 0 2.25vw;}
+  .feature_adven_box .feature_adven_bot span.days_price span.taxes{font-size: 2.719vw;}
+  .feature_adven_box .feature_adven_bot p{font-size: 3.579vw;}
+  .feature_adven_box .feature_adven_bot .btn a{font-size: 3.437vw; padding: 2.375vw 3.508vw;}
+  .pagination{padding-top: 6.809vw;}
+  .pagination button{width: 6.269vw; height: 6.269vw; gap:1.638vw; font-size: 2.806vw;}
+
+}
+
+/*Adventure Tab Listing - End */

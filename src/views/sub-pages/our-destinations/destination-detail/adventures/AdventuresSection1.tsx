@@ -1,11 +1,39 @@
+// React Imports
+import { useEffect, useRef, useState } from 'react'
+
 // Third-party Imports
 import classnames from 'classnames'
+
+import { getFilteredTours, getFilteredCount } from '@/app/server/tours'
 
 // Styles Imports
 import styles from './styles.module.css'
 
-const AdventuresSection1 = ({ data }: { data?: []; }) => { 
-  
+const AdventuresSection1 = ({ data, filter_categories, dest_data, setCurrentTours, setCurrentCat }: { data?: []; filter_categories?: []; dest_data?: any; setCurrentTours: any; setCurrentCat: any; }) => {
+
+  //console.log('filter_categories : ', filter_categories)
+
+  const [selected_category, setSelectedCategory] = useState(null);
+  const [selectedAct, setSelectedAct] = useState("- Select -");
+  const [openAct, setOpenAct] = useState(false);
+
+  const handleCategoryChange = async () => {
+    if (selectedAct) {
+      try {
+        setCurrentCat(selectedAct)
+
+        const t_data = await getFilteredTours(selectedAct, dest_data.destination_location, 1);
+        setCurrentTours(t_data || []);
+        //setDestinations(t_data || [])
+      } catch (err) {
+        console.error('Failed to fetch tours:', err)
+        setCurrentTours([])
+
+        //setDestinations([])
+      }
+    }
+  }
+
   return (
     <section className={classnames(styles.home_section1, styles.our_desti_sec1, styles.destination_overview_sec1)}>
         <div className={classnames(styles.container, 'container')}>
@@ -42,6 +70,64 @@ const AdventuresSection1 = ({ data }: { data?: []; }) => {
                           </svg> {data?.button_text}</a>
                       </div>
                     )}
+
+                    <div className={classnames(styles.activity_form)}>
+                        <form>
+                            <input type="hidden" name="adventure_activity" value='' />
+                            
+                            <div className={classnames(styles.search_select, styles.ss1)}>
+                                <label>Activity</label>
+                                <div className={`custom-select ${openAct ? 'active' : ''}`}>
+                                    <div 
+                                      className="select-selected"
+                                      onClick={() => {setOpenAct(!openAct);}}
+                                      style={{ cursor: "pointer" }}
+                                    >
+                                      <div>
+                                        <span className="select-icn">
+                                          <img src="/images/svg/solo.svg" alt=""  />
+                                        </span>
+                                        <span>{selectedAct}</span>
+                                      </div>
+
+                                      <img
+                                        src="/images/svg/down-arrow.svg"
+                                        alt=""
+                                        style={{
+                                          transform: openAct ? "rotate(180deg)" : "rotate(0deg)",
+                                          transition: "0.2s",
+                                        }}
+                                      />
+                                    </div>
+
+                                    {openAct && (
+                                      <div className="select-items">
+                                        {filter_categories.map((loc, index) => (
+                                          <div
+                                            key={index}
+                                            onClick={() => {
+                                              setSelectedAct(loc.category_name);
+                                              setSelectedCategory(loc._id)
+                                              setOpenAct(false);
+                                            }}
+                                            style={{ cursor: "pointer" }}
+                                          >
+                                            <span>
+                                              { loc.image ? (<img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${loc.image}`} alt="" />) : (<img src="/images/svg/walking-svgrepo-com.svg" alt="" />) }
+                                            </span>
+                                            {loc.category_name}
+                                          </div>
+                                        ))}
+                                      </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className={classnames(styles.search_btn)}>
+                                <input type="button" name="" value="Search" onClick={() => { handleCategoryChange(); }} />
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

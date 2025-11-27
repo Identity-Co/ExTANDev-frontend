@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 // Type Imports
 import type { Mode } from '@core/types'
@@ -29,10 +29,15 @@ type AdventureProps = {
   setIsOverviewDetailPage: React.Dispatch<React.SetStateAction<boolean>>;
   isOverviewDetailPageID: string
   setIsOverviewDetailPageID: React.Dispatch<React.SetStateAction<string>>;
-  adventures: []
+  adventures: [];
+  filter_categories: [];
 }
 
-const LandingPageWrapper = ({ pgData, destinations, isOverviewDetailPage, setIsOverviewDetailPage, isOverviewDetailPageID, setIsOverviewDetailPageID, adventures}: AdventureProps) => {
+const LandingPageWrapper = ({ pgData, destinations, isOverviewDetailPage, setIsOverviewDetailPage, isOverviewDetailPageID, setIsOverviewDetailPageID, adventures, filter_categories}: AdventureProps) => {
+  
+  const [currentCat, setCurrentCat] = useState('')
+  const [currentTours, setCurrentTours] = useState([])
+
   const adventurePosts = pgData?.adventures?.adventure_posts;
 
   // Hooks
@@ -79,8 +84,9 @@ const LandingPageWrapper = ({ pgData, destinations, isOverviewDetailPage, setIsO
   }else{
     return (
       <>
-        <AdventuresSection1 data={pgData?.adventures ?? []} />
-        <AdventuresSection2 data={adventures ?? []} isOverviewDetailPage={isOverviewDetailPage} setIsOverviewDetailPage={setIsOverviewDetailPage} isOverviewDetailPageID={isOverviewDetailPageID} setIsOverviewDetailPageID={setIsOverviewDetailPageID} />
+        <AdventuresSection1 data={pgData?.adventures ?? []} filter_categories={filter_categories} dest_data={pgData} setCurrentTours={setCurrentTours} setCurrentCat={setCurrentCat} />
+
+        <AdventuresSection2 data={adventures ?? []} isOverviewDetailPage={isOverviewDetailPage} setIsOverviewDetailPage={setIsOverviewDetailPage} isOverviewDetailPageID={isOverviewDetailPageID} setIsOverviewDetailPageID={setIsOverviewDetailPageID} dest_data={pgData} currentTours={currentTours} setCurrentTours={setCurrentTours} currentCat={currentCat} setCurrentCat={setCurrentCat} />
         <AdventuresSection3 sectionProps={instagramSliderSectionProps} />
         <AdventuresSection4 sectionProps={featuredResortsSectionProps} />
         <AdventuresSection5 data={pgData ?? []} />

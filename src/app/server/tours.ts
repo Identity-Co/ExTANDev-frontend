@@ -155,6 +155,28 @@ export const getDestinationsByCustomCategory = async (category: number) => {
   }
 }
 
+export const getCustomCategoryByDestination = async (location_name?: string) => {
+  const session = await getServerSession(authOptions);
+
+  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/tours/get-custom-category-by-destination`);
+  url.searchParams.append("location_name", location_name??'');
+
+  const response = await fetch(url.toString(), {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + session?.user?.userToken
+    }
+  })
+
+  if (!response.ok) {
+    return {}
+  } else {
+    const json = await response.json();
+
+    return json.data
+  }
+}
+
 export const getFilteredCount = async (category: string, destination: string) => {
   const session = await getServerSession(authOptions);
 
