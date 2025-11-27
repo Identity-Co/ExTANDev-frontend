@@ -57,6 +57,8 @@ const DetailPage = async ({ searchParams, params }: PageProps) => {
   //const filter_categories = await getCustomCategories();
   const filter_categories = await getCustomCategoryByDestination(pgData.destination_location??'');
 
+  filter_categories.sort((a, b) => a.category_name.localeCompare(b.category_name));
+  
   return <DestinationDetail mode={mode} pgData={pgData} resortDestinations={resortDestinations} adventures={adventures} suitable_for={suitable_for} season={season} hasParam={hasParam} filter_categories={filter_categories} />
 }
 
