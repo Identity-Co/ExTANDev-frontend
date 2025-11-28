@@ -134,7 +134,7 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
       'robots': data.robots,
     }
 
-    if (pgData?.banner_image) {
+    if (pgData?.banner_image && !data.banner_image) {
       fd.append("banner_image", pgData.banner_image);
     }
 
