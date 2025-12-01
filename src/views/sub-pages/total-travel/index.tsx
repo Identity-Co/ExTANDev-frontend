@@ -160,7 +160,7 @@ const LandingPageWrapper = ({ mode, banners, pgData }: { mode: Mode; banners?: [
 
         <TabContext value={val} className="my-5">
           <TabList variant='fullWidth' onChange={handleChange} aria-label='full width tabs example' className="destinations_tab total_travel_tab">
-            <Tab value='stays' label='Stays' />
+            <Tab value='stays' label='Hotels' />
             <Tab value='flights' label='flights' />
             <Tab value='cars' label='Cars' />
             <Tab value='packages' label='Parks & Tickets' />
