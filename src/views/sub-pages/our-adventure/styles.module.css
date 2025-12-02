@@ -60,6 +60,13 @@
 .home_section2 .home_slider2{position:relative;}
 
 
+@media only screen and (max-height: 900px) and (min-width: 691px) {
+    .home_banner .hero_slide_box {
+        min-height: 800px !important;
+    }
+}
+
+
 @media only screen and (max-width: 1024px){
   .home_banner .hero_slide_container{padding: 0 4.223vw; max-width: 90%;}
   .home_banner .hero_slide_text p{font-size: 1.818vw; padding-left: 1.2vw; line-height: 1.2;}

@@ -107,6 +107,14 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
 .search_row form .search_btn input[type="submit"]:hover{background-color: #000000;}
 
 
+
+@media only screen and (max-height: 900px) and (min-width: 691px) {
+    .home_banner .hero_slide_box {
+        min-height: 800px !important;
+    }
+}
+
+
 @media only screen and (max-width: 1024px){
 .home_banner .hero_slide_container{max-width: 90%; padding: 0 4.223vw;}
 .home_banner .hero_slide_text{max-width: 41.845vw;}

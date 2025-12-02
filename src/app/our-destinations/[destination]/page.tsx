@@ -4,7 +4,8 @@ import DestinationDetail from '@views/sub-pages/our-destinations/destination-det
 // Server Action Imports
 import { getServerMode } from '@core/utils/serverHelpers'
 import { getDestinationBySlug } from '@/app/server/destinations'
-import { getPageDestination, filterDestinationAdventure } from '@/app/server/destinations'
+//import { getPageDestination, filterDestinationAdventure } from '@/app/server/destinations'
+import { getPageDestination, getResortByIds, getDestinationList, filterDestination } from '@/app/server/destinations'
 import { getCustomCategoryByDestination } from '@/app/server/tours'; //getCustomCategories, getCustomCategoryByDestination
 
 import { notFound } from 'next/navigation'
@@ -15,17 +16,17 @@ interface PageProps {
   };
 }
 
-const DetailPage = async ({ searchParams, params }: PageProps) => {
+const DetailPage = async ({ params }: PageProps) => { //searchParams, 
   let hasParam: boolean = false;
 
   const mode = await getServerMode()
 
   const { destination } = params;
 
-  const qParams = await searchParams;
+  //const qParams = await searchParams;
 
-  const suitable_for = qParams.suitable_for;
-  const season = qParams.season;
+  //const suitable_for = qParams.suitable_for;
+  //const season = qParams.season;
 
   const pgData = await getDestinationBySlug(destination)
   var adventures = [];
@@ -39,7 +40,7 @@ const DetailPage = async ({ searchParams, params }: PageProps) => {
     notFound()
   }
 
-  if (suitable_for != "" || season != "") {
+  /* if (suitable_for != "" || season != "") {
     const advRes = await filterDestinationAdventure(pgData._id, suitable_for, season);
 
     if (advRes.length) {
@@ -50,7 +51,9 @@ const DetailPage = async ({ searchParams, params }: PageProps) => {
     hasParam = true;
   } else {
     adventures = pgData?.adventures?.adventure_lists??[];
-  }
+  } */
+
+  adventures = pgData?.adventures?.adventure_lists??[];
 
   const resortDestinations = await getPageDestination(pgData?.resorts?.feature_destinations??[]);
 
@@ -58,8 +61,17 @@ const DetailPage = async ({ searchParams, params }: PageProps) => {
   const filter_categories = await getCustomCategoryByDestination(pgData.destination_location??'');
 
   filter_categories.sort((a, b) => a.category_name.localeCompare(b.category_name));
-  
-  return <DestinationDetail mode={mode} pgData={pgData} resortDestinations={resortDestinations} adventures={adventures} suitable_for={suitable_for} season={season} hasParam={hasParam} filter_categories={filter_categories} />
+  console.log(filter_categories)
+
+  const locDestinations = await getDestinationList()
+  const locations = [...new Set(locDestinations.map(item => item.destination_location))];
+
+  var featuredDestinations = [];
+  featuredDestinations = await filterDestination("", "");
+
+  // suitable_for={suitable_for} season={season}
+
+  return <DestinationDetail mode={mode} pgData={pgData} resortDestinations={resortDestinations} adventures={adventures} hasParam={hasParam} filter_categories={filter_categories} locations={locations??[]} locDestinations={featuredDestinations} />
 }
 
 export default DetailPage

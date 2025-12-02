@@ -17,14 +17,14 @@ const BannerSection = ({ mode, banners, locations, locDestinations, scrollRef }:
 	const slideref = useRef();
 
   const [location, setLocation] = useState(null);
-  const [resort, setResort] = useState(null);
+  const [resort, setResort] = useState("Any Resorts"); // null
   const [resorts, setResorts] = useState([]);
 
   const [openLoc, setOpenLoc] = useState(false);
   const [selectedLoc, setSelectedLoc] = useState("Select Destination");
 
   const [openRes, setOpenRes] = useState(false);
-  const [selectedRes, setSelectedRes] = useState("Select Resort");
+  const [selectedRes, setSelectedRes] = useState("Any Resorts");  //"Select Resort"
 
   useEffect(() => {
     // Get query string from current URL
@@ -214,6 +214,20 @@ const BannerSection = ({ mode, banners, locations, locDestinations, scrollRef }:
 
                                 {openRes && (
                                   <div className="select-items">
+                                    <div
+                                      onClick={() => {
+                                        setSelectedRes('Any Resorts');
+                                        setResort('Any Resorts')
+                                        setOpenRes(false);
+                                      }}
+                                      style={{ cursor: "pointer" }}
+                                    >
+                                      <span>
+                                        <img src="/images/svg/hotel.svg" alt="" />
+                                      </span>
+                                      Any Resorts
+                                    </div>
+
                                     {resorts.map((res, index) => (
                                       <div
                                         key={index}

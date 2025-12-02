@@ -9,10 +9,39 @@ import type { Mode } from '@core/types'
 // Styles Imports
 import styles from './styles.module.css'
 
-const BannerOtherSection = ({ bannerData, tabID, bannerTitle, scrollRef }: { bannerData?: [], tabID?: ''; bannerTitle?: ''; scrollRef?: [] }) => {
+const BannerOtherSection = ({ bannerData, tabID, bannerTitle, scrollRef, locations, locDestinations }: { bannerData?: [], tabID?: ''; bannerTitle?: ''; scrollRef?: []; locations?: []; locDestinations?: []; }) => {
+    
+    const [location, setLocation] = useState(null);
+    const [resort, setResort] = useState("Any Resorts"); // null
+    const [resorts, setResorts] = useState([]);
+
+    const [openLoc, setOpenLoc] = useState(false);
+    const [selectedLoc, setSelectedLoc] = useState("Select Destination");
+
+    const [openRes, setOpenRes] = useState(false);
+    const [selectedRes, setSelectedRes] = useState("Any Resorts");  //"Select Resort"
+
+    useEffect(() => {
+      setResortItems()
+    }, [location]);
+
+    function setResortItems() {
+      const _resorts = locDestinations.filter(item => item.destination_location==location)
+
+      const resortsArr = _resorts.map(item => item.resorts?.resorts);
+
+      const _resortsItems = resortsArr
+        .filter(Array.isArray)
+        .flatMap(subArray => subArray.map(item => item.title));
+
+      const resortsItems = _resortsItems.sort((a, b) => a.localeCompare(b));
+
+      setResorts([...new Set(resortsItems)])
+    }
+
     const _bannerTitle = ( bannerTitle ? bannerTitle : (tabID == 'resorts') ? 'Resorts' : (tabID == 'adventures') ? 'Adventure' : (tabID == 'stories') ? 'Story' : '');
 
-    const [suitable_for, setSuitableFor] = useState(null);
+    /* const [suitable_for, setSuitableFor] = useState(null);
     const [season, setSeason] = useState(null);
 
     const [openSF, setOpenSF] = useState(false);
@@ -52,7 +81,7 @@ const BannerOtherSection = ({ bannerData, tabID, bannerTitle, scrollRef }: { ban
         {item: "Monsoon", icon: '/images/svg/monsoon.svg'}, 
         {item: "Summer", icon: '/images/svg/sumer.svg'}, 
         {item: "Winter", icon: '/images/svg/winter.svg'}
-    ];
+    ]; */
 
   return (
     <div className={classnames(styles.home_banner)}>
@@ -72,7 +101,7 @@ const BannerOtherSection = ({ bannerData, tabID, bannerTitle, scrollRef }: { ban
             <div className={classnames(styles.container, 'container')}>
                 <div className={classnames(styles.search_box_inner)}>
                     <div className={classnames(styles.search_row)}>
-                        <form>
+                        {/* <form>
                             <input type="hidden" name="suitable_for" value={suitable_for??''} />
                             <input type="hidden" name="season" value={season??''} />
                             <div className={classnames(styles.search_select, styles.ss1)}>
@@ -121,15 +150,6 @@ const BannerOtherSection = ({ bannerData, tabID, bannerTitle, scrollRef }: { ban
                                       </div>
                                     )}
                                 </div>
-
-                                {/*<select name="suitable_for" id="suitable_for" onChange={(e) => setSuitableFor(e.target.value)} value={suitable_for??''}>
-                                  <option value="">- Select -</option>
-                                  <option value="Couple">Couple</option>
-                                  <option value="Family">Family</option>
-                                  <option value="Kids Friendly">Kids Friendly</option>
-                                  <option value="Senior Friendly">Senior Friendly</option>
-                                  <option value="Solo">Solo</option>
-                                </select>*/}
                             </div>
                             <div className={classnames(styles.search_select, styles.ss2)}>
                                 <label>Season / Best Time</label>
@@ -178,18 +198,130 @@ const BannerOtherSection = ({ bannerData, tabID, bannerTitle, scrollRef }: { ban
                                       </div>
                                     )}
                                 </div>
-                                {/*<select name="season" id="season" onChange={(e) => setSeason(e.target.value)} value={season??''}>
-                                  <option value="">- Select -</option>
-                                  <option value="All Year">All Year</option>
-                                  <option value="Monsoon">Monsoon</option>
-                                  <option value="Summer">Summer</option>
-                                  <option value="Winter">Winter</option>
-                                </select>*/}
                             </div>
                             <div className={classnames(styles.search_btn)}>
                                 <input type="submit" name="" value="Search" />
                             </div>
+                        </form> */}
+
+                        <form action={`${process.env.NEXT_PUBLIC_APP_URL}/our-destinations`}>
+                          <input type="hidden" name="location" value={location??''} />
+                          <input type="hidden" name="resort" value={resort??''} />
+
+                          <div className={classnames(styles.search_select, styles.ss1)}>
+                              <label>Destinations</label>
+                              <div className={`custom-select ${openLoc ? 'active' : ''}`}>
+                                <div 
+                                  className="select-selected"
+                                  onClick={() => {setOpenLoc(!openLoc); setOpenRes(false)}}
+                                  style={{ cursor: "pointer" }}
+                                >
+                                  <div>
+                                    <span className="select-icn">
+                                      <img src="/images/svg/map-pin.svg" alt=""  />
+                                    </span>
+                                    <span>{selectedLoc}</span>
+                                  </div>
+
+                                  <img
+                                    src="/images/svg/down-arrow.svg"
+                                    alt=""
+                                    style={{
+                                      transform: openLoc ? "rotate(180deg)" : "rotate(0deg)",
+                                      transition: "0.2s",
+                                    }}
+                                  />
+                                </div>
+
+                                {openLoc && (
+                                  <div className="select-items">
+                                    {locations.map((loc, index) => (
+                                      <div
+                                        key={index}
+                                        onClick={() => {
+                                          setSelectedLoc(loc);
+                                          setLocation(loc)
+                                          setOpenLoc(false);
+                                        }}
+                                        style={{ cursor: "pointer" }}
+                                      >
+                                        <span>
+                                          <img src="/images/svg/map-pin.svg" alt="" />
+                                        </span>
+                                        {loc}
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                          </div>
+                          <div className={classnames(styles.search_select, styles.ss2)}>
+                              <label>Resort/Hotel</label>
+
+                              <div className={`custom-select ${openRes ? 'active' : ''}`}>
+                                <div 
+                                  className="select-selected"
+                                  onClick={() => {setOpenRes(!openRes); setOpenLoc(false)}}
+                                  style={{ cursor: "pointer" }}
+                                >
+                                  <div>
+                                    <span className="select-icn">
+                                      <img src="/images/svg/hotel.svg" alt=""  />
+                                    </span>
+                                    <span>{selectedRes}</span>
+                                  </div>
+
+                                  <img
+                                    src="/images/svg/down-arrow.svg"
+                                    alt=""
+                                    style={{
+                                      transform: openRes ? "rotate(180deg)" : "rotate(0deg)",
+                                      transition: "0.2s",
+                                    }}
+                                  />
+                                </div>
+
+                                {openRes && (
+                                  <div className="select-items">
+                                    <div
+                                      onClick={() => {
+                                        setSelectedRes('Any Resorts');
+                                        setResort('Any Resorts')
+                                        setOpenRes(false);
+                                      }}
+                                      style={{ cursor: "pointer" }}
+                                    >
+                                      <span>
+                                        <img src="/images/svg/hotel.svg" alt="" />
+                                      </span>
+                                      Any Resorts
+                                    </div>
+
+                                    {resorts.map((res, index) => (
+                                      <div
+                                        key={index}
+                                        onClick={() => {
+                                          setSelectedRes(res);
+                                          setResort(res)
+                                          setOpenRes(false);
+                                        }}
+                                        style={{ cursor: "pointer" }}
+                                      >
+                                        <span>
+                                          <img src="/images/svg/hotel.svg" alt="" />
+                                        </span>
+                                        {res}
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                          </div>
+                          <div className={classnames(styles.search_btn)}>
+                              <input type="submit" name="" value="Search" />
+                          </div>
                         </form>
+
                     </div>
                 </div>
             </div>

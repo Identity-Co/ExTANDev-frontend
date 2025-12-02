@@ -1,7 +1,7 @@
 /*section-1-start*/
 
 section.home_section1.our_desti_sec1{ background: url(/images/front-pages/images/tan-background-copy.jpg) center no-repeat; background-size: cover; box-shadow: none; padding-bottom: 13.021vw; }
-.home_section1{padding-top: 10.521vw; background: url(/images/front-pages/images/line-bg.jpg) center no-repeat; background-size: cover; box-shadow: 0 0.781vw 1.042vw rgb(0, 0, 0, 0.32);}
+.home_section1{padding-top: 6.521vw; background: url(/images/front-pages/images/line-bg.jpg) center no-repeat; background-size: cover; box-shadow: 0 0.781vw 1.042vw rgb(0, 0, 0, 0.32);}
 .home_section1 .container{max-width: 62.500vw;}
 
 .our_desti_sec1 .head_text_center{max-width: 43.125vw;}

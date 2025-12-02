@@ -37,6 +37,12 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
 .search_row form .search_btn input[type="submit"]{font-size: 1.25vw; color: #ffffff; background-color: #EA5647; border-radius:0.22vw; text-transform: uppercase; padding: 0.841vw 2.928vw; display: inline-block; line-height: 1; font-family: "Bebas Neue", sans-serif; outline: none; border: none; cursor: pointer; transition: 0.3s ease-in-out; min-height: 2.855vw; display: flex; align-items: center; justify-content: center; letter-spacing: 0.05em;}
 .search_row form .search_btn input[type="submit"]:hover{background-color: #000000;}
 
+@media only screen and (max-height: 900px) and (min-width: 691px) {
+    .home_banner .hero_slide_box {
+        min-height: 800px !important;
+    }
+}
+
 
 @media only screen and (max-width: 1024px){
 .home_banner .hero_slide_container{max-width: 90%; padding: 0 4.223vw;}

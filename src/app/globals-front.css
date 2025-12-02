@@ -9,7 +9,7 @@ font-family: 'Raleway', sans-serif !important;
 *,::after,::before {box-sizing: border-box; padding: 0; margin: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
 a, button{transition: 0.3s ease-in-out; outline: none; text-decoration: none;}
 button{ font-family: "Raleway", sans-serif; }
-body {margin: 0 !important; font-family: "Raleway", sans-serif !important; padding: 0; font-size: 0.833vw !important; line-height: 1.198vw !important; font-weight: 500 !important; color: #1F1F1F !important; background-color: #ffffff !important;}
+body {margin: 0 !important; font-family: "Raleway", sans-serif !important; padding: 0; font-size: max(0.675rem, 1.1vw) !important; line-height: 1.4 !important; font-weight: 500 !important; color: #1F1F1F !important; background-color: #ffffff !important;}
 p{padding-bottom: 1.464vw;}
 p:last-child{margin: 0; padding: 0;}
 p:empty{margin: 0; padding: 0;}
@@ -246,7 +246,7 @@ section.home_section2{position: relative;}
 .pt_50{padding-top: 3.474vw;}
 .pb_50{padding-bottom: 3.474vw;}
 .grid4{display: grid; grid-template-columns: repeat(2, 1fr);}
-body{font-size: 1.551vw !important; line-height: 1.4 !important;}
+/*body{font-size: 1.551vw !important; line-height: 1.4 !important;}*/
 p{padding-bottom: 2.876vw;}
 .fs_35{font-size: 2.432vw !important;}
 .fs_40{font-size: 2.070vw !important; line-height: 1;}
@@ -293,7 +293,7 @@ body .slick-dotted.slick-slider{margin-bottom: 0;}
 .grid2{grid-template-columns: repeat(1, 1fr);}
 .grid3{grid-template-columns: repeat(1, 1fr);}
 .grid4{grid-template-columns: repeat(1, 1fr);}
-body{font-size: 2.779vw !important;}
+/*body{font-size: 2.779vw !important;}*/
 .fs_35{font-size: 3.242vw !important;}
 .fs_40{font-size: 3.705vw !important; line-height: 1;}
 .fs_55{font-size: 5.095vw !important;}
@@ -311,7 +311,7 @@ body .slick-dots li button{width: 3.245vw; height: 3.245vw; border-radius: 100%;
 @media only screen and (max-width: 575px){
 .btn a,
 .btn button{font-size: 3.437vw; padding: 2.375vw 3.508vw;}
-body{font-size: 3.579vw !important;}
+/*body{font-size: 3.579vw !important;}*/
 .gap_16{gap:2.482vw;}
 .gap_24{gap:3.223vw;}
 .gap_32{gap:3.965vw;}
@@ -583,7 +583,7 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
 .destinations_tab{padding-top: 6.252vw; margin-bottom: -13.240vw;}
 .destinations_tab .MuiTabs-fixed{max-width: 36.459vw; margin: 0 auto; padding-bottom: 4.427vw;}
 .destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer{list-style: none; display: flex; flex-wrap: wrap; column-gap: 3.229vw; grid-row-gap: 1.250vw; justify-content: center; border-bottom: solid 0.026vw #707070; font-family: "Raleway", sans-serif;}
-.destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button{font-size: 0.833vw; font-weight: 600; text-transform: uppercase; color: #1F1F1F; position: relative; display: block; line-height: 3; min-width: 0.711vw; min-height: 0.711vw; padding: 0; font-family: "Raleway", sans-serif; flex: 0 0 auto; padding-block-end:0; border-block-end:0;}
+.destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button{font-size: max(0.675rem, 1.1vw); font-weight: 600; text-transform: uppercase; color: #1F1F1F; position: relative; display: block; line-height: 3; min-width: 0.711vw; min-height: 0.711vw; padding: 0; font-family: "Raleway", sans-serif; flex: 0 0 auto; padding-block-end:0; border-block-end:0;}
 .destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button:before{position: absolute; content: ""; width: 0%; height: 0.312vw; background-color: #F85241; left: 0; bottom: 0; transition: 0.3s ease-in-out;}
 .destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button.Mui-selected:before,
 .destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button:hover:before{width: 100%;}
@@ -597,7 +597,8 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
 
 @media only screen and (max-width: 1024px){
 .destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer{column-gap: 2.518vw;}
-.destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button{font-size: 1.260vw;}
+.destinations_tab.total_travel_tab .MuiTabs-fixed{max-width: 60.844vw;}
+/*.destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button{font-size: 1.260vw;}*/
 /*.destinations_tab.total_travel_tab{margin-top: -11vw;}*/
 
 }
@@ -606,7 +607,7 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
 .destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer{column-gap: 3.518vw;}
 .destinations_tab .MuiTabs-fixed{max-width: 90%;}
 .destinations_tab{padding-top: 15.501vw; margin-bottom: -23.201vw;}
-.destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button{font-size: 2.114vw;}
+/*.destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button{font-size: 2.114vw;}*/
 .destinations_tab.total_travel_tab .MuiTabs-fixed{max-width: 90%;}
 .destinations_tab.total_travel_tab{margin-top: -5vw;}
 .destinations_tab.total_travel_tab .MuiTabs-fixed .MuiTabs-flexContainer{padding: 2.646vw 3.646vw 3.646vw; gap: 2.667vw;}
@@ -614,7 +615,7 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
 }
 
 @media only screen and (max-width: 575px){
-.destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button{font-size: 3.114vw;}
+/*.destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button{font-size: 3.114vw;}*/
 
 }
 
@@ -648,7 +649,7 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
 
 
 .login-err-msg{text-align: center;}
-.login-err-msg a{color: #F85241;}
+.login-err-msg a{color: #F85241; font-weight: 600;}
 .login-err-msg a:hover{color: #014040;}
 
 
@@ -658,9 +659,8 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
 
 
 body .orange_social_lssc span{font-weight: 700; color: #F85241;}
-
-
-
+body .white_social_lssc span{font-weight: 700; color: #FFF;}
+body .white_social_lssc ul li a svg path{fill: #FFF;}
 
 
 
@@ -700,4 +700,32 @@ body .orange_social_lssc span{font-weight: 700; color: #F85241;}
 	.select-items div{font-size: 3.425vw;}
 	.select-selected{padding: 1vw 0.662vw;}
 
+}
+
+
+.jade_jungle_sec4 .activities_slider .slick-list,
+.jade_jungle_sec4 .activities_slider .slick-track{display: flex;}
+.jade_jungle_sec4 .activities_slider .slick-list{margin: 0 -0.732vw;}
+.jade_jungle_sec4 .activities_slider .slick-list .slick-slide{padding: 0 0.732vw;}
+.jade_jungle_sec4 .activities_slider .slick-list .slick-slide{height: 100%;}
+.jade_jungle_sec4 .activities_slider .slick-next, 
+.jade_jungle_sec4 .activities_slider .slick-prev{width: auto; height: auto; top: calc(50% - 1.098vw);}
+.jade_jungle_sec4 .activities_slider .slick-next:before, .activities_slider .slick-prev:before{display: none;}
+.jade_jungle_sec4 .activities_slider .slick-prev{left: -4.343vw; z-index: 1; background: url(/images/front-pages/images/left-gray-arrow.svg) center no-repeat; background-size: contain; width: 1.927vw; height: 2.813vw; opacity: 0.17; transition: 0.3s ease-in-out;}
+.jade_jungle_sec4 .activities_slider .slick-prev:hover{opacity: 1;}
+.jade_jungle_sec4 .activities_slider .slick-next{right: -4.343vw; z-index: 1; background: url(/images/front-pages/images/right-gray-arrow.svg) center no-repeat; background-size: contain; width: 1.927vw; height: 2.813vw; opacity: 0.17; transition: 0.3s ease-in-out;}
+.jade_jungle_sec4 .activities_slider .slick-next:hover{opacity: 1;}
+
+
+.jade_jungle_rooms_sec2 .jungle_room_slide_box .slick-next:before, .jungle_room_slide_box .slick-prev:before{display: none;}
+.jade_jungle_rooms_sec2 .jungle_room_slide_box .slick-prev{left: 0.512vw; z-index: 1; background: url(/images/front-pages/images/left-white-arrow-small.svg) center no-repeat; background-size: contain; width: 1.098vw; height: 1.611vw; opacity: 0.69; transition: 0.3s ease-in-out;}
+.jade_jungle_rooms_sec2 .jungle_room_slide_box .slick-prev:hover,
+.jade_jungle_rooms_sec2 .adventure_post_slide .slick-list .slick-slide.slick-active .jungle_room_slide_box .slick-prev{opacity: 1;}
+.jade_jungle_rooms_sec2 .jungle_room_slide_box .slick-next{right: 0.512vw; z-index: 1; background: url(/images/front-pages/images/right-white-arrow-small.svg) center no-repeat; background-size: contain; width: 1.098vw; height: 1.611vw; opacity: 0.69; transition: 0.3s ease-in-out;}
+.jade_jungle_rooms_sec2 .jungle_room_slide_box .slick-next:hover{opacity: 1;}
+
+
+@media only screen and (max-width: 768px){
+.jade_jungle_rooms_sec2 .jungle_room_slide_box .slick-prev{width: 2.098vw; height: 2.611vw; left:1ve;}
+.jade_jungle_rooms_sec2 .jungle_room_slide_box .slick-next{width: 2.098vw; height: 2.611vw; right:1ve;}
 }

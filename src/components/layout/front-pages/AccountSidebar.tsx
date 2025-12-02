@@ -18,7 +18,7 @@ type EditProps = {
   pathName: string
 }
 
-const AccountSidebar = ({ pathName, }: EditProps) => {
+const AccountSidebar = ({ pathName }: EditProps) => {
     const [session, setSession] = useState(null)
     
     useEffect(() => {
@@ -90,6 +90,15 @@ const AccountSidebar = ({ pathName, }: EditProps) => {
                   <Link href="/my-account/points-history/">
                     <img src="/images/front-pages/point.svg" alt="point" />
                     Points History
+                  </Link>
+                </li>
+              )}
+
+              {session?.user?.role != 'property_owner' && (
+                <li className={pathName === "/my-account/my-trips/" ? "active" : ""} >
+                  <Link href="/my-account/my-trips/">
+                    <img src="/images/front-pages/point.svg" alt="point" />
+                    My Trips
                   </Link>
                 </li>
               )}

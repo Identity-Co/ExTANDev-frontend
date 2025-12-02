@@ -13,16 +13,16 @@ import styles from './styles.module.css'
 const BannerSection = ({ mode, data, locations, locDestinations }: { mode: Mode; data?: []; locations?: []; locDestinations?: []; }) => {
 
     const [location, setLocation] = useState(null);
-    const [resort, setResort] = useState(null);
+    const [resort, setResort] = useState("Any Resorts");  // null
     const [resorts, setResorts] = useState([]);
 
     const [openLoc, setOpenLoc] = useState(false);
     const [selectedLoc, setSelectedLoc] = useState("Select Destination");
 
     const [openRes, setOpenRes] = useState(false);
-    const [selectedRes, setSelectedRes] = useState("Select Resort");
+    const [selectedRes, setSelectedRes] = useState("Any Resorts");  //"Select Resort"
 
-    useEffect(() => {
+    /* useEffect(() => {
         // Get query string from current URL
         const searchParams = new URLSearchParams(window.location.search);
 
@@ -33,7 +33,7 @@ const BannerSection = ({ mode, data, locations, locDestinations }: { mode: Mode;
         if(_location !== undefined) setLocation(_location);
         if(_resort !== undefined) setResort(_resort);
         console.log(_location, _resort)
-    }, []);
+    }, []); */
 
     useEffect(() => {
         setResortItems()
@@ -169,6 +169,20 @@ const BannerSection = ({ mode, data, locations, locDestinations }: { mode: Mode;
 
                                 {openRes && (
                                   <div className="select-items">
+                                    <div
+                                      onClick={() => {
+                                        setSelectedRes('Any Resorts');
+                                        setResort('Any Resorts')
+                                        setOpenRes(false);
+                                      }}
+                                      style={{ cursor: "pointer" }}
+                                    >
+                                      <span>
+                                        <img src="/images/svg/hotel.svg" alt="" />
+                                      </span>
+                                      Any Resorts
+                                    </div>
+
                                     {resorts.map((res, index) => (
                                       <div
                                         key={index}

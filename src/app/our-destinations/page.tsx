@@ -23,7 +23,10 @@ const LandingPage = async ({searchParams}) => {
 
   var featuredDestinations = [];
 
-  if((location == "" && resort == "") || (location === undefined && resort === undefined)) {
+  if(resort == "Any Resorts") {
+    featuredDestinations = await filterDestination("", "");
+    hasParam = true;
+  } else if((location == "" && resort == "") || (location === undefined && resort === undefined)) {
     featuredDestinations = await getPageDestination(pgData?.feature_destinations??[]);
   } else {
     featuredDestinations = await filterDestination(location, resort);

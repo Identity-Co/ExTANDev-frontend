@@ -11,6 +11,8 @@ import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import TabContext from '@mui/lab/TabContext'
 
+import { getFilteredCount } from '@/app/server/tours'
+
 const OverviewTab = dynamic(() => import('@views/sub-pages/our-destinations/destination-detail/overview'))
 const ResortTab = dynamic(() => import('@views/sub-pages/our-destinations/destination-detail/resorts'))
 const AdventureTab = dynamic(() => import('@views/sub-pages/our-destinations/destination-detail/adventures'))
@@ -26,11 +28,16 @@ const tabContentList = (props): { [key: string]: ReactElement } => ({
   stories: <StoryTab {...props}/>
 })
 
-const PageSection = ({ pgData, id, resortDestinations, adventures, suitable_for, season, hasParam, filter_categories }: { pgData?: []; id?: String; resortDestinations?: []; adventures?: []; suitable_for?: '', season?: ''; hasParam?: false; filter_categories: []; }) => {
+const PageSection = ({ pgData, id, resortDestinations, adventures, hasParam, filter_categories, locations, locDestinations }: { pgData?: []; id?: String; resortDestinations?: []; adventures?: []; hasParam?: false; filter_categories: []; locations?: []; locDestinations?: []; }) => {
+  // , suitable_for, season -- suitable_for?: '', season?: ''; 
 
-  const [val, setVal] = useState<string>((((suitable_for !== undefined && suitable_for) || (season !== undefined && season)) ? 'adventures' : 'overview'))
+  //const [val, setVal] = useState<string>((((suitable_for !== undefined && suitable_for) || (season !== undefined && season)) ? 'adventures' : 'overview'))
+  
+  const [val, setVal] = useState<string>('overview')
+  const [totAdventures, setTotAdventures] = useState(0)
   const [isOverviewDetailPage, setIsOverviewDetailPage] = useState(false);
   const [isOverviewDetailPageID, setIsOverviewDetailPageID] = useState<string>('');
+  const [hideResorts, setHideResorts] = useState(false);
 
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setVal(newValue)
@@ -65,22 +72,38 @@ const PageSection = ({ pgData, id, resortDestinations, adventures, suitable_for,
     }
   }, [hasParam]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const searchParams = new URLSearchParams(window.location.search);
+      const hide = searchParams.get("hide_resorts");
+
+      const t_count = await getFilteredCount('', pgData?.destination_location ?? '');
+      setTotAdventures(t_count);
+
+      if (hide === "1") {
+        setHideResorts(true);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <>
       {val === 'overview' ? (
-        <BannerOverviewSection bannerData={pgData?.overview?.banners ?? []} />
+        <BannerOverviewSection bannerData={pgData?.overview?.banners ?? []} locations={locations} locDestinations={locDestinations} />
       ) : isOverviewDetailPageID && isOverviewDetailPage ? (
         <BannerOtherSection
-          bannerData={adventureDetailPageData?.banner_image} tabID={val} bannerTitle={adventureDetailPageData?.title} />
+          bannerData={adventureDetailPageData?.banner_image} tabID={val} bannerTitle={adventureDetailPageData?.title} locations={locations} locDestinations={locDestinations} />
       ) : (
         <BannerOtherSection
-          bannerData={pgData?.[val]?.banner_image} tabID={val} scrollRef={scrollref} />
+          bannerData={pgData?.[val]?.banner_image} tabID={val} scrollRef={scrollref} locations={locations} locDestinations={locDestinations} />
       )}
       <TabContext value={val} className="my-5">
         <TabList variant='fullWidth' onChange={handleChange} aria-label='full width tabs example' className="destinations_tab">
           <Tab value='overview' label='Overview' />
-          <Tab value='resorts' label='Resorts' />
-          <Tab value='adventures' label='Adventures' onClick={(e) => { setIsOverviewDetailPageID(''); setIsOverviewDetailPage(false); }} />
+          {!hideResorts && <Tab value='resorts' label='Resorts' />}
+          {totAdventures > 0 && <Tab value='adventures' label='Adventures' onClick={(e) => { setIsOverviewDetailPageID(''); setIsOverviewDetailPage(false); }} />}
           <Tab value='stories' label='Stories' />
         </TabList>
         <TabPanel value={val} className='pbs-0'>

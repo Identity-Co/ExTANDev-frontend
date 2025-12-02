@@ -19,16 +19,16 @@ const BannerSection = ({ mode, banners, locations, locDestinations }: { mode: Mo
   const slideref = useRef();
 
   const [location, setLocation] = useState(null);
-  const [resort, setResort] = useState(null);
+  const [resort, setResort] = useState("Any Resorts");  //null
   const [resorts, setResorts] = useState([]);
 
   const [openLoc, setOpenLoc] = useState(false);
   const [selectedLoc, setSelectedLoc] = useState("Select Destination");
 
   const [openRes, setOpenRes] = useState(false);
-  const [selectedRes, setSelectedRes] = useState("Select Resort");
+  const [selectedRes, setSelectedRes] = useState("Any Resorts");  //"Select Resort"
 
-  useEffect(() => {
+  /* useEffect(() => {
     // Get query string from current URL
     const searchParams = new URLSearchParams(window.location.search);
 
@@ -38,7 +38,7 @@ const BannerSection = ({ mode, banners, locations, locDestinations }: { mode: Mo
 
     if(_location !== undefined) setLocation(_location);
     if(_resort !== undefined) setResort(_resort);
-  }, []);
+  }, []); */
   
   useEffect(() => {
     const slides = document.querySelectorAll('.hero_slide_box');
@@ -211,6 +211,20 @@ const BannerSection = ({ mode, banners, locations, locDestinations }: { mode: Mo
 
                                 {openRes && (
                                   <div className="select-items">
+                                    <div
+                                      onClick={() => {
+                                        setSelectedRes('Any Resorts');
+                                        setResort('Any Resorts')
+                                        setOpenRes(false);
+                                      }}
+                                      style={{ cursor: "pointer" }}
+                                    >
+                                      <span>
+                                        <img src="/images/svg/hotel.svg" alt="" />
+                                      </span>
+                                      Any Resorts
+                                    </div>
+
                                     {resorts.map((res, index) => (
                                       <div
                                         key={index}
