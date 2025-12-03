@@ -51,28 +51,12 @@ const RootLayout = async (props: ChildrenType ) => {
   return (
     
       <html id='__next' lang='en' dir={direction} suppressHydrationWarning>
-        <head>
-          <link
-            rel="stylesheet"
-            href="https://cdn.ai12z.net/pkg/ai12z@latest/dist/library/library.css"
-          />
-        </head>
         <body className='flex is-full min-bs-full flex-auto flex-col' suppressHydrationWarning>
           <AppRouterCacheProvider>
             <InitColorSchemeScript attribute='data' defaultMode={systemMode} />
             <NavigationEvents />
             <PageLoader />
             {children}
-
-            <ai12z-bot data-key="65832f10b6e586501e799bc716b673c21f422a6d59b9d861dcf9227f0f663481"></ai12z-bot>
-            <Script
-              type="module"
-              src="https://cdn.ai12z.net/pkg/ai12z@latest/dist/esm/library.js"
-              strategy="afterInteractive"
-              onLoad={() => {
-                if (window.Bot) window.Bot.init()
-              }}
-            />
           </AppRouterCacheProvider>
         </body>
       </html>
