@@ -109,6 +109,7 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
 section.home_section1.our_desti_sec1{ background: url(/images/front-pages/images/tan-background-copy.jpg) center no-repeat; background-size: cover; box-shadow: none; padding-bottom: 13.021vw; }
 .home_section1{padding-top: 10.521vw; background: url(/images/front-pages/images/line-bg.jpg) center no-repeat; background-size: cover; box-shadow: 0 0.781vw 1.042vw rgb(0, 0, 0, 0.32);}
 .home_section1 .container{max-width: 62.500vw;}
+.home_section1.hotels_login{padding-top: 6.521vw;}
 
 .our_desti_sec1 .head_text_center{max-width: 43.125vw;}
 .our_desti_sec1 .head_text_center h2{color: #1F1F1F; letter-spacing: 0; line-height: 1; padding-bottom: 1.146vw;}
@@ -133,6 +134,7 @@ section.home_section1.our_desti_sec1{ background: url(/images/front-pages/images
 
 @media only screen and (max-width: 1024px){
   .home_section1{padding-top: 17.521vw;}
+  .home_section1.hotels_login{padding-top: 12.521vw;}
   .home_section1 .container{max-width: 100%;}
   .our_desti_sec1 .head_text_center{max-width: 100%;}
   .our_desti_sec1 .head_text_center p{max-width: 100%;}

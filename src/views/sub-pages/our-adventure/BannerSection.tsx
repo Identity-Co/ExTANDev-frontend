@@ -29,7 +29,7 @@ const BannerSection = ({ mode, banners, filter_categories, scrollRef }: { mode: 
   const [selectedDest, setSelectedDest] = useState("Select a Destination");
 
   const searchParams = useSearchParams()
-  
+
   useEffect(() => {
     const slides = document.querySelectorAll('.hero_slide_box');
 
@@ -68,6 +68,7 @@ const BannerSection = ({ mode, banners, filter_categories, scrollRef }: { mode: 
 
     if (destinationFromUrl) {
       setSelectedDestination(destinationFromUrl)
+      setSelectedDest(destinationFromUrl)
     } else {
       setSelectedDestination('')
     }
@@ -94,6 +95,7 @@ const BannerSection = ({ mode, banners, filter_categories, scrollRef }: { mode: 
     setSelectedCategory(categoryName)*/
     setSelectedDestination('')
     setDestinations([])
+    setSelectedDest("Select a Destination")
 
     if (category) {
       try {

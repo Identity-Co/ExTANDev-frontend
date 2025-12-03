@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import type { Mode } from '@core/types'
 
 // Component Imports
+import TotalTravelSection1Loggedin from './TotalTravelSection1Loggedin'
 import TotalTravelSection1 from './TotalTravelSection1'
 import TotalTravelSection2 from './TotalTravelSection2'
 
@@ -28,8 +29,14 @@ const LandingPageWrapper = ({ mode, banners, pgData, setOpenAccess, accessToken 
 
   return (
     <>
-      <TotalTravelSection1 data={pgData} isMore={isMore} setIsMore={setIsMore} setOpenAccess={setOpenAccess} accessToken={accessToken} />
-      <TotalTravelSection2 data={pgData} isMore={isMore} setIsMore={setIsMore} />
+      {accessToken ? (
+        <TotalTravelSection1Loggedin data={pgData} setOpenAccess={setOpenAccess} accessToken={accessToken} />
+      ) : (
+        <>
+          <TotalTravelSection1 data={pgData} isMore={isMore} setIsMore={setIsMore} setOpenAccess={setOpenAccess} accessToken={accessToken} />
+          <TotalTravelSection2 data={pgData} isMore={isMore} setIsMore={setIsMore} />
+        </>
+      )}
     </>
   )
 }
