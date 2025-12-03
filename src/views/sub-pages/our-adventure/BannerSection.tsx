@@ -284,3 +284,4 @@ const BannerSection = ({ mode, banners, filter_categories, scrollRef }: { mode: 
 }
 
 export default BannerSection
+
