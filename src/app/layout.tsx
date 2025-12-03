@@ -51,6 +51,12 @@ const RootLayout = async (props: ChildrenType ) => {
   return (
     
       <html id='__next' lang='en' dir={direction} suppressHydrationWarning>
+        <head>
+          <link
+            rel="stylesheet"
+            href="https://cdn.ai12z.net/pkg/ai12z@latest/dist/library/library.css"
+          />
+        </head>
         <body className='flex is-full min-bs-full flex-auto flex-col' suppressHydrationWarning>
           <AppRouterCacheProvider>
             <InitColorSchemeScript attribute='data' defaultMode={systemMode} />
