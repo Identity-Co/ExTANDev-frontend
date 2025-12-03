@@ -136,6 +136,22 @@ const TotalTravelSection1 = ({ data, isMore, setIsMore, setOpenAccess, accessTok
 
     };
 
+    const fetchIframe = () => {
+      const checkFrame = setInterval(() => {
+        var iframeEL = document.querySelector("iframe");
+
+        if (iframeEL !== undefined) {
+          clearInterval(checkFrame);
+
+          const observer = new MutationObserver(() => {
+            console.log("Iframe started loading (src changed)");
+          });
+
+          observer.observe(iframeEL, { attributes: true, attributeFilter: ["src"] });
+        }
+      }, 500);
+    };
+
     useEffect(() => {
         if (isLoadRef.current) return;
         isLoadRef.current = true
@@ -146,6 +162,7 @@ const TotalTravelSection1 = ({ data, isMore, setIsMore, setOpenAccess, accessTok
 
     useEffect(() => {
         fetchCarsData();
+        fetchIframe();
     }, [isMore])
 
     // Extract <strong> or <b> text only

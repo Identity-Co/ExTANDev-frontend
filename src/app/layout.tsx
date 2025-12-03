@@ -36,6 +36,8 @@ export const metadata = {
   description: ''
 }
 
+import Script from "next/script"
+
 const RootLayout = async (props: ChildrenType ) => {
   
 
@@ -55,6 +57,15 @@ const RootLayout = async (props: ChildrenType ) => {
             <NavigationEvents />
             <PageLoader />
             {children}
+
+            <Script
+              type="module"
+              src="https://cdn.ai12z.net/pkg/ai12z@latest/dist/esm/library.js"
+              strategy="afterInteractive"
+              onLoad={() => {
+                if (window.Bot) window.Bot.init()
+              }}
+            />
           </AppRouterCacheProvider>
         </body>
       </html>
