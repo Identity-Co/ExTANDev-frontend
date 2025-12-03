@@ -84,7 +84,7 @@ const schema = object({
   rating: optional(string()),
 })
 
-const PageSection = ({ pgData, destinations, adventurePosts, allResortsList }: { pgData?: []; destinations?: []; adventurePosts?: []; allResortsList?: []; }) => {  
+const PageSection = ({ pgData, destinations, adventurePosts, allResortsList, resortTags }: { pgData?: []; destinations?: []; adventurePosts?: []; allResortsList?: []; resortTags?: [] }) => {  
   const router = useRouter()
 
   const setLoading = useNavigationStore((s) => s.setLoading)
@@ -110,13 +110,13 @@ const PageSection = ({ pgData, destinations, adventurePosts, allResortsList }: {
   }, [destinations]);
 
   useEffect(() => {
-    const obj = allResortsList.map(item => ({
-      label: item.resort_id,
-      value: `${item.resort_title} (${item.destination_title})`
+    const obj = resortTags.map(item => ({
+      label: item,
+      value: item
     }));
 
     setresortOptions(obj);
-  }, [allResortsList]);
+  }, [resortTags]);
 
   useEffect(() => {
     const obj = adventurePosts.map(item => ({
