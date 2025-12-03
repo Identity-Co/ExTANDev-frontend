@@ -1,0 +1,84 @@
+/*services-sec1-start*/
+section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 12.869vw;}
+section.home_section1.our_desti_sec1{ background: url(/images/front-pages/images/tan-background-copy.jpg) center no-repeat; background-size: cover; box-shadow: none; padding-bottom: 13.021vw; }
+
+.adventure_right_text .advanture_text1{display: flex; align-items: center; column-gap: 3.333vw; justify-content:center;}
+.adventure_right_text .advanture_text1 a{font-size: 1.025vw; font-weight: 600; color: #ffffff; background-color: #F85241; padding: 0.732vw 1.318vw; line-height: 1; display: flex; align-items: center; gap:0.952vw; text-transform: none; letter-spacing: -0.010em;}
+.adventure_right_text .advanture_text1 a svg{width: 1.318vw; height: 1.318vw;}
+.adventure_right_text .advanture_text1 a:hover{background-color: #000000;}
+
+.our_desti_sec2{margin-top: -7.813vw;}
+
+@media only screen and (min-width: 1025px){
+.our_desti_sec1.jade_jungle_sec1.jade_jungle_rooms_sec1 .head_text_center{max-width: 95%;}
+.jade_jungle_rooms_sec1 .container{max-width: 80%;}
+}
+
+@media only screen and (max-width: 1024px){
+.adventure_right_text .advanture_text1{column-gap: 1.333vw;}
+  .adventure_right_text .advanture_text1 a{font-size: 1.825vw; padding: 1.532vw 2.025vw;}
+  .adventure_right_text .advanture_text1 a svg{width: 2.318vw; height: 2.018vw;}
+}
+
+section.home_section1.our_desti_sec1.jade_jungle_sec1.jade_jungle_rooms_sec1{padding-bottom: 25.021vw;}
+.jade_jungle_rooms_sec1 .destination_overview_tab{padding-bottom: 2.757vw;}
+
+@media only screen and (max-width: 768px){
+  section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 22.616vw;}
+  .jade_jungle_rooms_sec1 .destination_overview_tab{max-width:100%;}
+  .jade_jungle_rooms_sec1.jade_jungle_sec1 .head_text_center{max-width:100%;}
+
+  .adventure_right_text .advanture_text1 a{font-size: 3.825vw; padding: 1.532vw 3.025vw;}
+  .adventure_right_text .advanture_text1 a svg{width: 3.318vw; height: 3.318vw;}
+}
+
+.jade_jungle_services_sec1 .head_text_center h2{text-transform:none; font-family: "Raleway", sans-serif; font-style:italic; font-weight:700; letter-spacing:-0.015em; line-height:1.2; padding-bottom: 1.146vw;}
+@media only screen and (min-width: 1025px){
+  .jade_jungle_services_sec1 .head_text_center{max-width:51vw;}
+}
+
+/*services-sec2-start*/
+.jade_jungle_services_sec2 > .container{display:flex; flex-direction:column; gap:5.208vw;}
+.jade_jungle_services_sec2 h2{padding-bottom:1vw;}
+
+@media only screen and (max-width: 1024px){
+.jade_jungle_services_sec2 > .container{gap:6.948vw;}
+
+}
+
+@media only screen and (max-width: 768px){
+  section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 22.616vw;}
+  .jade_jungle_services_sec2 > .container{gap:7.130vw;}
+}
+
+
+/*services-sec3-start*/
+.jade_jungle_services_sec3{background:#EFEEED; text-align:center;}
+.jade_jungle_services_sec3 .fs_35{font-weight:800; line-height:1.19; font-style:italic;}
+.jade_jungle_services_sec3 .star-review{padding-bottom:1.823vw; display:flex; justify-content: center; width:6vw; margin:auto;}
+.jade_jungle_services_sec3 .star-review img{width:100%;}
+.jade_jungle_services_sec3 p strong{font-weight:900;}
+
+.jade_jungle_services_sec3 .star_review { display: flex; gap: 0.1042vw; justify-content: center; }
+.jade_jungle_services_sec3 .star_review span{ font-size: 1.9375vw; }
+.jade_jungle_services_sec3 .star_review span.filled{ color: #f85241; }
+
+@media only screen and (min-width: 769px){
+.jade_jungle_services_sec3 > .container{max-width:54vw;}
+}
+
+@media only screen and (min-width: 1025px){
+.jade_jungle_services_sec3 > .container{max-width:45vw;}
+}
+
+@media only screen and (min-width: 1299px){
+.jade_jungle_services_sec3 > .container{max-width:36vw;}
+}
+
+@media only screen and (max-width: 1024px){
+.jade_jungle_services_sec3 .star-review{width:10vw; padding-bottom:2.876vw;}
+}
+
+@media only screen and (max-width: 768px){
+.jade_jungle_services_sec3 .star-review{width:16vw;}
+}

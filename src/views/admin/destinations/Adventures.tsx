@@ -159,9 +159,10 @@ type ResortProps = {
   getFormId: () => void
   adventurePosts: []
   reviews: []
+  resortTags: []
 }
 
-const Adventures = ({ pgData, setFormId, getFormId, adventurePosts, reviews }: ResortProps) => {
+const Adventures = ({ pgData, setFormId, getFormId, adventurePosts, reviews, resortTags }: ResortProps) => {
   const isOnlyPBr = /^<p><br><\/p>$/;
   const router = useRouter()
 
@@ -183,15 +184,15 @@ const Adventures = ({ pgData, setFormId, getFormId, adventurePosts, reviews }: R
   const fData = new FormData();
 
   useEffect(() => {
-    const obj = resorts.map(item => ({
-      label: item._id,
-      value: item.title
+    const obj = resortTags.map(item => ({
+      label: item,
+      value: item
     }));
 
-    obj.sort((a, b) => a.value.localeCompare(b.value));
+    obj.sort((a, b) => String(a.value).localeCompare(String(b.value)));
 
     setresortOptions(obj);
-  }, [resorts]);
+  }, [resortTags]);
 
   useEffect(() => {
     const obj = adventurePosts.map(item => ({
@@ -271,6 +272,7 @@ const Adventures = ({ pgData, setFormId, getFormId, adventurePosts, reviews }: R
     
     setIsSubmitting(true)
 
+    fData.append('is_adventures_tab', 'yes');
     if (data.banner_image instanceof File) {
       fData.append('banner_image_file', data.banner_image);
     }else{

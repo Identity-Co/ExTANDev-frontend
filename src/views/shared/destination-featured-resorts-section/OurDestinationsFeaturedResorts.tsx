@@ -24,18 +24,18 @@ const OurDestinationsFeaturedResorts = ({ sectionProps }: sectionProp) => {
                     {sectionProps.resorts?.map((item, index) => (
                         <div key={index} className={classnames(styles.network_travel_box)}>
                             <div className={classnames(styles.network_travel_top)}>
-                                <a className={classnames(styles.fl_bx_lnk_glb, 'fl_bx_lnk_glb')} href="#" tabIndex="0"></a>
+                                <a className={classnames(styles.fl_bx_lnk_glb, 'fl_bx_lnk_glb')} href={`${process.env.NEXT_PUBLIC_APP_URL}/resorts/${item?.page_url ?? ''}`} tabIndex="0"></a>
                                 <div className={classnames(styles.network_travel_img)}>
                                     <img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${item?.image}`} />
                                 </div>
                                 <div className={classnames(styles.network_travel_img_text)}>
                                     {item?.location && <span>{item?.location}</span>}
-                                    {item?.title && <h4>{item?.title}</h4>}
+                                    {item?.name && <h4>{item?.name}</h4>}
                                     <span dangerouslySetInnerHTML={{
-                                        __html: (item?.content || ''),
+                                        __html: (item?.short_description || ''),
                                     }}></span>
                                     <div className={classnames(styles.btn, 'btn')}>
-                                        <a href="#">BOOK NOW</a>
+                                        <a href={`${process.env.NEXT_PUBLIC_APP_URL}/resorts/${item?.page_url ?? ''}`}>BOOK NOW</a>
                                     </div>
                                 </div>
                             </div>

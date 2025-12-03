@@ -1,0 +1,65 @@
+// React Imports
+import React, { useState, useEffect } from 'react'
+
+// Third-party Imports
+import classnames from 'classnames'
+import Slider from 'react-slick';
+
+// Styles Imports
+import styles from './styles.module.css'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+const OverviewSection3 = ({ data }: { data?: []; }) => {
+  if(!data)
+    return
+  
+  const [centerPadding, setCenterPadding] = useState("0px");
+
+  useEffect(() => {
+    function updatePadding() {
+      const pxValue = 12.811 * (window.innerWidth * 0.01); // 29vw in px
+      
+      setCenterPadding(`${pxValue}px`);
+    }
+
+    updatePadding();
+    window.addEventListener("resize", updatePadding);
+    
+    return () => window.removeEventListener("resize", updatePadding);
+  }, []);
+
+  const settings = {
+    dots: true,
+    arrows: true,
+    infinite: true,
+    speed: 500,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding,
+  };
+
+  return (
+
+    <section className={classnames(styles.home_section2, 'home_section2 py_150')}>
+        <div className={classnames(styles.home_slider, 'home_slider')}>
+          <Slider {...settings} className={classnames(styles.home_slider2, 'home_slider2')}>
+              {data?.map((item, index) => (
+                  <div key={'slide-' + index} className={classnames(styles.resort_box_main, 'resort_box_main')}>
+                    <div className={classnames(styles.resort_box, 'resort_box')}>
+                      <div className={classnames(styles.resort_img, 'resort_img')}>
+                        <img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${item}`} />
+                      </div>
+                    </div>
+                  </div>
+              ))}
+          </Slider>
+        </div>
+    </section>   
+  )
+}
+
+export default OverviewSection3

@@ -28,7 +28,7 @@ const tabContentList = (props): { [key: string]: ReactElement } => ({
   stories: <StoryTab {...props}/>
 })
 
-const PageSection = ({ pgData, id, destinations, adventurePosts, reviews }: { pgData?: []; id?: String; destinations?: []; adventurePosts?: []; reviews?: []; }) => {
+const PageSection = ({ pgData, id, destinations, adventurePosts, reviews, resortTags }: { pgData?: []; id?: String; destinations?: []; adventurePosts?: []; reviews?: []; resortTags?: []; }) => {
 
   const [val, setVal] = useState<string>('overview')
 
@@ -63,7 +63,7 @@ const PageSection = ({ pgData, id, destinations, adventurePosts, reviews }: { pg
             </TabList>
             <TabPanel value={val} className='pbs-0'>
               <CardContent>
-                {tabContentList({ pgData: pgData, destinations: destinations, setFormId: setFormId, getFormId: getFormId, adventurePosts: adventurePosts, reviews: reviews })[val]}
+                {tabContentList({ pgData: pgData, destinations: destinations, setFormId: setFormId, getFormId: getFormId, adventurePosts: adventurePosts, reviews: reviews, resortTags: resortTags })[val]}
               </CardContent>
             </TabPanel>
           </TabContext>

@@ -7,6 +7,7 @@ import { getDestinationBySlug } from '@/app/server/destinations'
 //import { getPageDestination, filterDestinationAdventure } from '@/app/server/destinations'
 import { getPageDestination, getResortByIds, getDestinationList, filterDestination } from '@/app/server/destinations'
 import { getCustomCategoryByDestination } from '@/app/server/tours'; //getCustomCategories, getCustomCategoryByDestination
+import { getResortsByTag } from '@/app/server/resorts';
 
 import { notFound } from 'next/navigation'
 
@@ -69,9 +70,18 @@ const DetailPage = async ({ params }: PageProps) => { //searchParams,
   var featuredDestinations = [];
   featuredDestinations = await filterDestination("", "");
 
+  let resortsLists: any[] = [];
+  if(pgData?.resorts?.resort_tags){
+    const requestData: any = {
+      'tag': pgData?.resorts?.resort_tags,
+      'fields': '',
+    };
+    resortsLists = await getResortsByTag(requestData);
+  }
+
   // suitable_for={suitable_for} season={season}
 
-  return <DestinationDetail mode={mode} pgData={pgData} resortDestinations={resortDestinations} adventures={adventures} hasParam={hasParam} filter_categories={filter_categories} locations={locations??[]} locDestinations={featuredDestinations} />
+  return <DestinationDetail mode={mode} pgData={pgData} resortDestinations={resortDestinations} adventures={adventures} hasParam={hasParam} filter_categories={filter_categories} locations={locations??[]} locDestinations={featuredDestinations} resortsLists={resortsLists?? []} />
 }
 
 export default DetailPage

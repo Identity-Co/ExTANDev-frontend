@@ -21,6 +21,7 @@ import AdventuresDetailSection4 from '@/views/shared/instagram-feed-section/Inst
 import { useSettings } from '@core/hooks/useSettings'
 
 import { getEntry } from '@/app/server/reviews'
+import { getResortsByTag } from '@/app/server/resorts';
 
 type AdventureProps = {
   pgData: []
@@ -37,18 +38,27 @@ const LandingPageWrapper = ({ pgData, destinations, isOverviewDetailPage, setIsO
   
   const [currentCat, setCurrentCat] = useState('')
   const [currentTours, setCurrentTours] = useState([])
+  const [featuredResorts, setFeaturedResorts] = useState([])
 
   const adventurePosts = pgData?.adventures?.adventure_posts;
 
   // Hooks
   const { updatePageSettings } = useSettings()
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      if(pgData?.adventures?.feature_resorts?.resorts){
+        const requestData: any = {
+          'tag': pgData?.adventures?.feature_resorts?.resorts,
+          'fields': '',
+        };
+        const resorts = await getResortsByTag(requestData);
+        setFeaturedResorts(resorts);
+      }
+    }
 
-  let featuredResorts: any[] = [];
-  if(pgData?.adventures?.feature_resorts?.resorts){
-    pgData.adventures.feature_resorts.resorts.forEach((item: any, index: number) => {
-      featuredResorts?.push(pgData?.resorts?.resorts?.find(itemsub => itemsub._id == item))
-    });
-  }
+    fetchData();
+  }, pgData?.adventures?.feature_resorts?.resorts);
 
   // For Page specific settings
   useEffect(() => {

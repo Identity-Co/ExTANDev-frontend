@@ -1,0 +1,120 @@
+/*offers-sec1-start*/
+section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 12.869vw;}
+section.home_section1.our_desti_sec1{ background: url(/images/front-pages/images/tan-background-copy.jpg) center no-repeat; background-size: cover; box-shadow: none; padding-bottom: 13.021vw; }
+.our_desti_sec1.jade_jungle_sec1.jade_jungle_rooms_sec1 .adventure_right_text .advanture_text1{padding: 0; justify-content: center;}
+
+.adventure_right_text .advanture_text1{display: flex; align-items: center; column-gap: 3.333vw; justify-content:center;}
+.adventure_right_text .advanture_text1 a{font-size: 1.025vw; font-weight: 600; color: #ffffff; background-color: #F85241; padding: 0.732vw 1.318vw; line-height: 1; display: flex; align-items: center; gap:0.952vw; text-transform: none; letter-spacing: -0.010em;}
+.adventure_right_text .advanture_text1 a svg{width: 1.318vw; height: 1.318vw;}
+.adventure_right_text .advanture_text1 a:hover{background-color: #000000;}
+
+.our_desti_sec2{margin-top: -7.813vw;}
+
+@media only screen and (min-width: 1025px){
+.our_desti_sec1.jade_jungle_sec1.jade_jungle_rooms_sec1 .head_text_center{max-width: 95%;}
+.jade_jungle_rooms_sec1 .container{max-width: 80%;}
+}
+
+@media only screen and (max-width: 1024px){
+.adventure_right_text .advanture_text1{column-gap: 1.333vw;}
+  .adventure_right_text .advanture_text1 a{font-size: 1.825vw; padding: 1.532vw 2.025vw;}
+  .adventure_right_text .advanture_text1 a svg{width: 2.318vw; height: 2.018vw;}
+}
+
+section.home_section1.our_desti_sec1.jade_jungle_sec1.jade_jungle_rooms_sec1{padding-bottom: 25.021vw;}
+.jade_jungle_rooms_sec1 .destination_overview_tab{padding-bottom: 2.757vw;}
+
+@media only screen and (max-width: 768px){
+  section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 22.616vw;}
+  .jade_jungle_rooms_sec1 .destination_overview_tab{max-width:100%;}
+  .jade_jungle_rooms_sec1.jade_jungle_sec1 .head_text_center{max-width:100%;}
+
+  .adventure_right_text .advanture_text1 a{font-size: 3.825vw; padding: 1.532vw 3.025vw;}
+  .adventure_right_text .advanture_text1 a svg{width: 3.318vw; height: 3.318vw;}
+}
+
+
+/*offers-sec2-start*/
+
+.jade_jungle_offer_sec2 .jade_offer_row{display:grid; grid-template-columns:repeat(2, 1fr); row-gap:3.333vw;}
+.jade_jungle_offer_sec2 .jade_offer_col{box-shadow:0 0.260vw 0.260vw rgb(0, 0, 0, 0.16); background:#F7F7F7; border:solid 1px #D1D1D1;}
+.jade_jungle_offer_sec2 .jade_offer_col .jade_offer_img img{width:100%; display:block;}
+.jade_jungle_offer_sec2 .jade_offer_col .jade_offer_info{padding:1.823vw;}
+.jade_jungle_offer_sec2 .jade_offer_col h3{padding:0 0 1vw; margin:0;}
+.jade_jungle_offer_sec2 .jade_offer_col .date{display:flex; align-items:center; color:#237B81; font-weight:700; letter-spacing:0.2em; padding:0 0 1.25vw;}
+.jade_jungle_offer_sec2 .jade_offer_col .jade_offer_info p{line-height:1.3; padding-bottom:1.464vw;}
+.jade_jungle_offer_sec2 .jade_offer_col .date img{opacity:0.49; width:1.042vw;}
+.jade_jungle_offer_sec2 .jade_offer_col .faq_box{background:none; border:none; box-shadow:none; margin:0;}
+.jade_jungle_offer_sec2 .jade_offer_col .faq_box .question{padding:0; margin:0; gap:0.5vw; font-weight:900; color:#237B81; display:flex; align-items:center; cursor:pointer; position:relative;}
+.jade_jungle_offer_sec2 .jade_offer_col .faq_box .question:after{content: ''; position:relative; right:0; top:0; bottom:0; background:url(/images/sub-pages/offer-faq-arrow.svg) center no-repeat; background-size:contain; transform:rotate(90deg); width:0.5vw; height:1vw;}
+.jade_jungle_offer_sec2 .jade_offer_col .faq_box .answer{padding:1.375vw 0 0;}
+.jade_jungle_offer_sec2 .jade_offer_col .faq_box .answer p{font-size:1.042vw; line-height:1.3;}
+.jade_jungle_offer_sec2 .jade_offer_col .offer_btn{padding:1.667vw 0 0; margin:0; display:flex; justify-content:center;}
+.jade_jungle_offer_sec2 .jade_offer_col .offer_btn a{background:#237B81; color:#fff; padding:0.729vw 2.292vw; margin:0; font-size:inherit; text-transform:uppercase; font-weight:800; border-radius:0.26vw;}
+.jade_jungle_offer_sec2 .jade_offer_col .offer_btn a:hover{background:#ea5647;}
+
+@media only screen and (max-width: 1024px){
+.jade_jungle_offer_sec2 .jade_offer_col .jade_offer_info{padding:2.432vw;}
+.jade_jungle_offer_sec2 .jade_offer_col .jade_offer_info > p,
+.jade_jungle_offer_sec2 .jade_offer_col .faq_box .answer p{font-size:1.75vw;}
+/*.jade_jungle_offer_sec2 .jade_offer_col .offer_btn a,
+.jade_jungle_offer_sec2 .jade_offer_col .date{font-size:1.551vw;}*/
+.jade_jungle_offer_sec2 .jade_offer_col .date img{width:2vw;}
+}
+
+@media only screen and (max-width: 768px){
+.jade_jungle_offer_sec2 .jade_offer_row{grid-template-columns:repeat(1, 1fr); row-gap:6vw;}
+.jade_jungle_offer_sec2 .jade_offer_col .jade_offer_info{padding:3vw;}
+.jade_jungle_offer_sec2 .jade_offer_col .faq_box .question{font-size:2.779vw; gap:1.75vw;}
+.jade_jungle_offer_sec2 .jade_offer_col .faq_box .question:after{width:2vw; height:3vw;}
+.jade_jungle_offer_sec2 .jade_offer_col .date{/*font-size:2.779vw;*/ padding-bottom:3vw;}
+.jade_jungle_offer_sec2 .jade_offer_col .date img{width:3.5vw;}
+.jade_jungle_offer_sec2 .jade_offer_col .jade_offer_info > p,
+.jade_jungle_offer_sec2 .jade_offer_col .faq_box .answer p{font-size:3.579vw;}
+.jade_jungle_offer_sec2 .jade_offer_col .offer_btn{padding-top:3vw;}
+.jade_jungle_offer_sec2 .jade_offer_col .offer_btn a{/*font-size:2.779vw;*/ padding:2.5vw 4vw;}
+.jade_jungle_offer_sec2 .jade_offer_col h3{padding-bottom:2vw; font-size:5vw !important;}
+.jade_jungle_offer_sec2 .jade_offer_col .faq_box .answer{}
+
+}
+
+
+/*.jade_jungle_offer_sec2 .jade_offer_row {
+  column-count: 2;
+  column-gap: 3.333vw;
+}
+
+
+.jade_jungle_offer_sec2 .jade_offer_col {
+  break-inside: avoid;
+  margin-bottom: 3.333vw;
+  width: 100%;
+  display: inline-block;
+}
+
+
+@media (max-width: 1200px) {
+  .jade_jungle_offer_sec2 .jade_offer_row {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .jade_jungle_offer_sec2 .jade_offer_row {
+    column-count: 1;
+  }
+}
+*/
+
+
+/*offers-sec3-start*/
+
+.contact_sec4 .get_out{position: relative;}
+.contact_sec4 .get_out:before{position: absolute; content: ""; background: linear-gradient(180deg,rgba(128, 128, 128, 0) 0%, rgba(0, 0, 0, 1) 70%); opacity: 0.57; mix-blend-mode: multiply; bottom: 0; width: 100%; height: 55%;}
+
+@media only screen and (max-width: 768px){s
+.contact_sec4 .get_out:before{height: 70%;}
+
+}
+
+/*contact_sec4*/

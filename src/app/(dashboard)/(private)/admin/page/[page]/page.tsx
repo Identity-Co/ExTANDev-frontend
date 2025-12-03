@@ -35,6 +35,7 @@ import * as Common from '@/app/server/common'
 import { getPageData } from '@/app/server/pages'
 import { getDestinations, getDestinationsResorts } from '@/app/server/destinations'
 import { getAllTours } from '@/app/server/tours'
+import { getAllUniqueTags } from '@/app/server/resorts'
 
 import config from '@/configs/themeConfig'
 
@@ -77,7 +78,7 @@ const EditPage = async (props: { params: Promise<{ page: string }> }) => {
 
   let _destinations = []
   let adventurePosts = []
-  let allResortsList = []
+  let allTags = []
 
   if(_pg != 'add'){
     const isValidPage = (key: string): key is PageKey => {
@@ -94,12 +95,12 @@ const EditPage = async (props: { params: Promise<{ page: string }> }) => {
 
     adventurePosts = await getAllTours('id,name');
 
-    allResortsList = await getDestinationsResorts();
+    allTags = await getAllUniqueTags();
   }
 
   return ( 
     <>
-      {_pg=="our_destination" && (<DestinationPage pgData={data} destinations={_destinations??[]} adventurePosts={adventurePosts??[]} allResortsList={allResortsList??[]} />) } 
+      {_pg=="our_destination" && (<DestinationPage pgData={data} destinations={_destinations??[]} adventurePosts={adventurePosts??[]} resortTags={allTags?? []} />) } 
       {_pg=="our_adventure" && (<AdventurePage pgData={data} adventurePosts={adventurePosts??[]} />) } 
       {_pg=="total_travel" && (<TravelPage pgData={data} />) } 
       {_pg=="privacy_policy" && (<PrivacyPolicy pgData={data} />) } 

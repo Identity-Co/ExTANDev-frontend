@@ -1,0 +1,131 @@
+/*rooms-sec1-start*/
+section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 12.869vw;}
+section.home_section1.our_desti_sec1{ background: url(/images/front-pages/images/tan-background-copy.jpg) center no-repeat; background-size: cover; box-shadow: none; padding-bottom: 13.021vw; }
+.our_desti_sec1.jade_jungle_sec1.jade_jungle_rooms_sec1 .adventure_right_text .advanture_text1{padding: 0; justify-content: flex-start;}
+
+.adventure_right_text .advanture_text1{display:flex;}
+.adventure_right_text .advanture_text1 a{font-size: 1.025vw; font-weight: 600; color: #ffffff; background-color: #F85241; padding: 0.732vw 1.318vw; line-height: 1; display: flex; align-items: center; gap:0.952vw; text-transform: none; letter-spacing: -0.010em;}
+.adventure_right_text .advanture_text1 a svg{width: 1.318vw; height: 1.318vw;}
+.adventure_right_text .advanture_text1 a:hover{background-color: #000000;}
+
+@media only screen and (min-width: 1025px){
+.our_desti_sec1.jade_jungle_sec1.jade_jungle_rooms_sec1 .head_text_center{max-width: 95%;}
+.jade_jungle_rooms_sec1 .container{max-width: 80%;}
+}
+
+@media only screen and (max-width: 1024px){
+  .adventure_right_text .advanture_text1 a{font-size: 1.825vw; padding: 1.532vw 2.025vw;}
+  .adventure_right_text .advanture_text1 a svg{width: 2.318vw; height: 2.018vw;}
+}
+
+section.home_section1.our_desti_sec1.jade_jungle_sec1.jade_jungle_rooms_sec1{padding-bottom: 25.021vw;}
+.jade_jungle_rooms_sec1 .destination_overview_tab{padding-bottom: 2.757vw;}
+
+@media only screen and (max-width: 768px){
+  section.home_section1.our_desti_sec1.destination_overview_sec1{padding-top: 22.616vw;}
+  .jade_jungle_rooms_sec1 .destination_overview_tab{max-width:100%;}
+  .jade_jungle_rooms_sec1.jade_jungle_sec1 .head_text_center{max-width:100%;}
+
+  .adventure_right_text .advanture_text1 a{font-size: 3.825vw; padding: 1.532vw 3.025vw;}
+  .adventure_right_text .advanture_text1 a svg{width: 3.318vw; height: 3.318vw;}
+}
+
+/*rooms-sec2-start*/
+
+.jade_jungle_rooms_sec2{margin-top: -24.021vw;}
+
+@media only screen and (min-width: 1025px){
+  .jade_jungle_rooms_sec2 .container{max-width: 80%;}
+  .jungle_rooms_main{max-width: 95%;}
+}
+.jungle_rooms_main{margin: 0 auto; display: flex; flex-direction: column; grid-row-gap: 5.521vw;}
+.jungle_room_row{display: flex; flex-wrap: wrap;}
+.jungle_room_left{width: 35%; box-sizing: border-box;}
+.jungle_room_right{width: 65%; box-sizing: border-box; padding-left: 1.667vw;}
+.jungle_room_slide .jungle_room_img{position: relative; padding-bottom: 105%;}
+.jungle_room_slide .jungle_room_img img{position: absolute; width: 100%; height: 100%; top: 0; left: 0; object-fit: cover;}
+
+
+.jungle_room_right > h3{font-size: 2.083vw; position: relative; padding-bottom: 0.542vw; margin-bottom: 1.042vw;}
+.jungle_room_right > h3:after{position: absolute; content: ""; width: 4.167vw; height: 0.26vw; background-color: #EA5647; bottom: 0; left: 0;}
+.jungle_room_right > div > p{padding-bottom:1.464vw;}
+.jungle_room_right .faq_box{background-color: #F7F7F7; border: solid 1px #B4B3B3; box-shadow: 0 0.260vw 0.260vw rgb(0, 0, 0, 0.15);}
+.jungle_room_right .faq_box ul{column-count: 2; padding: 0; margin: 0; list-style: none;}
+.jungle_room_right .faq_box .answer{padding: 0 1.875vw 1.614vw}
+.jungle_room_right .faq_box .answer p{font-size:inherit; padding-bottom: 1.464vw; line-height: 1.4;}
+.jungle_room_right .faq_box .question{ padding: 1.614vw 3.511vw 1.614vw 1.875vw; position: relative; display: flex; align-items: center; cursor: pointer; width:100%;}
+.jungle_room_right .faq_box .question > h4{font-weight: 500; font-style: normal; font-family: "Raleway", sans-serif; font-size:max(0.675rem, 1.1vw); text-transform:none; }
+.jungle_room_right .faq_box .question::after{content: ''; background: url(/images/sub-pages/room-faq-arrow.svg) center no-repeat; position: absolute; content: ""; top: 0; bottom: 0; margin: auto 0; right: 1.875vw; width: 0.677vw; height: 1.042vw; transition: 0.3s ease-in-out; background-size: cover;}
+.jungle_room_right .faq_box .question.open::after{transform: rotate(90deg);}
+
+@media only screen and (max-width: 1024px){
+  .jungle_room_right > h3{font-size:2.779vw; line-height: 1;}
+  .jungle_room_right .faq_box .question > h4{font-size: 1.753vw;}
+  .faq_box .question::after{width: 1.389vw; height: 1.753vw;}
+}
+
+@media only screen and (max-width: 768px){
+  .jungle_room_left{width:100%;}
+  .jungle_room_right{width:100%; padding:2.965vw 0 0;}
+  .jungle_room_right > h3{font-size: 3.705vw; padding-bottom:1vw; margin-bottom:2vw;}
+  .jungle_room_right .faq_box .question > h4{font-size: 3.176vw;}
+  .faq_box .question::after{width: 2.100vw; height: 2.464vw; right: 2.586vw;}
+}
+
+
+/*rooms-sec4-start*/
+.jade_jungle_rooms_sec3{background-size:cover; position:relative; border:solid 1px #707070; z-index:1;}
+.jade_jungle_rooms_sec3:before{content:''; position:absolute; left:0; top:0; width:100%; height:100%; background:#1F1F1F; opacity:0.55; z-index:-1;}
+
+@media only screen and (min-width: 1025px){
+  .jade_jungle_rooms_sec3 .container{max-width:50vw;}
+}
+
+.network_travel_profile{display: flex; align-items: center; gap:0.878vw;}
+.network_travel_profile img{width: 3.125vw; height: 3.125vw; border-radius: 100%;}
+.network_travel_profile_info h4{font-size: 1.354vw; font-family: "Bebas Neue", sans-serif; letter-spacing: -0.015em; line-height: 1;}
+.network_travel_profile_info span{font-size: 0.729vw; color: #1F1F1F; font-weight: 500; font-style: italic; line-height: 1;}
+.network_travel_follow a{font-size: 0.729vw; letter-spacing: -0.015em; font-weight: 700; color: #EA5647; text-transform: uppercase;font-family: "Montserrat", sans-serif;}
+.network_travel_follow a:hover{text-decoration: underline;}
+.network_travel_follow{display: flex; align-items: center; column-gap: 0.878vw;}
+.network_travel_follow span{font-size: 0.729vw; letter-spacing: -0.015em; font-weight: 700; color: #1F1F1F; text-transform: uppercase;font-family: "Montserrat", sans-serif;}
+.network_travel_text p{padding: 0.878vw 0; font-size: 0.833vw; line-height: 1.146vw;}
+.network_travel_likes{display: flex; flex-wrap: wrap; gap:0.833vw;}
+.network_travel_likes span{font-size: 0.729vw; font-weight: 500; color: #1F1F1F; font-family: "Montserrat", sans-serif;}
+.network_travel_likes ul{list-style: none; display: flex; gap:0.833vw;}
+.network_travel_likes ul li a svg:hover path{fill: #EA5647;}
+.network_travel_likes ul li a svg{width: 1.098vw; height: 1.025vw;}
+
+.biking_row{display: flex; flex-wrap: wrap; padding-top: 1.250vw;}
+.biking_row .biking_left{width: 59%; padding-right: 2.500vw; box-sizing: border-box; border-right: solid 0.052vw #707070;}
+.biking_row .biking_left p{letter-spacing: -0.010em;}
+.biking_row .biking_right{width: 41%; padding-left: 2.500vw;}
+.biking_right .network_travel_profile img{width: 4.688vw; height: 4.688vw;}
+.biking_right .network_travel_profile_info_inner{display: flex;column-gap: 0.625vw;align-items: flex-end;}
+.biking_right .network_travel_profile{gap:1.042vw; padding-bottom: 0.833vw;}
+
+.jade_jungle_rooms_sec3 .biking_right > p{color:#fff;}
+.jade_jungle_rooms_sec3 .network_travel_profile_info h4{color: #fff;}
+.jade_jungle_rooms_sec3 .network_travel_profile_info span{color: #fff;}
+.jade_jungle_rooms_sec3 .network_travel_follow span{color: #fff;}
+.jade_jungle_rooms_sec3 .network_travel_likes span{color: #fff;}
+.jade_jungle_rooms_sec3 .network_travel_likes ul li a svg path{fill:#fff;}
+.jade_jungle_rooms_sec3 .network_travel_likes ul li a svg:hover path{fill: #EA5647;}
+
+@media only screen and (max-width: 1024px){
+.network_travel_profile{gap: 2.878vw;}
+.network_travel_profile img{width: 5.859vw; height: 5.859vw; border-radius: 100%;}
+.network_travel_profile_info h4{font-size: 2.903vw;}
+.network_travel_profile_info span,
+.network_travel_follow a{font-size: 1.825vw;}
+}
+
+@media only screen and (max-width: 768px){
+.network_travel_profile img{width: 7.859vw; height: 7.859vw; border-radius: 100%;}
+.network_travel_profile_info h4{font-size: 3.903vw;}
+.network_travel_profile_info span,
+.network_travel_follow a{font-size: 2.825vw;}
+}
+
+
+

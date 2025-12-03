@@ -157,6 +157,7 @@ const SocialSection = ({ collectionName, collectionID, format, color }: SocialSe
       <div
         className={classnames(styles.network_travel_likes, {
           'orange_social_lssc': color === 'orange',
+          'white_social_lssc': color === 'white',
         })}
       >
         {

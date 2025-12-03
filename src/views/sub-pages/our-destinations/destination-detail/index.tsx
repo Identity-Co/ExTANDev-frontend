@@ -28,7 +28,7 @@ const tabContentList = (props): { [key: string]: ReactElement } => ({
   stories: <StoryTab {...props}/>
 })
 
-const PageSection = ({ pgData, id, resortDestinations, adventures, hasParam, filter_categories, locations, locDestinations }: { pgData?: []; id?: String; resortDestinations?: []; adventures?: []; hasParam?: false; filter_categories: []; locations?: []; locDestinations?: []; }) => {
+const PageSection = ({ pgData, id, resortDestinations, adventures, hasParam, filter_categories, locations, locDestinations, resortsLists }: { pgData?: []; id?: String; resortDestinations?: []; adventures?: []; hasParam?: false; filter_categories: []; locations?: []; locDestinations?: []; resortsLists?: []; }) => {
   // , suitable_for, season -- suitable_for?: '', season?: ''; 
 
   //const [val, setVal] = useState<string>((((suitable_for !== undefined && suitable_for) || (season !== undefined && season)) ? 'adventures' : 'overview'))
@@ -107,7 +107,7 @@ const PageSection = ({ pgData, id, resortDestinations, adventures, hasParam, fil
           <Tab value='stories' label='Stories' />
         </TabList>
         <TabPanel value={val} className='pbs-0'>
-            {tabContentList({ pgData: pgData, destinations: resortDestinations, isOverviewDetailPage: isOverviewDetailPage, setIsOverviewDetailPage: setIsOverviewDetailPage, isOverviewDetailPageID: isOverviewDetailPageID, setIsOverviewDetailPageID: setIsOverviewDetailPageID, adventures:adventures, filter_categories: filter_categories })[val]}
+            {tabContentList({ pgData: pgData, destinations: resortDestinations, isOverviewDetailPage: isOverviewDetailPage, setIsOverviewDetailPage: setIsOverviewDetailPage, isOverviewDetailPageID: isOverviewDetailPageID, setIsOverviewDetailPageID: setIsOverviewDetailPageID, adventures:adventures, filter_categories: filter_categories, resortsLists: resortsLists })[val]}
         </TabPanel>
       </TabContext>
     </>

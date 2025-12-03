@@ -5,6 +5,7 @@ import config from '@/configs/themeConfig'
 import { getDestination, getDestinations } from '@/app/server/destinations'
 import { getAllTours } from '@/app/server/tours'
 import { getReviewsByCollectionId } from '@/app/server/reviews'
+import { getAllUniqueTags } from '@/app/server/resorts'
 
 export const metadata = {
   title: `Destination Management - ${config.appName}`,
@@ -33,13 +34,15 @@ const ManageDestinations = async (props: { params: Promise<{ id: string }> }) =>
 
   const adventurePosts = await getAllTours('id,name');
 
+  const allTags = await getAllUniqueTags();
+
   const requestData: any = {
     'fields': '',
     'collection_id': id,
   };
   const reviews = await getReviewsByCollectionId(requestData);
 
-  return <Destinations pgData={destination} id={id} destinations={destinations} adventurePosts={adventurePosts??[]} reviews={reviews?? []} />
+  return <Destinations pgData={destination} id={id} destinations={destinations} adventurePosts={adventurePosts??[]} reviews={reviews?? []} resortTags={allTags?? []} />
 }
 
 export default ManageDestinations

@@ -20,6 +20,7 @@ import OverviewSection10 from '@/views/shared/cta-section/CTASection'
 import OverviewSection11 from '@/views/shared/review-form-section/ReviewFormSection'
 import { useSettings } from '@core/hooks/useSettings'
 
+import { getResortsByTag } from '@/app/server/resorts';
 import * as Common from '@/app/server/common'
 
 const LandingPageWrapper = ({ pgData, destinations}: OverviewProps) => {
@@ -28,6 +29,7 @@ const LandingPageWrapper = ({ pgData, destinations}: OverviewProps) => {
 
   const [isUserLoggedIn, setisUserLoggedIn] = useState(null)
   const [userData, setuserData] = useState(null)
+  const [featuredResorts, setFeaturedResorts] = useState([])
 
   useEffect(() => {
     const getSessData = async () => {
@@ -43,12 +45,20 @@ const LandingPageWrapper = ({ pgData, destinations}: OverviewProps) => {
   // Hooks
   const { updatePageSettings } = useSettings()
 
-  let featuredResorts: any[] = [];
-  if(pgData?.overview?.feature_resorts?.resorts){
-    pgData.overview.feature_resorts.resorts.forEach((item: any, index: number) => {
-      featuredResorts?.push(pgData?.resorts?.resorts?.find(itemsub => itemsub._id == item))
-    });
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      if(pgData?.overview?.feature_resorts?.resorts){
+        const requestData: any = {
+          'tag': pgData?.overview?.feature_resorts?.resorts,
+          'fields': '',
+        };
+        const resorts = await getResortsByTag(requestData);
+        setFeaturedResorts(resorts);
+      }
+    }
+
+    fetchData();
+  }, pgData?.overview?.feature_resorts?.resorts);
 
   // For Page specific settings
   useEffect(() => {

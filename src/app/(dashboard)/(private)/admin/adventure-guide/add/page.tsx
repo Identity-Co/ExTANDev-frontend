@@ -10,6 +10,7 @@ import SmartLink from '@/components/SmartLink'
 // Component imports
 import AddForm from '@views/admin/adventure-guide/add/AddForm'
 
+import { getAllUniqueTags } from '@/app/server/resorts'
 import * as Common from '@/app/server/common'
 
 import config from '@/configs/themeConfig'
@@ -22,6 +23,8 @@ export const metadata = {
 const CompanyApp = async () => {
   const session = await Common.getUserSess()
   const userRole = session?.user?.role;
+
+  const allTags = await getAllUniqueTags();
 
   return (
     <Grid container spacing={6}>
@@ -41,7 +44,7 @@ const CompanyApp = async () => {
       </Grid>
 
       <Grid size={{ xs: 12, md: 12, lg:12 }}>
-        <AddForm />
+        <AddForm resortTags={allTags?? []} />
       </Grid>
     </Grid>
   )

@@ -62,6 +62,7 @@ type ResortProps = {
 	setFormId: () => void
 	getFormId: () => void
 	adventurePosts: []
+	resortTags: []
 }
 
 type FormData = InferInput<typeof schema>
@@ -87,6 +88,9 @@ const schema = object({
   about_button_text: optional(string()),
   about_button_link: pipe(string()),
   resort_title: pipe(string()),
+  resort_tags: array(
+    optional(string()),
+  ),
   resorts: array(
     object({
     	title: pipe(string(), nonEmpty('This field is required')),
@@ -124,7 +128,7 @@ const schema = object({
   )
 })
 
-const Resorts = ({ pgData, destinations, setFormId, getFormId, adventurePosts }: ResortProps) => {
+const Resorts = ({ pgData, destinations, setFormId, getFormId, adventurePosts, resortTags }: ResortProps) => {
 	const router = useRouter()
 
   const setLoading = useNavigationStore((s) => s.setLoading)
@@ -137,6 +141,7 @@ const Resorts = ({ pgData, destinations, setFormId, getFormId, adventurePosts }:
 
 	const [adventurePostslist, setadventurePostslist] = useState(adventurePosts??[])
   const [adventurePostslistOptions, setadventurePostslistOptions] = useState<string[]>([])
+  const [resortTagslistOptions, setresortTagslistOptions] = useState<string[]>([])
 
 	const [destOptions, setdestOptions] = useState<string[]>([])
 
@@ -163,6 +168,17 @@ const Resorts = ({ pgData, destinations, setFormId, getFormId, adventurePosts }:
 
     setadventurePostslistOptions(obj);
   }, [adventurePosts]);
+
+  useEffect(() => {
+    const obj = resortTags.map(item => ({
+      label: item,
+      value: item
+    }));
+
+    obj.sort((a, b) => a.value.localeCompare(b.value));
+
+    setresortTagslistOptions(obj);
+  }, [resortTags]);
 
 	// States
   const [files, setFiles] = useState<File[]>([])
@@ -201,6 +217,7 @@ const Resorts = ({ pgData, destinations, setFormId, getFormId, adventurePosts }:
 		  about_button_text: pgData?.resorts?.button_text??'',
 		  about_button_link: pgData?.resorts?.button_link??'',
 		  resort_title: pgData?.resort_title??'',
+		  resort_tags: pgData?.resorts?.resort_tags??[],
 		  resorts: pgData?.resorts?.resorts?.map(section => ({
         title: section.title ?? '',
         content: section.content ?? '',
@@ -245,6 +262,9 @@ const Resorts = ({ pgData, destinations, setFormId, getFormId, adventurePosts }:
 		})
 
     fData.append('resorts[resort_title]', data.resort_title);
+    data.resort_tags.forEach((dest_id, i) => {
+			fData.append(`resorts[resort_tags][${i}]`, dest_id);
+		})
     data.resorts.forEach((section, i) => {
 		  fData.append(`resorts_sections[${i}][title]`, section.title)
 		  fData.append(`resorts_sections[${i}][content]`, section.content)
@@ -473,6 +493,58 @@ const Resorts = ({ pgData, destinations, setFormId, getFormId, adventurePosts }:
 			        })}
 			      />
 			    )}
+			  />
+			</Grid>
+			<Grid size={{ md: 12, xs: 12, lg: 12 }}>
+        <input type="hidden" {...register("resort_tags")} />
+          <Autocomplete
+            multiple
+            options={resortTagslistOptions}
+            getOptionLabel={(option) => option.value} 
+            value={resortTagslistOptions.filter(opt =>
+              (watch("resort_tags") || []).includes(opt.label)
+            )}
+            renderOption={(props, option) => (
+              <li {...props} key={option.label}> 
+                {option.value}
+              </li>
+            )}
+            renderInput={(params) => (
+              <TextField {...params} label="Search Resort Tag" variant="outlined" />
+            )}
+            onChange={(event, newValue) => {
+              setValue(
+                "resort_tags",
+                newValue.map((item) => item.label), // array of values
+                { shouldValidate: true }
+              );
+            }}
+          />
+      </Grid>
+			<Grid size={{ md: 12, xs: 12, lg: 12 }}>
+			  <input type="hidden" {...register("feature_destinations")} />
+			  <Autocomplete
+			    multiple
+			    options={destOptions}
+			    getOptionLabel={(option) => option.value} 
+			    value={destOptions.filter(opt =>
+			      (watch("feature_destinations") || []).includes(opt.label)
+			    )}
+			    renderOption={(props, option) => (
+			      <li {...props} key={option.label}> 
+			        {option.value}
+			      </li>
+			    )}
+			    renderInput={(params) => (
+			      <TextField {...params} label="Search Destination" variant="outlined" />
+			    )}
+			    onChange={(event, newValue) => {
+			      setValue(
+			        "feature_destinations",
+			        newValue.map((item) => item.label), // array of values
+			        { shouldValidate: true }
+			      );
+			    }}
 			  />
 			</Grid>
 			<Grid size={{ md: 12, xs: 12, lg: 12 }}>

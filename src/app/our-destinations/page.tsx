@@ -4,7 +4,8 @@ import LandingPageWrapper from '@views/sub-pages/our-destinations'
 // Server Action Imports
 import { getServerMode } from '@core/utils/serverHelpers'
 import { getPageBanner } from '@/app/server/banners'
-import { getPageDestination, getResortByIds, getDestinationList, filterDestination } from '@/app/server/destinations'
+import { getPageDestination, getDestinationList, filterDestination } from '@/app/server/destinations'
+import { getResortsByTag } from '@/app/server/resorts';
 import { getPageData } from '@/app/server/pages'
 
 // import { useSearchParams } from 'next/navigation'
@@ -33,7 +34,14 @@ const LandingPage = async ({searchParams}) => {
     hasParam = true;
   }
 
-  const resortsLists = await getResortByIds(pgData?.feature_resorts??[])
+  let resortsLists: any[] = [];
+  if(pgData?.feature_resorts){
+    const requestData: any = {
+      'tag': pgData?.feature_resorts,
+      'fields': '',
+    };
+    resortsLists = await getResortsByTag(requestData);
+  }
 
   const locDestinations = await getDestinationList()
 

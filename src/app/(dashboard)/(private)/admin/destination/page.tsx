@@ -27,8 +27,6 @@ const ManageDestinations = async () => {
   // Vars
   const data = await getDestinations();
 
-  console.log(data);
-
   return <Destinations data={data} />
 }
 

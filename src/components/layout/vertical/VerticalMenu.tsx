@@ -132,8 +132,18 @@ const VerticalMenu = ({  scrollMenu }: Props) => {
         </MenuItem>
 
         <MenuItem
+          href='/admin/resorts'
+          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/resorts/')}
+          exactMatch={false}
+          activeUrl='/admin/resorts'
+          icon={< i className="ri-hotel-line"></i>}
+        >
+          Manage Resorts
+        </MenuItem>
+
+        <MenuItem
           href='/admin/destination/'
-          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/destimation/')}
+          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/destination/')}
           exactMatch={false}
           activeUrl='/admin/destination'
           icon={<i className='ri-map-pin-line' />}

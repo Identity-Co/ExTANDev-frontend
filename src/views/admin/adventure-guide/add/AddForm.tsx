@@ -16,6 +16,10 @@ import Divider from '@mui/material/Divider'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
 import CircularProgress from '@mui/material/CircularProgress';
 import Autocomplete from "@mui/material/Autocomplete";
 import Tooltip from '@mui/material/Tooltip';
@@ -190,7 +194,7 @@ const TooltipIfEnabled = ({ title, disabled, children }) =>
     </Tooltip>
   );
 
-const PageSection = ({ pgData }: { pgData?: [] }) => {  
+const PageSection = ({ pgData, resortTags }: { pgData?: []; resortTags?: [] }) => {  
   const router = useRouter()
 
   const setLoading = useNavigationStore((s) => s.setLoading)
@@ -200,13 +204,16 @@ const PageSection = ({ pgData }: { pgData?: [] }) => {
   const [editor, setEditor] = useState<any>(null);
   const [message, setMessage] = useState(null);
 
-  const resortsLists = { r1: 'Resort 1', r2: 'Resort 2', r3: 'Resort 3', r4: 'Resort 4', r5: 'Resort 5', r6: 'Resort 6'};
-  const [resortsOptions, setResortsOptions] = useState(() => {
-    return Object.entries(resortsLists).map(([key, value]) => ({
-      label: key,
-      value: value
+  const [resortsOptions, setResortsOptions] = useState<string[]>([])
+
+  useEffect(() => {
+    const obj = resortTags.map(item => ({
+      label: item,
+      value: item
     }));
-  });
+
+    setResortsOptions(obj);
+  }, [resortTags]);
 
   const reviewsLists = { r1: 'Review 1', r2: 'Review 2', r3: 'Review 3' };
   const [reviewsOptions, setreviewsOptions] = useState(() => {

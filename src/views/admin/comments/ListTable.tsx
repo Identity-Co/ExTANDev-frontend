@@ -109,6 +109,7 @@ const getAvatar = (params: Pick<UsersType, 'avatar' | 'fullName' | 'borderclr'>)
 const statusConfig = {
   'adventure_post': { label: "Adventure Post", color: "primary", icon: "ri-map-pin-line" },
   'destination_story': { label: "Destination Story", color: "secondary", icon: "ri-bookmark-line" },
+  'resort_story': { label: "Resort Story", color: "secondary", icon: "ri-bookmark-line" },
   'reviews': { label: "Reviews", color: "info", icon: "ri-star-line" },
   'adventure_guide': { label: "Adventure Guide", color: "warning", icon: "ri-news-line" },
 };
@@ -118,6 +119,7 @@ const postTypeOptions = [
   { value: 'all', label: 'All Post Types', icon: 'ri-list-check' },
   { value: 'adventure_post', label: 'Adventure Posts', icon: 'ri-map-pin-line' },
   { value: 'destination_story', label: 'Destination Stories', icon: 'ri-bookmark-line' },
+  { value: 'resort_story', label: 'Resort Stories', icon: 'ri-bookmark-line' },
   { value: 'reviews', label: 'Reviews', icon: 'ri-star-line' },
 ];
 
@@ -296,6 +298,8 @@ const CommentCard = ({ comment, onDelete }: { comment: any; onDelete: (id: strin
                           ? `/our-adventure/${comment.post_url}`
                           : comment.collection_name === "destination_story"
                           ? `/our-destinations/${comment.post_url}`
+                          : comment.collection_name === "resort_story"
+                          ? `/resorts/${comment.post_url}`
                           : comment.collection_name === "adventure_guide"
                           ? `/adventure-guide/${comment.post_url}`
                           : "#"
@@ -303,6 +307,8 @@ const CommentCard = ({ comment, onDelete }: { comment: any; onDelete: (id: strin
                       target="_blank"
                     >
                       {comment.collection_name === "destination_story"
+                        ? `${comment.post_title} (${comment.story_name})`
+                        : comment.collection_name === "resort_story"
                         ? `${comment.post_title} (${comment.story_name})`
                         : comment.post_title}
                     </Link>

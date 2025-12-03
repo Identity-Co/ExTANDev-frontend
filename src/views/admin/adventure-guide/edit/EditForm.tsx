@@ -186,7 +186,7 @@ const TooltipIfEnabled = ({ title, disabled, children }) =>
     </Tooltip>
   );
 
-const PageSection = ({ setId, adventureguide, allResortsList }: { setId?: string; adventureguide?: []; allResortsList?: []; userData?: []; }) => {  
+const PageSection = ({ setId, adventureguide, resortTags }: { setId?: string; adventureguide?: []; userData?: []; resortTags?: [] }) => {  
   const router = useRouter()
 
   const setLoading = useNavigationStore((s) => s.setLoading)
@@ -204,13 +204,13 @@ const PageSection = ({ setId, adventureguide, allResortsList }: { setId?: string
   //const [imgSrc, setImgSrc] = useState<string>(adventureguide?.image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${adventureguide?.image}` : '/images/avatars/1.png')
 
   useEffect(() => {
-    const obj = allResortsList.map(item => ({
-      label: item.resort_id,
-      value: `${item.resort_title} (${item.destination_title})`
+    const obj = resortTags.map(item => ({
+      label: item,
+      value: item
     }));
 
     setResortsOptions(obj);
-  }, [allResortsList]);
+  }, [resortTags]);
 
   const reviewsLists = { r1: 'Review 1', r2: 'Review 2', r3: 'Review 3' };
   const [reviewsOptions, setreviewsOptions] = useState(() => {

@@ -15,9 +15,9 @@ import ResortsSection5 from '@/views/shared/cta-section/CTASection'
 
 import { useSettings } from '@core/hooks/useSettings'
 
-const LandingPageWrapper = ({ pgData, destinations}: ResortsProps) => {
+const LandingPageWrapper = ({ pgData, destinations, resortsLists}: ResortsProps) => {
   const adventurePosts = pgData?.resorts?.adventure_posts;
-
+  
   // Hooks
   const { updatePageSettings } = useSettings()
 
@@ -35,7 +35,7 @@ const LandingPageWrapper = ({ pgData, destinations}: ResortsProps) => {
   }
 
   const featuredResortsSectionProps = {
-    resorts: pgData?.resorts?.resorts,
+    resorts: resortsLists,
     heading_class: 'fs_55',
     class: 'destination_resort_sec2 our_desti_sec2'
   }

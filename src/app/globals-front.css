@@ -26,6 +26,7 @@ svg path{transition: 0.3s ease-in-out;}
 .container{max-width: 80.208vw; margin: 0 auto; padding: 0 1.042vw;}
 input, textarea, select {-webkit-appearance: none;}
 .extra_bold{font-weight: 800;}
+.pb_0{padding-bottom: 0 !important;}
 .py_24{ padding: 1.25vw 0; }
 .py_150{padding: 7.813vw 0;}
 .pt_150{padding-top: 7.813vw;}
@@ -579,9 +580,8 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
 
 
 /*destinations_tab*/
-
-.destinations_tab{padding-top: 6.252vw; margin-bottom: -13.240vw;}
-.destinations_tab .MuiTabs-fixed{max-width: 36.459vw; margin: 0 auto; padding-bottom: 4.427vw;}
+.destinations_tab{padding-top: 6.252vw; margin-bottom: -14.240vw;}
+.destinations_tab .MuiTabs-fixed{max-width: 45.459vw; margin: 0 auto; padding-bottom: 4.427vw;}
 .destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer{list-style: none; display: flex; flex-wrap: wrap; column-gap: 3.229vw; grid-row-gap: 1.250vw; justify-content: center; border-bottom: solid 0.026vw #707070; font-family: "Raleway", sans-serif;}
 .destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button{font-size: max(0.675rem, 1.1vw); font-weight: 600; text-transform: uppercase; color: #1F1F1F; position: relative; display: block; line-height: 3; min-width: 0.711vw; min-height: 0.711vw; padding: 0; font-family: "Raleway", sans-serif; flex: 0 0 auto; padding-block-end:0; border-block-end:0;}
 .destinations_tab .MuiTabs-fixed .MuiTabs-flexContainer button:before{position: absolute; content: ""; width: 0%; height: 0.312vw; background-color: #F85241; left: 0; bottom: 0; transition: 0.3s ease-in-out;}
@@ -729,3 +729,17 @@ body .white_social_lssc ul li a svg path{fill: #FFF;}
 .jade_jungle_rooms_sec2 .jungle_room_slide_box .slick-prev{width: 2.098vw; height: 2.611vw; left:1ve;}
 .jade_jungle_rooms_sec2 .jungle_room_slide_box .slick-next{width: 2.098vw; height: 2.611vw; right:1ve;}
 }
+
+/*.jade_jungle_offer_sec2 .masonry-layout{-webkit-align-content:space-between; -ms-flex-line-pack:space-between; align-content:space-between;}*/
+
+
+
+
+
+
+
+
+
+
+
+

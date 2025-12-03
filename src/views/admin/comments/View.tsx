@@ -85,7 +85,7 @@ const OpenInNewIcon = () => (
 const ViewComment = ({ data }: { data?: any }) => {
   const router = useRouter()
   const id = data._id
-  const storyID = (data?.collection_name == 'destination_story') ?  data?.collection_id : null
+  const storyID = (data?.collection_name == 'destination_story' || data?.collection_name == 'resort_story') ?  data?.collection_id : null
   const reviewID = (data?.collection_name == 'reviews') ?  data?.collection_id : null
   const [comment, setComment] = useState<Comment | null>(data)
   const [storyPost, setStoryPost] = useState<any>(null)
@@ -136,7 +136,11 @@ const ViewComment = ({ data }: { data?: any }) => {
 
   const getStoryPost = async (story_ID: string) => {
     try {
-      const storyData = await getStoryPostByID(story_ID);
+      const formData = {
+        'id': story_ID,
+        'story_type': data?.collection_name,
+      };
+      const storyData = await getStoryPostByID(formData);
       if(storyData && storyData._id){
         setStoryPost(storyData);
       }
@@ -223,6 +227,7 @@ const ViewComment = ({ data }: { data?: any }) => {
   const commentTypeConfig = {
     'adventure_post': { label: "Adventure Post", color: "primary", icon: "ri-map-pin-line" },
     'destination_story': { label: "Destination Story", color: "secondary", icon: "ri-bookmark-line" },
+    'resort_story': { label: "Resort Story", color: "secondary", icon: "ri-bookmark-line" },
     'reviews': { label: "Reviews", color: "info", icon: "ri-star-line" },
     'adventure_guide': { label: "Adventure Guide", color: "warning", icon: "ri-news-line" },
   };
@@ -677,6 +682,8 @@ const ViewComment = ({ data }: { data?: any }) => {
                       ? (storyPost?.image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${storyPost.image}` : '')
                       : comment.collection_name === "adventure_guide"
                       ? (comment.post_image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${comment.post_image}` : '')
+                      : comment.collection_name === "resort_story"
+                      ? (storyPost?.image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${storyPost.image}` : '')
                       : comment.post_image
                   }
                   alt={comment.post_title}
@@ -692,7 +699,7 @@ const ViewComment = ({ data }: { data?: any }) => {
 
               <Typography variant='body1' fontWeight='medium' sx={{ mb: 2 }}>
                 {
-                  comment.collection_name === 'destination_story' ? (
+                  (comment.collection_name === 'destination_story' || comment.collection_name === 'resort_story') ? (
                     <>
                       {storyPost && `${storyPost.title} (${storyPost.name})`}
                     </>
@@ -716,7 +723,9 @@ const ViewComment = ({ data }: { data?: any }) => {
                     ? "our-adventure"
                     : comment.collection_name === "adventure_guide"
                     ? "adventure-guide"
-                    : "";
+                    : comment.collection_name === "resort_story"
+                    ? "resorts"
+                    : '';
 
                   const urlSlug =
                     comment.collection_name === "destination_story"
@@ -725,7 +734,9 @@ const ViewComment = ({ data }: { data?: any }) => {
                       ? comment.post_url
                       : comment.collection_name === "adventure_guide"
                       ? comment.post_url
-                      : "";
+                      : comment.collection_name === "resort_story"
+                      ? storyPost.post_url
+                      : '';
 
                   const fullUrl = `/${urlPrefix ? `${urlPrefix}/` : ''}${urlSlug}`;
 

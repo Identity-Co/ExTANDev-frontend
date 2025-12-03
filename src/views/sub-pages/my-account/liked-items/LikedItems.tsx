@@ -43,6 +43,7 @@ const LikedItems = ({ data }: { data?: [] }) => {
       reviews: 'Review',
       adventure_post: 'Adventure',
       destination_story: 'Destination Story',
+      resort_story: 'Resort Story',
       adventure_guide: 'Adventure Guide',
     };
     return labels[postType] || postType;

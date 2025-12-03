@@ -75,6 +75,7 @@ type OverviewProps = {
 	setFormId: () => void
 	getFormId: () => void
   adventurePosts: []
+  resortTags: []
 }
 
 type FormData = InferInput<typeof schema>
@@ -192,7 +193,7 @@ const schema = object({
   rating: optional(string()),
 })
 
-const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }: OverviewProps) => {
+const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts, resortTags }: OverviewProps) => {
 	const router = useRouter()
 
 	let form_id = getFormId();
@@ -223,15 +224,17 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 	const fData = new FormData();
 
 	useEffect(() => {
-    const obj = resorts.map(item => ({
-      label: item._id,
-      value: item.title
+    const obj = resortTags.map(item => ({
+      label: item,
+      value: item
     }));
 
-    obj.sort((a, b) => a.value.localeCompare(b.value));
+    obj.sort((a, b) => String(a.value).localeCompare(String(b.value)));
 
     setresortOptions(obj);
-  }, [resorts]);
+  }, [resortTags]);
+
+  console.log(resortOptions)
 
   useEffect(() => {
     const obj = adventurePosts.map(item => ({
@@ -512,6 +515,8 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
     	log = await updateDestination(form_id, fData);
     }
 
+    console.log(log)
+
     if (log && log._id) {
       toast.success('Overview data saved successfully.')
       setFormId(log._id);
@@ -637,6 +642,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 				        variant='outlined'
 				        placeholder='Destination Title'
 				        className='mbe-1'
+                id='destination_title'
 				        onChange={e => {
 				          field.onChange(e.target.value)
 				          if(form_id === null) {
@@ -667,6 +673,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 				        variant='outlined'
 				        placeholder='Sub Title'
 				        className='mbe-1'
+                id='overview_sub_title'
 				        onChange={e => {
 				          field.onChange(e.target.value)
 				          errorState !== null && setErrorState(null)
@@ -693,6 +700,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
                 variant='outlined'
                 placeholder='Destination Location'
                 className='mbe-1'
+                id='overview_destination_location'
                 onChange={e => {
                   field.onChange(e.target.value)
                   errorState !== null && setErrorState(null)
@@ -729,6 +737,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 									        variant='outlined'
 									        placeholder='Enter Title'
 									        className='mbe-1'
+                          id={`overview_banners.${index}.title`}
 									        onChange={e => {
 									          field.onChange(e.target.value)
 									          errorState !== null && setErrorState(null)
@@ -757,6 +766,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 									        variant='outlined'
 									        placeholder='Enter Location'
 									        className='mbe-1'
+                          id={`overview_banners.${index}.location`}
 									        onChange={e => {
 									          field.onChange(e.target.value)
 									          errorState !== null && setErrorState(null)
@@ -882,6 +892,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			        variant='outlined'
 			        placeholder='Enter Title'
 			        className='mbe-1'
+              id='overview_about_title'
 			        onChange={e => {
 			          field.onChange(e.target.value)
 			          errorState !== null && setErrorState(null)
@@ -935,6 +946,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			        variant='outlined'
 			        placeholder='Enter Button Text'
 			        className='mbe-1'
+              id='overview_about_button_text'
 			        onChange={e => {
 			          field.onChange(e.target.value)
 			          errorState !== null && setErrorState(null)
@@ -960,6 +972,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			        label='Button Link'
 			        variant='outlined'
 			        placeholder='https://example.com'
+              id='overview_about_button_link'
 			        {...register("link", {
 			          required: "URL is required",
 			          pattern: {
@@ -1051,6 +1064,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
                   <Controller
                     name={`about_sections.${index}.direction`}
                     control={control}
+                    id={`overview_about_sections.${index}.direction`}
                     render={({ field }) => (
                       <Select label='Direction' {...field} error={!!errors.about_sections?.[index]?.direction}>
                         <MenuItem value=''>- Direction -</MenuItem>
@@ -1147,7 +1161,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 				            <Button color='error' variant='outlined' onClick={handleRemoveAllFiles}>
 				              Remove All
 				            </Button>
-				            <Button variant='contained'>Upload Files</Button>
+				            {/*<Button variant='contained'>Upload Files</Button>*/}
 				          </div>
 				        </>
 			      	) : null}
@@ -1223,6 +1237,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
                 variant='outlined'
                 placeholder='Enter Quick Facts Title'
                 className='mbe-1'
+                id='overview_quick_facts_title'
                 onChange={e => {
                   field.onChange(e.target.value)
                   errorState !== null && setErrorState(null)
@@ -1254,6 +1269,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
                         variant='outlined'
                         placeholder='Enter Label'
                         className='mbe-1'
+                        id={`overview_quick_facts.${index}.label`}
                         onChange={e => {
                           field.onChange(e.target.value)
                           errorState !== null && setErrorState(null)
@@ -1280,6 +1296,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
                         variant='outlined'
                         placeholder='Enter Content'
                         className='mbe-1'
+                        id={`overview_quick_facts.${index}.content`}
                         onChange={e => {
                           field.onChange(e.target.value)
                           errorState !== null && setErrorState(null)
@@ -1368,6 +1385,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			        variant='outlined'
 			        placeholder='Enter Title'
 			        className='mbe-1'
+              id='overview_feature_resorts_title'
 			        onChange={e => {
 			          field.onChange(e.target.value)
 			          errorState !== null && setErrorState(null)
@@ -1395,7 +1413,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			      </li>
 			    )}
 			    renderInput={(params) => (
-			      <TextField {...params} label="Search Destination" variant="outlined" />
+			      <TextField {...params} label="Search Resort" variant="outlined" />
 			    )}
 			    onChange={(event, newValue) => {
 			      setValue(
@@ -1433,6 +1451,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
                         variant='outlined'
                         placeholder='Question'
                         className='mbe-1'
+                        id={`overview_faqs.${index}.question`}
                         onChange={e => {
                           field.onChange(e.target.value)
                           errorState !== null && setErrorState(null)
@@ -1470,6 +1489,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
                         variant='outlined'
                         placeholder='Answer'
                         className='mbe-1'
+                        id={`overview_faqs.${index}.answer`}
                         onChange={e => {
                           field.onChange(e.target.value)
                           errorState !== null && setErrorState(null)
@@ -1528,6 +1548,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			          variant='outlined'
 			          placeholder='Enter Title'
 			          className='mbe-1'
+                id='overview_subscribe_title'
 			          onChange={e => {
 			            field.onChange(e.target.value)
 			            errorState !== null && setErrorState(null)
@@ -1556,6 +1577,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			          variant='outlined'
 			          placeholder='Enter Sub Title'
 			          className='mbe-1'
+                id='overview_subscribe_sub_title'
 			          onChange={e => {
 			            field.onChange(e.target.value)
 			            errorState !== null && setErrorState(null)
@@ -1582,6 +1604,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			          variant='outlined'
 			          placeholder='Enter Button Text'
 			          className='mbe-1'
+                id='overview_subscribe_button_text'
 			          onChange={e => {
 			            field.onChange(e.target.value)
 			            errorState !== null && setErrorState(null)
@@ -1606,6 +1629,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			          type='url'
 			          label='Button Link'
 			          variant='outlined'
+                id='overview_subscribe_button_link'
 			          placeholder='https://example.com'
 			          {...register("link", {
 			            required: "URL is required",
@@ -1645,6 +1669,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			          variant='outlined'
 			          placeholder='Enter Title'
 			          className='mbe-1'
+                id='overview_share_title'
 			          onChange={e => {
 			            field.onChange(e.target.value)
 			            errorState !== null && setErrorState(null)
@@ -1673,6 +1698,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			          variant='outlined'
 			          placeholder='Enter Sub Title'
 			          className='mbe-1'
+                id='overview_share_sub_title'
 			          onChange={e => {
 			            field.onChange(e.target.value)
 			            errorState !== null && setErrorState(null)
@@ -1699,6 +1725,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			          variant='outlined'
 			          placeholder='Enter Button Text'
 			          className='mbe-1'
+                id='overview_share_button_text'
 			          onChange={e => {
 			            field.onChange(e.target.value)
 			            errorState !== null && setErrorState(null)
@@ -1722,6 +1749,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			          fullWidth
 			          type='url'
 			          label='Button Link'
+                id='overview_share_button_link'
 			          variant='outlined'
 			          placeholder='https://example.com'
 			          {...register("link", {
@@ -1771,6 +1799,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			            variant='outlined'
 			            placeholder='Enter URL'
 			            className='mbe-1'
+                  id='overview_page_url'
 			            onChange={e => {
 			              field.onChange(e.target.value)
 			              errorState !== null && setErrorState(null)
@@ -1797,6 +1826,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			            variant='outlined'
 			            placeholder='Enter Meta Title'
 			            className='mbe-1'
+                  id='overview_meta_title'
 			            onChange={e => {
 			              field.onChange(e.target.value)
 			              errorState !== null && setErrorState(null)
@@ -1825,6 +1855,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			            variant='outlined'
 			            placeholder='Enter Meta Description'
 			            className='mbe-1'
+                  id='overview_meta_description'
 			            onChange={e => {
 			              field.onChange(e.target.value)
 			              errorState !== null && setErrorState(null)
@@ -1851,6 +1882,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			            variant='outlined'
 			            placeholder='Enter Meta Keywords'
 			            className='mbe-1'
+                  id='overview_meta_keywords'
 			            onChange={e => {
 			              field.onChange(e.target.value)
 			              errorState !== null && setErrorState(null)
@@ -1877,6 +1909,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			            variant='outlined'
 			            placeholder='Robots'
 			            className='mbe-1'
+                  id='overview_robots'
 			            onChange={e => {
 			              field.onChange(e.target.value)
 			              errorState !== null && setErrorState(null)
@@ -1908,6 +1941,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			            variant='outlined'
 			            placeholder='Enter Author'
 			            className='mbe-1'
+                  id='overview_author'
 			            onChange={e => {
 			              field.onChange(e.target.value)
 			              errorState !== null && setErrorState(null)
@@ -1934,6 +1968,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			            variant='outlined'
 			            placeholder='Enter Publisher'
 			            className='mbe-1'
+                  id='overview_publisher'
 			            onChange={e => {
 			              field.onChange(e.target.value)
 			              errorState !== null && setErrorState(null)
@@ -1960,6 +1995,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			            variant='outlined'
 			            placeholder='Enter Copyright'
 			            className='mbe-1'
+                  id='overview_copyright'
 			            onChange={e => {
 			              field.onChange(e.target.value)
 			              errorState !== null && setErrorState(null)
@@ -1986,6 +2022,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			            variant='outlined'
 			            placeholder='Enter Revisit-After'
 			            className='mbe-1'
+                  id='overview_revisit_after'
 			            onChange={e => {
 			              field.onChange(e.target.value)
 			              errorState !== null && setErrorState(null)
@@ -2012,6 +2049,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			            variant='outlined'
 			            placeholder='Enter Classification'
 			            className='mbe-1'
+                  id='overview_classification'
 			            onChange={e => {
 			              field.onChange(e.target.value)
 			              errorState !== null && setErrorState(null)
@@ -2038,6 +2076,7 @@ const Overview = ({ pgData, destinations, setFormId, getFormId, adventurePosts }
 			            variant='outlined'
 			            placeholder='Enter Rating'
 			            className='mbe-1'
+                  id='overview_rating'
 			            onChange={e => {
 			              field.onChange(e.target.value)
 			              errorState !== null && setErrorState(null)
