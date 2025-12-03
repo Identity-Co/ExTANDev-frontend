@@ -15,6 +15,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import type { ChildrenType } from '@core/types'
 
 // Component Imports
+import Ai12zWidget from '@/components/Bot'
 
 // HOC Imports
 
@@ -22,6 +23,7 @@ import type { ChildrenType } from '@core/types'
 
 // Util Imports
 import { getSystemMode } from '@core/utils/serverHelpers'
+
 
 // Style Imports
 import '@/app/globals.css'
@@ -35,8 +37,6 @@ export const metadata = {
   title: 'Adventure Network',
   description: ''
 }
-
-import Script from "next/script"
 
 const RootLayout = async (props: ChildrenType ) => {
   
@@ -57,7 +57,9 @@ const RootLayout = async (props: ChildrenType ) => {
             <NavigationEvents />
             <PageLoader />
             {children}
+
           </AppRouterCacheProvider>
+          <Ai12zWidget />
         </body>
       </html>
     
