@@ -30,7 +30,7 @@ const OverviewSection4 = ({ data }: { data?: []; }) => {
       function initMap() {
         const map = new window.google.maps.Map(mapRef.current, {
           center: { lat: latitude, lng: longitude },
-          zoom: 15,
+          zoom: 12,
         });
 
         new window.google.maps.Marker({
@@ -47,7 +47,7 @@ const OverviewSection4 = ({ data }: { data?: []; }) => {
           <div className={classnames(styles.jade_jungle_sec3_row)}>
               <div className={classnames(styles.jungle_map_box)}>
                   <div className={classnames(styles.jungle_map_img, 'full_img')}>
-                      <div ref={mapRef} style={{ width: '100%', height: '400px' }} />
+                      <div ref={mapRef} style={{ width: '100%', height: '50vw' }} />
                   </div>
               </div>
               <div className={classnames(styles.jungle_facilities_box)}>
