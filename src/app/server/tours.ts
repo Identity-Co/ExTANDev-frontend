@@ -402,3 +402,23 @@ export const getAllToursForSEO = async (category: string, destination: string, p
     return json.data
   }
 }
+
+export const getToursByLocation = async (data: any) => {
+  const session = await getServerSession(authOptions)
+  
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tours/get/by-location`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    return {}
+  } else {
+    const json = await response.json();
+    
+    return json.data
+  }
+}

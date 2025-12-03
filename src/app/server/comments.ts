@@ -227,15 +227,16 @@ export const getCommentById = async (id: any) => {
   }
 }
 
-export const getStoryPostByID = async (id: any) => {
+export const getStoryPostByID = async (data: any) => {
   const session = await getServerSession(authOptions);
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments/get/story/${id}`, {
-    method: 'GET',
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments/get/story`, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + session?.user?.userToken
-    }
+    },
+    body: JSON.stringify(data)
   }).catch(rejected => {
       console.log(rejected);
   })  
