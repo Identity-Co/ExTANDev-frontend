@@ -162,7 +162,7 @@ const schema = object({
   adventure_posts: array(
     optional(string()),
   ),
-  feature_resorts_title: pipe(string(), nonEmpty('This field is required')),
+  feature_resorts_title: optional(string()),
   feature_resorts: array(
     optional(string()),
   ),
@@ -172,11 +172,11 @@ const schema = object({
 	  	answer: pipe(string(), nonEmpty('This field is required'))
 	  })
   ),
-  subscribe_title: pipe(string(), nonEmpty('This field is required')),
+  subscribe_title: optional(string()),
   subscribe_sub_title: pipe(string()),
   subscribe_button_text: optional(string()),
   subscribe_button_link: pipe(string()),
-  share_title: pipe(string(), nonEmpty('This field is required')),
+  share_title: optional(string()),
   share_sub_title: pipe(string()),
   share_button_text: optional(string()),
   share_button_link: pipe(string()),

@@ -13,6 +13,8 @@ type sectionProp = {
 }
 
 const OurDestinationsFeaturedResorts = ({ sectionProps }: sectionProp) => {
+    if(!sectionProps.resorts.length)
+        return false;
 
     return (
         <section className={classnames(styles.our_desti_sec4, ...sectionProps.class?.split(' ').map(cls => styles[cls]).filter(Boolean), sectionProps.general_class?.trim() || '' )}>

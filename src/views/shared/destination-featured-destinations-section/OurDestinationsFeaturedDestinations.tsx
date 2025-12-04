@@ -13,6 +13,9 @@ type sectionProp = {
 }
 
 const OurDestinationsFeaturedDestinations = ({ sectionProps }: sectionProp) => {
+    if(!sectionProps?.destinations.length)
+      return false;
+    
     const [resortParam, setResortParam] = useState("");
 
     useEffect(() => {

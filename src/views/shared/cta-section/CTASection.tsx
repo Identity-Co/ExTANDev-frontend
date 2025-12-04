@@ -5,6 +5,8 @@ import classnames from 'classnames'
 import styles from './styles.module.css'
 
 const CTASection = ({ data }: { data?: []; }) => {
+  if(!data?.subscribe_title && !data?.share_title)
+    return false;
 
   return (
     <section className={classnames(styles.cta_section, 'py_50')}>

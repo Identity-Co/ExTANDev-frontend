@@ -31,8 +31,6 @@ function truncateHTMLWords(html: string, limit = 50) {
 }
 
 const getCompressedUrl = (src, width = 800, quality = 80) => {
-  console.log(process.env.NEXT_PUBLIC_API_URL);
-
   return `${process.env.NEXT_PUBLIC_API_URL}/image_compress/compress?url=${encodeURIComponent(src)}&width=${width}&quality=${quality}&format=webp`;
 };
 
@@ -103,7 +101,6 @@ const InnerSlider = (images: string[]) => {
   };
 
   return (
-    <>
     <Slider {...Isettings} className='mbe-6'>
       {images?.images
         ?.filter(item => item.type === "IMAGE")
@@ -122,11 +119,12 @@ const InnerSlider = (images: string[]) => {
           </div>
         ))}
     </Slider>
-    </>
   );
 };
 
 const InstagramFeedSlider = ({ sectionProps }: sectionProp) => {
+  if(!sectionProps?.lists.length)
+    return false;
   const [toursData, settoursData] = useState<any>(null);
 
   const listsString = JSON.stringify(sectionProps?.lists ?? []);
@@ -225,7 +223,7 @@ const InstagramFeedSlider = ({ sectionProps }: sectionProp) => {
           <div className={classnames(styles.network_travel_bottom)}>
               <div className={classnames(styles.network_travel_profile)}>
                   <div className={classnames(styles.network_travel_picture)}>
-                      {fData?.image && <img src={fData?.image}/> }
+                      {fData?.image && <img src={getCompressedUrl(fData.image, 300, 300)} /> }
                   </div>
                   <div className={classnames(styles.adv_post_top_right)}>
                       <div className={classnames(styles.network_travel_profile_info)}>
@@ -245,7 +243,7 @@ const InstagramFeedSlider = ({ sectionProps }: sectionProp) => {
           
           <div className={classnames(styles.adv_post_img_slide, 'adv_post_img_slide')}>
           
-            <InnerSlider images={fData?.details?.gallery_images} />
+            {/*<InnerSlider images={fData?.details?.gallery_images} />*/}
             
           </div>
       </div>); // Remember to add a unique key prop

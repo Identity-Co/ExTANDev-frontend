@@ -74,7 +74,7 @@ const LandingPageWrapper = ({ pgData, destinations}: OverviewProps) => {
   }
 
   const featuredResortsSectionProps = {
-    resorts: featuredResorts,
+    resorts: featuredResorts?? [],
     heading_class: 'fs_35',
     class: '',
     sectionHeading: pgData?.overview?.feature_resorts?.title ?? ''
