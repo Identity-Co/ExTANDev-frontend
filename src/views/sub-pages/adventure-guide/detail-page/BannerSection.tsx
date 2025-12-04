@@ -7,6 +7,8 @@ import classnames from 'classnames'
 // Type Imports
 import type { Mode } from '@core/types'
 
+import DestinationResortFilter from '@/components/DestinationResortFilter'
+
 // Styles Imports
 import styles from './styles.module.css'
 
@@ -83,138 +85,7 @@ const BannerSection = ({ mode, data, locations, locDestinations }: { mode: Mode;
             <div className={classnames(styles.container, 'container')}>
                 <div className={classnames(styles.search_box_inner)}>
                     <div className={classnames(styles.search_row)}>
-                        <form action="/our-destinations/" method="get">
-                            <input type="hidden" name="location" value={location??''} />
-                          <input type="hidden" name="resort" value={resort??''} />
-                          <div className={classnames(styles.search_select, styles.ss1)}>
-                              <label>Destinations</label>
-                              <div className={`custom-select ${openLoc ? 'active' : ''}`}>
-                                <div 
-                                  className="select-selected"
-                                  onClick={() => {setOpenLoc(!openLoc); setOpenRes(false)}}
-                                  style={{ cursor: "pointer" }}
-                                >
-                                  <div>
-                                    <span className="select-icn">
-                                      <img src="/images/svg/map-pin.svg" alt=""  />
-                                    </span>
-                                    <span>{selectedLoc}</span>
-                                  </div>
-
-                                  <img
-                                    src="/images/svg/down-arrow.svg"
-                                    alt=""
-                                    style={{
-                                      transform: openLoc ? "rotate(180deg)" : "rotate(0deg)",
-                                      transition: "0.2s",
-                                    }}
-                                  />
-                                </div>
-
-                                {openLoc && (
-                                  <div className="select-items">
-                                    {locations.map((loc, index) => (
-                                      <div
-                                        key={index}
-                                        onClick={() => {
-                                          setSelectedLoc(loc);
-                                          setLocation(loc)
-                                          setOpenLoc(false);
-                                        }}
-                                        style={{ cursor: "pointer" }}
-                                      >
-                                        <span>
-                                          <img src="/images/svg/map-pin.svg" alt="" />
-                                        </span>
-                                        {loc}
-                                      </div>
-                                    ))}
-                                  </div>
-                                )}
-                              </div>
-                              {/*<select name="location" id="location" required onChange={(e) => setLocation(e.target.value)} value={location??''}>
-                                <option value="">Select a Destination</option>
-                                {locations.map((loc, i) => (
-                                  <option key={`${i}_${loc}`} value={loc} >
-                                    {loc}
-                                  </option>
-                                ))}
-                              </select>*/}
-                          </div>
-                          <div className={classnames(styles.search_select, styles.ss2)}>
-                              <label>Resort/Hotel</label>
-
-                              <div className={`custom-select ${openRes ? 'active' : ''}`}>
-                                <div 
-                                  className="select-selected"
-                                  onClick={() => {setOpenRes(!openRes); setOpenLoc(false)}}
-                                  style={{ cursor: "pointer" }}
-                                >
-                                  <div>
-                                    <span className="select-icn">
-                                      <img src="/images/svg/hotel.svg" alt=""  />
-                                    </span>
-                                    <span>{selectedRes}</span>
-                                  </div>
-
-                                  <img
-                                    src="/images/svg/down-arrow.svg"
-                                    alt=""
-                                    style={{
-                                      transform: openRes ? "rotate(180deg)" : "rotate(0deg)",
-                                      transition: "0.2s",
-                                    }}
-                                  />
-                                </div>
-
-                                {openRes && (
-                                  <div className="select-items">
-                                    <div
-                                      onClick={() => {
-                                        setSelectedRes('Any Resorts');
-                                        setResort('Any Resorts')
-                                        setOpenRes(false);
-                                      }}
-                                      style={{ cursor: "pointer" }}
-                                    >
-                                      <span>
-                                        <img src="/images/svg/hotel.svg" alt="" />
-                                      </span>
-                                      Any Resorts
-                                    </div>
-
-                                    {resorts.map((res, index) => (
-                                      <div
-                                        key={index}
-                                        onClick={() => {
-                                          setSelectedRes(res);
-                                          setResort(res)
-                                          setOpenRes(false);
-                                        }}
-                                        style={{ cursor: "pointer" }}
-                                      >
-                                        <span>
-                                          <img src="/images/svg/hotel.svg" alt="" />
-                                        </span>
-                                        {res}
-                                      </div>
-                                    ))}
-                                  </div>
-                                )}
-                              </div>
-                              {/*<select name="resort" id="resort" onChange={(e) => setResort(e.target.value)} value={resort??''}>
-                                <option value="">Select Resort</option>
-                                {resorts.map((res, i) => (
-                                  <option key={`${i}_${res}`} value={res}>
-                                    {res}
-                                  </option>
-                                ))}
-                              </select>*/}
-                          </div>
-                            <div className={classnames(styles.search_btn)}>
-                                <input type="submit" name="" value="Search" />
-                            </div>
-                        </form>
+                        <DestinationResortFilter />
                     </div>
                 </div>
             </div>

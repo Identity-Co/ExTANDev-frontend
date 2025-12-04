@@ -271,3 +271,43 @@ export const filterDestinationAdventure = async(destID: string, suitable_for?: s
   
   return json.data;
 }
+
+
+export const getResortsByDestinations = async (location?: string,) => {
+  const session = await getServerSession(authOptions);
+  
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/destination/filter-resorts-by-destination`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({'destination_location': location})
+  })
+  
+  if (!response.ok) {
+    return {}
+  } else {
+    const json = await response.json();
+    
+    return json.data
+  }
+}
+
+
+export const filterDestinationByTags = async (location?: string, resort?: string) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/destination/filter-destination-by-tags`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({'location': location, 'resort': resort})
+  })
+  
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const json = await response.json();
+  
+  return json.data;
+}
