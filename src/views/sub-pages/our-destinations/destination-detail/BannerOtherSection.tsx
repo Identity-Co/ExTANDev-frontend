@@ -11,7 +11,7 @@ import DestinationResortFilter from '@/components/DestinationResortFilter'
 // Styles Imports
 import styles from './styles.module.css'
 
-const BannerOtherSection = ({ bannerData, tabID, bannerTitle, scrollRef, locations, locDestinations }: { bannerData?: [], tabID?: ''; bannerTitle?: ''; scrollRef?: []; locations?: []; locDestinations?: []; }) => {
+const BannerOtherSection = ({ bannerData, tabID, bannerTitle, scrollRef, locations, locDestinations, cur_location }: { bannerData?: [], tabID?: ''; bannerTitle?: ''; scrollRef?: []; locations?: []; locDestinations?: []; cur_location?: '' }) => {
     
     const [location, setLocation] = useState(null);
     const [resort, setResort] = useState("Any Resorts"); // null
@@ -103,7 +103,7 @@ const BannerOtherSection = ({ bannerData, tabID, bannerTitle, scrollRef, locatio
             <div className={classnames(styles.container, 'container')}>
                 <div className={classnames(styles.search_box_inner)}>
                     <div className={classnames(styles.search_row)}>
-                        <DestinationResortFilter />
+                        <DestinationResortFilter cur_dest_page={cur_location} />
                     </div>
                 </div>
             </div>

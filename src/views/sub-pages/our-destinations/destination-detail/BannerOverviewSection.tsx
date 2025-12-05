@@ -15,7 +15,7 @@ import styles from './styles.module.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const BannerOverviewSection = ({ bannerData, locations, locDestinations }: { bannerData?: []; locations?: []; locDestinations?: []; }) => {
+const BannerOverviewSection = ({ bannerData, locations, locDestinations, cur_location }: { bannerData?: []; locations?: []; locDestinations?: []; cur_location?: '' }) => {
   const slideref = useRef();
 
   const [location, setLocation] = useState(null);
@@ -153,7 +153,7 @@ const BannerOverviewSection = ({ bannerData, locations, locDestinations }: { ban
             <div className={classnames(styles.container, 'container')}>
                 <div className={classnames(styles.search_box_inner)}>
                     <div className={classnames(styles.search_row)}>
-                        <DestinationResortFilter />
+                        <DestinationResortFilter cur_dest_page={cur_location} />
                     </div>
                 </div>
             </div>

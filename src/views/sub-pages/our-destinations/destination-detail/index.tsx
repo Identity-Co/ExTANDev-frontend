@@ -91,13 +91,13 @@ const PageSection = ({ pgData, id, resortDestinations, adventures, hasParam, fil
   return (
     <>
       {val === 'overview' ? (
-        <BannerOverviewSection bannerData={pgData?.overview?.banners ?? []} locations={locations} locDestinations={locDestinations} />
+        <BannerOverviewSection bannerData={pgData?.overview?.banners ?? []} locations={locations} locDestinations={locDestinations} cur_location={pgData.destination_location??''} />
       ) : isOverviewDetailPageID && isOverviewDetailPage ? (
         <BannerOtherSection
-          bannerData={adventureDetailPageData?.banner_image} tabID={val} bannerTitle={adventureDetailPageData?.title} locations={locations} locDestinations={locDestinations} />
+          bannerData={adventureDetailPageData?.banner_image} tabID={val} bannerTitle={adventureDetailPageData?.title} locations={locations} locDestinations={locDestinations} cur_location={pgData.destination_location??''} />
       ) : (
         <BannerOtherSection
-          bannerData={pgData?.[val]?.banner_image} tabID={val} scrollRef={scrollref} locations={locations} locDestinations={locDestinations} />
+          bannerData={pgData?.[val]?.banner_image} tabID={val} scrollRef={scrollref} locations={locations} locDestinations={locDestinations} cur_location={pgData.destination_location??''} />
       )}
       <TabContext value={val} className="my-5">
         <TabList variant='fullWidth' onChange={handleChange} aria-label='full width tabs example' className="destinations_tab">

@@ -8,7 +8,9 @@ import styles from './styles.module.css'
 
 import { getPageDestination, getDestinationList, filterDestination, getResortsByDestinations } from '@/app/server/destinations'
 
-export default function DestinationResortFilter() {
+
+
+export default function DestinationResortFilter({cur_dest_page}:{cur_dest_page?: string}) {
 
   const searchParams = useSearchParams();
   const isLoadRef = useRef(false)
@@ -41,6 +43,11 @@ export default function DestinationResortFilter() {
 
   useEffect(() => {
     if (isLoadRef.current) return;
+
+    if(cur_dest_page && cur_dest_page!='') {
+      setLocation(cur_dest_page)
+      setSelectedLoc(cur_dest_page)
+    }
 
     isLoadRef.current = true
 
