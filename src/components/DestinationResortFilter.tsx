@@ -4,27 +4,30 @@ import { useEffect, useState, useRef } from "react";
 import classnames from "classnames";
 import { useSearchParams } from "next/navigation";
 
-import styles from './styles.module.css'
+import styles from "./styles.module.css";
 
-import { getPageDestination, getDestinationList, filterDestination, getResortsByDestinations } from '@/app/server/destinations'
+import { getDestinationList, getResortsByDestinations} from "@/app/server/destinations";
 
-
-
-export default function DestinationResortFilter({cur_dest_page}:{cur_dest_page?: string}) {
+export default function DestinationResortFilter({cur_dest_page}: {cur_dest_page?: string;}) {
 
   const searchParams = useSearchParams();
-  const isLoadRef = useRef(false)
-  const isLoaded = useRef(false)
+  const isLoadRef = useRef(false);
+  const isLoaded = useRef(false);
 
-  const [featuredDestinations, setFeaturedDestinations] = useState([]);
-  const [allLocations, setAllLocations] = useState([]);
-  const [location, setLocation] = useState(null);
-  const [resort, setResort] = useState("Any Resorts"); // null
+  const [allLocations, setAllLocations] = useState<
+    { label: string; page_url: string }[]
+  >([]);
+  const [location, setLocation] = useState<{ label: string; page_url: string } | null>(null);
 
-  const location_para = searchParams.get("location");
-  const resort_para = searchParams.get("resort");
+  const [resorts, setResorts] = useState<
+    { name: string; page_url: string }[]
+  >([]);
 
-  const [resorts, setResorts] = useState([]);
+  const [resort, setResort] = useState<{ name: string; page_url: string } | null>({
+    name: "Any Resorts",
+    page_url: "",
+  });
+
   const [isClicked, setIsClicked] = useState(0);
 
   const [openLoc, setOpenLoc] = useState(false);
@@ -33,74 +36,138 @@ export default function DestinationResortFilter({cur_dest_page}:{cur_dest_page?:
   const [openRes, setOpenRes] = useState(false);
   const [selectedRes, setSelectedRes] = useState("Any Resorts");
 
+  const location_para = searchParams.get("location");
+  const resort_para = searchParams.get("resort");
+
   useEffect(() => {
-    setLocation(location_para ?? ''); setSelectedLoc (location_para ?? "Select Destination");
-    setResort(resort_para ?? 'Any Resorts'); setSelectedRes(resort_para ?? 'Any Resorts');
+    if (location_para) {
+      setSelectedLoc(location_para);
+    }
+
+    if (resort_para) {
+      setSelectedRes(resort_para);
+    }
   }, [location_para, resort_para]);
 
-
-  //console.log("DestinationResortFilter: ", location, resort);
-
+  /** ---------------------------------------------------
+   * LOAD DESTINATIONS (WITH page_url)
+   * --------------------------------------------------- */
   useEffect(() => {
     if (isLoadRef.current) return;
 
-    if(cur_dest_page && cur_dest_page!='') {
-      setLocation(cur_dest_page)
-      setSelectedLoc(cur_dest_page)
-    }
-
-    isLoadRef.current = true
+    isLoadRef.current = true;
 
     async function loadLocations() {
-      const locDestinations = await getDestinationList()
+      const locDestinations = await getDestinationList();
 
-      const locations = [...new Set(locDestinations.map(item => item.destination_location))];
+      // Expecting each item: { destination_location, page_url }
+      /* const locations = locDestinations.map((item) => ({
+        label: item.destination_location,
+        page_url: item.page_url,
+      })); */
 
-      setAllLocations(locations)
+      const locations = Array.from(
+        new Map(
+          locDestinations.map((item) => [
+            item.destination_location,
+            {
+              label: item.destination_location,
+              page_url: item.page_url,
+            },
+          ])
+        ).values()
+      );
 
-      //console.log('All locations: ', locations)
+      if (cur_dest_page) {
+        const found = locations.find((l) => l.label === cur_dest_page);
+        if (found) {
+          setLocation(found);
+          setSelectedLoc(found.label);
+        }
+      }
 
-      isLoaded.current = true
+      setAllLocations(locations);
+      isLoaded.current = true;
     }
 
     loadLocations();
   }, []);
 
-
+  /** ---------------------------------------------------
+   * LOAD RESORTS BASED ON LOCATION
+   * --------------------------------------------------- */
   useEffect(() => {
-    if(isClicked == 1) {
-      setResort("Any Resorts")
-      setSelectedRes("Any Resorts")
+    if (!location) return;
+
+    if (isClicked === 1) {
+      setResort({ name: "Any Resorts", page_url: "" });
+      setSelectedRes("Any Resorts");
     }
-    setResortItems()
+
+    loadResorts();
   }, [location]);
 
-  async function setResortItems() {
-    //console.log('setResortItems called : ', location)
+  async function loadResorts() {
+    const resortsList = await getResortsByDestinations(location?.label);
 
-    const resortsList = await getResortsByDestinations(location);
-    
-    //console.log('resortsList : ', resortsList)
-    
-    setResorts(resortsList)
+    // Expecting: { name, page_url }
+    setResorts(resortsList);
   }
 
-  return (
-    isLoaded.current && <form action={`${process.env.NEXT_PUBLIC_APP_URL}/our-destinations`} className={classnames(styles.destresort_form)}>
-      <input type="hidden" name="location" value={location??''} />
-      <input type="hidden" name="resort" value={resort??''} />
+  /** ---------------------------------------------------
+   * HANDLE SUBMIT
+   * --------------------------------------------------- */
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-      <div className={classnames(styles.search_select, styles.ss1)}>
+    const dest = location;
+    const res = resort;
+
+    // 1. Resort selected → redirect to resort page
+    if (res && res.name !== "Any Resorts") {
+      window.location.href = `${process.env.NEXT_PUBLIC_APP_URL}/resorts/${res.page_url}`;
+      return;
+    }
+
+    // 2. Destination selected → redirect to destination page
+    if (dest && dest.label !== "Select Destination") {
+      window.location.href = `${process.env.NEXT_PUBLIC_APP_URL}/our-destinations/${dest.page_url}`;
+      return;
+    }
+
+    // 3. Default → normal form submit
+    e.target.submit();
+  };
+
+  /** ---------------------------------------------------
+   * UI
+   * --------------------------------------------------- */
+  return (
+    isLoaded.current && (
+      <form
+        onSubmit={handleSubmit}
+        action={`${process.env.NEXT_PUBLIC_APP_URL}/our-destinations`}
+        className={classnames(styles.destresort_form)}
+      >
+        {/* Hidden fields for normal form submission */}
+        <input type="hidden" name="location" value={location?.label ?? ""} />
+        <input type="hidden" name="resort" value={resort?.name ?? ""} />
+
+        {/* ------------------ DESTINATION ------------------ */}
+        <div className={classnames(styles.search_select, styles.ss1)}>
           <label>Destinations</label>
-          <div className={`custom-select ${openLoc ? 'active' : ''}`}>
-            <div 
+
+          <div className={`custom-select ${openLoc ? "active" : ""}`}>
+            <div
               className="select-selected"
-              onClick={() => {setOpenLoc(!openLoc); setOpenRes(false)}}
-              style={{ cursor: "pointer" }}
+              onClick={() => {
+                setOpenLoc(!openLoc);
+                setOpenRes(false);
+              }}
             >
               <div>
                 <span className="select-icn">
-                  <img src="/images/svg/map-pin.svg" alt=""  />
+                  <img src="/images/svg/map-pin.svg" alt="map" />
                 </span>
                 <span>{selectedLoc}</span>
               </div>
@@ -110,7 +177,6 @@ export default function DestinationResortFilter({cur_dest_page}:{cur_dest_page?:
                 alt=""
                 style={{
                   transform: openLoc ? "rotate(180deg)" : "rotate(0deg)",
-                  transition: "0.2s",
                 }}
               />
             </div>
@@ -118,40 +184,43 @@ export default function DestinationResortFilter({cur_dest_page}:{cur_dest_page?:
             {openLoc && (
               <div className="select-items">
                 {allLocations
-                  .filter(loc => loc !== undefined && loc !== null && loc !== "")
+                  .filter((loc) => loc.label)
                   .map((loc, index) => (
                     <div
                       key={index}
                       onClick={() => {
                         setIsClicked(1);
-                        setSelectedLoc(loc);
                         setLocation(loc);
+                        setSelectedLoc(loc.label);
                         setOpenLoc(false);
                       }}
-                      style={{ cursor: "pointer" }}
                     >
                       <span>
                         <img src="/images/svg/map-pin.svg" alt="" />
                       </span>
-                      {loc}
+                      {loc.label}
                     </div>
                   ))}
               </div>
             )}
           </div>
-      </div>
-      <div className={classnames(styles.search_select, styles.ss2)}>
+        </div>
+
+        {/* ------------------ RESORT ------------------ */}
+        <div className={classnames(styles.search_select, styles.ss2)}>
           <label>Resort/Hotel</label>
 
-          <div className={`custom-select ${openRes ? 'active' : ''}`}>
-            <div 
+          <div className={`custom-select ${openRes ? "active" : ""}`}>
+            <div
               className="select-selected"
-              onClick={() => {setOpenRes(!openRes); setOpenLoc(false)}}
-              style={{ cursor: "pointer" }}
+              onClick={() => {
+                setOpenRes(!openRes);
+                setOpenLoc(false);
+              }}
             >
               <div>
                 <span className="select-icn">
-                  <img src="/images/svg/hotel.svg" alt=""  />
+                  <img src="/images/svg/hotel.svg" alt="hotel" />
                 </span>
                 <span>{selectedRes}</span>
               </div>
@@ -161,7 +230,6 @@ export default function DestinationResortFilter({cur_dest_page}:{cur_dest_page?:
                 alt=""
                 style={{
                   transform: openRes ? "rotate(180deg)" : "rotate(0deg)",
-                  transition: "0.2s",
                 }}
               />
             </div>
@@ -170,11 +238,10 @@ export default function DestinationResortFilter({cur_dest_page}:{cur_dest_page?:
               <div className="select-items">
                 <div
                   onClick={() => {
-                    setSelectedRes('Any Resorts');
-                    setResort('Any Resorts')
+                    setSelectedRes("Any Resorts");
+                    setResort({ name: "Any Resorts", page_url: "" });
                     setOpenRes(false);
                   }}
-                  style={{ cursor: "pointer" }}
                 >
                   <span>
                     <img src="/images/svg/hotel.svg" alt="" />
@@ -182,17 +249,14 @@ export default function DestinationResortFilter({cur_dest_page}:{cur_dest_page?:
                   Any Resorts
                 </div>
 
-                {resorts.length > 0 && resorts
-                  .filter(res => res !== undefined && res !== null && res !== "")
-                  .map((res, index) => (
+                {resorts.map((res, index) => (
                   <div
                     key={index}
                     onClick={() => {
                       setSelectedRes(res.name);
-                      setResort(res.name);
+                      setResort(res);
                       setOpenRes(false);
                     }}
-                    style={{ cursor: "pointer" }}
                   >
                     <span>
                       <img src="/images/svg/hotel.svg" alt="" />
@@ -203,10 +267,13 @@ export default function DestinationResortFilter({cur_dest_page}:{cur_dest_page?:
               </div>
             )}
           </div>
-      </div>
-      <div className={classnames(styles.search_btn)}>
-          <input type="submit" name="" value="Search" />
-      </div>
-  </form>
+        </div>
+
+        {/* Submit Button */}
+        <div className={classnames(styles.search_btn)}>
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+    )
   );
 }
