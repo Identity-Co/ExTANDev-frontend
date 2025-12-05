@@ -108,3 +108,14 @@
 
 
 /*banner-end*/
+@media only screen and (min-width: 691px) {
+    .travel_banner_bg_image .travel_banner_bg_image_hero {
+        height: calc(100vw * (500 / 1920)); min-height:500px; padding:0;
+    }
+}
+
+@media only screen and (max-width: 690px) {
+    .travel_banner_bg_image .travel_banner_bg_image_hero {
+        height: calc(100vw * (250 / 690)); min-height:250px; padding:0;
+    }
+}

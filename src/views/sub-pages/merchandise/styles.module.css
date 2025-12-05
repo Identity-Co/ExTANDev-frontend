@@ -89,3 +89,16 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
 }
 
 /*merchandise_sec3-end*/
+
+
+@media only screen and (min-width: 691px) {
+    .banner_bg_image .banner_bg_image_hero {
+        height: calc(100vw * (500 / 1920)); min-height:500px; padding:0;
+    }
+}
+
+@media only screen and (max-width: 690px) {
+    .banner_bg_image .banner_bg_image_hero {
+        height: calc(100vw * (250 / 690)); min-height:250px; padding:0;
+    }
+}
