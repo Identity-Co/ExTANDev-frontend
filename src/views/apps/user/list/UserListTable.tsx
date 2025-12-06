@@ -216,7 +216,7 @@ const UserListTable = ({ tableData, roles }: { tableData?: UsersType[]; roles?: 
         header: 'User',
         cell: ({ row }) => (
           <div className='flex items-center gap-4'>
-            {row.original.profile_picture ? getAvatar({ avatar: process.env.NEXT_PUBLIC_UPLOAD_URL+'/'+row.original.profile_picture, fullName: row.original.first_name ?? '' }) : getAvatar({ avatar: '/images/avatars/1.png', fullName: row.original.first_name ?? '' })}
+            {row.original.profile_picture ? getAvatar({ avatar: process.env.NEXT_PUBLIC_UPLOAD_URL+'/'+row.original.profile_picture, fullName: row.original.first_name ?? '', borderclr: row.original.ambassador_status==1 ?'golden_avatar':''}) : getAvatar({ avatar: '/images/avatars/1.png', fullName: row.original.first_name ?? '', borderclr: row.original.ambassador_status==1 ?'golden_avatar':'' })}
             <div className='flex flex-col'>
               <Typography className='font-medium' color='text.primary'>
                 {row.original.first_name}
@@ -239,7 +239,7 @@ const UserListTable = ({ tableData, roles }: { tableData?: UsersType[]; roles?: 
       }),
       columnHelper.accessor('contact', {
         header: 'Phone',
-        cell: ({ row }) => <Typography>{row.original.phone.country_code} {row.original.phone.number}</Typography>
+        cell: ({ row }) => <Typography>{row.original?.phone?.country_code} {row.original?.phone?.number}</Typography>
       }),
       columnHelper.accessor('role', {
         header: 'Role',
@@ -408,14 +408,14 @@ const UserListTable = ({ tableData, roles }: { tableData?: UsersType[]; roles?: 
     }
   }, [table.getState().sorting[0]?.id])*/
 
-  const getAvatar = (params: Pick<UsersType, 'avatar' | 'fullName'>) => {
-    const { avatar, fullName } = params
+  const getAvatar = (params: Pick<UsersType, 'avatar' | 'fullName' | 'borderclr'>) => {
+    const { avatar, fullName, borderclr } = params
     
     if (avatar) {
-      return <CustomAvatar src={avatar} skin='light' size={34} />
+      return <CustomAvatar src={avatar} skin='light' size={34} className={borderclr} />
     } else {
       return (
-        <CustomAvatar skin='light' size={34}>
+        <CustomAvatar skin='light' size={34} className={borderclr}>
           {getInitials(fullName as string)}
         </CustomAvatar>
       )
