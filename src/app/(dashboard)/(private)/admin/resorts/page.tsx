@@ -1,7 +1,7 @@
 import ResortsLists from '@views/admin/resorts'
 
 import * as Common from '@/app/server/common'
-import { getResorts } from '@/app/server/resorts'
+import { getResorts, getResortsByUser } from '@/app/server/resorts'
 
 import config from '@/configs/themeConfig'
 
@@ -13,10 +13,16 @@ export const metadata = {
 const ManageDestinations = async () => {
   const session = await Common.getUserSess();
 
-  // Vars
-  const data = await getResorts('name,location,created_at')
+  let data: any[] = [];
+  if(session?.user?.role == 'property_owner'){
+    data = await getResortsByUser('name,location,created_at', session?.user?.id);
+  }else{
+    data = await getResorts('name,location,created_at')
+  }
 
-  return <ResortsLists data={data} />
+  console.log(data);
+
+  return <ResortsLists data={data} session={session} />
 }
 
 export default ManageDestinations

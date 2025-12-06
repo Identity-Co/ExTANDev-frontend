@@ -41,6 +41,7 @@ type RenderExpandIconProps = {
 type Props = {
   
   scrollMenu: (container: any, isPerfectScrollbar: boolean) => void
+  session: []
 }
 
 const RenderExpandIcon = ({ open, transitionDuration }: RenderExpandIconProps) => (
@@ -49,14 +50,13 @@ const RenderExpandIcon = ({ open, transitionDuration }: RenderExpandIconProps) =
   </StyledVerticalNavExpandIcon>
 )
 
-const VerticalMenu = ({  scrollMenu }: Props) => {
+const VerticalMenu = ({  scrollMenu, session }: Props) => {
   const setLoading = useNavigationStore((s) => s.setLoading)
   const pathname = usePathname()
 
   // Hooks
   const theme = useTheme()
-  const verticalNavOptions = useVerticalNav()
-  
+  const verticalNavOptions = useVerticalNav()  
 
   // Vars
   const { isBreakpointReached, transitionDuration } = verticalNavOptions
@@ -68,6 +68,12 @@ const VerticalMenu = ({  scrollMenu }: Props) => {
     if (url && pathname != url) {
       setLoading(true)
     }
+  }
+
+  let isShowMenuItem: any = true;
+
+  if(session?.user?.role == 'property_owner'){
+    isShowMenuItem = false;
   }
 
   return (
@@ -92,44 +98,52 @@ const VerticalMenu = ({  scrollMenu }: Props) => {
         renderExpandIcon={({ open }) => <RenderExpandIcon open={open} transitionDuration={transitionDuration} />}
         renderExpandedMenuItemIcon={{ icon: <i className='ri-circle-line' /> }}
         menuSectionStyles={menuSectionStyles(verticalNavOptions, theme)}
-      >
-        <MenuItem
-          href='/admin/dashboards/'
-          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/dashboard/')}
-          exactMatch={false}
-          activeUrl='/admin/dashboards'
-          icon={<i className='ri-home-smile-line' />}
-        >
-          Dashboard
-        </MenuItem>
+      > 
+        {isShowMenuItem && 
+          <MenuItem
+            href='/admin/dashboards/'
+            onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/dashboard/')}
+            exactMatch={false}
+            activeUrl='/admin/dashboards'
+            icon={<i className='ri-home-smile-line' />}
+          >
+            Dashboard
+          </MenuItem>
+        }
 
-        <MenuItem
-          href='/admin/users/'
-          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/users/')}
-          exactMatch={false}
-          activeUrl='/admin/users'
-          icon={<i className='ri-user-line' />}
-        >
-          Users
-        </MenuItem>
+        {isShowMenuItem && 
+          <MenuItem
+            href='/admin/users/'
+            onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/users/')}
+            exactMatch={false}
+            activeUrl='/admin/users'
+            icon={<i className='ri-user-line' />}
+          >
+            Users
+          </MenuItem>
+        }
 
-        <MenuItem
-          href='/admin/banner-sliders/'
-          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/banner-sliders/')}
-          exactMatch={false}
-          activeUrl='/admin/banner-sliders'
-          icon={<i className='ri-triangular-flag-line' />}
-        >
-          Banners/Sliders
-        </MenuItem>
+        {isShowMenuItem && 
+          <MenuItem
+            href='/admin/banner-sliders/'
+            onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/banner-sliders/')}
+            exactMatch={false}
+            activeUrl='/admin/banner-sliders'
+            icon={<i className='ri-triangular-flag-line' />}
+          >
+            Banners/Sliders
+          </MenuItem>
+        }
 
-        <MenuItem 
-          href='/admin/page_list/' 
-          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/page_list/')}
-          icon={<i className='ri-article-line' />}
-        >
-          Pages
-        </MenuItem>
+        {isShowMenuItem && 
+          <MenuItem 
+            href='/admin/page_list/' 
+            onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/page_list/')}
+            icon={<i className='ri-article-line' />}
+          >
+            Pages
+          </MenuItem>
+        }
 
         <MenuItem
           href='/admin/resorts'
@@ -141,136 +155,111 @@ const VerticalMenu = ({  scrollMenu }: Props) => {
           Manage Resorts
         </MenuItem>
 
-        <MenuItem
-          href='/admin/destination/'
-          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/destination/')}
-          exactMatch={false}
-          activeUrl='/admin/destination'
-          icon={<i className='ri-map-pin-line' />}
-        >
-          Manage Destinations 
-        </MenuItem>
+        {isShowMenuItem && 
+          <MenuItem
+            href='/admin/destination/'
+            onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/destination/')}
+            exactMatch={false}
+            activeUrl='/admin/destination'
+            icon={<i className='ri-map-pin-line' />}
+          >
+            Manage Destinations 
+          </MenuItem>
+        }
 
-        <MenuItem 
-          href='/admin/adventure-guide/' 
-          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/adventure-guide/')}
-          exactMatch={false}
-          activeUrl='/admin/adventure-guide/'
-          icon={<i className='ri-news-line' />}
-        >
-          Adventure Guide
-        </MenuItem>
+        {isShowMenuItem && 
+          <MenuItem 
+            href='/admin/adventure-guide/' 
+            onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/adventure-guide/')}
+            exactMatch={false}
+            activeUrl='/admin/adventure-guide/'
+            icon={<i className='ri-news-line' />}
+          >
+            Adventure Guide
+          </MenuItem>
+        }
 
-        <MenuItem 
-          href='/admin/custom-categories/' 
-          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/custom-categories/')}
-          exactMatch={false}
-          activeUrl='/admin/custom-categories/'
-          icon={<i className='ri-menu-search-line' />}
-        >
-          Tour Custom Categories
-        </MenuItem>
+        {isShowMenuItem && 
+          <MenuItem 
+            href='/admin/custom-categories/' 
+            onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/custom-categories/')}
+            exactMatch={false}
+            activeUrl='/admin/custom-categories/'
+            icon={<i className='ri-menu-search-line' />}
+          >
+            Tour Custom Categories
+          </MenuItem>
+        }
 
+        {isShowMenuItem && 
+          <MenuItem
+            href='/admin/contact-enquiries/'
+            onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/contact-enquiries/')}
+            exactMatch={false}
+            activeUrl='/admin/contact-enquiries'
+            icon={<i className='ri-survey-line' />}
+          >
+            Contact Enquiries
+          </MenuItem>
+        }
 
-        {/*<SubMenu
-          label='Pages'
-          icon={<i className='ri-vip-diamond-line' />}
-        >
-            <MenuItem href='/admin/page/add' onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/page/add')}>Add New Page</MenuItem>*/}
-          {/*<MenuItem href='/admin/cms_home/' onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/cms_home/')}>Homepage</MenuItem>
-          <MenuItem href='/admin/page/contact-us' onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/page/contact-us')}>Contact Us</MenuItem>
-          <MenuItem href='/admin/page/privacy-policy' onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/page/privacy-policy')}>Privacy Policy</MenuItem>
-          <MenuItem href='/admin/page/terms-of-use' onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/page/terms-of-use')}>Terms of Use</MenuItem>
-          <MenuItem href='/admin/page/real-estate' onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/page/real-estate')}>Real Estate Opportunities</MenuItem>*/}
-        {/*</SubMenu>*/}
+        {isShowMenuItem && 
+          <MenuItem
+            href='/admin/reviews/'
+            onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/reviews/')}
+            exactMatch={false}
+            activeUrl='/admin/reviews'
+            icon={<i className='ri-star-smile-line' />}
+          >
+            Reviews
+          </MenuItem>
+        }
 
-        {/*<MenuItem
-          href='/admin/adventure/'
-          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/adventure/')}
-          exactMatch={false}
-          activeUrl='/admin/adventure'
-          icon={<i className='ri-flight-takeoff-line' />}
-        >
-          Adventure Management 
-        </MenuItem>
+        {isShowMenuItem && 
+          <SubMenu
+            label='Comments'
+            icon={<i className='ri-discuss-line' />}
+          >
+            <MenuItem href='/admin/comments/'>All Comments</MenuItem>
+            <MenuItem href='/admin/comments/reported/'>Reported Comments</MenuItem>
+          </SubMenu>
+        }
 
-        <MenuItem
-          href='/admin/travel/'
-          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/travel/')}
-          exactMatch={false}
-          activeUrl='/admin/travel'
-          icon={<i className='ri-road-map-line' />}
-        >
-          Travel Management 
-        </MenuItem>
+        {isShowMenuItem && 
+          <MenuItem
+            href='/admin/reports/'
+            onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/reports/')}
+            exactMatch={false}
+            activeUrl='/admin/reports'
+            icon={<i className='ri-file-chart-line' />}
+          >
+            Reports
+          </MenuItem>
+        }
 
-        <MenuItem
-          href='/admin/field-notes/'
-          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/field-notes/')}
-          exactMatch={false}
-          activeUrl='/admin/field-notes'
-          icon={<i className='ri-sticky-note-line' />}
-        >
-          Manage Field Notes
-        </MenuItem>*/}
+        {isShowMenuItem && 
+          <MenuItem
+            href='/admin/royalty-settings/'
+            onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/royalty-settings/')}
+            exactMatch={false}
+            activeUrl='/admin/royalty-settings'
+            icon={<i className='ri-money-dollar-circle-line' />}
+          >
+            Royalty Settings
+          </MenuItem>
+        }
 
-        <MenuItem
-          href='/admin/contact-enquiries/'
-          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/contact-enquiries/')}
-          exactMatch={false}
-          activeUrl='/admin/contact-enquiries'
-          icon={<i className='ri-survey-line' />}
-        >
-          Contact Enquiries
-        </MenuItem>
-
-        <MenuItem
-          href='/admin/reviews/'
-          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/reviews/')}
-          exactMatch={false}
-          activeUrl='/admin/reviews'
-          icon={<i className='ri-star-smile-line' />}
-        >
-          Reviews
-        </MenuItem>
-
-        <SubMenu
-          label='Comments'
-          icon={<i className='ri-discuss-line' />}
-        >
-          <MenuItem href='/admin/comments/'>All Comments</MenuItem>
-          <MenuItem href='/admin/comments/reported/'>Reported Comments</MenuItem>
-        </SubMenu>
-
-        <MenuItem
-          href='/admin/reports/'
-          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/reports/')}
-          exactMatch={false}
-          activeUrl='/admin/reports'
-          icon={<i className='ri-file-chart-line' />}
-        >
-          Reports
-        </MenuItem>
-
-        <MenuItem
-          href='/admin/royalty-settings/'
-          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/royalty-settings/')}
-          exactMatch={false}
-          activeUrl='/admin/royalty-settings'
-          icon={<i className='ri-money-dollar-circle-line' />}
-        >
-          Royalty Settings
-        </MenuItem>
-
-        <MenuItem
-          href='/admin/general-settings/'
-          onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/general-settings/')}
-          exactMatch={false}
-          activeUrl='/admin/general-settings'
-          icon={<i className='ri-settings-5-line' />}
-        >
-          General Site Settings
-        </MenuItem>
+        {isShowMenuItem && 
+          <MenuItem
+            href='/admin/general-settings/'
+            onClick={e => showPageLoadr(e as unknown as React.MouseEvent<HTMLLIElement>, '/admin/general-settings/')}
+            exactMatch={false}
+            activeUrl='/admin/general-settings'
+            icon={<i className='ri-settings-5-line' />}
+          >
+            General Site Settings
+          </MenuItem>
+        }
 
         {/*<SubMenu
           label='dashboards'

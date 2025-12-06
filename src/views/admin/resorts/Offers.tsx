@@ -213,11 +213,6 @@ const AddResorts = ({ pgData, adventurePosts, getFormId }: { pgData?: any; adven
       formData.append("bottom_image", data.bottom_image);
     }
 
-    // Debug logging
-    for (const [key, value] of formData.entries()) {
-        console.log(key, value instanceof File ? value.name : value);
-    }
-
     let log = null;
     if(form_id === null) {
      //

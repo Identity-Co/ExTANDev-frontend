@@ -70,6 +70,7 @@ type ResortType = {
   _id?: string
   name: string
   location: string
+  created_by: string
   created_at: string
   action?: string
 }
@@ -136,7 +137,7 @@ const DebouncedInput = ({
 // Column Definitions
 const columnHelper = createColumnHelper<ResortType>()
 
-const ResortListTable = ({ tableData }: { tableData?: ResortType[] }) => {
+const ResortListTable = ({ tableData, session }: { tableData?: ResortType[]; session?: [] }) => {
   const setLoading = useNavigationStore((s) => s.setLoading)
 
   // States
@@ -156,7 +157,12 @@ const ResortListTable = ({ tableData }: { tableData?: ResortType[] }) => {
     try {
       setLoading(true);
       // Fetch updated data
-      const refresh = await Resorts.getResorts('name,location,created_at');
+      let refresh: any[] = [];
+      if(session?.user?.role == 'property_owner'){
+        refresh = await Resorts.getResortsByUser('name,location,created_at', session?.user?.id);
+      }else{
+        refresh = await Resorts.getResorts('name,location,created_at');
+      }
       
       // Ensure the returned data is of the correct type
       if (Array.isArray(refresh)) {
@@ -181,6 +187,19 @@ const ResortListTable = ({ tableData }: { tableData?: ResortType[] }) => {
     }
   }, [tableData]);
 
+  const createdByColumn =
+  session?.user?.role !== 'property_owner'
+    ? columnHelper.accessor('created_by', {
+        header: 'Created By',
+        cell: ({ row }) => (
+          <Typography>
+            {row.original?.posted_user?.first_name}{' '}
+            {row.original?.posted_user?.last_name}
+          </Typography>
+        )
+      })
+    : undefined;
+
   const columns = useMemo<ColumnDef<ResortType, any>[]>(
     () => [
       columnHelper.accessor('name', {
@@ -191,32 +210,36 @@ const ResortListTable = ({ tableData }: { tableData?: ResortType[] }) => {
         header: 'Location',
         cell: ({ row }) => <Typography>{row.original.location}</Typography>
       }),
+      ...(createdByColumn ? [createdByColumn] : []), // Insert conditionally
       columnHelper.accessor('created_at', {
-        header: 'Created at',
-        cell: ({ row }) => <Typography>{formatDate(row.original.created_at)}</Typography>
+        header: 'Created At',
+        cell: ({ row }) => (
+          <Typography>{formatDate(row.original.created_at)}</Typography>
+        )
       }),
       columnHelper.accessor('action', {
         header: 'Action',
+        enableSorting: false,
         cell: ({ row }) => (
-          <div className='flex items-center'>
-            
-            <SmartLink href={'/admin/resorts/edit/'+row.original._id}>
-              <IconButton sx={{color: 'warning.main'}} className='flex'>
-                <i className='ri-edit-box-line' />
+          <div className="flex items-center">
+            <SmartLink href={`/admin/resorts/edit/${row.original._id}`}>
+              <IconButton sx={{ color: 'warning.main' }}>
+                <i className="ri-edit-box-line" />
               </IconButton>
             </SmartLink>
 
-            <IconButton sx={{color: 'error.main'}} onClick={() => handleDeleteClick(row.original._id)}>
-              <i className='ri-delete-bin-7-line' />
+            <IconButton
+              sx={{ color: 'error.main' }}
+              onClick={() => handleDeleteClick(row.original._id)}
+            >
+              <i className="ri-delete-bin-7-line" />
             </IconButton>
           </div>
-        ),
-        enableSorting: false
+        )
       })
     ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data, filteredData]
-  )
+    [session?.user?.role, data, filteredData]
+  );
 
   const handleDeleteClick = async (id?: string) => {
     if (id) {

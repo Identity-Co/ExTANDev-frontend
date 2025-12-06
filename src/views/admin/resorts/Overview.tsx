@@ -482,11 +482,6 @@ const AddResorts = ({ pgData, adventurePosts, getFormId }: { pgData?: []; advent
       }
     });
 
-    // Debug logging
-    for (const [key, value] of formData.entries()) {
-        console.log(key, value instanceof File ? value.name : value);
-    }
-
     let log = null;
     if(form_id === null) {
       log = await createResort(formData);

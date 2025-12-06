@@ -63,7 +63,6 @@ export const getSingleUser = async (user_id: any) => {
 
   if (res && res.ok) {
     const log = await res.json()
-    console.log(log);
 
     return log.data
   } else {
@@ -130,8 +129,6 @@ export const changePassword = async (data: any) => {
     },
     body: JSON.stringify(data)
   });
-
-  console.log(response)
 
   // Send new password to WP API
   /* try {
@@ -297,7 +294,7 @@ export const signUp = async (data: any) => {
           body: JSON.stringify(data)
         }); */
 
-        /*try {
+        try {
           const res = await fetch(`${process.env.NEXT_PUBLIC_WP_API_URL}/wp-json/shop-api/v1/register`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -328,7 +325,7 @@ export const signUp = async (data: any) => {
           console.error('WordPress API error:', error);
           
           //return { status: 'error', message: error.message };
-        }*/
+        }
 
         return json.data
       }

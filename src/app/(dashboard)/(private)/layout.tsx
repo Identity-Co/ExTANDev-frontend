@@ -19,13 +19,16 @@ import HorizontalFooter from '@components/layout/horizontal/Footer'
 import ScrollToTop from '@core/components/scroll-to-top'
 import AuthGuard from '@/hocs/AuthGuard'
 
+import * as Common from '@/app/server/common';
+
+import UserAccessCheck from './UserAccessCheck'
+
 // Config Imports
 
 // Util Imports
 import { getMode, getSystemMode } from '@core/utils/serverHelpers'
 
 const Layout = async (props: ChildrenType ) => {
-  
 
   const { children } = props
 
@@ -34,14 +37,17 @@ const Layout = async (props: ChildrenType ) => {
   const mode = await getMode()
   const systemMode = await getSystemMode()
 
+  const session = await Common.getUserSess()
+
   return (
     <Providers direction={direction}>
       <AuthGuard >
+        <UserAccessCheck session={session} />
         <LayoutWrapper
           systemMode={systemMode}
           verticalLayout={
             <VerticalLayout
-              navigation={<Navigation  mode={mode} />}
+              navigation={<Navigation  mode={mode} session={session} />}
               navbar={<Navbar />}
               footer={<VerticalFooter />}
             >

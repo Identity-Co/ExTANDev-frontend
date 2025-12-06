@@ -184,7 +184,6 @@ const AddResorts = ({ pgData, adventurePosts, getFormId, reviews }: { pgData?: a
   // Fix: Add setEditor function
   const setEditor = (editorInstance: any) => {
     // You can store the editor instance if needed
-    console.log('Editor initialized', editorInstance);
   };
 
   const handleDragStart = (roomIndex: number, imageIndex: number) => (e: React.DragEvent) => {
@@ -284,11 +283,6 @@ const AddResorts = ({ pgData, adventurePosts, getFormId, reviews }: { pgData?: a
       formData.append("rooms_review_background", data.review_background);
     }else if(data.review_background){
       formData.append("review_background", data.review_background);
-    }
-
-    // Debug logging
-    for (const [key, value] of formData.entries()) {
-        console.log(key, value instanceof File ? value.name : value);
     }
 
     let log = null;

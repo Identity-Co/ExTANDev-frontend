@@ -1,10 +1,8 @@
-// app/(my-account)/layout.tsx
 // MUI Imports
 import Button from '@mui/material/Button'
 
 // Third-party Imports
 import 'react-perfect-scrollbar/dist/css/styles.css'
-import classnames from 'classnames'
 
 // Type Imports
 import type { ChildrenType } from '@core/types'
@@ -31,39 +29,37 @@ import '@/app/globals-front.css'
 // Generated Icon CSS Imports
 import '@assets/iconify-icons/generated-icons.css'
 
-// Client Component Import
-import AccountLayoutClient from '@components/layout/front-pages/AccountLayoutClient'
-
 export const metadata = {
-  title: 'Adventure Network | Our Adventure',
-  description: ''
+  title: 'Adventure Network | Signup',
+  description:
+    ''
 }
 
 const Layout = async ({ children }: ChildrenType) => {
   // Vars
   const session = await Common.getUserSess()
 
-  if(!session?.user?.id || session?.user?.id == '') {
-    redirect('/signin/')
+  if(session?.user?.role == 'property_owner'){
+    redirect('/admin/resorts/')
+    
     return;
   }
 
-  if(session?.user?.role == 'property_owner'){
-    redirect('/admin/resorts/')
+  if(session?.user?.id && session?.user?.id != '') {
+    redirect('/my-account/')
+
     return;
   }
 
   const systemMode = await getSystemMode()
 
   return (
+    
     <Providers direction='ltr'>
       <BlankLayout systemMode={systemMode}>
         <IntersectionProvider>
           <FrontLayout>
-            <AccountLayoutClient systemMode={systemMode}>
-              {children}
-            </AccountLayoutClient>
-            
+            {children}
             <ScrollToTop className='mui-fixed'>
               <Button
                 variant='contained'
@@ -76,6 +72,7 @@ const Layout = async ({ children }: ChildrenType) => {
         </IntersectionProvider>
       </BlankLayout>
     </Providers>
+      
   )
 }
 

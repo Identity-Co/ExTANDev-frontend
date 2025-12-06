@@ -29,8 +29,35 @@ export const getResorts = async (fields: string = '') => {
   }
 }
 
+export const getResortsByUser = async (fields: string = '', postedUser: string = '') => {
+  const session = await getServerSession(authOptions);
+
+  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/resorts/by/user`);
+  if (fields) url.searchParams.append("fields", fields);
+  if (postedUser) url.searchParams.append("posted_user", postedUser);
+  
+  const response = await fetch(url.toString(), {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + session?.user?.userToken
+    }
+  })
+  
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  } else {
+    const json = await response.json();
+    
+    return json.data
+  }
+}
+
 export const createResort = async (data: any) => {
   const session = await getServerSession(authOptions);
+
+  if(data){
+    data.append('posted_user', session?.user?.id?? '')
+  }
 
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/resorts/create`, {
     method: "POST",

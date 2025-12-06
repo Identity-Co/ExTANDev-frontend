@@ -79,12 +79,6 @@ const AccountSidebar = ({ pathName }: EditProps) => {
                 </li>
               )}
 
-              {session?.user?.role == 'property_owner' && (
-                <li className={pathName.includes('/my-account/properties/') ? "active" : ""} >
-                  <Link href="/my-account/properties/">Manage Properties</Link>
-                </li>
-              )}
-
               {session?.user?.role != 'property_owner' && (
                 <li className={pathName === "/my-account/points-history/" ? "active" : ""} >
                   <Link href="/my-account/points-history/">

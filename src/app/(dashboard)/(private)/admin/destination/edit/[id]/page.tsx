@@ -30,8 +30,6 @@ const ManageDestinations = async (props: { params: Promise<{ id: string }> }) =>
 
   const destination = await getDestination(id);
 
-  const destinations = await getDestinations();
-
   const adventurePosts = await getAllTours('id,name');
 
   const allTags = await getAllUniqueTags();
@@ -42,7 +40,7 @@ const ManageDestinations = async (props: { params: Promise<{ id: string }> }) =>
   };
   const reviews = await getReviewsByCollectionId(requestData);
 
-  return <Destinations pgData={destination} id={id} destinations={destinations} adventurePosts={adventurePosts??[]} reviews={reviews?? []} resortTags={allTags?? []} />
+  return <Destinations pgData={destination} id={id} adventurePosts={adventurePosts??[]} reviews={reviews?? []} resortTags={allTags?? []} />
 }
 
 export default ManageDestinations

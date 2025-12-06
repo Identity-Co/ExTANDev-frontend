@@ -1,0 +1,199 @@
+/*banner-start*/
+
+.ambassadorship_banner{min-height: 21.615vw;}
+
+.cta_section{background: #F85241; position: relative;}
+.cta_section:before{position: absolute; content: ""; background: url(/images/front-pages/images/tan-background.png) center no-repeat; background-size: 100% 100%; top: 0; left: 0; width: 100%; height: 100%; mix-blend-mode: multiply;}
+
+
+@media only screen and (max-width: 768px){
+  .ambassadorship_banner{min-height: 28.729vw;}  
+}
+
+/*banner-end*/
+
+/*ambassadorship_sec1-start*/
+
+.ambassadorship_sec1{background: url(/images/sub-pages/tan-background-copy.jpg) center no-repeat; background-size: cover; box-shadow: none;}
+.ambassadorship_img{position: relative; margin-top: -9.960vw;}
+.amb_sec1_inner{text-align: center; margin-top: -10.672vw; max-width: 41.406vw; margin-left: auto; margin-right: auto; position: relative; z-index: 1;}
+.ambassador_video{padding-top: 1.042vw;}
+.ambassador_video iframe{border-radius: 0.417vw;}
+
+
+@media only screen and (max-width: 1024px){
+  .amb_sec1_inner{max-width: 100%;}
+  
+}
+
+@media only screen and (max-width: 768px){
+  
+}
+
+/*ambassadorship_sec1-end*/
+
+/*ambassadorship_sec2-start*/
+
+.network_travel_profile .adv_post_top_right{display: flex; flex-wrap: wrap; align-items: center; column-gap:0.625vw; line-height: 1;}
+.network_travel_profile .adv_post_top_right .adv_trailblazer{width: 100%;}
+.network_travel_profile .adv_post_top_right .adv_trailblazer span{font-size: 0.625vw; font-weight: 700; text-transform: uppercase;}
+
+.biking_row{display: flex; flex-wrap: wrap; padding-top: 1.250vw;}
+.biking_row .biking_left{width: 59%; padding-right: 2.500vw; box-sizing: border-box; border-right: solid 0.052vw #707070;}
+.biking_row .biking_left p{letter-spacing: -0.010em;}
+.biking_row .biking_right{width: 41%; padding-left: 2.500vw;}
+.biking_right .network_travel_profile img{width: 4.688vw; height: 4.688vw;}
+.biking_right .network_travel_profile_info_inner{display: flex;column-gap: 0.625vw;align-items: flex-end;}
+.biking_right .network_travel_profile{gap:1.042vw; padding-bottom: 0.833vw;}
+
+.network_travel_profile{display: flex; align-items: center; gap:0.625vw;}
+.network_travel_profile img{width: 3.125vw; height: 3.125vw; border-radius: 100%;}
+.network_travel_profile_info h4{font-size: 1.354vw; font-family: "Bebas Neue", sans-serif; letter-spacing: -0.015em; line-height: 1;}
+.network_travel_profile_info span{font-size: 0.729vw; color: #1F1F1F; font-weight: 500; font-style: italic; line-height: 1;}
+.network_travel_follow a{font-size: 0.729vw; letter-spacing: -0.015em; font-weight: 700; color: #EA5647; text-transform: uppercase;font-family: "Montserrat", sans-serif;}
+.network_travel_follow{display: flex; align-items: center; column-gap: 0.625vw;}
+.network_travel_follow span{font-size: 0.729vw; letter-spacing: -0.015em; font-weight: 700; color: #1F1F1F; text-transform: uppercase;font-family: "Montserrat", sans-serif;}
+
+.network_travel_likes{display: flex; flex-wrap: wrap; gap:0.833vw;}
+.network_travel_likes span{font-size: 0.729vw; font-weight: 500; color: #1F1F1F; font-family: "Montserrat", sans-serif;}
+.network_travel_likes ul{list-style: none; display: flex; gap:0.833vw;}
+.network_travel_likes ul li a svg:hover path{fill: #EA5647;}
+.network_travel_likes ul li a svg{width: 0.781vw; height: 0.729vw;}
+
+.ambassadorship_sec2 span.next_post{font-size: 1.250vw;}
+.ambassadorship_sec2 .ambassadorship_sec2_inner{max-width: 50.781vw; margin: 0 auto;}
+.ambassadorship_sec2 .biking_row .biking_left{width: 55%;}
+.ambassadorship_sec2 .biking_row .biking_right{width: 45%;}
+
+@media only screen and (max-width: 1024px){
+  .ambassadorship_sec2 .ambassadorship_sec2_inner{max-width: 100%;}
+
+  .network_travel_likes span{font-size: 1.298vw;}
+  .network_travel_likes ul li a svg{width: 1.493vw; height: 1.085vw;}
+
+  .network_travel_profile{gap: 2.048vw;}
+
+  .network_travel_profile img{width: 4.168vw; height: 4.168vw; border-radius: 100%;}
+  .network_travel_profile_info h4{font-size: 2.065vw;}
+  .network_travel_profile_info span,
+  .network_travel_follow a{font-size: 1.298vw;}
+
+  .network_travel_profile .adv_post_top_right{ line-height: 1.1 }
+}
+
+@media only screen and (max-width: 768px){
+  .biking_row{padding-top: 3.384vw; gap:3.801vw;}
+  .biking_row .biking_left{width: 100%; padding-right: 0; border-right: 0;}
+  .biking_row .biking_right{width: 100%; padding-left: 0;}
+  .biking_right .network_travel_profile img{width: 6.111vw; height: 6.111vw;}
+
+  .network_travel_profile img{width: 5.591vw; height: 5.591vw; border-radius: 100%;}
+  .network_travel_profile_info h4{font-size: 2.777vw;}
+  .network_travel_profile_info span,
+  .network_travel_follow a{font-size: 2.010vw;}
+
+  .ambassadorship_sec2 .biking_row .biking_left,
+  .ambassadorship_sec2 .biking_row .biking_right{width: 100%;}
+  .ambassadorship_sec2 span.next_post{font-size: 2.531vw;} 
+
+  .network_travel_likes span{font-size: 2.010vw;}
+  .network_travel_likes ul li a svg{width: 2.204vw; height: 1.796vw;}
+}
+
+/*ambassadorship_sec2-end*/
+
+/*ambassadorship_sec3-start*/
+
+.ambassadorship_sec3{position: relative;}
+.ambassadorship_sec3:before{position: absolute; content: ""; background: linear-gradient(180deg,rgba(255, 255, 255, 1) 10%, rgba(227, 227, 227, 1) 90%); bottom: 0; left: 0; right: 0; width: 100%; height: 60%; z-index: -1;}
+.ambassadorship_sec3 .ambassadorship_sec3_inner{max-width: 56.656vw; margin: 0 auto;}
+.signup_box{padding: 2.604vw; background-color: #ffffff;}
+.signup_box h4{font-size: 1.354vw; text-transform: uppercase; text-align: center; padding-bottom: 2.083vw; color: #000000; font-family: "Raleway", sans-serif; font-weight: 800;}
+.signup_box .input_row{display: flex; flex-wrap: wrap; gap:0.781vw;}
+.signup_box .input_row .MuiOutlinedInput-root{background: #f4f8f7; border-radius: 0.208vw;}
+.signup_box .input_row .MuiOutlinedInput-root fieldset{border-width: 0;}
+.signup_box .input_row .input_full_box{width: 100%;}
+.signup_box .input_row .input_full_box:not(.checkbox_label) label{display: block; width: 100%;}
+.signup_box .input_row .input_full_box input:not([type="checkbox"], [type="submit"]){width: 100%; min-height: 0.711vw; padding: 1.042vw; background-color: #F4F8F7; border-radius: 0.208vw; font-size: 0.729vw; font-family: "Raleway", sans-serif; font-weight: 400; color: #868686; border: none; outline: none;}
+
+.signup_box .input_row .input_full_box.pass_ref{padding-top: 1.042vw;}
+.signup_box .input_row .input_full_box.pass_ref span{font-size: 0.677vw; font-family: "Raleway", sans-serif; font-weight: 400; color: #868686; text-align: center; display: block; line-height: 1.4;}
+/*.signup_box .input_row .input_full_box input[type="password"]{padding-left: 2.083vw; background: #F4F8F7 url(/images/sub-pages/lock.svg) center left 1.042vw no-repeat; background-size: 0.625vw 0.625vw;}*/
+.signup_box .input_row .input_full_box.checkbox_label{padding-top: 1.042vw; position: relative;}
+.signup_box .input_row .input_full_box.checkbox_label input{padding: 0; margin-bottom: 0; -webkit-appearance: auto; cursor: pointer; left: 0; right: 0; height: 1.042vw; z-index: 1; opacity: 0; bottom: 0; position: absolute;}
+.signup_box .input_row .input_full_box.checkbox_label label {position: relative;cursor: pointer; font-size: 0.729vw; font-family: "Raleway", sans-serif; font-weight: 400; color: #868686; display: flex; align-items: center; line-height: 1.4;}
+
+.signup_box .input_row .input_full_box.checkbox_label label:before { content:''; -webkit-appearance: none; background-color: transparent; border: 0.104vw solid #868686; width: 0.833vw; height: 0.833vw; display: inline-block; position: relative; vertical-align: middle; cursor: pointer; margin-right: 0.417vw; top: -0.104vw;}
+.signup_box .input_row .input_full_box.checkbox_label input:checked + label:after { content: ''; display: block; position: absolute; top: 0.028vw; left: 0.327vw; width: 0.277vw; height: 0.587vw; border: solid #127AC3; border-width: 0 0.104vw 0.104vw 0; transform: rotate(45deg);}
+.signup_box .input_row .input_full_box.checkbox_label a{color: #127AC3; position: relative; z-index: 2;}
+.signup_box .input_row .input_full_box.checkbox_label a:hover{color: #F85241;}
+.signup_box .input_row .input_full_box.submit_btn{padding-top: 1.302vw; text-align: center;}
+.signup_box .input_row input[type="submit"],
+.signup_box .input_row .input_full_box a.back_btn,
+.signup_box .input_row .input_full_box button.back_btn{background-color: #F85241; font-size: 0.729vw; font-family: "Raleway", sans-serif; color: #ffffff; text-align: center; display: inline-block; line-height: 1; text-transform: uppercase; border-radius: 2.604vw; font-weight: 600; padding: 0.781vw 2.604vw; border: none; outline: none; cursor: pointer; transition: 0.3s ease-in-out; letter-spacing: 0.10em;}
+.signup_box .input_row .input_full_box a.back_btn,
+.signup_box .input_row .input_full_box button.back_btn{background-color: #F4F8F7; color: #868686;}
+.signup_box .input_row .input_full_box a.back_btn:hover,
+.signup_box .input_row .input_full_box button.back_btn{background: rgb(31, 31, 31, 0.8); color: #ffffff;}
+.signup_box .input_row input[type="submit"]:hover{background: rgb(31, 31, 31, 0.8);}
+.signup_box .input_row .input_full_box.checkbox_label label a.forgot_pass{margin-left: auto;}
+.signup_box .input_row .input_full_box a{color: #127AC3; position: relative; z-index: 2;}
+.signup_box .input_row .input_full_box a:hover{color: #F85241;}
+.signup_box .input_row .input_full_box.email input[type="email"]{padding-left: 2.083vw; background: #F4F8F7 url(/images/sub-pages/email.svg) center left 1.042vw no-repeat; background-size: 0.729vw 0.573vw;}
+.grid_box .signup_box.account_box{margin-top: 1.042vw;}
+.signup_box .input_row .input_full_box.pass_ref.recovery{padding-top: 0;}
+.signup_box .btnset{display: flex; justify-content: space-between; flex-wrap: wrap; padding-top: 0.781vw;}
+.signup_box .input_row .btnset .submit_btn{padding-top: 0;}
+.signup_box.sign_in .input_row .input_full_box.submit_btn{padding-top: 0.521vw;}
+.signup_box.sign_in{padding-bottom: 1.634vw;}
+.signup_box.account_box h4{padding-bottom: 1.562vw;}
+
+
+@media only screen and (max-width: 1024px){
+  .ambassadorship_sec3 .ambassadorship_sec3_inner{max-width: 100%;}
+  .signup_box h4{font-size: 2.065vw;}
+  .signup_box .input_row .input_full_box input:not([type="checkbox"], [type="submit"]){font-size: 1.298vw; padding: 2.042vw;}
+  .signup_box .input_row .input_full_box.pass_ref span{font-size: 1.033vw;}
+  .signup_box .input_row .input_full_box input[type="password"]{background-size: 1.336vw 1.336vw; padding-left: 2.795vw;}
+  .signup_box .input_row .input_full_box.checkbox_label label{font-size: 1.033vw;}
+  .signup_box .input_row input[type="submit"], .signup_box .input_row .input_full_box a.back_btn,
+  .signup_box .input_row input[type="submit"], .signup_box .input_row .input_full_box button.back_btn{font-size: 1.298vw;}
+  .signup_box .input_row .input_full_box.email input[type="email"]{padding-left: 2.795vw; background-size: 1.441vw 1.284vw;}
+}
+
+@media only screen and (max-width: 768px){
+  .signup_box .input_row{gap: 1.493vw;}
+  .signup_box h4{font-size: 3.488vw;}
+  .signup_box .input_row .input_full_box input:not([type="checkbox"], [type="submit"]){font-size: 2.366vw; padding: 1.753vw;}
+  .signup_box .input_row .input_full_box.pass_ref span{font-size: 2.171vw;}
+  .signup_box .input_row .input_full_box input[type="password"]{background-size: 2.048vw 2.048vw; padding-left: 4.218vw;}
+  .signup_box .input_row .input_full_box.checkbox_label label{font-size: 2.171vw;}
+  .signup_box .input_row input[type="submit"], .signup_box .input_row .input_full_box a.back_btn, .signup_box .input_row input[type="submit"], .signup_box .input_row .input_full_box button.back_btn {font-size: 2.366vw; padding: 1.848vw 4.027vw; border-radius: 5.450vw;}
+  .signup_box .input_row .input_full_box.email input[type="email"]{padding-left: 4.218vw; background-size: 2.152vw 1.996vw;}
+  .signup_box .input_row .input_full_box.checkbox_label label:before{width: 2.256vw; height: 2.256vw;}
+  .signup_box .input_row .input_full_box.checkbox_label input{height: 2.464vw;}
+  .signup_box .input_row .input_full_box.checkbox_label input:checked + label:after{top: 0.285vw; left: 0.611vw; width: 0.775vw; height: 1.298vw;}
+  .ambassadorship_sec3:before{height: 80%;}
+  .grid_box .signup_box.account_box{margin-top: 2.223vw;}
+}
+
+
+@media only screen and (max-width: 575px){
+  .signup_box .input_row{gap: 3.493vw;}
+  .signup_box .input_row .input_full_box input:not([type="checkbox"], [type="submit"]){padding: 3.753vw 1.753vw; font-size: 3.366vw;}
+  .signup_box .input_row input[type="submit"], .signup_box .input_row .input_full_box a.back_btn, .signup_box .input_row input[type="submit"], .signup_box .input_row .input_full_box button.back_btn{font-size: 3.437vw;
+        padding: 2.375vw 3.508vw;}
+}
+
+/*ambassadorship_sec3-end*/
+
+/* CUSTOM */
+
+.fullwidth { width: 100%; }
+.custom_error_class { color: var(--mui-palette-error-main); font-family: 'Inter','Inter Fallback'; font-weight: 400; font-size: 0.8125rem; text-align: left; margin-top: 0px; margin-bottom: 0; margin-left: 14px; margin-right: 14px; line-height: 1; letter-spacing: unset; --Grid-columns: 12; --Grid-columnSpacing: 1.25rem; --Grid-rowSpacing: 1.25rem; }
+.mt--18 { margin-top: -18px !important; }
+
+
+
+.travelSignin .signup_box{padding: 0.604vw !important;}
+.travelSignin.ambassadorship_sec3 .ambassadorship_sec3_inner{max-width: 100%;}

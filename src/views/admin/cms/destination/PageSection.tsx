@@ -53,9 +53,6 @@ const schema = object({
   about_button_text: optional(string()),
   about_button_link: pipe(string()),
   feature_destination_title: pipe(string(), nonEmpty('This field is required')),
-  feature_destinations: array(
-    optional(string()),
-  ),
   adventure_posts: array(
     optional(string()),
   ),
@@ -84,7 +81,7 @@ const schema = object({
   rating: optional(string()),
 })
 
-const PageSection = ({ pgData, destinations, adventurePosts, allResortsList, resortTags }: { pgData?: []; destinations?: []; adventurePosts?: []; allResortsList?: []; resortTags?: [] }) => {  
+const PageSection = ({ pgData, adventurePosts, allResortsList, resortTags }: { pgData?: []; adventurePosts?: []; allResortsList?: []; resortTags?: [] }) => {  
   const router = useRouter()
 
   const setLoading = useNavigationStore((s) => s.setLoading)
@@ -94,20 +91,10 @@ const PageSection = ({ pgData, destinations, adventurePosts, allResortsList, res
   const [editor, setEditor] = useState<Editor | null>(null)
   const [message, setMessage] = useState(null);
 
-  const [destOptions, setdestOptions] = useState<string[]>([])
   const [resortOptions, setresortOptions] = useState<string[]>([])
   const [advPostsOptions, setadvPostsOptions] = useState<string[]>([])
 
   const fData = new FormData();
-
-  useEffect(() => {
-    const obj = destinations.map(item => ({
-      label: item._id,
-      value: item.title
-    }));
-
-    setdestOptions(obj);
-  }, [destinations]);
 
   useEffect(() => {
     const obj = resortTags.map(item => ({
@@ -141,7 +128,6 @@ const PageSection = ({ pgData, destinations, adventurePosts, allResortsList, res
       about_button_text: pgData?.about_button_text??'',
       about_button_link: pgData?.about_button_link??'',
       feature_destination_title: pgData?.feature_destination_title??'',
-      feature_destinations: pgData?.feature_destinations??[],
       adventure_posts: pgData?.adventure_posts??[],
       feature_resorts_title: pgData?.feature_resorts_title??'',
       feature_resorts: pgData?.feature_resorts??[],
@@ -343,32 +329,6 @@ const PageSection = ({ pgData, destinations, adventurePosts, allResortsList, res
                         })}
                       />
                     )}
-                  />
-                </Grid>
-                <Grid size={{ md: 12, xs: 12, lg: 12 }}>
-                  <input type="hidden" {...register("feature_destinations")} />
-                  <Autocomplete
-                    multiple
-                    options={destOptions}
-                    getOptionLabel={(option) => option.value} 
-                    value={destOptions.filter(opt =>
-                      (watch("feature_destinations") || []).includes(opt.label)
-                    )}
-                    renderOption={(props, option) => (
-                      <li {...props} key={option.label}> 
-                        {option.value}
-                      </li>
-                    )}
-                    renderInput={(params) => (
-                      <TextField {...params} label="Search Destinations" variant="outlined" />
-                    )}
-                    onChange={(event, newValue) => {
-                      setValue(
-                        "feature_destinations",
-                        newValue.map((item) => item.label), // array of values
-                        { shouldValidate: true }
-                      );
-                    }}
                   />
                 </Grid>
               </Grid>

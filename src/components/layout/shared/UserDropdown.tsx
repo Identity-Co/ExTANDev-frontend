@@ -89,6 +89,12 @@ const UserDropdown = () => {
     }
   }
 
+  let isShowMenuItem: any = true;
+
+  if(session?.user?.role == 'property_owner'){
+    isShowMenuItem = false;
+  }
+
   return (
     <>
       <Badge
@@ -101,7 +107,7 @@ const UserDropdown = () => {
         <Avatar
           ref={anchorRef}
           alt={session?.user?.name || ''}
-          src={session?.user?.image || ''}
+          src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${session?.user?.image}` || ''}
           onClick={handleDropdownOpen}
           className='cursor-pointer bs-[38px] is-[38px]'
         />
@@ -125,7 +131,7 @@ const UserDropdown = () => {
               <ClickAwayListener onClickAway={e => handleDropdownClose(e as MouseEvent | TouchEvent)}>
                 <MenuList>
                   <div className='flex items-center plb-2 pli-4 gap-2' tabIndex={-1}>
-                    <Avatar alt={session?.user?.name || ''} src={session?.user?.image || ''} />
+                    <Avatar alt={session?.user?.name || ''} src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${session?.user?.image}` || ''} />
                     <div className='flex items-start flex-col'>
                       <Typography className='font-medium' color='text.primary'>
                         {session?.user?.name || ''}
@@ -134,22 +140,16 @@ const UserDropdown = () => {
                     </div>
                   </div>
                   <Divider className='mlb-1' />
-                  <MenuItem className='gap-3' onClick={e => handleDropdownClose(e, '/pages/user-profile')}>
+                  <MenuItem className='gap-3' onClick={e => handleDropdownClose(e, `/admin/user-profile/`)}>
                     <i className='ri-user-3-line' />
                     <Typography color='text.primary'>My Profile</Typography>
                   </MenuItem>
-                  <MenuItem className='gap-3' onClick={e => handleDropdownClose(e, '/pages/account-settings')}>
-                    <i className='ri-settings-4-line' />
-                    <Typography color='text.primary'>Settings</Typography>
-                  </MenuItem>
-                  <MenuItem className='gap-3' onClick={e => handleDropdownClose(e, '/pages/pricing')}>
-                    <i className='ri-money-dollar-circle-line' />
-                    <Typography color='text.primary'>Pricing</Typography>
-                  </MenuItem>
-                  <MenuItem className='gap-3' onClick={e => handleDropdownClose(e, '/pages/faq')}>
-                    <i className='ri-question-line' />
-                    <Typography color='text.primary'>FAQ</Typography>
-                  </MenuItem>
+                  {isShowMenuItem && 
+                    <MenuItem className='gap-3' onClick={e => handleDropdownClose(e, '/admin/general-settings/')}>
+                      <i className='ri-settings-4-line' />
+                      <Typography color='text.primary'>Settings</Typography>
+                    </MenuItem>
+                  }
                   <div className='flex items-center plb-2 pli-4'>
                     <Button
                       fullWidth
