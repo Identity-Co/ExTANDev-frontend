@@ -19,6 +19,10 @@ const data: roleData[] = [
   {
     key: 'travel_supplier',
     name: 'Travel Supplier'
+  },
+  {
+    key: 'property_owner',
+    name: 'Property Owner'
   }
 ]
 
