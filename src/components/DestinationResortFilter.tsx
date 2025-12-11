@@ -86,6 +86,10 @@ export default function DestinationResortFilter({cur_dest_page}: {cur_dest_page?
         }
       }
 
+      console.log(locations)
+      locations.sort((a, b) => a.label.localeCompare(b.label));
+      console.log(locations)
+
       setAllLocations(locations);
       isLoaded.current = true;
     }
@@ -110,6 +114,9 @@ export default function DestinationResortFilter({cur_dest_page}: {cur_dest_page?
   async function loadResorts() {
     const resortsList = await getResortsByDestinations(location?.label);
 
+    console.log(resortsList);
+
+    const resortsItems = resortsList.sort((a, b) => a.name.localeCompare(b.name));
     // Expecting: { name, page_url }
     setResorts(resortsList);
   }

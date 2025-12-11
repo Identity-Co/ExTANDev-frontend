@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation'
 
 import { toast } from 'react-toastify';
 
-
 import 'react-toastify/dist/ReactToastify.css';
 
 // MUI Imports
@@ -74,7 +73,13 @@ const schema = object({
   user_country: pipe(string(), nonEmpty('This field is required')),
   user_fullphone: optional(string()),
   status: optional(number()),
-  ambassador_status: optional(number())
+  ambassador_status: optional(number()),
+  instagram_url: optional(string()),
+  facebook_url: optional(string()),
+  pinterest_url: optional(string()),
+  twitterx_url: optional(string()),
+  whatsapp_url: optional(string()),
+  tiktok_url: optional(string())
 })
 
 type EditProps = {
@@ -228,16 +233,22 @@ const EditForm = ({ setId, userInfo, roles }: EditProps) => {
       user_first_name: userInfo.first_name??'',
       user_last_name: userInfo.last_name??'',
       user_email: userInfo.email??'',
-      user_address: userInfo.address.address??'',
-      user_address2: userInfo.address.address2??'',
-      user_city: userInfo.address.city??'',
-      user_state: userInfo.address.state??'',
-      user_zip: userInfo.address.zip??'',
-      user_country: userInfo.address.country??'',
+      user_address: userInfo.address?.address??'',
+      user_address2: userInfo.address?.address2??'',
+      user_city: userInfo.address?.city??'',
+      user_state: userInfo.address?.state??'',
+      user_zip: userInfo.address?.zip??'',
+      user_country: userInfo.address?.country??'',
       role: userInfo.role??'',
       user_fullphone : '',
       status: userInfo.status??0,
-      ambassador_status: userInfo.ambassador_status??0
+      ambassador_status: userInfo.ambassador_status??0,
+      instagram_url: userInfo.socialmedia_urls?.instagram_url??'',
+      facebook_url: userInfo.socialmedia_urls?.facebook_url??'',
+      pinterest_url: userInfo.socialmedia_urls?.pinterest_url??'',
+      twitterx_url: userInfo.socialmedia_urls?.twitterx_url??'',
+      whatsapp_url: userInfo.socialmedia_urls?.whatsapp_url??'',
+      tiktok_url: userInfo.socialmedia_urls?.tiktok_url??'',
     }
   })
 
@@ -283,6 +294,14 @@ const EditForm = ({ setId, userInfo, roles }: EditProps) => {
       "role" : data.role,
       "status" : data.status,
       "ambassador_status" : data.ambassador_status ?? 0,
+      "socialmedia_urls" : {
+        "instagram_url" : data.instagram_url ?? '',
+        "facebook_url" : data.facebook_url ?? '',
+        "pinterest_url" : data.pinterest_url ?? '',
+        "twitterx_url" : data.twitterx_url ?? '',
+        "whatsapp_url" : data.whatsapp_url ?? '',
+        "tiktok_url" : data.tiktok_url ?? ''
+      }
     }
 
     const log = await User.updateUser(setId, f_data);
@@ -674,8 +693,8 @@ const EditForm = ({ setId, userInfo, roles }: EditProps) => {
                   rules={{ required: true }}
                   render={({ field }) => (
                     <Select label='Select Status' {...field} error={Boolean(errors.status)}>
-                      <MenuItem value={0}>Pending</MenuItem>
                       <MenuItem value={1}>Approve</MenuItem>
+                      <MenuItem value={0}>Pending</MenuItem>
                       <MenuItem value={2}>Reject</MenuItem>
                     </Select>
                   )}
@@ -685,26 +704,155 @@ const EditForm = ({ setId, userInfo, roles }: EditProps) => {
             </Grid>
 
             {userInfo.role == 'ambassador' && (
-              <Grid size={{ md: 6 }}>
-                <FormControl>
-                  <FormControlLabel
-                    control={
-                      <Controller
-                        name='ambassador_status'
-                        control={control}
-                        render={({ field }) => (
-                          <Checkbox
-                            {...field}
-                            checked={field.value === 1}
-                            onChange={(e) => field.onChange(e.target.checked ? 1 : 0)}
-                          />
-                        )}
+              <>
+                <Grid size={{ md: 12 }}>
+                  <FormControl>
+                    <FormControlLabel
+                      control={
+                        <Controller
+                          name='ambassador_status'
+                          control={control}
+                          render={({ field }) => (
+                            <Checkbox
+                              {...field}
+                              checked={field.value === 1}
+                              onChange={(e) => field.onChange(e.target.checked ? 1 : 0)}
+                            />
+                          )}
+                        />
+                      }
+                      label='Approved as Ambassador Profile'
+                    />
+                  </FormControl>
+                </Grid>
+
+                <Grid size={{ md: 6 }}>
+                  <Controller
+                    name='instagram_url'
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        autoFocus
+                        type='text'
+                        label='Instagram URL'
+                        variant='outlined'
+                        placeholder='Enter Instagram URL'
+                        className='mbe-1'
+                        onChange={e => {
+                          field.onChange(e.target.value)
+                        }}
                       />
-                    }
-                    label='Approved as Ambassador Profile'
+                    )}
                   />
-                </FormControl>
-              </Grid>
+                </Grid>
+                <Grid size={{ md: 6 }}>
+                  <Controller
+                    name='facebook_url'
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        autoFocus
+                        type='text'
+                        label='Facebook URL'
+                        variant='outlined'
+                        placeholder='Enter Facebook URL'
+                        className='mbe-1'
+                        onChange={e => {
+                          field.onChange(e.target.value)
+                        }}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid size={{ md: 6 }}>
+                  <Controller
+                    name='pinterest_url'
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        autoFocus
+                        type='text'
+                        label='Pinterest URL'
+                        variant='outlined'
+                        placeholder='Enter Pinterest URL'
+                        className='mbe-1'
+                        onChange={e => {
+                          field.onChange(e.target.value)
+                        }}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid size={{ md: 6 }}>
+                  <Controller
+                    name='twitterx_url'
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        autoFocus
+                        type='text'
+                        label='Twitter/X URL'
+                        variant='outlined'
+                        placeholder='Enter Twitter/X URL'
+                        className='mbe-1'
+                        onChange={e => {
+                          field.onChange(e.target.value)
+                        }}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid size={{ md: 6 }}>
+                  <Controller
+                    name='whatsapp_url'
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        autoFocus
+                        type='text'
+                        label='WhatsApp URL'
+                        variant='outlined'
+                        placeholder='Enter WhatsApp URL'
+                        className='mbe-1'
+                        onChange={e => {
+                          field.onChange(e.target.value)
+                        }}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid size={{ md: 6 }}>
+                  <Controller
+                    name='tiktok_url'
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        autoFocus
+                        type='text'
+                        label='TikTok URL'
+                        variant='outlined'
+                        placeholder='Enter TikTok URL'
+                        className='mbe-1'
+                        onChange={e => {
+                          field.onChange(e.target.value)
+                        }}
+                      />
+                    )}
+                  />
+                </Grid>
+              </>
             )}
 
 

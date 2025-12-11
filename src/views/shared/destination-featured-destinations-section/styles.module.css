@@ -23,6 +23,11 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
 .network_travel_top .network_travel_img_text .btn a{font-size: 0.833vw;  border-radius: 0.026vw; font-weight: 800; border: solid 0.026vw #ffffff; background-color: transparent; padding: 0.521vw 1.094vw; text-decoration: none;}
 .network_travel_top .network_travel_img_text .btn a:hover{background-color: #ffffff; color: #F85241;}
 
+.pagination{padding-top: 2.083vw; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap:0.521vw;}
+.pagination button {width: 1.562vw; height: 1.562vw; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 0.833vw; font-weight: 400; background-color: #ffffff; border: solid 0.052vw #131313; color: #131313; transition: 0.3s ease-in-out; font-family: "Bebas Neue", sans-serif; cursor: pointer;}
+.pagination button:hover,
+.pagination button.active{background-color: #EA5647; color: #ffffff; border-color: #EA5647;}
+
 @media only screen and (max-width: 1024px){
   .network_travel_box .network_travel_top .network_travel_img{padding-bottom: 110%;}
   .network_travel_top .network_travel_img_text h3{font-size: 3.515vw;}
@@ -31,6 +36,9 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
   .feature_desti_row{column-gap: 1.251vw; grid-row-gap: 1.251vw; grid-template-columns: repeat(2, 1fr);}
   .feature_desti_row .network_travel_img_text p{font-size: 1.441vw; line-height: 1.3;}
   .feature_desti_row .network_travel_top .network_travel_img_text .btn a{font-size: 1.649vw;}
+
+  .pagination{padding-top: 3.742vw;}
+  .pagination button{width: 2.846vw; height: 2.846vw; gap:1.138vw; font-size: 1.494vw;}
 }
 
 @media only screen and (max-width: 768px){
@@ -43,6 +51,9 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
   .feature_desti_row .network_travel_top .network_travel_img_text .btn a{font-size: 2.289vw;}
   .network_travel_top .network_travel_img_text{bottom: 4.374vw;}
   .network_travel_top .network_travel_img_text{width: 90%;}
+
+  .pagination{padding-top: 4.809vw;}
+  .pagination button{width: 4.269vw; height: 4.269vw; gap:1.138vw; font-size: 2.206vw;}
 }
 
 
@@ -50,4 +61,6 @@ a.fl_bx_lnk_glb:hover ~ .network_travel_img img{transform: scale(1.1);}
   .feature_desti_row .network_travel_top .network_travel_img_text .btn a{font-size: 3.437vw; padding: 2.375vw 3.508vw;}
   .feature_desti_row .network_travel_img_text p{font-size: 3.579vw;}
 
+  .pagination{padding-top: 6.809vw;}
+  .pagination button{width: 6.269vw; height: 6.269vw; gap:1.638vw; font-size: 2.806vw;}
 }

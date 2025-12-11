@@ -28,7 +28,7 @@ const BannerOtherSection = ({ bannerData, tabID, bannerTitle, scrollRef, locatio
     }, [location]);
 
     function setResortItems() {
-      const _resorts = locDestinations.filter(item => item.destination_location==location)
+      const _resorts = locDestinations?.data?.filter(item => item.destination_location==location)
 
       const resortsArr = _resorts.map(item => item.resorts?.resorts);
 

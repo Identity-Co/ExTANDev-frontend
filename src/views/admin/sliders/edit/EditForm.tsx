@@ -32,6 +32,8 @@ import { object, string, pipe, nonEmpty, optional } from 'valibot'
 import type { InferInput } from 'valibot'
 import type { SubmitHandler } from 'react-hook-form'
 
+import BannerTextFontSize from '@/components/BannerTextFontSize'
+
 import { useDropzone } from 'react-dropzone'
 
 type FileProp = {
@@ -78,6 +80,10 @@ const EditForm = ({ setId, banner }: EditProps) => {
   const [imgSrc, setImgSrc] = useState<string>(banner.banner_image?`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${banner.banner_image}`:'/images/avatars/1.png')
   const [imageInput, setImageInput] = useState<File | null>(null)
   const fData = new FormData();
+
+  const [FontSizeTitle, setFontSizeTitle] = useState(banner?.title_font_size)
+  const [FontSizeSubTitle, setFontSizeSubTitle] = useState(banner?.sub_title_font_size)
+  const [FontSizeLocation, setFontSizeLocation] = useState(banner?.location_font_size)
 
   const handleFileInputChange = (file: ChangeEvent) => {
     const { files } = file.target as HTMLInputElement
@@ -160,12 +166,15 @@ const EditForm = ({ setId, banner }: EditProps) => {
 
     const _data = {
       "title" : data.title,
+      "title_font_size": FontSizeTitle,
       "sub_title" : data.sub_title,
+      "sub_title_font_size" : FontSizeSubTitle,
       "content" : data.content,
       "button_text" : data.button_text,
       "button_link" : data.button_link,
       "page" : data.page,
-      "location": data.location
+      "location": data.location,
+      "location_font_size": FontSizeLocation
     }
 
     const log = await Banner.updateBanner(setId, _data);
@@ -246,7 +255,7 @@ const EditForm = ({ setId, banner }: EditProps) => {
               </FormControl>
             </Grid>
 
-            <Grid size={{ md: 6, xs: 12, lg: 6 }}>
+            <Grid size={{ md: 9, xs: 12, lg: 9 }}>
               <Controller
                 name='title'
                 control={control}
@@ -272,7 +281,10 @@ const EditForm = ({ setId, banner }: EditProps) => {
                 )}
               />
             </Grid>
-            <Grid size={{ md: 6, xs: 12, lg: 6 }}>
+            <Grid size={{ md: 3, xs: 12, lg: 3 }}>
+              <BannerTextFontSize value={FontSizeTitle} onChange={e => setFontSizeTitle(e.target.value)} label="Title Font Size" instanceId="1" />
+            </Grid>
+            <Grid size={{ md: 9, xs: 12, lg: 9 }}>
               <Controller
                 name='sub_title'
                 control={control}
@@ -298,6 +310,9 @@ const EditForm = ({ setId, banner }: EditProps) => {
                 )}
               />
             </Grid>
+            <Grid size={{ md: 3, xs: 12, lg: 3 }}>
+              <BannerTextFontSize value={FontSizeSubTitle} onChange={e => setFontSizeSubTitle(e.target.value)} label="Sub Title Font Size" instanceId="1" />
+            </Grid>
             <Grid size={{ md: 12, xs: 12, lg: 12 }}>
               <Controller
                 name='content'
@@ -307,7 +322,7 @@ const EditForm = ({ setId, banner }: EditProps) => {
                   <TextField
                     {...field}
                     fullWidth
-                    rows={8}
+                    rows={2}
                     multiline
                     type='text'
                     label='Content'
@@ -379,7 +394,7 @@ const EditForm = ({ setId, banner }: EditProps) => {
                 )}
               />
             </Grid>
-            <Grid size={{ md: 6, xs: 12, lg: 6 }}>
+            <Grid size={{ md: 9, xs: 12, lg: 9 }}>
               <Controller
                 name='location'
                 control={control}
@@ -403,6 +418,9 @@ const EditForm = ({ setId, banner }: EditProps) => {
                   />
                 )}
               />
+            </Grid>
+            <Grid size={{ md: 3, xs: 12, lg: 3 }}>
+              <BannerTextFontSize value={FontSizeLocation} onChange={e => setFontSizeLocation(e.target.value)} label="Location Font Size" instanceId="1" />
             </Grid>
             <Grid size={{ xs: 12 }} className='flex gap-4 mt-5 flex-wrap' justifyContent="space-between" container>
               <Grid>

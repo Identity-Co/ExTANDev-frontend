@@ -22,7 +22,7 @@ const DetailPage = async ({ params }: PageProps) => { //searchParams,
 
   const mode = await getServerMode()
 
-  const { destination } = params;
+  const { destination } = await params;
 
   //const qParams = await searchParams;
 
@@ -30,6 +30,8 @@ const DetailPage = async ({ params }: PageProps) => { //searchParams,
   //const season = qParams.season;
 
   const pgData = await getDestinationBySlug(destination)
+
+  console.log(pgData, destination, params);
   var adventures = [];
   // console.log(destination, suitable_for, season);
 

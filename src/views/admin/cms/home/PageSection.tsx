@@ -695,28 +695,20 @@ const PageSection = ({ pgData, fnotes, destinations, adventurePosts }: { pgData?
                 <Grid size={{ md: 12, xs: 12, lg: 12 }}>
                   <Grid container spacing={5}> 
                     <Grid size={{ md: 6, xs: 12, lg: 6 }}>
+                      <Typography variant="h6" color="#a3a3a3">
+                        Description
+                      </Typography>
                       <Controller
                         name='adventure_slider_description'
                         control={control}
                         render={({ field }) => (
-                          <TextField
-                            {...field}
-                            fullWidth
-                            multiline
-                            rows={4}
-                            type='text'
-                            label='Description'
-                            variant='outlined'
-                            placeholder='Enter Description'
-                            className='mbe-1'
-                            onChange={e => {
-                              field.onChange(e.target.value)
-                              errorState !== null && setErrorState(null)
-                            }}
-                            {...((errors.adventure_slider_description || errorState !== null) && {
-                              error: true,
-                              helperText: errors?.adventure_slider_description?.message || errorState?.message[0]
-                            })}
+                          <ReactQuill
+                            theme="snow"
+                            value={field.value ?? ""}
+                            onChange={field.onChange}
+                            modules={modules}
+                            placeholder="Enter adventure slider description..."
+                            style={{ height: "100px", marginBottom: "60px" }}
                           />
                         )}
                       />

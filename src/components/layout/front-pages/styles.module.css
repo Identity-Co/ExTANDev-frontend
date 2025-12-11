@@ -3,7 +3,7 @@ header.header{position: fixed; top: 0; left: 0; width: 100%; z-index: 900; paddi
 header.header.sticky{background-color: #014040;}
 header.header .headMain{display: flex; align-items: center; justify-content: space-between;}
 header.header .headerLogo a{display: block;}
-header.header .headerLogo a img{max-width: 10.37vw;}
+header.header .headerLogo a img{max-width: 10.37vw; width: 100%}
 header.header .navMenu ul{list-style: none; display: flex; align-items: center; column-gap: 2.604vw;}
 header.header .navMenu ul li a{text-transform: uppercase; font-size: max(0.875rem, 1.2vw); font-weight: 400; letter-spacing: 0.005em; line-height: 1; color: #ffffff; font-family: "Bebas Neue", sans-serif; position: relative;}
 header.header .navMenu ul li a:before{position: absolute; content: ""; width: 0%; height: 0.312vw; background-color: #F85241; left: 0; bottom: -0.521vw; transition: 0.3s ease-in-out;}
@@ -74,7 +74,7 @@ header.header .navMenu ul{ padding-inline-start: 0; }
 footer.footer{background-color: #000000; text-align: center;}
 .footer_top{border-bottom: solid 0.0365vw #FFFFFF;}
 .foot_logo a{display: inline-block;}
-.foot_logo a img{max-width: 15.99vw;}
+.foot_logo a img{max-width: 15.99vw; width: 100%}
 .foot_bot_inner{display: flex; flex-wrap: wrap; gap:2.196vw; align-items: center; justify-content: center;}
 .foot_bot_inner ul.foot_menu{display: flex; column-gap: 2.928vw; list-style: none; grid-row-gap: 1.318vw;}
 .foot_bot_inner ul.foot_menu li a{font-size: 0.729vw; font-weight: 600; color: #ffffff;}

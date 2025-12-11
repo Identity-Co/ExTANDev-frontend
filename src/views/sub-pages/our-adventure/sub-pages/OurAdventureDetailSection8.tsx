@@ -8,7 +8,7 @@ import styles from './styles.module.css'
 
 const OurAdventureDetailSection8 = ({ tour, tour_details }: { tour: any; tour_details: any; }) => {
 
-    const whatsIncluded = tour_details.full_details.find(
+    const whatsIncluded = tour_details?.full_details?.find(
       item => item.intro_id === 30  //  item => item.label === "What's Included"
     );
 
@@ -17,19 +17,19 @@ const OurAdventureDetailSection8 = ({ tour, tour_details }: { tour: any; tour_de
       .filter(Boolean);
 
 
-    const accommodation = tour_details.full_details.find(
+    const accommodation = tour_details?.full_details?.find(
       item => item.intro_id === 6  //  item => item.label === "Accommodation"
     );
 
-    const mealsInc = tour_details.full_details.find(
+    const mealsInc = tour_details?.full_details?.find(
       item => item.intro_id === 10  //  item => item.label === "Meals Included"
     );
 
-    const transport = tour_details.full_details.find(
+    const transport = tour_details?.full_details?.find(
       item => item.intro_id === 7  //  item => item.label === "Transport"
     );
 
-    const groupLeader = tour_details.full_details.find(
+    const groupLeader = tour_details?.full_details?.find(
       item => item.intro_id === 18  //  item => item.label === "Group Leader"
     );
   

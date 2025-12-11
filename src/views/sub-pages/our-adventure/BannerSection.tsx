@@ -1,6 +1,6 @@
 // React Imports
 import { useEffect, useRef, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 // Third-party Imports
 import Slider from 'react-slick';
@@ -28,6 +28,7 @@ const BannerSection = ({ mode, banners, filter_categories, scrollRef }: { mode: 
   const [openDest, setOpenDest] = useState(false);
   const [selectedDest, setSelectedDest] = useState("Select a Destination");
 
+  const router = useRouter()
   const searchParams = useSearchParams()
 
   useEffect(() => {
@@ -56,6 +57,8 @@ const BannerSection = ({ mode, banners, filter_categories, scrollRef }: { mode: 
     //const searchParams = new URLSearchParams(window.location.search)
     const categoryFromUrl = searchParams.get('category')
     const destinationFromUrl = searchParams.get('destination')
+
+    console.log(categoryFromUrl,destinationFromUrl)
 
     if (categoryFromUrl) {
       setSelectedAct(categoryFromUrl);
@@ -99,6 +102,9 @@ const BannerSection = ({ mode, banners, filter_categories, scrollRef }: { mode: 
 
     if (category) {
       try {
+        var filtered = filter_categories.filter((item) => item._id == category);
+        router.push(`/our-adventures?category=${filtered[0]?.category_name}&destination=${selectedDestination}`, { scroll: false })
+
         const data = await getDestinationsByCustomCategory(category)
 
         data.sort();
@@ -132,15 +138,15 @@ const BannerSection = ({ mode, banners, filter_categories, scrollRef }: { mode: 
                   >
                       <div className={classnames(styles.hero_slide_container)}>
                           <div className={classnames(styles.hero_slide_text)}>
-                              {item.title && <h1>{item.title}</h1>}
-                              {item.sub_title && <p>{item.sub_title}</p>}
+                              {item.title && <h1 className={item?.title_font_size ? `${item.title_font_size}` : ''}>{item.title}</h1>}
+                              {item.sub_title && <p className={item?.sub_title_font_size ? `${item.sub_title_font_size}` : ''}>{item.sub_title}</p>}
                           </div>
 
                           {item.location && (
                             <div className={classnames(styles.hero_slide_location)}>
                               <div className={classnames(styles.location_name)}>
                                 <img src="/images/front-pages/images/hero-location.svg" />
-                                <span>{item.location}</span>
+                                <span className={item?.location_font_size ? `${item.location_font_size}` : ''}>{item.location}</span>
                               </div>
                             </div>
                           )}
@@ -154,7 +160,7 @@ const BannerSection = ({ mode, banners, filter_categories, scrollRef }: { mode: 
             <div className={classnames(styles.container, 'container')}>
                 <div className={classnames(styles.search_box_inner)}>
                     <div className={classnames(styles.search_row)}>
-                        <form action="/our-adventure/" method="get">
+                        <form action="/our-adventures/" method="get">
                             <input type="hidden" name="category" value={selectedCategory??''} />
                             <input type="hidden" name="destination" value={selectedDestination??''} />
 
@@ -258,6 +264,7 @@ const BannerSection = ({ mode, banners, filter_categories, scrollRef }: { mode: 
                                             setSelectedDest(dest);
                                             setSelectedDestination(dest)
                                             setOpenDest(false);
+                                            router.push(`/our-adventures?category=${selectedCategory}&destination=${dest}`, { scroll: false })
                                           }}
                                           style={{ cursor: "pointer" }}
                                         >
@@ -284,4 +291,3 @@ const BannerSection = ({ mode, banners, filter_categories, scrollRef }: { mode: 
 }
 
 export default BannerSection
-

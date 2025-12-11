@@ -32,7 +32,7 @@ const LandingPage = async () => {
             banners={banners}
             pgData = {pgData}
             fieldNotes={fieldnotes}
-            destinations={destinations}
+            destinations={destinations?.data??[]}
             locations={locations??[]}
             locDestinations={locDestinations??[]}
             adventurePosts={adventurePosts}

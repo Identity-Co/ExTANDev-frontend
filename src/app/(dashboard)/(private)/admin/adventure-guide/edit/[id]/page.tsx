@@ -17,6 +17,7 @@ import EditForm from '@views/admin/adventure-guide/edit/EditForm'
 import * as AdventureGuide from '@/app/server/adventure_guide'
 import { getAllUniqueTags } from '@/app/server/resorts'
 import * as Common from '@/app/server/common'
+import { getAllTours } from '@/app/server/tours'
 
 import config from '@/configs/themeConfig'
 
@@ -44,6 +45,8 @@ const EditAdventureGuide = async (props: { params: Promise<{ id: string }> }) =>
 
   const allTags = await getAllUniqueTags();
 
+  const adventurePosts = await getAllTours('id,name');
+
   return (
     <Grid container spacing={6}>
       <Grid size={{ xs: 12 }}>
@@ -62,7 +65,7 @@ const EditAdventureGuide = async (props: { params: Promise<{ id: string }> }) =>
       </Grid>
 
       <Grid size={{ xs: 12, md: 12, lg:12 }}>
-        <EditForm setId={params.id} adventureguide={adventureGuide} resortTags={allTags?? []} />
+        <EditForm setId={params.id} adventureguide={adventureGuide} resortTags={allTags?? []} adventurePosts={adventurePosts??[]} />
       </Grid>
     </Grid>
   )

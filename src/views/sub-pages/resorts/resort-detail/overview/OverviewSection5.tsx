@@ -70,7 +70,7 @@ const OverviewSection5 = ({ data }: { data?: []; }) => {
                                 <div className={classnames(styles.property_info_text)}>
                                     {item?.name && <h3 className="fs_35">{item?.name}</h3> }
                                     <p>{truncateWords(item?.description)}</p>
-                                    <a className={classnames(styles.activities_read_more_btn)} href={`${process.env.NEXT_PUBLIC_APP_URL}/our-adventure/${item?.slug ?? ''}`}>Read More <svg xmlns="http://www.w3.org/2000/svg" width="14.085" height="8.943" viewBox="0 0 14.085 8.943">
+                                    <a className={classnames(styles.activities_read_more_btn)} href={`${process.env.NEXT_PUBLIC_APP_URL}/our-adventures/${item?.slug ?? ''}`}>Read More <svg xmlns="http://www.w3.org/2000/svg" width="14.085" height="8.943" viewBox="0 0 14.085 8.943">
                                     <path data-name="Path 461" d="M0,0V2.74L5.45,6.987,0,11.323v2.762L8.943,6.97Z" transform="translate(14.085) rotate(90)" fill="#237b81"/>
                                     </svg></a>
                                 </div>

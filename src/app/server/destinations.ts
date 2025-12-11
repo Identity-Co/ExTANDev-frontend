@@ -46,7 +46,7 @@ export const getPageDestination = async (ids: (string | number)[]) => {
 
   const json = await response.json();
   
-  return json.data;
+  return json;
 }
 
 export const getDestination = async (id: any) => {
@@ -236,13 +236,13 @@ export const getDestinationList = async () => {
   }
 }
 
-export const filterDestination = async (location?: string, resort?: string) => {
+export const filterDestination = async (location?: string, resort?: string, page?: number = 1, limit?: string = 9) => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/destination/filter`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({'location': location, 'resort': resort})
+    body: JSON.stringify({'location': location, 'resort': resort, 'page' : page, 'limit' : limit})
   })
   
   if (!response.ok) {
@@ -251,7 +251,7 @@ export const filterDestination = async (location?: string, resort?: string) => {
 
   const json = await response.json();
   
-  return json.data;
+  return json;
 }
 
 export const filterDestinationAdventure = async(destID: string, suitable_for?: string, season?: string) => {
@@ -294,13 +294,13 @@ export const getResortsByDestinations = async (location?: string,) => {
 }
 
 
-export const filterDestinationByTags = async (location?: string, resort?: string) => {
+export const filterDestinationByTags = async (location?: string, resort?: string, page?: number = 1, limit?: string = 9) => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/destination/filter-destination-by-tags`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({'location': location, 'resort': resort})
+    body: JSON.stringify({'location': location, 'resort': resort, 'page' : page, 'limit' : limit})
   })
   
   if (!response.ok) {
@@ -309,5 +309,5 @@ export const filterDestinationByTags = async (location?: string, resort?: string
 
   const json = await response.json();
   
-  return json.data;
+  return json;
 }

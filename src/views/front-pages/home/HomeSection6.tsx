@@ -11,11 +11,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const HomeSection6 = ({ data, fieldNotes }: { data?: []; fieldNotes?: []; }) => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 575);
+  const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
+    setWindowWidth(window.innerWidth);
+    
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 575);
+      setWindowWidth(window.innerWidth);
     };
 
     window.addEventListener("resize", handleResize);
@@ -23,33 +25,29 @@ const HomeSection6 = ({ data, fieldNotes }: { data?: []; fieldNotes?: []; }) => 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Calculate slidesToShow based on window width
+  const getSlidesToShow = () => {
+    if (windowWidth < 576) return 1;
+    if (windowWidth < 1025) return 2;
+    return 3;
+  };
+
+  const getDots = () => windowWidth < 1024;
+  const getArrows = () => windowWidth >= 1024;
+
   const settings = {
-    dots: isMobile,
-    arrows: !isMobile,
+    dots: getDots(),
+    arrows: getArrows(),
     infinite: true,
     speed: 500,
     autoplay: true,
     autoplaySpeed: 2000,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    responsive: [
-    {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-        }
-      },
-      {
-        breakpoint: 575,
-        settings: {
-          slidesToShow: 1,
-        }
-      }
-    ]
+    slidesToShow: getSlidesToShow(),
+    slidesToScroll: 1
   };
 
   return (
-    <section className={classnames(styles.home_section6, 'pb_150 home_section6')}>
+    <section className={classnames(styles.home_section6, 'pb_150 pt_50 home_section6')}>
       <div className="container">
         <div className={classnames(styles.head_text_center)}>
           { data?.field_note_title && (<h2 className="fs_55">{data?.field_note_title}</h2>) }
@@ -75,7 +73,7 @@ const HomeSection6 = ({ data, fieldNotes }: { data?: []; fieldNotes?: []; }) => 
                           {slide.excerpt && (<p>{slide.excerpt}</p>)}
 
                           <div className={classnames(styles.btn, 'btn')}>
-                            <a href={`/adventure-guide/${slide.page_url}`}>Read More</a>
+                            <a href={`${process.env.NEXT_PUBLIC_APP_URL}/adventure-guide/${slide.page_url}`}>Read More</a>
                           </div>
                         </div>
                       </div>

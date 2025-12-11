@@ -19,7 +19,9 @@ const DetailPage = async ({ params }: PageProps) => {
 
   const mode = await getServerMode()
 
-  const { resort } = params;
+  const { resort } = await params;
+
+  console.log(process.env.NODE_ENV)
 
   const pgData = await getResortBySlug(resort)
 

@@ -12,7 +12,9 @@ import "slick-carousel/slick/slick-theme.css";
 
 import LikesShare from '@/views/shared/like-share-section/LikeShareSection'
 
-const HomeSection3 = ({ data, adventurePosts }: { data?: []; adventurePosts?: []; }) => {
+const AdventureGuideDetail6 = ({ data, adventurePosts }: { data?: []; adventurePosts?: []; }) => {
+  if(!adventurePosts.length)
+    return false;
   const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
@@ -49,7 +51,7 @@ const HomeSection3 = ({ data, adventurePosts }: { data?: []; adventurePosts?: []
   };
 
   return (
-    <section className={classnames(styles.home_section3, 'py_150 home_section3')}>
+    <section className={classnames(styles.home_section3, 'pb_150 home_section3')}>
         <div className={classnames('container')}>
             <div className={classnames(styles.head_text_center)}>
               {data?.adventure_slider_title && <h2 className="fs_55">{data?.adventure_slider_title}</h2>}
@@ -101,4 +103,4 @@ const HomeSection3 = ({ data, adventurePosts }: { data?: []; adventurePosts?: []
   )
 }
 
-export default HomeSection3
+export default AdventureGuideDetail6

@@ -113,7 +113,7 @@ const BannerSection = ({ mode, filter_categories }: { mode: Mode; filter_categor
             <div className={classnames(styles.container, 'container')}>
                 <div className={classnames(styles.search_box_inner)}>
                     <div className={classnames(styles.search_row)}>
-                        <form action="/our-adventure/" method="get">
+                        <form action="/our-adventures/" method="get">
                             <input type="hidden" name="category" value={selectedCategory??''} />
                             <input type="hidden" name="destination" value={selectedDestination??''} />
                             <div className={classnames(styles.search_select, styles.ss1)}>

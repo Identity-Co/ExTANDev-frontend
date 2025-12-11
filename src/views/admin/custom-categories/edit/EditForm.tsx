@@ -112,7 +112,7 @@ const EditForm = ({ setId, category }: EditProps) => {
   })
 
   const onUpdate: SubmitHandler<FormData> = async (data: FormData) => {
-    if (!imageInput) {
+    if (!imageInput && !category?.image) {
       setMessage('This field is required.');
 
       return;

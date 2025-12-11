@@ -147,7 +147,7 @@ const AdventuresSection2 = ({ data, isOverviewDetailPage, setIsOverviewDetailPag
                                     .join(' ')}
                                   {tour.description.split(' ').length > 50 ? '...' : ''}</p>
                                 <div className={classnames(styles.btn, 'btn')}>
-                                    <a href={`/our-adventure/${tour.slug}/`} tabIndex="0">View Trip</a>
+                                    <a href={`/our-adventures/${tour.slug}/`} tabIndex="0">View Trip</a>
                                 </div>
                             </div>
                         </div>

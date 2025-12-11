@@ -14,7 +14,7 @@ const OurAdventureDetailSection3 = ({ tour_details, categories }: { tour_details
     );
 
     // Only loop through categories from tour_details.categories array
-    const mappedCategories = tour_details.categories.map(catId => {
+    const mappedCategories = tour_details?.categories?.map(catId => {
       const currentCat = categoriesById[catId];
       if (!currentCat) return null;
 
@@ -37,7 +37,7 @@ const OurAdventureDetailSection3 = ({ tour_details, categories }: { tour_details
                         <div className={classnames(styles.tour_main_row)}>
                             <div className={classnames(styles.tour_clmn_left)}>
                                 <div className={classnames(styles.tour_info_row)}>
-                                    {mappedCategories.map(cat => (
+                                    {mappedCategories?.map(cat => (
                                       <div key={cat.id} className={classnames(styles.tour_info_box)}>
                                         <h4>
                                           {cat.parent ? `${cat.parent}: ` : ''}

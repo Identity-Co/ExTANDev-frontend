@@ -35,6 +35,7 @@ const PageSection = ({ pgData, id, resortDestinations, adventures, hasParam, fil
   
   const [val, setVal] = useState<string>('overview')
   const [totAdventures, setTotAdventures] = useState(0)
+  const [totResorts, seTtotResorts] = useState(resortsLists.length?? 0)
   const [isOverviewDetailPage, setIsOverviewDetailPage] = useState(false);
   const [isOverviewDetailPageID, setIsOverviewDetailPageID] = useState<string>('');
   const [hideResorts, setHideResorts] = useState(false);
@@ -102,7 +103,7 @@ const PageSection = ({ pgData, id, resortDestinations, adventures, hasParam, fil
       <TabContext value={val} className="my-5">
         <TabList variant='fullWidth' onChange={handleChange} aria-label='full width tabs example' className="destinations_tab">
           <Tab value='overview' label='Overview' />
-          {!hideResorts && <Tab value='resorts' label='Resorts' />}
+          {(!hideResorts && totResorts > 0) && <Tab value='resorts' label='Resorts' />}
           {totAdventures > 0 && <Tab value='adventures' label='Adventures' onClick={(e) => { setIsOverviewDetailPageID(''); setIsOverviewDetailPage(false); }} />}
           <Tab value='stories' label='Stories' />
         </TabList>

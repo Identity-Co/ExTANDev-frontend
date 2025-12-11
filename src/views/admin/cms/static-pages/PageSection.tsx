@@ -20,6 +20,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import type { Editor } from '@tiptap/react'
 
+import BannerTextFontSize from '@/components/BannerTextFontSize'
+
 const TipTapEditor = dynamic(() => import('@/components/TipTap'), { ssr: false })
 
 import { toast } from 'react-toastify';
@@ -84,6 +86,8 @@ const PageSection = ({ pgData, pgDataMain }: { pgData?: []; pgDataMain?: []; }) 
   const [isSubmitting , setIsSubmitting ] = useState(false)
   const [editor, setEditor] = useState<Editor | null>(null)
   const [message, setMessage] = useState(null);
+
+  const [FontSizeBannerTitle, setFontSizeBannerTitle] = useState(pgData?.banner_title_font_size?? 'fs_90')
 
   const [destOptions, setdestOptions] = useState<string[]>([])
   const [resortOptions, setresortOptions] = useState<string[]>([])
@@ -161,6 +165,7 @@ const PageSection = ({ pgData, pgDataMain }: { pgData?: []; pgDataMain?: []; }) 
       'banner_image': '',
       'name': data.name,
       'banner_title': data.banner_title,
+      'banner_title_font_size': FontSizeBannerTitle,
       'main_content': data.main_content,
       'author': data.author,
       'classification': data.classification,
@@ -290,7 +295,7 @@ const PageSection = ({ pgData, pgDataMain }: { pgData?: []; pgDataMain?: []; }) 
                   <h2>Banner Sections</h2>
                 </Grid>
 
-                <Grid size={{ md: 6, xs: 12, lg: 6 }}>
+                <Grid size={{ md: 5, xs: 12, lg: 5 }}>
                   <Grid container spacing={6}>
                     <Grid size={{ md: 12, xs: 12, lg: 12 }}>
                       <div className='flex max-sm:flex-col items-center gap-6'>
@@ -348,7 +353,7 @@ const PageSection = ({ pgData, pgDataMain }: { pgData?: []; pgDataMain?: []; }) 
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid size={{ md: 6, xs: 12, lg: 6 }}>
+                <Grid size={{ md: 5, xs: 12, lg: 5 }}>
                   <Controller
                     name='banner_title'
                     control={control}
@@ -373,6 +378,9 @@ const PageSection = ({ pgData, pgDataMain }: { pgData?: []; pgDataMain?: []; }) 
                       />
                     )}
                   />
+                </Grid>
+                <Grid size={{ md: 2, xs: 12, lg: 2 }}>
+                  <BannerTextFontSize value={FontSizeBannerTitle} onChange={e => setFontSizeBannerTitle(e.target.value)} label="Font Size" instanceId="1" />
                 </Grid>
               </Grid>
               <Divider />

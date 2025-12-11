@@ -151,9 +151,9 @@ const Resorts = ({ pgData, destinations, setFormId, getFormId, adventurePosts, r
     const obj = destinations?.map(item => ({
       label: item._id,
       value: item.title
-    }));
+    })) || [];
 
-    obj.sort((a, b) => a.value.localeCompare(b.value));
+    obj?.sort((a, b) => a.value.localeCompare(b.value));
 
     setdestOptions(obj);
   }, [destinations]);
@@ -162,7 +162,7 @@ const Resorts = ({ pgData, destinations, setFormId, getFormId, adventurePosts, r
     const obj = adventurePosts.map(item => ({
       label: item._id,
       value: item.name
-    }));
+    })) || [];
 
     obj.sort((a, b) => a.value.localeCompare(b.value));
 
@@ -173,7 +173,7 @@ const Resorts = ({ pgData, destinations, setFormId, getFormId, adventurePosts, r
     const obj = resortTags.map(item => ({
       label: item,
       value: item
-    }));
+    })) || [];
 
     obj.sort((a, b) => a.value.localeCompare(b.value));
 

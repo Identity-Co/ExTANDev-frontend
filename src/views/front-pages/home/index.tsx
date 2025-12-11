@@ -24,10 +24,10 @@ const LandingPageWrapper = ({ mode, banners, pgData, fieldNotes, destinations, l
   
   return (
     <>
-      {banners.length ? <BannerSection mode={mode} banners={banners} locations={locations} locDestinations={locDestinations} /> : null}
+      {banners.length ? <BannerSection mode={mode} banners={banners} locations={locations} locDestinations={locDestinations.data?? []} /> : null}
       <HomeSection1 data={pgData}/>
       {destinations.length ? <HomeSection2 slides={destinations}/> : null}
-      <HomeSection3 adventurePosts={adventurePosts} />
+      <HomeSection3 data={pgData} adventurePosts={adventurePosts} />
       <HomeSection4 data={pgData}/>
       <HomeSection5 sectionProps={instagramSliderSectionProps} />
       <HomeSection6 data={pgData} fieldNotes={fieldNotes}/>

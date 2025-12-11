@@ -16,6 +16,7 @@ import Divider from '@mui/material/Divider'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
+import FormHelperText from '@mui/material/FormHelperText'
 import FormControl from '@mui/material/FormControl'
 import Chip from '@mui/material/Chip'
 import Box from '@mui/material/Box'
@@ -75,14 +76,11 @@ const schema = object({
   country: pipe(string(), nonEmpty('This field is required')),
   short_description: optional(string()),
   tags: array(string()),
+  booking_url: optional(string()),
+  booking_url_date_format:  optional(string()),
   banners: array(
     object({
-      title: pipe(string(), nonEmpty('This field is required')),
-      content: pipe(custom<string | null>((value) => {
-        if (!value || value == "<p><br></p>") return false;
-
-        return true;
-      }, 'This field is required')),
+      content: optional(string()),
       image: pipe(custom<File | null>((value) => {
         if (!value) return 'This field is required';
 
@@ -219,15 +217,16 @@ const AddResorts = ({ pgData, adventurePosts, getFormId }: { pgData?: []; advent
       short_description: pgData?.short_description?? '',
       location: pgData?.location?? '',
       country: pgData?.country?? '',
+      booking_url: pgData?.booking_url?? '',
+      booking_url_date_format: pgData?.booking_url_date_format?? '',
       tags: pgData?.tags?? [],
       banners: (pgData?.overview?.banners && Array.isArray(pgData.overview.banners) && pgData.overview.banners.length > 0) 
         ? pgData.overview.banners.map((section: any) => ({
-            title: section.title || '',
             content: section.content ?? '',
             image: section.image || null,
             _preview: section.image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${section.image}` : '',
           }))
-        : [{ title: '', content: '', image: null, _preview: '' }],
+        : [{ content: '', image: null, _preview: '' }],
       about_title: pgData?.overview?.about_title??'',
       about_content: pgData?.overview?.about_content??'',
       about_button_text: pgData?.overview?.about_button_text??'',
@@ -251,7 +250,7 @@ const AddResorts = ({ pgData, adventurePosts, getFormId }: { pgData?: []; advent
           }))
         : [{ title: '', content: ''}],
       map_info_box: (pgData?.overview?.map?.info_boxes && Array.isArray(pgData.overview.map.info_boxes) && pgData.overview.map.info_boxes.length > 0) 
-        ? pgData.overview.map.content_boxes.map((section: any) => ({
+        ? pgData.overview.map.info_boxes.map((section: any) => ({
             title: section.title ?? '',
             content: section.content ?? '',
           }))
@@ -415,6 +414,8 @@ const AddResorts = ({ pgData, adventurePosts, getFormId }: { pgData?: []; advent
     formData.append("name", data.name);
     formData.append("location", data.location);
     formData.append("country", data.country);
+    formData.append("booking_url", data.booking_url);
+    formData.append("booking_url_date_format", data.booking_url_date_format);
     formData.append("short_description", data.short_description);
 
     formData.append("tags", JSON.stringify(data.tags?? []));
@@ -461,7 +462,6 @@ const AddResorts = ({ pgData, adventurePosts, getFormId }: { pgData?: []; advent
     }
 
     data.banners.forEach((section, i) => {
-      formData.append(`overview_banners[${i}][title]`, section.title)
       formData.append(`overview_banners[${i}][content]`, section.content)
       if (section.image) {
         formData.append(`overview_banners[${i}][image]`, section.image)
@@ -690,7 +690,76 @@ const AddResorts = ({ pgData, adventurePosts, getFormId }: { pgData?: []; advent
                       {errors.tags.message}
                     </Typography>
                   )}
-                </Grid> 
+                </Grid>
+                <Grid size={{ md: 12, xs: 12, lg: 12 }}>
+                  <Controller
+                    name='booking_url'
+                    control={control}
+                    rules={{ required: false }}
+                    render={({ field }) => (
+                      <>
+                        <TextField
+                          {...field}
+                          fullWidth
+                          type='text'
+                          label='Booking URL'
+                          variant='outlined'
+                          placeholder='Enter Booking URL'
+                          className='mbe-1'
+                          id='resort_booking_url'
+                          onChange={e => {
+                            field.onChange(e.target.value);
+                            errorState !== null && setErrorState(null);
+                          }}
+                          {...((errors.booking_url || errorState !== null) && {
+                            error: true,
+                            helperText: errors?.booking_url?.message || errorState?.message[0],
+                          })}
+                        />
+                        
+                        {/* Description or additional helper text below */}
+                        <FormHelperText>
+                          <span style={{display: "block", marginBottom: "10px"}}>Use placeholders for dates and guest, Available placeholders(DTCHECKIN, DTCHECKOUT, DTGUESTS). Example:</span>
+                          • Example 1: <code>https://example.com/booking?DateIn={"DTCHECKIN"}&DateOut={"DTCHECKOUT"}&guest={"DTGUESTS"}</code><br />
+                          • Example 2: <code>https://example.com/booking?checkin={"DTCHECKIN"}&checkout={"DTCHECKOUT"}&adult={"DTGUESTS"}</code>
+                        </FormHelperText>
+                      </>
+                    )}
+                  />
+                </Grid><Grid size={{ md: 12, xs: 12, lg: 12 }}>
+                  <Controller
+                    name='booking_url_date_format'
+                    control={control}
+                    rules={{ required: false }}
+                    render={({ field }) => (
+                      <>
+                        <TextField
+                          {...field}
+                          fullWidth
+                          type='text'
+                          label='Booking URL Date Format'
+                          variant='outlined'
+                          placeholder='Enter Booking URL Date Format'
+                          className='mbe-1'
+                          id='resort_booking_url_date_format'
+                          onChange={e => {
+                            field.onChange(e.target.value);
+                            errorState !== null && setErrorState(null);
+                          }}
+                          {...((errors.booking_url_date_format || errorState !== null) && {
+                            error: true,
+                            helperText: errors?.booking_url_date_format?.message || errorState?.message[0],
+                          })}
+                        />
+                        
+                        {/* Description or additional helper text below */}
+                        <FormHelperText>
+                          For example YYYY/MM/DD, YYYY-MM-DD, MM/DD/YYYY, MM-DD-YYYY, DD/MM/YYYY, DD-MM-YYYY etc...
+                        </FormHelperText>
+                      </>
+                    )}
+                  />
+                </Grid>
               </Grid>
             </CardContent>
           </Card>
@@ -719,34 +788,6 @@ const AddResorts = ({ pgData, adventurePosts, getFormId }: { pgData?: []; advent
                             : null }   
                           </div>
                           <Grid container spacing={3}>
-                            <Grid size={{ md: 6, xs: 12, sm: 12, lg: 6 }}>
-                              <FormControl fullWidth>
-                                <Controller
-                                  name={`banners.${index}.title`}
-                                  control={control}
-                                  render={({ field }) => (
-                                    <TextField
-                                      {...field}
-                                      fullWidth
-                                      type='text'
-                                      label='Title'
-                                      variant='outlined'
-                                      placeholder='Enter Title'
-                                      className='mbe-1'
-                                      id={`overview_banners.${index}.title`}
-                                      onChange={e => {
-                                        field.onChange(e.target.value)
-                                        errorState !== null && setErrorState(null)
-                                      }}
-                                      {...((errors.banners?.[index]?.title || errorState !== null) && {
-                                        error: true,
-                                        helperText: errors.banners?.[index]?.title?.message || errorState?.message[0]
-                                      })}
-                                    />
-                                  )}
-                                />
-                              </FormControl>
-                            </Grid>
                             <Grid size={{ md: 6, xs: 12, lg: 6 }}>
                               <div className='flex max-sm:flex-col items-center gap-6'>
                                 {watch(`banners.${index}._preview`) ? (
@@ -793,7 +834,7 @@ const AddResorts = ({ pgData, adventurePosts, getFormId }: { pgData?: []; advent
                               </div>
                             </Grid>
 
-                            <Grid size={{ md: 12, xs: 12, lg: 12 }} style={{ marginBottom: "0" }}>
+                            <Grid size={{ md: 6, xs: 12, lg: 6 }} style={{ marginBottom: "0" }}>
                               <Typography variant='h6' color='#a3a3a3'>Content</Typography>
                               <Controller
                                 name={`banners.${index}.content`}
@@ -818,7 +859,7 @@ const AddResorts = ({ pgData, adventurePosts, getFormId }: { pgData?: []; advent
                             <Divider />
                           </Grid>
                           <Grid size={{ md: 6, xs: 2, sm: 2 }}>
-                            { bannersFields.length === index+1 ? (<Button aria-label='capture screenshot' onClick={() => appendbannersFields({title: '', content: '', image: null})} color='secondary' size='small' variant="contained" startIcon={<i className='ri-add-line' />} >
+                            { bannersFields.length === index+1 ? (<Button aria-label='capture screenshot' onClick={() => appendbannersFields({content: '', image: null})} color='secondary' size='small' variant="contained" startIcon={<i className='ri-add-line' />} >
                               Add Banner
                             </Button>) : null }               
                           </Grid>

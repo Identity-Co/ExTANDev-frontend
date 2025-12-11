@@ -62,7 +62,7 @@ type FormData = InferInput<typeof schema>
 const schema = object({
 	banners: array(
     object({
-      title: pipe(string(), nonEmpty('This field is required')),
+      content: optional(string()),
       image: pipe(custom<File | null>((value) => {
         if (!value) return 'This field is required';
         const allowed = ["image/png", "image/jpeg", "image/gif"];
@@ -164,7 +164,7 @@ const Stories = ({ pgData, getFormId }: { pgData?: any; getFormId?: any }) => {
 		defaultValues: {
 			banners: (pgData?.stories?.banners && Array.isArray(pgData.stories.banners) && pgData.stories.banners.length > 0) 
         ? pgData.stories.banners.map((section: any) => ({
-            title: section.title || '',
+            content: section.content || '',
             image: section.image || null,
             _preview: section.image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${section.image}` : '',
           }))
@@ -299,7 +299,7 @@ const Stories = ({ pgData, getFormId }: { pgData?: any; getFormId?: any }) => {
 
     // Banners data
     data.banners.forEach((section, i) => {
-      formData.append(`stories_banners[${i}][title]`, section.title)
+      formData.append(`stories_banners[${i}][content]`, section.content)
       if (section.image && section.image instanceof File) {
         formData.append(`stories_banners[${i}][image]`, section.image)
       } else if (typeof section.image === 'string') {
@@ -371,34 +371,6 @@ const Stories = ({ pgData, getFormId }: { pgData?: any; getFormId?: any }) => {
 	                            : null }   
 	                          </div>
 	                          <Grid container spacing={3}>
-	                            <Grid size={{ md: 6, xs: 12, sm: 12, lg: 6 }}>
-	                              <FormControl fullWidth>
-	                                <Controller
-	                                  name={`banners.${index}.title`}
-	                                  control={control}
-	                                  render={({ field }) => (
-	                                    <TextField
-	                                      {...field}
-	                                      fullWidth
-	                                      type='text'
-	                                      label='Title'
-	                                      variant='outlined'
-	                                      placeholder='Enter Title'
-	                                      className='mbe-1'
-	                                      id={`rooms_banners.${index}.title`}
-	                                      onChange={e => {
-	                                        field.onChange(e.target.value)
-	                                        errorState !== null && setErrorState(null)
-	                                      }}
-	                                      {...((errors.banners?.[index]?.title || errorState !== null) && {
-	                                        error: true,
-	                                        helperText: errors.banners?.[index]?.title?.message || errorState?.message[0]
-	                                      })}
-	                                    />
-	                                  )}
-	                                />
-	                              </FormControl>
-	                            </Grid>
 	                            <Grid size={{ md: 6, xs: 12, lg: 6 }}>
 	                              <div className='flex max-sm:flex-col items-center gap-6'>
 	                                {watch(`banners.${index}._preview`) ? (
@@ -442,6 +414,28 @@ const Stories = ({ pgData, getFormId }: { pgData?: any; getFormId?: any }) => {
 	                                  {errors.banners?.[index]?.image && (<Typography color='error.main'>{String(errors.banners[index]?.image?.message)}</Typography>)}
 	                                </div>
 	                              </div>
+	                            </Grid>
+	                            <Grid size={{ md: 6, xs: 12, lg: 6 }} style={{ marginBottom: "0" }}>
+	                              <Typography variant='h6' color='#a3a3a3'>Content</Typography>
+	                              <Controller
+	                                name={`banners.${index}.content`}
+	                                control={control}
+	                                rules={{ required: true }}
+	                                render={({ field }) => (
+	                                  <ReactQuill
+	                                    theme="snow"
+	                                    value={field.value ?? ''}
+	                                    onChange={field.onChange}
+	                                    onInit={(editorInstance) => setEditor(editorInstance)}
+	                                    modules={modules}
+	                                    placeholder="Write something amazing..."
+	                                    style={{ height: "100px", marginBottom: "60px" }}
+	                                  />
+	                                )}
+	                              />
+	                              {errors.banners?.[index]?.content && (
+	                                <p className="text-red-500 text-sm mt-1">{errors.banners?.[index]?.content.message}</p>
+	                              )}
 	                            </Grid>
 	                            <Divider />
 	                          </Grid>

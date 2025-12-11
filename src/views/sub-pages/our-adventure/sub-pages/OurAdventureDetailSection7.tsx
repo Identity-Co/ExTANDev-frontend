@@ -64,7 +64,7 @@ const OurAdventureDetailSection7 = ({ tour_details }: { tour_details: any; }) =>
         },
     ];*/
 
-    const faqData = tour_details.full_details.map((item, index) => ({
+    const faqData = tour_details?.full_details.map((item, index) => ({
         id: (index + 1).toString(),
         question: item.label,
         answer: item.content
@@ -77,7 +77,7 @@ const OurAdventureDetailSection7 = ({ tour_details }: { tour_details: any; }) =>
                     <h2 className="fs_55">USEFUL INFO</h2>
                 </div>
                 <div className={classnames(styles.faq)}>
-                    {faqData.slice(0, 5).map(faq => (
+                    {faqData?.slice(0, 5).map(faq => (
                         <div key={faq.id} className={classnames(styles.faq_box)}>
                             <Accordion expanded={expanded === faq.id ? true : false} onChange={handleChange(faq.id)}>
                                 <AccordionSummary 

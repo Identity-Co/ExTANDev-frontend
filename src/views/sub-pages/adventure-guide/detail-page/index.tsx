@@ -12,10 +12,11 @@ import AdventureGuideDetail1 from './AdventureGuideDetail1'
 import AdventureGuideDetail2 from './AdventureGuideDetail2'
 import AdventureGuideDetail3 from './AdventureGuideDetail3'
 import AdventureGuideDetail5 from './AdventureGuideDetail5'
+import AdventureGuideDetail6 from './AdventureGuideDetail6'
 
 import { useSettings } from '@core/hooks/useSettings'
 
-const AdventureGuideDetailPage = ({ mode, pgData, locations, locDestinations }: { mode: Mode; pgData?: []; locations?: []; locDestinations?: []; }) => {
+const AdventureGuideDetailPage = ({ mode, pgData, locations, locDestinations, adventurePosts }: { mode: Mode; pgData?: []; locations?: []; locDestinations?: []; adventurePosts?: [] }) => {
   // Hooks
   const { updatePageSettings } = useSettings()
 
@@ -43,6 +44,7 @@ const AdventureGuideDetailPage = ({ mode, pgData, locations, locDestinations }: 
         
         return <AdventureGuideDetail3 key={index + 1} data={section} />;
       })}
+      <AdventureGuideDetail6 data={pgData} adventurePosts={adventurePosts} />
       <AdventureGuideDetail5 data={pgData} />
     </>
   )

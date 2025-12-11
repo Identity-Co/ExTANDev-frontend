@@ -100,7 +100,7 @@ const Header = ({ mode, siteSettings }: { mode: Mode; siteSettings?: []; }) => {
                   <nav>
                       <ul>
                           <li className={classnames({ [styles.active]: firstSegment === 'our-destinations' })}><Link href={"/our-destinations"}>Our Destinations</Link></li>
-                          <li className={classnames({ [styles.active]: firstSegment === 'our-adventure' })}><Link href={"/our-adventure"}>Our adventures</Link></li>
+                          <li className={classnames({ [styles.active]: firstSegment === 'our-adventures' })}><Link href={"/our-adventures"}>Our adventures</Link></li>
                           <li className={classnames({ [styles.active]: firstSegment === 'total-travel' })}><Link href={"/total-travel"}>Total travel</Link></li>
                           <li className={classnames({ [styles.active]: firstSegment === 'adventure-guide' })}><Link href={"/adventure-guide"}>Field notes</Link></li>
                           <li className={classnames({ [styles.active]: firstSegment === 'merchandise' })}><Link href={"/merchandise"}>Merch</Link></li>

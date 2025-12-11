@@ -18,14 +18,14 @@ const OurAdventureDetailSection4 = ({ tour, tour_details }: { tour: any; tour_de
     const [activities, setActivities] = useState<Record<number, any>>({});
     const [value, setValue] = useState<string>('1')
     const [expandedDay, setExpandedDay] = useState<string | null>('1')
-    const totalDays = tour_details.days_summary.length ?? 0;
+    const totalDays = tour_details?.days_summary?.length ?? 0;
 
     useEffect(() => {
-        const allIds = tour_details.days_summary
+        const allIds = tour_details?.days_summary
           .flatMap((day: any) => day.optional_activities)
           .filter((id: number) => id > 0);
 
-        if (allIds.length) {
+        if (allIds?.length) {
           (async () => {
             const res = await getActivitiesByIds(allIds);
             const mapped: Record<number, any> = {};
@@ -92,7 +92,7 @@ const OurAdventureDetailSection4 = ({ tour, tour_details }: { tour: any; tour_de
                             </div>
                         </div>
                         <TabList orientation='vertical' onChange={handleChange} aria-label='vertical tabs example' className={classnames(styles.tab_lists, styles.ultimate_days)}>
-                            {tour_details.days_summary.map(day => (
+                            {tour_details?.days_summary?.map(day => (
                               <Tab
                                 key={day.day}
                                 value={String(day.day)}
@@ -107,10 +107,10 @@ const OurAdventureDetailSection4 = ({ tour, tour_details }: { tour: any; tour_de
                             ))}
                         </TabList>
                     </div>
-                    {tour_details.site_links?.download_pdf !='' && (
+                    {tour_details?.site_links?.download_pdf !='' && (
                         <div className={classnames(styles.ultimate__bot)}>
                             <div className={classnames(styles.btn, 'btn')}>
-                                <a href={tour_details.site_links.download_pdf} target="_blank">DOWNLOAD ITINERAY PDF</a>
+                                <a href={tour_details?.site_links?.download_pdf} target="_blank">DOWNLOAD ITINERAY PDF</a>
                             </div>
                         </div>
                     )}
@@ -118,7 +118,7 @@ const OurAdventureDetailSection4 = ({ tour, tour_details }: { tour: any; tour_de
             </div>
             <div className={classnames(styles.ultimate_right)}>
                 <div className={classnames(styles.ultimate_right_row)}>
-                    {tour_details.days_summary.map(day => (
+                    {tour_details?.days_summary?.map(day => (
                         <TabPanel value={String(day.day)} key={day.day} className={classnames(styles.tab_details)}>
                             <div className={classnames(styles.ultimate_right_left)}>
                                 <p className="extra_bold text_up">DAY {day.day}</p>
@@ -175,7 +175,7 @@ const OurAdventureDetailSection4 = ({ tour, tour_details }: { tour: any; tour_de
                 </div>
             </div>
 
-            {tour_details.days_summary.map(day => (
+            {tour_details?.days_summary?.map(day => (
                 <div 
                     key={day.day} 
                     className={classnames(
@@ -242,10 +242,10 @@ const OurAdventureDetailSection4 = ({ tour, tour_details }: { tour: any; tour_de
                 </div>
             ))}
 
-            {tour_details.site_links?.download_pdf !='' && (
+            {tour_details?.site_links?.download_pdf !='' && (
                 <div className={classnames(styles.ultimate__bot, styles.mobile_download)}>
                     <div className={classnames(styles.btn, 'btn')}>
-                        <a href={tour_details.site_links.download_pdf} target="_blank">DOWNLOAD ITINERAY PDF</a>
+                        <a href={tour_details?.site_links?.download_pdf} target="_blank">DOWNLOAD ITINERAY PDF</a>
                     </div>
                 </div>
             )}

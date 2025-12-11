@@ -31,7 +31,7 @@ import type { SubmitHandler } from 'react-hook-form'
 
 import { valibotResolver } from '@hookform/resolvers/valibot'
 
-import { object, string, pipe, nonEmpty, optional, custom } from 'valibot'
+import { object, string, pipe, nonEmpty, optional, custom, array } from 'valibot'
 
 //import type { InferInput } from 'valibot'
 
@@ -78,6 +78,9 @@ type FormData = {
   excerpt?: string;
   site_url?: string;
   site_logo?: File | null | string;
+  adventure_slider_title?: string;
+  adventure_slider_description?: string;
+  adventure_slides?: string[];
   page_url?: string;
   meta_title?: string;
   meta_description?: string;
@@ -165,6 +168,11 @@ const schema = object({
       return value.size <= maxMB * 1024 * 1024;
     }, "Only PNG/JPG/GIF/SVG allowed and max file size is 5 MB")
   ),
+  adventure_slider_title: optional(string()),
+  adventure_slider_description: optional(string()),
+  adventure_slides: array(
+    optional(string()),
+  ),
   page_url: optional(string()),
   meta_title: optional(string()),
   meta_description: optional(string()),
@@ -186,7 +194,7 @@ const TooltipIfEnabled = ({ title, disabled, children }) =>
     </Tooltip>
   );
 
-const PageSection = ({ setId, adventureguide, resortTags }: { setId?: string; adventureguide?: []; userData?: []; resortTags?: [] }) => {  
+const PageSection = ({ setId, adventureguide, resortTags, adventurePosts }: { setId?: string; adventureguide?: []; userData?: []; resortTags?: []; adventurePosts?: [] }) => {  
   const router = useRouter()
 
   const setLoading = useNavigationStore((s) => s.setLoading)
@@ -199,6 +207,7 @@ const PageSection = ({ setId, adventureguide, resortTags }: { setId?: string; ad
   const [message, setMessage] = useState(null);
 
   const [resortsOptions, setResortsOptions] = useState<string[]>([])
+  const [advPostsOptions, setadvPostsOptions] = useState<string[]>([])
 
 
   //const [imgSrc, setImgSrc] = useState<string>(adventureguide?.image ? `${process.env.NEXT_PUBLIC_UPLOAD_URL}/${adventureguide?.image}` : '/images/avatars/1.png')
@@ -219,6 +228,15 @@ const PageSection = ({ setId, adventureguide, resortTags }: { setId?: string; ad
       value: value
     }));
   });
+
+  useEffect(() => {
+    const obj = adventurePosts.map(item => ({
+      label: item._id,
+      value: item.name
+    }));
+
+    setadvPostsOptions(obj);
+  }, [adventurePosts]);
 
   const formatDate = (date) => {
     const year = date.getFullYear();
@@ -304,6 +322,9 @@ const PageSection = ({ setId, adventureguide, resortTags }: { setId?: string; ad
       excerpt: adventureguide?.excerpt??'',
       site_url: adventureguide?.site_url??'',
       site_logo: adventureguide?.site_logo??null,
+      adventure_slider_title: adventureguide?.adventure_slider_title??'',
+      adventure_slider_description: adventureguide?.adventure_slider_description??'',
+      adventure_slides: adventureguide?.adventure_slides??[],
       page_url: adventureguide?.page_url??'',
       meta_title: adventureguide?.meta_title??'',
       meta_description: adventureguide?.meta_description??'',
@@ -448,6 +469,15 @@ const PageSection = ({ setId, adventureguide, resortTags }: { setId?: string; ad
       if (data.author_name) fd.append('author_name', data.author_name)
       if (data.author_testimonial) fd.append('author_testimonial', data.author_testimonial)
       if (data.excerpt) fd.append('excerpt', data.excerpt)
+      if (data.adventure_slider_title) fd.append('adventure_slider_title', data.adventure_slider_title)
+      if (data.adventure_slider_description) fd.append('adventure_slider_description', data.adventure_slider_description)
+
+      if (data.adventure_slides){
+        data.adventure_slides.forEach((section, i) => {
+          fd.append(`adventure_slides[${i}]`, section)
+        });
+      }
+
       if (data.site_url) fd.append('site_url', data.site_url)
       if (data.page_url) fd.append('page_url', data.page_url)
       if (data.meta_title) fd.append('meta_title', data.meta_title)
@@ -568,6 +598,7 @@ const PageSection = ({ setId, adventureguide, resortTags }: { setId?: string; ad
                             variant='outlined'
                             placeholder='Enter Title'
                             className='mbe-1'
+                            id='main_title'
                             onChange={e => {
                               field.onChange(e.target.value)
                               errorState !== null && setErrorState(null)
@@ -824,6 +855,7 @@ const PageSection = ({ setId, adventureguide, resortTags }: { setId?: string; ad
                                             label="Caption"
                                             variant="outlined"
                                             placeholder="Enter Caption"
+                                            id={`content_sections.${sectionIndex}.fields.${fieldIndex}.caption`}
                                           />
                                         )}
                                       />
@@ -865,6 +897,7 @@ const PageSection = ({ setId, adventureguide, resortTags }: { setId?: string; ad
                                             variant='outlined'
                                             placeholder='Enter Title'
                                             className='mbe-1'
+                                            id={`content_sections.${sectionIndex}.fields.${fieldIndex}.resort_title`}
                                             onChange={e => {
                                               field.onChange(e.target.value)
                                               errorState !== null && setErrorState(null)
@@ -883,6 +916,7 @@ const PageSection = ({ setId, adventureguide, resortTags }: { setId?: string; ad
                                         multiple
                                         options={resortsOptions}
                                         getOptionLabel={(option) => option.value} 
+                                        id={`content_sections.${sectionIndex}.fields.${fieldIndex}.resorts_list`}
                                         value={resortsOptions.filter(opt =>
                                           (watch(`content_sections.${sectionIndex}.fields.${fieldIndex}.resorts_list`) || []).includes(opt.label)
                                         )}
@@ -909,6 +943,7 @@ const PageSection = ({ setId, adventureguide, resortTags }: { setId?: string; ad
                                         multiple
                                         options={reviewsOptions}
                                         getOptionLabel={(option) => option.value} 
+                                        id={`content_sections.${sectionIndex}.fields.${fieldIndex}.reviews_list`}
                                         value={reviewsOptions.filter(opt =>
                                           (watch(`content_sections.${sectionIndex}.fields.${fieldIndex}.reviews_list`) || []).includes(opt.label)
                                         )}
@@ -1088,6 +1123,7 @@ const PageSection = ({ setId, adventureguide, resortTags }: { setId?: string; ad
                                 variant='outlined'
                                 placeholder='Enter Author Name'
                                 className='mbe-1'
+                                id='author_name'
                                 onChange={e => {
                                   field.onChange(e.target.value)
                                   errorState !== null && setErrorState(null)
@@ -1135,6 +1171,87 @@ const PageSection = ({ setId, adventureguide, resortTags }: { setId?: string; ad
                   </Grid>
                   <Divider />
 
+                  {/* Adventure Slider Section */}
+                  <Grid container spacing={5} className="my-5">  
+                    <Grid size={{ md: 12, xs: 12, lg: 12 }}>
+                      <h2>Adventure Slider</h2>
+                    </Grid>
+
+                    <Grid size={{ md: 12, xs: 12, lg: 12 }}>
+                      <Controller
+                        name='adventure_slider_title'
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <TextField
+                            {...field}
+                            fullWidth
+                            type='text'
+                            label='Title'
+                            variant='outlined'
+                            placeholder='Enter Title'
+                            className='mbe-1'
+                            id='adventure_slider_title'
+                            onChange={e => {
+                              field.onChange(e.target.value)
+                              errorState !== null && setErrorState(null)
+                            }}
+                            {...((errors.adventure_slider_title || errorState !== null) && {
+                              error: true,
+                              helperText: errors?.adventure_slider_title?.message || errorState?.message[0]
+                            })}
+                          />
+                        )}
+                      />
+                    </Grid>
+                    <Grid size={{ md: 12, xs: 12, lg: 12 }} className="mb-4">
+                      <Typography variant="h6" color="#a3a3a3">
+                        Description
+                      </Typography>
+                      <Controller
+                        name='adventure_slider_description'
+                        control={control}
+                        render={({ field }) => (
+                          <ReactQuill
+                            theme="snow"
+                            value={field.value ?? ""}
+                            onChange={field.onChange}
+                            modules={modules}
+                            placeholder="Enter adventure slider description..."
+                            style={{ height: "100px", marginBottom: "60px" }}
+                          />
+                        )}
+                      />
+                    </Grid>
+                    <Grid size={{ md: 12, xs: 12, lg: 12 }}>
+                      <input type="hidden" {...register("adventure_slides")} />
+                      <Autocomplete
+                        multiple
+                        options={advPostsOptions}
+                        getOptionLabel={(option) => option.value} 
+                        value={advPostsOptions.filter(opt =>
+                          (watch("adventure_slides") || []).includes(opt.label)
+                        )}
+                        renderOption={(props, option) => (
+                          <li {...props} key={option.label}> 
+                            {option.value}
+                          </li>
+                        )}
+                        renderInput={(params) => (
+                          <TextField {...params} label="Search Adventues" variant="outlined" />
+                        )}
+                        onChange={(event, newValue) => {
+                          setValue(
+                            "adventure_slides",
+                            newValue.map((item) => item.label), // array of values
+                            { shouldValidate: true }
+                          );
+                        }}
+                      />
+                    </Grid> 
+                  </Grid>
+                  <Divider />
+
                   {/* SEO Section */}
                   <Grid container spacing={5} className="my-5">  
                     <Grid size={{ md: 12, xs: 12, lg: 12 }}>
@@ -1157,6 +1274,7 @@ const PageSection = ({ setId, adventureguide, resortTags }: { setId?: string; ad
                                 variant='outlined'
                                 placeholder='Enter URL'
                                 className='mbe-1'
+                                id='page_url'
                                 onChange={e => {
                                   field.onChange(e.target.value)
                                   errorState !== null && setErrorState(null)
@@ -1183,6 +1301,7 @@ const PageSection = ({ setId, adventureguide, resortTags }: { setId?: string; ad
                                 variant='outlined'
                                 placeholder='Enter Meta Title'
                                 className='mbe-1'
+                                id='meta_title'
                                 onChange={e => {
                                   field.onChange(e.target.value)
                                   errorState !== null && setErrorState(null)

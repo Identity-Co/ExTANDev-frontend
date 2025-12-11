@@ -20,7 +20,7 @@ const BannerSection = ({ mode, data }: { mode: Mode; data?: []; }) => {
         <div className="container">
             {data?.banner_title && (
                 <div className={classnames(styles.banner_bg_image_text)}>
-                    <h1 className="fs_90">{data.banner_title}</h1>
+                    <h1 className={data?.banner_title_font_size ? `${data.banner_title_font_size}` : ''}>{data.banner_title}</h1>
                 </div>
             )}
         </div>

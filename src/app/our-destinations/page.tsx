@@ -4,7 +4,7 @@ import LandingPageWrapper from '@views/sub-pages/our-destinations'
 // Server Action Imports
 import { getServerMode } from '@core/utils/serverHelpers'
 import { getPageBanner } from '@/app/server/banners'
-import { getDestinationList, filterDestination, filterDestinationByTags } from '@/app/server/destinations'
+import { getPageDestination, getDestinationList, filterDestination, filterDestinationByTags } from '@/app/server/destinations'
 import { getResortsByTag } from '@/app/server/resorts';
 import { getPageData } from '@/app/server/pages'
 
@@ -28,7 +28,7 @@ const LandingPage = async ({searchParams}) => {
     featuredDestinations = await filterDestination("", "");
     hasParam = true;
   } else if((location == "" && resort == "") || (location === undefined && resort === undefined)) {
-    featuredDestinations = await getDestinationList();
+    featuredDestinations = await getPageDestination(pgData?.feature_destinations??[]);
   } else {
     //featuredDestinations = await filterDestination(location, resort);
     featuredDestinations = await filterDestinationByTags(location, resort);

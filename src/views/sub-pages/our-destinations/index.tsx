@@ -19,7 +19,7 @@ import { useSettings } from '@core/hooks/useSettings'
 
 import * as Common from '@/app/server/common'
 
-const DestinationDetailPage = ({ mode, banners, pgData, featuredDestinations, featuredResorts, locations, locDestinations, hasParam }: { mode: Mode; banners?: []; pgData?: []; destinations?: []; featuredResorts?: []; locations?: []; locDestinations?: []; hasParam?: false }) => {
+const DestinationDetailPage = ({ mode, banners, pgData, featuredDestinations, featuredResorts, locations, locDestinations, hasParam, location, resort }: { mode: Mode; banners?: []; pgData?: []; destinations?: []; featuredResorts?: []; locations?: []; locDestinations?: []; hasParam?: false, location?: ''; resort?: '' }) => {
   const adventure_Posts = pgData?.adventure_posts;
 
   const scrollref = useRef(null);
@@ -94,9 +94,9 @@ const DestinationDetailPage = ({ mode, banners, pgData, featuredDestinations, fe
 
   return (
     <>
-      {banners.length ? <BannerSection mode={mode} banners={banners} locations={locations} locDestinations={locDestinations} scrollRef={scrollref}  /> : null}
+      {banners.length ? <BannerSection mode={mode} banners={banners} locations={locations} locDestinations={locDestinations?.data} scrollRef={scrollref}  /> : null}
       <OurDestinationsSection1 data={pgData} />
-      <OurDestinationsSection2 data={pgData} sectionProps={featuredDestinationsSectionProps} />
+      <OurDestinationsSection2 data={pgData} sectionProps={featuredDestinationsSectionProps} hasParam={hasParam} isPaginated={true} />
       <OurDestinationsSection3 data={pgData} sectionProps={instagramSliderSectionProps} />
       <OurDestinationsSection4 data={pgData} sectionProps={featuredResortsSectionProps} />
       <OurDestinationsSection5 sectionProps={instagramFeedSectionProps} />

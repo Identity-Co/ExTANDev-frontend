@@ -1,6 +1,7 @@
 /* src/index.css or src/globals.css */
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');*/
+
+/*@import url('https://fonts.googleapis.com/css2?');*/
 
 body {
 font-family: 'Raleway', sans-serif !important;
@@ -9,20 +10,27 @@ font-family: 'Raleway', sans-serif !important;
 *,::after,::before {box-sizing: border-box; padding: 0; margin: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
 a, button{transition: 0.3s ease-in-out; outline: none; text-decoration: none;}
 button{ font-family: "Raleway", sans-serif; }
-body {margin: 0 !important; font-family: "Raleway", sans-serif !important; padding: 0; font-size: max(0.675rem, 1.1vw) !important; line-height: 1.4 !important; font-weight: 500 !important; color: #1F1F1F !important; background-color: #ffffff !important;}
+body {margin: 0 !important; font-family: "Raleway", sans-serif !important; padding: 0; font-size: max(0.675rem, 0.833vw) !important; line-height: 1.4 !important; font-weight: 500 !important; color: #1F1F1F !important; background-color: #ffffff !important;}
 p{padding-bottom: 1.464vw;}
 p:last-child{margin: 0; padding: 0;}
 p:empty{margin: 0; padding: 0;}
 ul, ol{padding: 0; margin: 0;}
 svg path{transition: 0.3s ease-in-out;}
 .h1,.h2,.h3,.h4,.h5,.h6,h1,h2,h3,h4,h5,h6 {font-family: "Bebas Neue", sans-serif; margin: 0; font-weight: 400;line-height: 1.2;color: #1F1F1F; text-transform: uppercase; letter-spacing: -0.005em;}
-.fs_35{font-size: 1.823vw !important; line-height: 1;}
-.fs_40{font-size: 2.083vw !important; line-height: 1;}
+.fs_16{font-size: 0.833vw !important; line-height: 1.4 !important;}
+.fs_18{font-size: 0.938vw !important; line-height: 1.4 !important;}
+.fs_20{font-size: 1.042vw !important; line-height: 1.4 !important;}
+.fs_35{font-size: 1.823vw !important; line-height: 1 !important;}
+.fs_40{font-size: 2.083vw !important; line-height: 1 !important;}
 .fs_44{font-size: 2.292vw;}
-.fs_55{font-size: 2.864vw !important; line-height: 1;}
-.fs_60{font-size: 3.125vw !important; line-height: 1;}
-.fs_70{font-size: 3.646vw !important; line-height: 1;}
-.fs_90{font-size: 4.688vw !important; line-height: 1;}
+.fs_55{font-size: 2.864vw !important; line-height: 1 !important;}
+.fs_60{font-size: 3.125vw !important; line-height: 1 !important;}
+.fs_70{font-size: 3.646vw !important; line-height: 1 !important;}
+.fs_90{font-size: 4.688vw !important; line-height: 1 !important;}
+.fs_100{font-size: 5.208vw !important; line-height: 1 !important;}
+.fs_120{font-size: 6.25vw !important; line-height: 1 !important;}
+.fs_140{font-size: 7.292vw !important; line-height: 1 !important;}
+.fs_160{font-size: 8.333vw !important; line-height: 1 !important;}
 .container{max-width: 80.208vw; margin: 0 auto; padding: 0 1.042vw;}
 input, textarea, select {-webkit-appearance: none;}
 .extra_bold{font-weight: 800;}
@@ -103,7 +111,7 @@ section.home_section2{position: relative;}
 .home_section2 .home_slider2 .slick-prev:hover{opacity: 1;}
 .home_section2 .home_slider2 .slick-next{right: 2.343vw; z-index: 1; background: url(/images/front-pages/images/right-white-arrow.svg) center no-repeat; background-size: contain !important; width: 1.927vw; height: 2.813vw; opacity: 0.7; transition: 0.3s ease-in-out;}
 .home_section2 .home_slider2 .slick-next:hover{opacity: 1;}
-.home_section2 .home_slider2 .slick-dots{display: flex !important; justify-content: center; bottom: -3vw; gap:0.5vw; list-style:none; position:absolute; width:100%; z-index:1; }
+.home_section2 .home_slider2 .slick-dots{display: flex !important; justify-content: center; bottom: -2.5vw; gap:0.5vw; list-style:none; position:absolute; width:100%; z-index:1; }
 .home_section2 .home_slider2 .slick-dots li{width: auto; height: auto; margin: 0; padding: 0; cursor: pointer;}
 .home_section2 .home_slider2 .slick-dots li button{width: 1.245vw; height: 1.245vw; border-radius: 5.208vw; background-color: #ffffff; border: solid 0.0365vw #131313; padding: 0; cursor: pointer;}
 .home_section2 .home_slider2 .slick-dots li.slick-active button{border-color: #EA5647; background-color: #EA5647;}
@@ -249,13 +257,20 @@ section.home_section2{position: relative;}
 .grid4{display: grid; grid-template-columns: repeat(2, 1fr);}
 /*body{font-size: 1.551vw !important; line-height: 1.4 !important;}*/
 p{padding-bottom: 2.876vw;}
+.fs_16{font-size: 1.563vw !important;}
+.fs_18{font-size: 1.758vw !important;}
+.fs_20{font-size: 1.953vw !important;}
 .fs_35{font-size: 2.432vw !important;}
-.fs_40{font-size: 2.070vw !important; line-height: 1;}
+.fs_40{font-size: 2.070vw !important;}
 .fs_44{font-size: 2.292vw;}
 .fs_55{font-size: 3.821vw !important;}
-.fs_60{font-size: 4.168vw !important; line-height: 1;}
+.fs_60{font-size: 4.168vw !important;}
 .fs_70{font-size: 4.864vw !important;}
 .fs_90{font-size: 6.253vw !important;}
+.fs_100{font-size: 7.208vw !important;}
+.fs_120{font-size: 8.25vw !important;}
+.fs_140{font-size: 9.292vw !important;}
+.fs_160{font-size: 10.333vw !important;}
 .container, .home_banner .hero_slide_container,
 header .container{padding: 0 4.223vw;}
 body .slick-dots{display: flex !important; justify-content: center; bottom: -4.269vw; gap:1.067vw; }
@@ -295,12 +310,19 @@ body .slick-dotted.slick-slider{margin-bottom: 0;}
 .grid3{grid-template-columns: repeat(1, 1fr);}
 .grid4{grid-template-columns: repeat(1, 1fr);}
 /*body{font-size: 2.779vw !important;}*/
+.fs_16{font-size: 2.083vw !important; }
+.fs_18{font-size: 2.344vw !important;}
+.fs_20{font-size: 2.542vw !important;}
 .fs_35{font-size: 3.242vw !important;}
-.fs_40{font-size: 3.705vw !important; line-height: 1;}
+.fs_40{font-size: 3.705vw !important;}
 .fs_55{font-size: 5.095vw !important;}
-.fs_60{font-size: 5.559vw !important; line-height: 1;}
+.fs_60{font-size: 5.559vw !important;}
 .fs_70{font-size: 6.485vw !important;}
 .fs_90{font-size: 8.338vw !important;}
+.fs_100{font-size: 8.208vw !important;}
+.fs_120{font-size: 9.25vw !important;}
+.fs_140{font-size: 10.292vw !important;}
+.fs_160{font-size: 11.333vw !important;}
 body .slick-dots{gap:1.779vw; }
 body .slick-dots li button{width: 3.245vw; height: 3.245vw; border-radius: 100%;}
 .btn a,
@@ -321,12 +343,20 @@ body .slick-dots li button{width: 3.245vw; height: 3.245vw; border-radius: 100%;
 .gap_56{gap:6.188vw;}
 .gap_64{gap:6.929vw !important;}
 .fs_44{font-size: 5.711vw;}
+.fs_16{font-size: 3.183vw !important;}
+.fs_18{font-size: 3.344vw !important;}
+.fs_20{font-size: 3.542vw !important;}
 .fs_35{font-size: 4.242vw !important;}
-.fs_40{font-size: 4.705vw !important; line-height: 1;}
+.fs_40{font-size: 4.705vw !important;}
 .fs_55{font-size: 6.095vw !important;}
-.fs_60{font-size: 6.559vw !important; line-height: 1;}
+.fs_60{font-size: 6.559vw !important;}
 .fs_70{font-size: 7.485vw !important;}
 .fs_90{font-size: 9.338vw !important;}
+.fs_100{font-size: 8.808vw !important;}
+.fs_120{font-size: 9.85vw !important;}
+.fs_140{font-size: 10.892vw !important;}
+.fs_160{font-size: 11.933vw !important;}
+
 
 }
 
@@ -356,7 +386,7 @@ html body .cst-style-tb .MuiTabs-flexContainer { display: flex; flex-wrap: wrap;
 .blog-section .blog-box .merch_info{position: relative; left: auto; top: auto; bottom: auto; right: auto; text-align: left; padding: 0.759vw;}
 .blog-section .blog-box .merch_info h4{letter-spacing: 0; color: #1F1F1F;}
 
-shop_merch{position: relative;}
+.shop_merch{position: relative;}
 .merch_sec1 .shop_merch:before{position: absolute; content: ""; border: solid 0.157vw #ffffff; top: 0.677vw; left: 0.677vw; right: 0.677vw; bottom: 0.677vw; z-index: 1; background: linear-gradient(180deg, rgba(31, 31, 31, 0) 70%, rgba(0, 0, 0, 1) 100%); opacity: 0.55;}
 .shop_merch .shop_merch_img{position: relative; padding-bottom: 95%; overflow: hidden;}
 .shop_merch .shop_merch_img img{position: absolute; width: 100%; height: 100%; object-fit: cover; top: 0; left: 0; transition: 0.3s ease-in-out;}
@@ -649,8 +679,8 @@ a.fl_bx_lnk_glb:hover ~ .shop_merch_img img{transform: scale(1.1);}
 
 
 .login-err-msg{text-align: center;}
-.login-err-msg a{color: #F85241; font-weight: 600;}
-.login-err-msg a:hover{color: #014040;}
+.login-err-msg a{font-size: max(.675rem, 1.1vw) !important; font-weight: 700; color: #ffffff; background-color: #EA5647; border-radius:0.156vw; text-transform: uppercase; padding: 0.625vw 0.833vw; display: inline-block; line-height: 1.2; font-family: "Raleway", sans-serif; text-align: center; cursor: pointer;}
+.login-err-msg a:hover{background-color: #000000;}
 
 
 .mui-1ptug20-MuiModal-root-MuiDialog-root{z-index: 99999 !important;}
@@ -692,6 +722,7 @@ body .white_social_lssc ul li a svg path{fill: #FFF;}
 	.select-selected,
 	.select-items div{font-size: 1.825vw;}
 	.select-selected{padding: 1vw 0.662vw;}
+	.login-err-msg a{padding: 1.625vw 2.833vw;}
 
 }
 
@@ -726,20 +757,119 @@ body .white_social_lssc ul li a svg path{fill: #FFF;}
 
 
 @media only screen and (max-width: 768px){
-.jade_jungle_rooms_sec2 .jungle_room_slide_box .slick-prev{width: 2.098vw; height: 2.611vw; left:1ve;}
-.jade_jungle_rooms_sec2 .jungle_room_slide_box .slick-next{width: 2.098vw; height: 2.611vw; right:1ve;}
+.jade_jungle_rooms_sec2 .jungle_room_slide_box .slick-prev{width: 2.098vw; height: 2.611vw; left:1vw;}
+.jade_jungle_rooms_sec2 .jungle_room_slide_box .slick-next{width: 2.098vw; height: 2.611vw; right:1vw;}
 }
 
 /*.jade_jungle_offer_sec2 .masonry-layout{-webkit-align-content:space-between; -ms-flex-line-pack:space-between; align-content:space-between;}*/
 
 
 
+/*checkout*/
+
+
+.check_main .check_main_row{display: flex; flex-wrap: wrap; row-gap: 3.083vw;}
+.check_main_row .check_left{width: 65%; box-sizing: border-box; padding-right: 2.083vw;}
+.check_main_row .check_right{width: 35%; box-sizing: border-box;}
+.check_left .MuiCardHeader-title{font-family: "Bebas Neue", sans-serif; margin: 0; font-weight: 400;line-height: 1.2;color: #ffffff; font-size: 1.823vw; padding-bottom: 0.833vw;}
+.check_left .MuiCardHeader-subheader{font-family: "Raleway", sans-serif; margin: 0; font-weight: 500;line-height: 1.2;color: #ffffff; font-size: 1.042vw;}
+.check_left .MuiStep-root .step-title{font-family: "Raleway", sans-serif; margin: 0; font-weight: 500;line-height: 1.2;color: #1F1F1F; font-size: 1.042vw; transition: 0.3s ease-in-out;}
+.check_left .MuiStep-root .step-title:hover{color: #EA5647;}
+.check_left .travelling_title{font-family: "Raleway", sans-serif; margin: 0; font-weight: 600;line-height: 1.2;color: #014040; font-size: 1.042vw; transition: 0.3s ease-in-out;}
+.check_left .adult_box{display: flex; align-items: center; gap: 1.042vw;}
+.check_left .adult_box input{text-align: center;}
+.check_left .p_0{padding: 0 !important;}
+.check_left .pb_20{padding-bottom: 1.042vw;}
+.check_left .pt_20{padding-top: 1.042vw !important;}
+.check_left .inform_cnt{color: #1F1F1F;}
+.check_left .form_acr{display: flex; align-items: center; min-height: 1px; padding: 0.521vw;}
+.check_left .inform_name{color: #1F1F1F !important; font-weight: 500 !important;}
+.check_left .travel_info_dtl .box:not(:last-child){border-bottom: solid 1px #2e263d1f;}
+.check_left .travel_info_dtl .box{padding-bottom: 0.833vw; padding-top: 0.833vw;}
+.check_left .MuiAccordionSummary-expandIconWrapper{width: 1.863vw; height: 1.863vw; display: flex; align-items: center; justify-content: center; background-color: #EA5647; border-radius: 100%;}
+.check_left .MuiAccordionSummary-expandIconWrapper i{color: #ffffff; font-size: 1.342vw;}
+.check_left .ac_dtl{padding-top: 1.658vw; display: block;}
+.check_left .card_head{background: #014040; border-radius: 6px 6px 0 0;}
+.check_left .departure_hide{display: none;}
+.check_left .check-step{flex-direction: row !important;}
+.continue_btn button{font-size: 0.833vw; font-weight: 700; color: #ffffff; background-color: #EA5647; border-radius:0.156vw; text-transform: uppercase; padding: 0.625vw 0.833vw; display: inline-block; line-height: 1.2; font-family: "Raleway", sans-serif; text-align: center; cursor: pointer;}
+.continue_btn button:hover{background-color: #000000;}
+
+
+.check_right_inner{background: #ffffff; border-top: solid 0.26vw #ff5e4e; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08); border-radius: 0.625vw; padding: 1.042vw;}
+.check_right .tour_title{font-family: "Raleway", sans-serif; margin: 0; font-weight: 700;line-height: 1.2;color: #014040; font-size: 1.25vw; transition: 0.3s ease-in-out;}
+.check_right .tour_subtl{font-family: "Raleway", sans-serif; margin: 0; font-weight: 500;line-height: 1.2;color: #1f1f1f; font-size: 1.042vw;}
+.check_right .tour_top_title{font-family: "Raleway", sans-serif; margin: 0; font-weight: 600;line-height: 1.2;color: #1f1f1f; font-size: 1.042vw; transition: 0.3s ease-in-out;}
+.check_right .tour_bg_box{background-color: rgb(255 228 161 / 43%); padding: 1.025vw; border-radius: 0.313vw;}
+.check_right .tour_bg_box .tour_img{min-width: 3.646vw; height: 3.646vw; border-radius: 0.313vw;}
+.check_right .tour_price{font-weight: 600;}
+.check_right .check_right_inner .MuiCardContent-root{padding: 0;}
+.check_right .tour_last_price{font-family: "Raleway", sans-serif; margin: 0; font-weight: 700;line-height: 1.2;color: #ff5e4e; font-size: 1.667vw; transition: 0.3s ease-in-out;}
+.check_right .totl_last{padding-top: 1rem;}
 
 
 
+@media only screen and (max-width: 1024px){
+	.check_main_row .check_left{width: 100%; padding-right: 0;}
+	.check_main_row .check_right{width: 100%;}
+	.check_left .MuiCardHeader-title{font-size: 2.823vw;}
+	.check_left .MuiCardHeader-subheader,
+	.check_left .MuiStep-root .step-title,
+	.check_left .travelling_title,
+	.check_right .tour_subtl,
+	.check_right .tour_top_title{font-size: 1.742vw;}
+	.continue_btn button{font-size: 1.298vw; padding: 1.090vw 1.441vw;}
+	.check_right .tour_title{font-size: 2.0258vw;}
+	.check_right_inner{padding: 2.042vw;}
+	.check_right .tour_bg_box .tour_img{min-width: 6.646vw; height: 6.646vw;}
+	.check_right .tour_bg_box{padding: 2.025vw;}
+	.check_right .tour_last_price{font-size: 2.667vw;}
+	.check_left .MuiAccordionSummary-expandIconWrapper{width: 2.863vw; height: 2.863vw;}
+	.check_left .MuiAccordionSummary-expandIconWrapper i{font-size: 2.342vw;}
+	.check_left .adult_box{gap: 2.042vw;}
+	.check_left .ac_dtl{padding-top: 2.658vw}
+	.check_left .travel_info_dtl .box{padding-bottom: 1.233vw; padding-top: 1.233vw;}
+
+}
 
 
+@media only screen and (max-width: 768px){
+	.check_left .MuiCardHeader-title{font-size: 3.823vw;}
+	.check_left .MuiCardHeader-subheader,
+	.check_left .MuiStep-root .step-title,
+	.check_left .travelling_title,
+	.check_right .tour_subtl,
+	.check_right .tour_top_title{font-size: 2.742vw;}
+	.check_right .tour_title{font-size: 3.0258vw;}
+	.check_right_inner{padding: 3.042vw;}
+	.check_right .tour_bg_box .tour_img{min-width: 9.646vw; height: 9.646vw;}
+	.check_right .tour_bg_box{padding: 3.025vw;}
+	.check_right .tour_last_price{font-size: 3.667vw;}
+	.check_left .MuiAccordionSummary-expandIconWrapper{width: 3.863vw; height: 3.863vw;}
+	.check_left .MuiAccordionSummary-expandIconWrapper i{font-size: 3.342vw;}
+	.continue_btn button{font-size: 2.437vw; padding: 1.375vw 2.508vw;}
+	.check_main .check_main_row{row-gap: 5.083vw;}
+	.check_left .ac_dtl{padding-top: 3.658vw}
+	.check_left .travel_info_dtl .box{padding-bottom: 1.533vw; padding-top: 1.533vw;}
 
+}
 
+@media only screen and (max-width: 575px){
+	.check_left .MuiCardHeader-title{font-size: 4.823vw;}
+	.check_left .MuiCardHeader-subheader,
+	.check_left .MuiStep-root .step-title,
+	.check_left .travelling_title,
+	.check_right .tour_subtl,
+	.check_right .tour_top_title{font-size: 3.142vw;}
+	.check_right .tour_title{font-size: 3.3258vw;}
+	.check_right_inner{padding: 3.342vw;}
+	.check_right .tour_bg_box .tour_img{min-width: 9.946vw; height: 9.946vw;}
+	.check_right .tour_bg_box{padding: 3.325vw;}
+	.check_right .tour_last_price{font-size: 3.967vw;}
+	.check_left .MuiAccordionSummary-expandIconWrapper{width: 4.063vw; height: 4.063vw;}
+	.check_left .MuiAccordionSummary-expandIconWrapper i{font-size: 3.642vw;}
+	.continue_btn button{font-size: 3.437vw; padding: 2.375vw 3.508vw;}
+	.check_main .check_main_row{row-gap: 6.083vw;}
+	.check_left .travel_info_dtl .box{padding-bottom: 1.833vw; padding-top: 1.833vw;}
 
-
+}

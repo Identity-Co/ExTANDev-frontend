@@ -51,6 +51,8 @@ const UserListApp = async () => {
   // Vars
   const data = await User.getUserData()
 
+  roles.sort((a, b) => a.name.localeCompare(b.name));
+
   return <UserList userData={data??[]} roles={roles} />
 }
 

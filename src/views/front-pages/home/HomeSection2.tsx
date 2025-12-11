@@ -39,7 +39,7 @@ const HomeSection2 = ({ slides }: { slides?: []; }) => {
     centerPadding,
   };
 
-  /*const slides = [
+  /*slides = [
     {
       title: 'JADE JUNGLE RESORT',
       sub_title: 'BELIZE',
@@ -58,7 +58,7 @@ const HomeSection2 = ({ slides }: { slides?: []; }) => {
   ]*/
 
   return (
-    <section key={`section-3`} className={classnames(styles.home_section2, 'home_section2')}>
+    <section key={`section-3`} className={classnames(styles.home_section2, 'home_section2 pb_50')}>
       <div className={classnames(styles.home_slider, 'home_slider')}>
         <Slider {...settings} className={classnames(styles.home_slider2, 'home_slider2')}>
             {slides?.map((item, index) => (
@@ -67,9 +67,7 @@ const HomeSection2 = ({ slides }: { slides?: []; }) => {
                   })}>
                   <div className={classnames(styles.resort_box)}>
                       <div className={classnames(styles.resort_img)}>
-                          {/*item.image && (<img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${item.image}`} alt={item.title} />)*/}
-                          {item.image && (<img src='https://adventure.deepripple.com/images/front-pages/images/jade-slider.jpg' alt={item.title} />)}
-
+                          {item.image && (<img src={`${process.env.NEXT_PUBLIC_UPLOAD_URL}/${item.image}`} alt={item.title} />)}
                       </div>
                       <div className={classnames(styles.resort_text)}>
                           {item.title && (<h3>{item.title}</h3>)}
@@ -89,7 +87,7 @@ const HomeSection2 = ({ slides }: { slides?: []; }) => {
 
       {slides.length && (
         <div className={classnames(styles.destination_btn)}>
-            <a href="#"> View All Destinations → </a>
+          <a href="/our-destinations/"> View All Destinations → </a>
         </div>
       )}
   </section>

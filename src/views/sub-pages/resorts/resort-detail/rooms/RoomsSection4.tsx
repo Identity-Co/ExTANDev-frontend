@@ -38,7 +38,6 @@ const ResortsSection1 = ({ data }: { data?: []; }) => {
   useEffect(() => {
     const getReviewData = async () => {
       const review = await getEntry(data?.selected_review);
-        console.log(review, data?.selected_review)
       if(review){
         setDetailpageReviw(review);
       }

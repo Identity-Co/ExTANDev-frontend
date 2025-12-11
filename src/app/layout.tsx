@@ -24,6 +24,8 @@ import Ai12zWidget from '@/components/Bot'
 // Util Imports
 import { getSystemMode } from '@core/utils/serverHelpers'
 
+import { Montserrat, Playfair_Display, Roboto, Raleway, Bebas_Neue } from "next/font/google";
+
 
 // Style Imports
 import '@/app/globals.css'
@@ -38,6 +40,14 @@ export const metadata = {
   description: ''
 }
 
+
+const montserrat = Montserrat({ subsets: ["latin"] });
+const playfair = Playfair_Display({ subsets: ["latin"] });
+const roboto = Roboto({ subsets: ["latin"] });
+const raleway = Raleway({ subsets: ["latin"] });
+const bebas = Bebas_Neue({ weight: "400", subsets: ["latin"] });
+
+
 const RootLayout = async (props: ChildrenType ) => {
   
 
@@ -50,7 +60,7 @@ const RootLayout = async (props: ChildrenType ) => {
 
   return (
     
-      <html id='__next' lang='en' dir={direction} suppressHydrationWarning>
+      <html id='__next' lang='en' dir={direction} suppressHydrationWarning className={`${montserrat.className}`}>
         <body className='flex is-full min-bs-full flex-auto flex-col' suppressHydrationWarning>
           <AppRouterCacheProvider>
             <InitColorSchemeScript attribute='data' defaultMode={systemMode} />

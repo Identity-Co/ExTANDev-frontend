@@ -59,7 +59,7 @@ export const useShare = ({
             url:
             collectionData?.slug
               ? collectionName === 'adventure_post'
-                ? `${window.location.origin}/our-adventure/${collectionData.slug}`
+                ? `${window.location.origin}/our-adventures/${collectionData.slug}`
                 : `${window.location.origin}/our-destinations/${collectionData.slug}`
               : window.location.href,
             title: collectionData.title || collectionData.name || 'Travel Content',

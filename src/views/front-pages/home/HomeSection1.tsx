@@ -9,7 +9,7 @@ const HomeSection1 = ({ data }: { data?: []; }) => {
   return (
     <section className={classnames(styles.home_section1, 'pb_100')}>
       <div className={classnames(styles.container, 'container')}>
-        <div className={classnames("grid2 gap_64 item-center")}>
+        <div className={classnames(styles.grid2, "grid2 gap_64 item_center")}>
           <div className={classnames("grid-column")}>
             <div className={classnames(styles.bamboo_boat, 'full-img')}>
               {data?.about_image ? (

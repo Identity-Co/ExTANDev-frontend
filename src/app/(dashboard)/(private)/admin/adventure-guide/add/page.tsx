@@ -12,6 +12,7 @@ import AddForm from '@views/admin/adventure-guide/add/AddForm'
 
 import { getAllUniqueTags } from '@/app/server/resorts'
 import * as Common from '@/app/server/common'
+import { getAllTours } from '@/app/server/tours'
 
 import config from '@/configs/themeConfig'
 
@@ -25,6 +26,8 @@ const CompanyApp = async () => {
   const userRole = session?.user?.role;
 
   const allTags = await getAllUniqueTags();
+
+  const adventurePosts = await getAllTours('id,name');
 
   return (
     <Grid container spacing={6}>
@@ -44,7 +47,7 @@ const CompanyApp = async () => {
       </Grid>
 
       <Grid size={{ xs: 12, md: 12, lg:12 }}>
-        <AddForm resortTags={allTags?? []} />
+        <AddForm resortTags={allTags?? []} adventurePosts={adventurePosts??[]} />
       </Grid>
     </Grid>
   )

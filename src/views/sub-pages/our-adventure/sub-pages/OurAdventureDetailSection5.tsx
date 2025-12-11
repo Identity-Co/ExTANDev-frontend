@@ -60,15 +60,10 @@ const OurAdventureDetailSection5 = ({ tour, tour_details }: { tour: any; tour_de
 
     const [selectedYear, setSelectedYear] = useState<number | ''>('');
 
-    const availableYears = useMemo(() => {
+    /* const availableYears = useMemo(() => {
         const years = tour_details.availabilities.map(slot => new Date(slot.start_date).getFullYear());
         return Array.from(new Set(years)).sort((a, b) => a - b);
     }, [tour_details.availabilities]);
-
-    /*const filteredSlots = useMemo(() => {
-        if (!selectedYear) return tour_details.availabilities;
-        return tour_details.availabilities.filter(slot => new Date(slot.start_date).getFullYear() === Number(selectedYear));
-    }, [selectedYear, tour_details.availabilities]);*/
 
     const filteredSlots = useMemo(() => {
         let slots = tour_details.availabilities;
@@ -76,17 +71,43 @@ const OurAdventureDetailSection5 = ({ tour, tour_details }: { tour: any; tour_de
             slots = slots.filter(slot => new Date(slot.start_date).getFullYear() === Number(selectedYear));
         }
         return slots.sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime());
-    }, [selectedYear, tour_details.availabilities]);
+    }, [selectedYear, tour_details.availabilities]); */
+
+    const availableYears = useMemo(() => {
+        const today = new Date();
+        const years = tour_details?.availabilities
+            .filter(slot => new Date(slot.start_date) > today) // only future slots
+            .map(slot => new Date(slot.start_date).getFullYear());
+        return Array.from(new Set(years)).sort((a, b) => a - b);
+    }, [tour_details?.availabilities]);
+
+    const filteredSlots = useMemo(() => {
+        const today = new Date();
+        let slots = tour_details?.availabilities
+            .filter(slot => new Date(slot.start_date) > today); // only future slots
+
+        if (selectedYear) {
+            slots = slots.filter(slot => new Date(slot.start_date).getFullYear() === Number(selectedYear));
+        }
+
+        return slots?.sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime());
+    }, [selectedYear, tour_details?.availabilities]);
 
     const renderActionButton = (slot) => {
         if (slot.status == 'WAIT_LIST') {
             return <div className={classnames(styles.btn, styles.sold_btn, 'btn')}><a>SOLD OUT</a></div>;
         }
         if (slot.status == 'REQUEST_SPACE') {
-            return <div className={classnames(styles.btn, styles.departure_btn_set, 'btn')}><a href={`${tour_details.site_links.checkout}#date/${slot.start_date.slice(0,10)}`}>INQUIRE</a></div>;
+            return <div className={classnames(styles.btn, styles.departure_btn_set, 'btn')}><a href={`${tour_details?.site_links?.checkout}#date/${slot.start_date.slice(0,10)}`}>INQUIRE</a></div>;
         }
         if (slot.status == 'AVAILABLE') {
-            return <div className={classnames(styles.btn, styles.departure_btn_set, 'btn')}><a href={`${tour_details.site_links.checkout}#date/${slot.start_date.slice(0,10)}`}>BOOK</a></div>;
+            //return <div className={classnames(styles.btn, styles.departure_btn_set, 'btn')}><a href={`${tour_details.site_links.checkout}#date/${slot.start_date.slice(0,10)}`}>BOOK</a></div>;
+            
+            /* THIRD PARTY BOOKING LINK:: 
+
+            return <div className={classnames(styles.btn, styles.departure_btn_set, 'btn')}><a href={`${tour_details.site_links.checkout}#date/${slot.start_date.slice(0,10)}&depart_id=${slot.depart_id}`}>BOOK</a></div>;*/
+
+            return <div className={classnames(styles.btn, styles.departure_btn_set, 'btn')}><a href={`/book/${tour.api_tour_id}?depart_id=${slot.depart_id}`}>BOOK</a></div>;
         }
         return null;
     };
@@ -141,7 +162,7 @@ const OurAdventureDetailSection5 = ({ tour, tour_details }: { tour: any; tour_de
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {filteredSlots.map(slot => (
+                                        {filteredSlots?.map(slot => (
                                             <tr key={slot.start_date}>
                                                 {isMobile ? (
                                                     // Mobile: Action column first

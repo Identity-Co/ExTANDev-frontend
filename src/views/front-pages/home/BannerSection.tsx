@@ -60,15 +60,13 @@ const BannerSection = ({ mode, banners, locations, locDestinations }: { mode: Mo
   }, [location]);
 
   function setResortItems() {
-    const _resorts = locDestinations.filter(item => item.destination_location==location)
+    const _resorts = locDestinations?.filter(item => item.destination_location==location)
     
-    const resortsArr = _resorts.map(item => item.resorts?.resorts);
+    const resortsArr = _resorts?.map(item => item.resorts?.resorts);
 
-    const _resortsItems = resortsArr
-      .filter(Array.isArray)
-      .flatMap(subArray => subArray.map(item => item.title));
+    const _resortsItems = resortsArr?.filter(Array.isArray).flatMap(subArray => subArray.map(item => item.title));
 
-    const resortsItems = _resortsItems.sort((a, b) => a.localeCompare(b));
+    const resortsItems = _resortsItems?.sort((a, b) => a.localeCompare(b));
 
     setResorts([...new Set(resortsItems)])
   }
@@ -102,8 +100,8 @@ const BannerSection = ({ mode, banners, locations, locDestinations }: { mode: Mo
                 >
                   <div className={styles.hero_slide_container}>
                     <div className={styles.hero_slide_text}>
-                      {item.sub_title && <p>{item.sub_title}</p>}
-                      {item.title && <h1>{item.title}</h1>}
+                      {item.sub_title && <p className={item?.sub_title_font_size ? `${item.sub_title_font_size}` : ''}>{item.sub_title}</p>}
+                      {item.title && <h1 className={item?.title_font_size ? `${item.title_font_size}` : ''}>{item.title}</h1>}
 
                       {item.button_text && item.button_link && (
                         <div className="btn">
@@ -111,13 +109,14 @@ const BannerSection = ({ mode, banners, locations, locDestinations }: { mode: Mo
                         </div>
                       )}
                     </div>
-
-                    <div className={styles.hero_slide_location}>
-                      <div className={styles.location_name}>
-                        <img src="/images/front-pages/images/hero-location.svg" alt="Location" />
-                        <span>Kirroughtree, Scotland</span>
+                    {item?.location && 
+                      <div className={styles.hero_slide_location}>
+                        <div className={styles.location_name}>
+                          <img src="/images/front-pages/images/hero-location.svg" alt="Location" />
+                          <span className={item?.location_font_size ? `${item.location_font_size}` : ''}>{item?.location}</span>
+                        </div>
                       </div>
-                    </div>
+                    }
                   </div>
                 </div>
               );

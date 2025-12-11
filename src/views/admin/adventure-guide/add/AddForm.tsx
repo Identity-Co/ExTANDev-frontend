@@ -35,7 +35,7 @@ import type { SubmitHandler } from 'react-hook-form'
 
 import { valibotResolver } from '@hookform/resolvers/valibot'
 
-import { object, string, pipe, nonEmpty, optional, custom } from 'valibot'
+import { object, string, pipe, nonEmpty, optional, custom, array } from 'valibot'
 
 //import type { InferInput } from 'valibot'
 
@@ -83,6 +83,9 @@ type FormData = {
   excerpt?: string;
   site_url?: string;
   site_logo?: File | null | string;
+  adventure_slider_title?: string;
+  adventure_slider_description?: string;
+  adventure_slides?: string[];
   page_url?: string;
   meta_title?: string;
   meta_description?: string;
@@ -173,6 +176,11 @@ const schema = object({
       return value.size <= maxMB * 1024 * 1024;
     }, "Only PNG/JPG/GIF allowed and max file size is 5 MB")
   ),
+  adventure_slider_title: optional(string()),
+  adventure_slider_description: optional(string()),
+  adventure_slides: array(
+    optional(string()),
+  ),
   page_url: pipe(string(), nonEmpty('This field is required')),
   meta_title: optional(string()),
   meta_description: optional(string()),
@@ -194,7 +202,7 @@ const TooltipIfEnabled = ({ title, disabled, children }) =>
     </Tooltip>
   );
 
-const PageSection = ({ pgData, resortTags }: { pgData?: []; resortTags?: [] }) => {  
+const PageSection = ({ pgData, resortTags, adventurePosts }: { pgData?: []; resortTags?: []; adventurePosts?: [] }) => {  
   const router = useRouter()
 
   const setLoading = useNavigationStore((s) => s.setLoading)
@@ -205,6 +213,7 @@ const PageSection = ({ pgData, resortTags }: { pgData?: []; resortTags?: [] }) =
   const [message, setMessage] = useState(null);
 
   const [resortsOptions, setResortsOptions] = useState<string[]>([])
+  const [advPostsOptions, setadvPostsOptions] = useState<string[]>([])
 
   useEffect(() => {
     const obj = resortTags.map(item => ({
@@ -222,6 +231,15 @@ const PageSection = ({ pgData, resortTags }: { pgData?: []; resortTags?: [] }) =
       value: value
     }));
   });
+
+  useEffect(() => {
+    const obj = adventurePosts.map(item => ({
+      label: item._id,
+      value: item.name
+    }));
+
+    setadvPostsOptions(obj);
+  }, [adventurePosts]);
 
   const formatDate = (date) => {
     const year = date.getFullYear();
@@ -272,6 +290,9 @@ const PageSection = ({ pgData, resortTags }: { pgData?: []; resortTags?: [] }) =
       excerpt: '',
       site_url: '',
       site_logo: null,
+      adventure_slider_title: '',
+      adventure_slider_description: '',
+      adventure_slides: [],
       page_url: '',
       meta_title: '',
       meta_description: '',
@@ -351,6 +372,15 @@ const PageSection = ({ pgData, resortTags }: { pgData?: []; resortTags?: [] }) =
       if (data.author_name) fd.append('author_name', data.author_name)
       if (data.author_testimonial) fd.append('author_testimonial', data.author_testimonial)
       if (data.excerpt) fd.append('excerpt', data.excerpt)
+      if (data.adventure_slider_title) fd.append('adventure_slider_title', data.adventure_slider_title)
+      if (data.adventure_slider_description) fd.append('adventure_slider_description', data.adventure_slider_description)
+
+      if (data.adventure_slides){
+        data.adventure_slides.forEach((section, i) => {
+          fd.append(`adventure_slides[${i}]`, section)
+        });
+      }
+
       if (data.site_url) fd.append('site_url', data.site_url)
       if (data.page_url) fd.append('page_url', data.page_url)
       if (data.meta_title) fd.append('meta_title', data.meta_title)
@@ -991,6 +1021,87 @@ const PageSection = ({ pgData, resortTags }: { pgData?: []; resortTags?: [] }) =
                         </Grid>
                       </Grid>
                     </Grid>
+                  </Grid>
+                  <Divider />
+
+                  {/* Adventure Slider Section */}
+                  <Grid container spacing={5} className="my-5">  
+                    <Grid size={{ md: 12, xs: 12, lg: 12 }}>
+                      <h2>Adventure Slider</h2>
+                    </Grid>
+
+                    <Grid size={{ md: 12, xs: 12, lg: 12 }}>
+                      <Controller
+                        name='adventure_slider_title'
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <TextField
+                            {...field}
+                            fullWidth
+                            type='text'
+                            label='Title'
+                            variant='outlined'
+                            placeholder='Enter Title'
+                            className='mbe-1'
+                            id='adventure_slider_title'
+                            onChange={e => {
+                              field.onChange(e.target.value)
+                              errorState !== null && setErrorState(null)
+                            }}
+                            {...((errors.adventure_slider_title || errorState !== null) && {
+                              error: true,
+                              helperText: errors?.adventure_slider_title?.message || errorState?.message[0]
+                            })}
+                          />
+                        )}
+                      />
+                    </Grid>
+                    <Grid size={{ md: 12, xs: 12, lg: 12 }} className="mb-4">
+                      <Typography variant="h6" color="#a3a3a3">
+                        Description
+                      </Typography>
+                      <Controller
+                        name='adventure_slider_description'
+                        control={control}
+                        render={({ field }) => (
+                          <ReactQuill
+                            theme="snow"
+                            value={field.value ?? ""}
+                            onChange={field.onChange}
+                            modules={modules}
+                            placeholder="Enter adventure slider description..."
+                            style={{ height: "100px", marginBottom: "60px" }}
+                          />
+                        )}
+                      />
+                    </Grid>
+                    <Grid size={{ md: 12, xs: 12, lg: 12 }}>
+                      <input type="hidden" {...register("adventure_slides")} />
+                      <Autocomplete
+                        multiple
+                        options={advPostsOptions}
+                        getOptionLabel={(option) => option.value} 
+                        value={advPostsOptions.filter(opt =>
+                          (watch("adventure_slides") || []).includes(opt.label)
+                        )}
+                        renderOption={(props, option) => (
+                          <li {...props} key={option.label}> 
+                            {option.value}
+                          </li>
+                        )}
+                        renderInput={(params) => (
+                          <TextField {...params} label="Search Adventues" variant="outlined" />
+                        )}
+                        onChange={(event, newValue) => {
+                          setValue(
+                            "adventure_slides",
+                            newValue.map((item) => item.label), // array of values
+                            { shouldValidate: true }
+                          );
+                        }}
+                      />
+                    </Grid> 
                   </Grid>
                   <Divider />
 

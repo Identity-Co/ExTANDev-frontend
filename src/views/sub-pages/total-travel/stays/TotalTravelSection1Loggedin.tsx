@@ -33,16 +33,8 @@ const TotalTravelSection1Loggedin = ({ data, setOpenAccess, accessToken }: { dat
                   session_token: accessToken,
                   container: '.hotel_search_selector',
                   navigate_to: {
-                    view: 'hotels',
-                    destination: 'Portland%2C%20OR%2C%20US',
-                    lat: 45.5231,
-                    lon: -122.6765,
-                    check_in: "2025-10-20",
-                    check_out: "2024-10-25",
-                    rooms: 1,
-                    adults: 2,
-                    children: 1,
-                    child_ages: "7",
+                    view: 'home',
+                    start_tab: "hotels"
                   },
                 })
 

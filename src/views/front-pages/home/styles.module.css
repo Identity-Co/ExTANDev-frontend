@@ -251,7 +251,7 @@ section.home_section2{position: relative;}
 .home_slider2 .slick_dots li button:before{display: none;}
 .home_slider2 .slick-dotted.slick-slider{margin-bottom: 0;}
 
-.destination_btn{position: absolute; bottom: -3.3vw; right: 13.543vw;}
+.destination_btn{position: absolute; bottom: 0; right: 13.543vw; z-index: 2;}
 .destination_btn a{font-size: 1.25vw; font-weight: 400; color: #1F1F1F; text-transform: uppercase; font-family: "Bebas Neue", sans-serif;}
 .destination_btn a:hover{color: #EA5647;}
 

@@ -10,7 +10,7 @@ const AdventuresGuidePage = async () => {
   // Vars
   const mode = await getServerMode();
 
-  const pgData = await getAllAdventureGuides();
+  const pgData = await getAllAdventureGuides('https://surfer.com/.rss/feed/07d7f01a-6514-4c7a-b782-251f979a691a.xml', 'Surf Culture', 1, 12);
 
   const MainPage = await getPageData("Adventure Guide");
 

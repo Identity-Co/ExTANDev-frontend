@@ -30,7 +30,7 @@ export const getAdventureGuides = async (fields: string = '') => {
   }
 }
 
-export const getAllAdventureGuides = async () => {
+export const getAllAdventureGuides = async (feedUrl: string = '', filteredCat: string = '', page: number = 1, limit: number = 9) => {
   const session = await getServerSession(authOptions);
 
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/adventure_guide/public/page`, {
@@ -38,15 +38,16 @@ export const getAllAdventureGuides = async () => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({'userId': session?.user?.id})
+    body: JSON.stringify({'userId': session?.user?.id, 'feedUrl' : feedUrl, 'filteredCat': filteredCat, 'page': page, 'limit': limit})
   })
+
   
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   } else {
     const json = await response.json();
     
-    return json.data
+    return json
   }
 }
 

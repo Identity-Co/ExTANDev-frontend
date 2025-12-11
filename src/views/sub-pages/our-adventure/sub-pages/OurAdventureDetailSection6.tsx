@@ -6,7 +6,7 @@ import styles from './styles.module.css';
 const OurAdventureDetailSection6 = ({ tour, tour_details }) => {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const [galleryItems, setGalleryItems] = useState(tour_details.gallery_images);
+  const [galleryItems, setGalleryItems] = useState(tour_details?.gallery_images);
 
   // Handle body scroll when lightbox opens/closes
   useEffect(() => {
@@ -123,7 +123,7 @@ const OurAdventureDetailSection6 = ({ tour, tour_details }) => {
 
         <div className={classnames(styles.gallery_main)}>
           <div className={classnames(styles.gallery_row)}>
-            {galleryItems.map((media, index) => (
+            {galleryItems?.map((media, index) => (
               <div
                 key={`media-${index}`}
                 className={classnames(styles.gallery_box)}
